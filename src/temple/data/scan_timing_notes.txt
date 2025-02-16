@@ -1,0 +1,10 @@
+016 - no change
+019 - arrow_pt1 +10, collector + 10
+020 - arrow_pt1 +10, collector + 10
+023 - arrow_pt1 +10, collector + 10
+024 - arrow_pt1 +10, collector + 10, arrow_pt2 + 10
+025 - arrow_pt1 +10, collector + 10, arrow_pt2 + 10
+029 - arrow_pt1 +10, collector + 10, arrow_pt2 + 10
+030 - arrow_pt1 +10, collector + 10, arrow_pt2 + 10
+
+

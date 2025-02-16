@@ -1,0 +1,17 @@
+</pre><hr>Higher-level input files preparation<br><pre>
+
+/work2/03206/mortonne/software/apps/fsl-6.0.4/bin/featregapply /scratch/09123/ofriend/temple/skyra_prepro/derivatives/fmriprep/sub-temple024/univ/out_run1.feat
+
+/work2/03206/mortonne/software/apps/fsl-6.0.4/bin/flirt -ref reg/standard -in example_func -out frgrot_pOKq9y -applyxfm -init reg/example_func2standard.mat -interp spline -datatype float
+
+
+/work2/03206/mortonne/software/apps/fsl-6.0.4/bin/flirt -ref reg/standard -in mean_func -out frgrot_cubAcl -applyxfm -init reg/example_func2standard.mat -interp spline -datatype float
+
+
+/work2/03206/mortonne/software/apps/fsl-6.0.4/bin/flirt -ref reg/standard -in stats/cope1 -out frgrot_dhNYnc -applyxfm -init reg/example_func2standard.mat -interp trilinear -datatype float
+
+
+/work2/03206/mortonne/software/apps/fsl-6.0.4/bin/flirt -ref reg/standard -in stats/cope2 -out frgrot_bgiv41 -applyxfm -init reg/example_func2standard.mat -interp trilinear -datatype float
+
+
+/work2/03206/mortonne/software/apps/fsl-6.0.4/bin/flirt -ref reg/standard -in stats/cope3 -out frgrot_ELsBqC -applyxfm -init reg/example_func2standard.mat -interp trilinear -datatype float

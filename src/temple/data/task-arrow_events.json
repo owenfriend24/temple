@@ -1,0 +1,57 @@
+{   
+    "trial": {
+        "LongName": "Trial",
+        "Description": "Trial number"
+    },
+    "onset": {
+        "LongName": "Stimulus onset",
+        "Description": "Time the object appeared on screen",
+        "Units": "s"
+    },
+    "duration": {
+        "LongName": "Stimulus duration",
+        "Description": "Time the object remained on screen",
+        "Units": "s"
+    },
+    "object": {
+        "LongName": "Object ID",
+        "Description": "Object ID of 12 objects"
+    }, 
+    "position": {
+        "LongName": "Position within triad",
+        "Description": "Position 1 - 3 within triad"
+    },
+    "triad": {
+        "LongName": "Triad member",
+        "Description": "Member of 1 through 4 triads"
+    },
+    "left_right": {
+        "LongName": "Direction of arrow",
+        "Description": "Direction of arrow overlaid on object",
+        "Levels": {
+            "1": "Arrow pointing to the left",
+            "2": "Arrow pointing to the right"
+        }
+    },
+    "response": {
+        "LongName": "Response",
+        "Description": "Direction arrow is pointing on screen",
+        "Levels": {
+            "left": "1",
+            "right": "2"
+        }
+    },
+    "response_time": {
+        "LongName": "Response time",
+        "Description": "Time of response to the arrow question",
+        "Units": "s"
+    },
+    "acc": {
+        "LongName": "Accuracy",
+        "Description": "Indicates the accuracy of the participant for a given trial",
+        "Levels": {
+            "1": "Correct",
+            "0": "Incorrect"
+        }
+    }
+}

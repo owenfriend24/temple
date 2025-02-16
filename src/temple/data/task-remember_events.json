@@ -1,0 +1,79 @@
+{   
+    "trial": {
+        "LongName": "Trial",
+        "Description": "Trial number"
+    },
+    "item1": {
+        "LongName": "First Item",
+        "Description": "Item within set of 12 to be presented on screen"
+    },
+    "item2": {
+        "LongName": "Second Item",
+        "Description": "Item within set of 12 to be presented on screen"
+    },
+    "item3": {
+        "LongName": "Third Item",
+        "Description": "Item within set of 12 to be presented on screen"
+    },
+    "item4": {
+        "LongName": "Fourth Item",
+        "Description": "Item within set of 12 to be presented on screen"
+    },
+    "item5": {
+        "LongName": "Fifth Item",
+        "Description": "Item within set of 12 to be presented on screen"
+    },
+    "item6": {
+        "LongName": "Sixth Item",
+        "Description": "Item within set of 12 to be presented on screen"
+    },
+    "order": {
+        "LongName": "Presentation Order",
+        "Description": "Indicates whether presentation starts with item1 or item4",
+        "Levels": {
+            "1": "Indicates item1 was presented first (followed immediately by item2 and item3), then item4",
+            "2": "Indicates item4 was presented first (followed immediately by item5 and item6), then item1" 
+        }
+    },
+    "order_resp": {
+        "LongName": "Participant response order",
+        "Description": "Indicates whether the participant responded to the first order second order as correct",
+        "Levels": {
+            "1": "Pariticpant indicates the first set of items is correct",
+            "2": "Pariticpant indicates the second set of items is correct"
+        }
+    },
+    "side": {
+        "LongName": "Presentation side of screen",
+        "Description": "The side of the screen the correct response is on",
+        "Levels": {
+            "1": "The correct response is on the left side of the screen",
+            "2": "The correct response is on the right side of the screen"
+        }
+    },
+    "side_resp": {
+        "LongName": "Participant side response",
+        "Description": "Side of the screen the participant responded as correct",
+        "Levels": {
+            "1": "Participant indicated the left side of the screen",
+            "2": "Participant indicated the right side of the screen"
+        }
+    },
+    "acc": {
+        "LongName": "Accuracy",
+        "Description": "Indicates the accuracy of the participant for a given trial",
+        "Levels": {
+            "1": "Correct",
+            "0": "Incorrect"
+        }
+    },
+    "response_time": {
+        "LongName": "Response Time",
+        "Description": "Response to remember task (begins from first item onset)",
+        "Units": "s"
+    },
+    "reps": {
+        "LongName": "Repetitions",
+        "Description": "Number of repetitions participant took for a given trial"
+    }
+}

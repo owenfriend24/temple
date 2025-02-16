@@ -1,0 +1,8 @@
+
+/bin/cp /tmp/feat_0308rW.fsf design.fsf
+
+/work2/03206/mortonne/software/apps/fsl-6.0.4/bin/feat_model design
+
+mkdir .files;cp /work2/03206/mortonne/software/apps/fsl-6.0.4/doc/fsl.css .files;cp -r /work2/03206/mortonne/software/apps/fsl-6.0.4/doc/images .files/images
+
+/work2/03206/mortonne/software/apps/fsl-6.0.4/bin/fsl_sub -T 60 -l logs -N feat2_pre   /work2/03206/mortonne/software/apps/fsl-6.0.4/bin/feat /home1/09123/ofriend/analysis/temple/univ/.gfeat/design.fsf -D /home1/09123/ofriend/analysis/temple/univ/.gfeat -gfeatprep

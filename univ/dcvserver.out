@@ -1,0 +1,11 @@
+TACC: job 1388972 execution at: Sat Dec  9 17:38:12 CST 2023
+TACC: running on node c303-006
+TACC: local (compute node) DCV port is 8443
+TACC: got login node DCV port 60758
+TACC: Created reverse ports on Lonestar6 logins
+TACC: Your DCV session is now running!
+TACC: To connect to your DCV session, please point a modern web browser to:
+TACC:          https://ls6.tacc.utexas.edu:60758
+TACC: closing DCV session
+TACC: release port returned {"released_port": 60758}
+TACC: job 1388972 execution finished at: Sat Dec  9 17:44:33 CST 2023
