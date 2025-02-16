@@ -1,0 +1,15 @@
+ Starting at Fri Dec 15 10:44:27 CST 2023
+ WORKING DIR: /home1/09123/ofriend/analysis/temple/bin/
+ JOB ID:      1399496
+ JOB NAME:    third
+ NODES:       c302-005
+ N NODES:     1
+ N TASKS:     1
++ run_third_feat.sh /scratch/09123/ofriend/temple/skyra_prepro/derivatives/fmriprep ppi
+running third level ppi analysis
+To view the FEAT progress and final report, point your web browser at /scratch/09123/ofriend/temple/skyra_prepro/derivatives/fmriprep/group_univ/3rdlevelNEWPPI.gfeat/report_log.html
++ set +x
+ 
+ Job complete at Fri Dec 15 10:50:42 CST 2023
+ 
+Job duration: 00:06:15 (375 s)

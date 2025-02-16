@@ -1,0 +1,10 @@
+/ContrastName1	ten_over_sev 
+/ContrastName2	sev_over_ten 
+/NumWaves	2
+/NumContrasts	2
+/PPheights		1.000000e+00	1.000000e+00
+/RequiredEffect		2.539	2.539
+
+/Matrix
+1.000000e+00 -1.000000e+00 
+-1.000000e+00 1.000000e+00 

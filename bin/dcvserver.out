@@ -1,0 +1,9 @@
+TACC: job 1391104 execution at: Mon Dec 11 11:06:25 CST 2023
+TACC: running on node c309-006
+TACC: local (compute node) DCV port is 8443
+TACC: got login node DCV port 60136
+TACC: Created reverse ports on Lonestar6 logins
+TACC: Your DCV session is now running!
+TACC: To connect to your DCV session, please point a modern web browser to:
+TACC:          https://ls6.tacc.utexas.edu:60136
+slurmstepd: error: *** JOB 1391104 ON c309-006 CANCELLED AT 2023-12-11T12:05:53 ***

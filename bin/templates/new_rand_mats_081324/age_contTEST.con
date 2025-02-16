@@ -1,0 +1,10 @@
+/ContrastName1	age_increasing 
+/ContrastName2	age_decreasing 
+/NumWaves	1
+/NumContrasts	2
+/PPheights		3.491700e+01	3.491700e+01
+/RequiredEffect		1.122	1.122
+
+/Matrix
+1.000000e+00 
+-1.000000e+00 

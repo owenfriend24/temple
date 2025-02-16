@@ -1,0 +1,16 @@
+/ContrastName1	group mean 
+/ContrastName2	adult_mean 
+/ContrastName3	child_mean 
+/ContrastName4	adult_over_child 
+/ContrastName5	child_over_adult 
+/NumWaves	2
+/NumContrasts	5
+/PPheights		5.263158e-01	1.000000e+00	1.000000e+00	1.000000e+00	1.000000e+00
+/RequiredEffect		0.743	1.024	0.972	1.412	1.412
+
+/Matrix
+1.000000e+00 1.000000e+00 
+1.000000e+00 0.000000e+00 
+0.000000e+00 1.000000e+00 
+1.000000e+00 -1.000000e+00 
+-1.000000e+00 1.000000e+00 
