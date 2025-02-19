@@ -26,15 +26,11 @@ def create_subject_file(subject, master_dir, comparison, mask):
     bwd_comp=comparison[::-1]
 
     # sets up subject data table
-    # fwd integration (e.g., ApostBpre, A shifts to become like B)
     comp_data = pd.DataFrame(columns = ['subject', 'age_group', 'roi', 'triplet',
                                         'comparison', 'within_sim', 'across_sim', 'difference'])
 
     # subject directory on tacc
     sub_dir=f'{master_dir}/sub-{subject}'
-
-    # pull both forward and backward integration within an roi
-    bwd_comp = comparison[::-1]
 
     comp_data = pd.DataFrame(columns=['subject', 'age_group', 'roi', 'triplet',
                                       'comparison', 'within_sim', 'across_sim', 'difference'])
@@ -46,29 +42,29 @@ def create_subject_file(subject, master_dir, comparison, mask):
         raise ValueError('no valid mask')
 
     # Process both forward and backward integration within an ROI
-    for comp in [comparison, bwd_comp]:
-        comp_dir = f'{master_dir}/prepost_{comp}_symm_txt/'
-        sub_dir = f'{comp_dir}/sub-{subject}'
-        for mask in masks:
-            within_filename = f'{sub_dir}/{subject}_prepost_{comp}_within_{mask}.txt'
-            within = pd.read_csv(within_filename, sep='\t', header=None)
 
-            across_filename = f'{sub_dir}/{subject}_prepost_{comp}_across_{mask}.txt'
-            across = pd.read_csv(across_filename, sep='\t', header=None)
+    comp_dir = f'{master_dir}/prepost_{comparison}/'
+    sub_dir = f'{comp_dir}/sub-{subject}'
+    for mask in masks:
+        within_filename = f'{sub_dir}/{subject}_prepost_{comparison}_within_{mask}.txt'
+        within = pd.read_csv(within_filename, sep='\t', header=None)
 
-            for triad in [1, 2, 3, 4]:
-                within_indices = integration_indices.pull_within_symm_indices(triad)
-                within_df = within.iloc[within_indices]
-                within_sim = np.mean(within_df)
+        across_filename = f'{sub_dir}/{subject}_prepost_{comparison}_across_{mask}.txt'
+        across = pd.read_csv(across_filename, sep='\t', header=None)
 
-                across_indices = integration_indices.pull_across_symm_indices(triad)
-                across_df = across.iloc[across_indices]
-                across_sim = np.mean(across_df)
+        for triad in [1, 2, 3, 4]:
+            within_indices = integration_indices.pull_within_prepost_indices(triad)
+            within_df = within.iloc[within_indices]
+            within_sim = np.mean(within_df)
 
-                comp_data.loc[len(comp_data)] = [
-                    subject, age_group, mask, triad, comp,
-                    within_sim, across_sim, (within_sim - across_sim)
-                ]
+            across_indices = integration_indices.pull_across_prepost_indices(triad)
+            across_df = across.iloc[across_indices]
+            across_sim = np.mean(across_df)
+
+            comp_data.loc[len(comp_data)] = [
+                subject, age_group, mask, triad, comparison,
+                within_sim, across_sim, (within_sim - across_sim)
+            ]
     return comp_data
 
 
@@ -81,7 +77,7 @@ def run(command):
 
 def main(subject, master_dir, comparison, mask):
     run('source /home1/09123/ofriend/analysis/temple/profile')
-    out_file = f'{master_dir}/prepost_{comparison}_symm_txt/sub-{subject}/sub-{subject}_{comparison}_{mask}_master.csv'
+    out_file = f'{master_dir}/prepost_{comparison}/sub-{subject}/sub-{subject}_{comparison}_{mask}_master.csv'
     df = create_subject_file(subject, master_dir, comparison, mask)
     df.to_csv(out_file)
 

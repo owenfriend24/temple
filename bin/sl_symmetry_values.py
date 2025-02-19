@@ -45,8 +45,8 @@ sbj = sys.argv[1]
 masktype = sys.argv[2]
 comp = sys.argv[3]
 
-expdir = '/corral-repl/utexas/prestonlab/temple'
-resultdir = expdir+f'/searchlight/prepost_{comp}_symm'
+expdir = '/corral-repl/utexas/prestonlab/temple/'
+resultdir = expdir+f'/integration_prepost/symmetry_{comp}/'
 
 ### masks for data to analyze ###
 
@@ -100,11 +100,10 @@ for comparison in comparisons:
 
         within, across = sl_func(ds)
         
-        subjoutfile_w = "%s_prepost_%s_%s_%s.txt"%(sbj, comp, 'within',mask)
-        subjoutfile_a = "%s_prepost_%s_%s_%s.txt"%(sbj, comp, 'across',mask)
+        out_file_w = f"{resultdir}/{sbj}_symmetry_{comp}_within_{mask}"
+        out_file_a = f"{resultdir}/{sbj}_symmetry_{comp}_across_{mask}"
 
-        os.makedirs(f'/corral-repl/utexas/prestonlab/temple/searchlight/prepost_{comp}_symm_txt/sub-{sbj}', exist_ok=True)
-        os.chdir(f'/corral-repl/utexas/prestonlab/temple/searchlight/prepost_{comp}_symm_txt/sub-{sbj}')
+        os.makedirs(f'{resultdir}/sub-{sbj}', exist_ok=True)
         
-        savetxt(subjoutfile_w,within,fmt="%.8f")
-        savetxt(subjoutfile_a,across,fmt="%.8f")
+        savetxt(out_file_w,within,fmt="%.8f")
+        savetxt(out_file_a,across,fmt="%.8f")
