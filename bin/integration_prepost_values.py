@@ -58,6 +58,8 @@ subjdir = expdir + '/sub-%s' % (sbj)
 betadir = subjdir + '/betaseries'
 resultdir = expdir + f'/integration_prepost/prepost_{comparison}'
 
+out_dir = f"{resultdir}/{sbj}"
+os.makedirs(out_dir, exist_ok=True)
 for mask in masks:
     if masktype == 'b_hip_subregions':
         slmask = f'{subjdir}/transforms/{mask}.nii.gz'
@@ -76,8 +78,7 @@ for mask in masks:
     within, across = measure(ds)
 
 
-    out_dir = f"{resultdir}/{sbj}"
-    os.makedirs(out_dir)
+
     subjoutfile_w = f"{resultdir}/{sbj}_prepost_{comparison}_within_{mask}.txt"
     subjoutfile_a = f"{resultdir}/{sbj}_prepost_{comparison}_across_{mask}.txt"
 
