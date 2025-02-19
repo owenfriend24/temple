@@ -37,18 +37,13 @@ import subprocess
 ### import custom searchlight function ###
 from prepost_roi import *
 
-#subprocess.run('. /home1/09123/ofriend/analysis/temple/rsa/bin/activate', shell = True)
+subprocess.run('. /home1/09123/ofriend/analysis/temple/rsa/bin/activate', shell = True)
 
 ### set up expriment info ###
-expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
+expdir = '/corral-repl/utexas/prestonlab/temple/'
 resultdir = expdir+'/searchlight/prepost_AC'
 sbj = sys.argv[1]
 masktype = sys.argv[2]
-comp = sys.argv[3]
-
-ad = [] #[19, 20, 22, 23, 25, 37, 57, 59, 74, 72, 16, 24, 50, 56, 73, 71, 76, 58]
-ten = [] #[29, 51, 30, 33, 35, 60, 36, 32, 45, 38, 42, 63]
-sev = []#[41, 64, 70, 34, 65, 66, 53, 68]
 
 ### masks for data to analyze ###
 if masktype == 'mni':
@@ -61,26 +56,11 @@ elif masktype == 'seg':
     masks = ['gm']
 elif masktype == 'whole_brain':
     masks = ['brainmask_func_dilated']
-#elif masktype == 'b_hip':
- #   masks = ['b_hip', 'right_hip', 'left_hip']
-elif masktype == 'b_hip':
-    masks = ['b_hip', 'b_hip_ant', 'b_hip_post', 'b_hip_body']
-elif masktype == 'sl':
-    if int(sbj[-2:]) in ad:
-        masks = ['b_hip', 'b_hip_ant', 'b_hip_post', 'b_hip_body']
-    elif int(sbj[-2:]) in ten:
-        masks = ['b_hip', 'b_hip_ant', 'b_hip_post', 'b_hip_body']
-    elif int(sbj[-2:]) in sev:
-        masks = ['b_hip', 'b_hip_ant', 'b_hip_post', 'b_hip_body']
-    else:
-        masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
-elif masktype == 'ifg':
-    masks = ['ifg_mask1', 'ifg_mask2']
-elif masktype == 'hip_inc':
-    masks = ['hip_increasing_mask']
+elif masktype == 'hippocampus':
+    masks = ['b_hip', 'b_hip_ant', 'b_hip_post', 'b_hip_body', 'b_hip_tail']
 ### searchlight information ###
-niter = 1000
-phase,run,triad,item = loadtxt(f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comp}_items.txt',unpack=1)
+#niter = 1000
+phase,run,triad,item = loadtxt('/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_AC_items.txt',unpack=1)
 #comparisons = ['separation','integration']
 comparisons = ['integration']
 
@@ -103,17 +83,11 @@ for comparison in comparisons:
             slmask = subjdir+'/anatomy/antsreg/data/funcunwarpspace/rois/seg/%s.nii.gz'%(mask)
         elif masktype == 'whole_brain':
             slmask = expdir+'/sourcedata/freesurfer/sub-%s/mri/out/brainmask_func_dilated.nii.gz'%(sbj)
-        elif masktype == 'b_hip':
-            slmask = expdir+'/sub-%s/transforms/b_hip.nii.gz'%(sbj)
-        elif masktype == 'sl':
-            slmask = expdir+'/sub-%s/transforms/%s.nii.gz'%(sbj, mask)
-        elif masktype == 'ifg':
-            slmask = expdir+'/sub-%s/transforms/%s.nii.gz'%(sbj, mask)
-        elif masktype == 'hip_inc':
-            slmask = expdir+'/sub-%s/transforms/%s.nii.gz'%(sbj, mask)
+        elif masktype == 'hippocampus':
+            slmask = expdir+f'/sub-%s/transforms/{mask}.nii.gz'%(sbj)
 
         #load in data
-        ds = fmri_dataset(betadir+f'/pre_post_{comp}_items.nii.gz',mask=slmask)
+        ds = fmri_dataset(betadir+'/pre_post_AC_items.nii.gz',mask=slmask)
         ds.sa['phase'] = phase[:]
         ds.sa['run'] = run[:]
         ds.sa['triad'] = triad[:]
@@ -125,24 +99,32 @@ for comparison in comparisons:
         # call the measure object to obtain within-pair and across-pair similarity values
         within, across = measure(ds)
         
-       # within, across = prepost_roi('correlation',1,comparison)
-       # results_w = within(ds)
-       # results_a = across(ds)
+        #within, across = prepost_roi('correlation',1,comparison)
+        #results_w = within(ds)
+        #results_a = across(ds)
         
-        subjoutfile_w = "%s/%s_prepost_%s_%s_%s.txt"%(sbj, sbj, comp, 'within',mask)
-        subjoutfile_a = "%s/%s_prepost_%s_%s_%s.txt"%(sbj, sbj, comp, 'across',mask)
+        os.chdir(f"/{expdir}/searchlight/prepost_AC")
+        
+        subjoutfile_w = "%s_prepost_%s_%s.txt"%(sbj,'within',mask)
+        subjoutfile_a = "%s_prepost_%s_%s.txt"%(sbj,'across',mask)
 
-        #dist_w = "%s/%s_distance_%s_%s_%s.txt"%(sbj, sbj, comp, 'within',mask)
-        #dist_a = "%s/%s_distance_%s_%s_%s.txt"%(sbj, sbj, comp, 'across',mask)
-
-        #subjoutfile_d = "%s/%s_prepost_%s_%s_%s.txt"%(sbj, sbj, comp, 'dsdiff',mask)
-        
-        os.chdir(f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/searchlight/prepost_{comp}_txt')
-        
         savetxt(subjoutfile_w,within,fmt="%.8f")
         savetxt(subjoutfile_a,across,fmt="%.8f")
-        #savetxt(dist_w,w_distance,fmt="%.8f")
-        #savetxt(dist_a,a_distance,fmt="%.8f")
-        #savetxt(subjoutfile_d,dsm_diff,fmt="%.8f")
-         
-       
+     
+        """
+        #for testing with whole roi
+        #results = sl_func(ds)
+        #os.chdir("/corral-repl/utexas/prestonlab/garnet/results/searchlight")
+        #subjoutfile = "%s_prepost_%s_%s.txt"%(sbj,comparison,mask)
+        #savetxt(subjoutfile,results,fmt="%.8f")
+
+
+        #run the searchlight
+        sl = sphere_searchlight(sl_func,radius = 3)
+        sl_map = sl(ds)
+
+        #save out map
+        #subjoutfile = resultdir+'/%s_prepost_%s_%s.nii.gz'%(sbj,comparison,mask) #p-score computed within searchlight
+        subjoutfile = resultdir+'/%s_prepost_%s_z.nii.gz'%(sbj,mask) #z-score computed within searchlight
+        map2nifti(ds,sl_map.samples).to_filename(subjoutfile)
+        """

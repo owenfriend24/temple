@@ -70,6 +70,9 @@ class prepost_roi(Measure):
 
                             within.append(dstmp)
                             w_distance.append(dst)
+                            print(f"within comparison: "
+                                  f"run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
+                                  f"run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
                     elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
 
