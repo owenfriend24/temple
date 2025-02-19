@@ -95,8 +95,8 @@ for mask in masks:
 
     resultdir = expdir + f'/integration_prepost/symmetry_{comp}/sub-{sbj}'
     os.makedirs(f'{resultdir}', exist_ok=True)
-    out_file_w = f"{resultdir}/{sbj}_symmetry_{comp}_within_{mask}"
-    out_file_a = f"{resultdir}/{sbj}_symmetry_{comp}_across_{mask}"
+    out_file_w = f"{resultdir}/{sbj}_symmetry_{comp}_within_{mask}.txt"
+    out_file_a = f"{resultdir}/{sbj}_symmetry_{comp}_across_{mask}.txt"
 
 
 

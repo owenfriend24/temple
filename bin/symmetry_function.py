@@ -67,7 +67,7 @@ class symmetry_function(Measure):
                     if (dataset.sa['item'][x] == first_item) & (dataset.sa['item'][y] == second_item):
                         if dataset.sa['triad'][x] == dataset.sa['triad'][y]:  # within triad
                             within.append(dstmp)
-                            print(f"within comparison: phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
+                            #print(f"within comparison: phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
                         elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
 
