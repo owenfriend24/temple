@@ -47,7 +47,7 @@ def create_subject_file(subject, master_dir, comparison, mask):
 
     # Process both forward and backward integration within an ROI
     for comp in [comparison, bwd_comp]:
-        comp_dir = f'{master_dir}/prepost_{comp}_symm_txt/'
+        comp_dir = f'{master_dir}/symmetry_{comp}/'
         sub_dir = f'{comp_dir}/sub-{subject}'
         for mask in masks:
             within_filename = f'{sub_dir}/{subject}_prepost_{comp}_within_{mask}.txt'
@@ -77,7 +77,7 @@ def run(command):
 
 def main(subject, master_dir, comparison, mask):
     run('source /home1/09123/ofriend/analysis/temple/profile')
-    out_file = f'{master_dir}/prepost_{comparison}_symm_txt/sub-{subject}/sub-{subject}_{comparison}_{mask}_master.csv'
+    out_file = f'{master_dir}/symmetry_{comparison}/sub-{subject}/sub-{subject}_{comparison}_{mask}_master.csv'
     df = create_subject_file(subject, master_dir, comparison, mask)
     df.to_csv(out_file)
 
