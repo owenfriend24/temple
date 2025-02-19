@@ -55,7 +55,7 @@ class sl_symm_values_function(Measure):
                 dstmp = dsm_diff[x, y]
 
                 # comparing post representations to pre; only interested in post of A and pre of C (or B)
-                
+
                 # are the items different phases?
                 #if (dataset.sa['phase'][x] == 2) & (dataset.sa['item'][x] == 1):
                 if (dataset.sa['phase'][x] != dataset.sa['phase'][y]):
@@ -72,7 +72,7 @@ class sl_symm_values_function(Measure):
                         elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
 
                             across.append(dstmp)
-                            print(f"across comparison: phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
+                            #print(f"across comparison: phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
         #### convert items to arrays ###
         within = array(within)
