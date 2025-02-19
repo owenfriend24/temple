@@ -58,7 +58,7 @@ subjdir = expdir + '/sub-%s' % (sbj)
 betadir = subjdir + '/betaseries'
 resultdir = expdir + f'/integration_prepost/prepost_{comparison}'
 
-out_dir = f"{resultdir}/{sbj}"
+out_dir = f"{resultdir}/sub-{sbj}"
 os.makedirs(out_dir, exist_ok=True)
 for mask in masks:
     if masktype == 'b_hip_subregions':
