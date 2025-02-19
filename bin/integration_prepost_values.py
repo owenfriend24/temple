@@ -75,6 +75,9 @@ for mask in masks:
     # call the measure object to obtain within-pair and across-pair similarity values
     within, across = measure(ds)
 
+
+    out_dir = f"{resultdir}/{sbj}"
+    os.makedirs(out_dir)
     subjoutfile_w = f"{resultdir}/{sbj}_prepost_{comparison}_within_{mask}.txt"
     subjoutfile_a = f"{resultdir}/{sbj}_prepost_{comparison}_across_{mask}.txt"
 
