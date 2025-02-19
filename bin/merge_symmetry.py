@@ -50,10 +50,10 @@ def create_subject_file(subject, master_dir, comparison, mask):
         comp_dir = f'{master_dir}/symmetry_{comp}/'
         sub_dir = f'{comp_dir}/sub-{subject}'
         for mask in masks:
-            within_filename = f'{sub_dir}/{subject}_prepost_{comp}_within_{mask}.txt'
+            within_filename = f'{sub_dir}/{subject}_symmetry_{comp}_within_{mask}.txt'
             within = pd.read_csv(within_filename, sep='\t', header=None)
 
-            across_filename = f'{sub_dir}/{subject}_prepost_{comp}_across_{mask}.txt'
+            across_filename = f'{sub_dir}/{subject}_symmetry_{comp}_across_{mask}.txt'
             across = pd.read_csv(across_filename, sep='\t', header=None)
 
             for triad in [1, 2, 3, 4]:
