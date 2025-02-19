@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+if len(sys.argv) < 4:
+    print(f"Usage: {sys.argv[0]} <subject_id> <comparison> <masktype>")
+    print("Example: integration_prepost_values.py temple016 AC b_hip_subregions")
+    sys.exit(1)
 
 ### import python libraries needed for the analysis ###
 import numpy as N
