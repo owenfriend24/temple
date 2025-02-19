@@ -1,4 +1,4 @@
-# output is not super well-structured in the txt files but it is consistent
+# output is not super well-structured in the txt files on tacc but it is consistent
 #   later can go back and figure out a more logical way to generate these
 #   but for now hard-coded will work fine
 def pull_across_symm_indices(triad):
@@ -20,6 +20,7 @@ def pull_within_symm_indices(triad):
     return within_indices[(triad-1)]
 
 
+# takes in an int 1, 2, 3, or 4
 def pull_within_prepost_indices(triad):
     indices = []
     for comp_run in range(4):
@@ -29,5 +30,11 @@ def pull_within_prepost_indices(triad):
         indices.append(16 + (triad - 1) * 2 + comp_run)
     return indices
 
-
-# need to figure out across now
+# takes in an int 1, 2, 3, or 4
+def pull_across_prepost_indices(triad):
+    indices = []
+    start_1 = (triad - 1) * 12
+    indices.extend(range(start_1, start_1 + 12))
+    start_2 = 48 + (triad - 1) * 6
+    indices.extend(range(start_2, start_2 + 6))
+    return indices
