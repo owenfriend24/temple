@@ -60,7 +60,7 @@ resultdir = expdir + f'/integration_prepost/prepost_{comparison}'
 
 for mask in masks:
     if masktype == 'b_hip_subregions':
-        slmask = f'subjdir/transforms/{mask}.nii.gz'
+        slmask = f'{subjdir}/transforms/{mask}.nii.gz'
 
     # load in data
     ds = fmri_dataset(betadir + f'/pre_post_{comparison}_items.nii.gz', mask=slmask)
