@@ -13,7 +13,7 @@ sub_dir=$a_dir/sub-${sub}
 
 
 mkdir -p ${sub_dir}/subfield_masks
-sf_dir=$sub_dir/subfield_masks
+sf_dir=${sub_dir}/subfield_masks
 
 #left hemisphere
 fslmaths ${sub_dir}/final/sub-${sub}_left_lfseg_corr_nogray.nii.gz -thr 1 -uthr 1 -bin ${sf_dir}/sub-${sub}_CA1_mask_L.nii.gz

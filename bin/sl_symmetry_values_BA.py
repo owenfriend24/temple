@@ -45,7 +45,7 @@ sbj = sys.argv[1]
 masktype = sys.argv[2]
 comp = sys.argv[3]
 
-expdir = '/corral-repl/utexas/prestonlab/temple'
+expdir = '/corral-repl/utexas/prestonlab/temple/'
 resultdir = expdir+f'/searchlight/prepost_{comp}_symm'
 
 ### masks for data to analyze ###
