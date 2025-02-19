@@ -1,5 +1,98 @@
 #!/usr/bin/env python
 
-from temple_utils import get_age_groups
+import os
+import subprocess
+from pathlib import Path
+import argparse
+import pandas as pd
+import numpy as np
+from temple_utils import get_age_groups, symmetry_indices
 
-get_age_groups.get_children()
+def create_subject_file(subject, master_dir, comparison, mask):
+    children = get_age_groups.get_children()
+    adolescents = get_age_groups.get_adolescents()
+    adults = get_age_groups.get_adults()
+    if subject in children:
+        age_group = 'child'
+    elif subject in adolescents:
+        age_group = 'adolescent'
+    elif subject in adults:
+        age_group = 'adult'
+    else:
+        raise ValueError('no age group assigned')
+
+
+    # makes sure we have forward and backward comparisons (e.g., 'AB' and 'BA')
+    bwd_comp=comparison[::-1]
+
+    # sets up subject data table
+    # fwd integration (e.g., ApostBpre, A shifts to become like B)
+    comp_data = pd.DataFrame(columns = ['subject', 'age_group', 'roi', 'triplet',
+                                        'comparison', 'within_sim', 'across_sim', 'difference'])
+
+    # subject directory on tacc
+    sub_dir=f'{master_dir}/sub-{subject}'
+
+    # define masks/roi's to pull similarity values from
+    if mask == 'b_hip_subregions':
+        masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
+    # pull both forward and backward integration within an roi
+    bwd_comp = comparison[::-1]
+
+    comp_data = pd.DataFrame(columns=['subject', 'age_group', 'roi', 'triplet',
+                                      'comparison', 'within_sim', 'across_sim', 'difference'])
+
+    # Define masks/ROIs to pull similarity values from
+    if mask == 'b_hip_subregions':
+        masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
+    else:
+        raise ValueError('no valid mask')
+
+    # Process both forward and backward integration within an ROI
+    for comp in [comparison, bwd_comp]:
+        comp_dir = f'{master_dir}/prepost_{comp}_symm_txt/'
+        sub_dir = f'{comp_dir}/sub-{subject}'
+        for mask in masks:
+            within_filename = f'{sub_dir}/{subject}_prepost_{comp}_within_{mask}.txt'
+            within = pd.read_csv(within_filename, sep='\t', header=None)
+
+            across_filename = f'{sub_dir}/{subject}_prepost_{comp}_across_{mask}.txt'
+            across = pd.read_csv(across_filename, sep='\t', header=None)
+
+            for triad in [1, 2, 3, 4]:
+                within_indices = symmetry_indices.pull_within_indices(triad)
+                within_df = within.iloc[within_indices]
+                within_sim = np.mean(within_df)
+
+                across_indices = symmetry_indices.pull_across_indices(triad)
+                across_df = across.iloc[across_indices]
+                across_sim = np.mean(across_df)
+
+                comp_data.loc[len(comp_data)] = [
+                    subject, 'age_group_placeholder', mask, triad, comp,
+                    within_sim, across_sim, (within_sim - across_sim)
+                ]
+    return comp_data
+
+
+
+
+
+
+def run(command):
+    subprocess.run(command, shell=True)
+
+def main(subject, master_dir, comparison, mask):
+    run('source /home1/09123/ofriend/analysis/temple/profile')
+    out_file = f'{master_dir}/prepost_{comparison}_symm_txt/sub-{subject}/sub-{subject}_{comparison}_{mask}.csv'
+    df = create_subject_file(subject, master_dir, comparison, mask)
+    df.to_csv(out_file)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("subject", help="e.g., temple100")
+    parser.add_argument("master_dir", help="where folders containing .txt files for each comparison are stored")
+    parser.add_argument("comparison", help="options: AB, BC, AC")
+    parser.add_argument("mask", help="mask name e.g., b_hip_warp, 'CA_1, etc.")
+    args = parser.parse_args()
+    main(args.subject, args.master_dir, args.comparison, args.mask)
