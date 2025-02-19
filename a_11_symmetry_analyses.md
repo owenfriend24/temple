@@ -61,3 +61,17 @@ sl_symmetry_values_CA.py temple070 sl_hip AC 3
 
 
 
+
+
+## new versions (need to update md files)
+```
+integration_prepost_values.py subject comparison mask
+integration_prepost_values.py temple016 AC b_hip_subregions
+symmetry_prepost_values.py subject comparison mask
+symmetry_prepost_values.py temple016 AC b_hip_subregions
+symmetry_prepost_values.py temple016 CA b_hip_subregions
+merge_asymm.py subject master_dir comparison mask
+merge_integration.py temple016 $CORR/integration_prepost AB b_hip_subregions
+```
+
+
