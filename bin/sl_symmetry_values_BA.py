@@ -45,7 +45,7 @@ sbj = sys.argv[1]
 masktype = sys.argv[2]
 comp = sys.argv[3]
 
-expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
+expdir = '/corral-repl/utexas/prestonlab/temple'
 resultdir = expdir+f'/searchlight/prepost_{comp}_symm'
 
 ### masks for data to analyze ###
@@ -103,8 +103,8 @@ for comparison in comparisons:
         subjoutfile_w = "%s_prepost_%s_%s_%s.txt"%(sbj, 'BA', 'within',mask)
         subjoutfile_a = "%s_prepost_%s_%s_%s.txt"%(sbj, 'BA', 'across',mask)
 
-        os.makedirs(f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/searchlight/prepost_BA_symm_txt/sub-{sbj}', exist_ok=True)
-        os.chdir(f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/searchlight/prepost_BA_symm_txt/sub-{sbj}')
+        os.makedirs(f'{expdir}/searchlight/prepost_BA_symm_txt/sub-{sbj}', exist_ok=True)
+        os.chdir(f'{expdir}/searchlight/prepost_BA_symm_txt/sub-{sbj}')
         
         savetxt(subjoutfile_w,within,fmt="%.8f")
         savetxt(subjoutfile_a,across,fmt="%.8f")
