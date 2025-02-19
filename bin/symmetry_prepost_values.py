@@ -62,6 +62,10 @@ elif masktype == 'b_hip_subregions':
     masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
 
 ### searchlight information ###
+if comp in ['BA', 'CB', 'CA']:
+    c_fwd = comp[::-1]
+else:
+    c_fwd = comp
 
 phase, run, triad, item = loadtxt(f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comp}_items.txt',
                                   unpack=1)
@@ -69,12 +73,6 @@ phase, run, triad, item = loadtxt(f'/home1/09123/ofriend/analysis/temple/bin/tem
 ### directories ###
 subjdir = f'{expdir}/sub-{sbj}/'
 betadir = subjdir + '/betaseries'
-
-if comp in ['BA', 'CB', 'CA']:
-    c_fwd = comp[::-1]
-else:
-    c_fwd = comp
-print(c_fwd)
 
 
 for mask in masks:
