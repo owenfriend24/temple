@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-if len(sys.argv) < 4:
-    print(f"Usage: {sys.argv[0]} <subject_id> <comparison> <masktype>")
-    print("Example: symmetry_prepost_values.py temple016 AC b_hip_subregions")
-    sys.exit(1)
+
 import subprocess
 
 ### import python libraries needed for the analysis ###
@@ -43,6 +40,10 @@ import subprocess
 from symmetry_function import *
 
 ### set up expriment info ###
+if len(sys.argv) < 4:
+    print(f"Usage: {sys.argv[0]} <subject_id> <comparison> <masktype>")
+    print("Example: symmetry_prepost_values.py temple016 AC b_hip_subregions")
+    sys.exit(1)
 
 sbj = sys.argv[1]
 masktype = sys.argv[2]
