@@ -81,8 +81,8 @@ class prepost_roi(Measure):
                             across.append(dstmp)
                             a_distance.append(dst)
                             print(f"across comparison: "
-                                  f"phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
-                                  f"phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
+                                  f"triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
+                                  f"triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
 
         #### convert items to arrays ###
