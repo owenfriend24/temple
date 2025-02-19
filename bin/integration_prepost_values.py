@@ -79,8 +79,8 @@ for mask in masks:
 
 
 
-    subjoutfile_w = f"{resultdir}/{sbj}_prepost_{comparison}_within_{mask}.txt"
-    subjoutfile_a = f"{resultdir}/{sbj}_prepost_{comparison}_across_{mask}.txt"
+    subjoutfile_w = f"{out_dir}/{sbj}_prepost_{comparison}_within_{mask}.txt"
+    subjoutfile_a = f"{out_dir}/{sbj}_prepost_{comparison}_across_{mask}.txt"
 
     savetxt(subjoutfile_w, within, fmt="%.8f")
     savetxt(subjoutfile_a, across, fmt="%.8f")
