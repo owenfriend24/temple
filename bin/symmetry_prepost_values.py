@@ -67,7 +67,7 @@ if comp in ['BA', 'CB', 'CA']:
 else:
     c_fwd = comp
 
-phase, run, triad, item = loadtxt(f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comp}_items.txt',
+phase, run, triad, item = loadtxt(f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{c_fwd}_items.txt',
                                   unpack=1)
 
 ### directories ###
