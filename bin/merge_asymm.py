@@ -72,10 +72,6 @@ def create_subject_file(subject, master_dir, comparison, mask):
     return comp_data
 
 
-
-
-
-
 def run(command):
     subprocess.run(command, shell=True)
 
