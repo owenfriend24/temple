@@ -33,11 +33,7 @@ from mvpa2.measures.anova import *
 from mvpa2.base.dataset import *
 import sys
 import subprocess
-import warnings
 
-# suppress warnings that come from using the older mvpa2 packages
-warnings.filterwarnings("ignore", category=DeprecationWarning)
-warnings.filterwarnings("ignore", category=IntegrationWarning)
 
 
 ### import custom searchlight function ###
