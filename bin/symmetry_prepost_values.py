@@ -70,6 +70,12 @@ phase, run, triad, item = loadtxt(f'/home1/09123/ofriend/analysis/temple/bin/tem
 subjdir = f'{expdir}/sub-{sbj}/'
 betadir = subjdir + '/betaseries'
 
+if comp in ['BA', 'CB', 'CA']:
+    c_fwd = comp[::-1]
+else:
+    c_fwd = comp
+print(c_fwd)
+
 
 for mask in masks:
     if masktype == 'b_hip_subregions':
@@ -77,10 +83,7 @@ for mask in masks:
 
 
     # load in data - need to swap order if going backward
-    if comp in ['BA', 'CB', 'CA']:
-        c_fwd = comp[::-1]
-    else:
-        c_fwd = comp
+
     ds = fmri_dataset(betadir + f'/pre_post_{c_fwd}_items.nii.gz', mask=slmask)
     ds.sa['phase'] = phase[:]
     ds.sa['run'] = run[:]
