@@ -46,8 +46,9 @@ if len(sys.argv) < 4:
     sys.exit(1)
 
 sbj = sys.argv[1]
-masktype = sys.argv[2]
-comp = sys.argv[3]
+comp = sys.argv[2]
+masktype = sys.argv[3]
+
 
 expdir = '/corral-repl/utexas/prestonlab/temple/'
 
