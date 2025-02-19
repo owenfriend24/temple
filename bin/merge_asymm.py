@@ -6,7 +6,7 @@ from pathlib import Path
 import argparse
 import pandas as pd
 import numpy as np
-from temple_utils import get_age_groups, symmetry_indices
+from temple_utils import get_age_groups, integration_indices
 
 def create_subject_file(subject, master_dir, comparison, mask):
     children = get_age_groups.get_children()
@@ -60,11 +60,11 @@ def create_subject_file(subject, master_dir, comparison, mask):
             across = pd.read_csv(across_filename, sep='\t', header=None)
 
             for triad in [1, 2, 3, 4]:
-                within_indices = symmetry_indices.pull_within_indices(triad)
+                within_indices = integration_indices.pull_within_symm_indices(triad)
                 within_df = within.iloc[within_indices]
                 within_sim = np.mean(within_df)
 
-                across_indices = symmetry_indices.pull_across_indices(triad)
+                across_indices = integration_indices.pull_across_symm_indices(triad)
                 across_df = across.iloc[across_indices]
                 across_sim = np.mean(across_df)
 

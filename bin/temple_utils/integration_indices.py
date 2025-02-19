@@ -1,7 +1,7 @@
 # output is not super well-structured in the txt files but it is consistent
 #   later can go back and figure out a more logical way to generate these
 #   but for now hard-coded will work fine
-def pull_across_indices(triad):
+def pull_across_symm_indices(triad):
     across_indices = [[9, 12, 15, 18, 21, 24, 27, 30, 33, 45, 48, 51, 54, 57,
                        60, 63, 66, 69, 81, 84, 87, 90, 93, 96, 99, 102, 105],
                       [0, 3, 6, 19, 22, 25, 28, 31, 34, 36, 39, 42, 55, 58, 61,
@@ -12,9 +12,22 @@ def pull_across_indices(triad):
                        56, 59, 62, 74, 77, 80, 83, 86, 89, 92, 95, 98]]
     return across_indices[(triad-1)]
 
-def pull_within_indices(triad):
+def pull_within_symm_indices(triad):
     within_indices = [[0, 1, 2, 12, 13, 14, 24, 25, 26],
                       [3, 4, 5, 15, 16, 17, 27, 28, 29],
                       [6, 7, 8, 18, 19, 20, 30, 31, 32],
                       [9, 10, 11, 21, 22, 23, 33, 34, 35]]
     return within_indices[(triad-1)]
+
+
+def pull_within_prepost_indices(triad):
+    indices = []
+    for comp_run in range(4):
+        indices.append((triad - 1) * 4 + comp_run)
+
+    for comp_run in range(2):
+        indices.append(16 + (triad - 1) * 2 + comp_run)
+    return indices
+
+
+# need to figure out across now
