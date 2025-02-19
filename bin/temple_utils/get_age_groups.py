@@ -18,4 +18,3 @@ def get_adults():
 
 def get_all_subjects():
     return get_children() + get_adolescents() + get_adults()
-print(get_all_subjects())

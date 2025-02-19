@@ -93,6 +93,6 @@ if __name__ == "__main__":
     parser.add_argument("subject", help="e.g., temple100")
     parser.add_argument("master_dir", help="where folders containing .txt files for each comparison are stored")
     parser.add_argument("comparison", help="options: AB, BC, AC")
-    parser.add_argument("mask", help="mask name e.g., b_hip_warp, 'CA_1, etc.")
+    parser.add_argument("mask", help="mask name e.g., b_hip_subregions, b_hip_subfields, etc.")
     args = parser.parse_args()
     main(args.subject, args.master_dir, args.comparison, args.mask)
