@@ -53,7 +53,7 @@ def main(study_dir, bids_dir, subject, mat=True):
     if subject == "ALL":
         subjects = tasks.get_subj_list()
     else:
-        subjects = [subject]
+        subjects = [int(subject)]
 
     keys_arrow = [
         "onset",
