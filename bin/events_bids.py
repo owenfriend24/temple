@@ -45,12 +45,17 @@ def copy_json(in_file, out_file):
         json.dump(j, f, indent=4)
 
 
-def main(study_dir, bids_dir, mat=True):
+def main(study_dir, bids_dir, subject, mat=True):
     data_dir = os.path.join(study_dir, "sourcebehav")
     scan_dir = os.path.join(study_dir, "sourcedata")
     srcdir = os.environ["SRCDIR"]
-    subjects = tasks.get_subj_list()
-    keys = [
+
+    if subject == "ALL":
+        subjects = tasks.get_subj_list()
+    else:
+        subjects = [subject]
+
+    keys_arrow = [
         "onset",
         "trial",
         "duration",
@@ -63,20 +68,15 @@ def main(study_dir, bids_dir, mat=True):
         "acc"
     ]
 
-    # get all data
+    # Load and filter data for `arrow` task
     data = raw.load_arrow_runs(data_dir)
+    data = data[data["subject"].isin(subjects)]  # Filter for selected subjects
+    if not data.empty:
+        write_events(data, keys_arrow, bids_dir, "arrow", "func", "events")
+        json_file = os.path.join(srcdir, "src/temple/data/task-arrow_events.json")
+        copy_json(json_file, os.path.join(bids_dir, "task-arrow_events.json"))
 
-    # arrow
-    write_events(data, keys, bids_dir, "arrow", "func", "events")
-    json_file = os.path.join(srcdir, "src/temple/data/task-arrow_events.json")
-    copy_json(json_file, os.path.join(bids_dir, "task-arrow_events.json"))
-
-    # # using more sophisticated package structure
-    # json_file = resource_filename("temple", "data/task-arrow_pt1_events.json")
-    # copy_json(json_file, os.path.join(bids_dir, "task-arrow_pt1_events.json"))
-
-    # collector
-    keys = [
+    keys_collector = [
         "trial",
         "onset",
         "duration",
@@ -89,13 +89,15 @@ def main(study_dir, bids_dir, mat=True):
         "acc"
     ]
 
-    # get all data
+    # Load and filter data for `collector` task
     data = raw.load_collector_runs(data_dir, mat=True)
-    write_events(data, keys, bids_dir, "collector", "func", "events")
-    json_file = os.path.join(srcdir, "src/temple/data/task-collector_events.json")
-    copy_json(json_file, os.path.join(bids_dir, "task-collector_events.json"))
+    data = data[data["subject"].isin(subjects)]  # Filter for selected subjects
+    if not data.empty:
+        write_events(data, keys_collector, bids_dir, "collector", "func", "events")
+        json_file = os.path.join(srcdir, "src/temple/data/task-collector_events.json")
+        copy_json(json_file, os.path.join(bids_dir, "task-collector_events.json"))
 
-    keys = [
+    keys_remember = [
         "trial",
         "item1",
         "item2",
@@ -111,16 +113,21 @@ def main(study_dir, bids_dir, mat=True):
         "response_time",
         "reps"
     ]
-    data = raw.load_remember(data_dir, subjects=None)
-    write_events(data, keys, bids_dir, "remember", "beh", "events")
-    json_file = os.path.join(srcdir, "src/temple/data/task-remember_events.json")
-    copy_json(json_file, os.path.join(bids_dir, "task-remember_events.json"))
+
+    # Load and filter data for `remember` task
+    data = raw.load_remember(data_dir, subjects=subjects)  # Explicitly pass subjects
+    if not data.empty:
+        write_events(data, keys_remember, bids_dir, "remember", "beh", "events")
+        json_file = os.path.join(srcdir, "src/temple/data/task-remember_events.json")
+        copy_json(json_file, os.path.join(bids_dir, "task-remember_events.json"))
+
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("study_dir", help="main data directory")
     parser.add_argument("bids_dir", help="output directory for BIDS files")
+    parser.add_argument("subject", help="three digit ID or ALL")
     parser.add_argument("--mat", action=argparse.BooleanOptionalAction, default=False, help="process .mat files or not")
     args = parser.parse_args()
-    main(args.study_dir, args.bids_dir, args.mat)
+    main(args.study_dir, args.bids_dir, args.subject, args.mat)
