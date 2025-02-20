@@ -57,9 +57,9 @@ def get_subdirectories(master_dir):
 def aggregate_subjects(master_dir):
     all_dfs = []
     for sub in get_subdirectories(master_dir):
-        csv_path = f'{master_dir}/{sub}/beh/{sub}_task-remember_events.csv'
-        if os.path.exists(csv_path):
-            all_dfs.append(pd.read_csv(csv_path))
+        tsv_path = f'{master_dir}/{sub}/beh/{sub}_task-remember_events.tsv'
+        if os.path.exists(tsv_path):
+            all_dfs.append(pd.read_table(tsv_path))
         else:
             print(f"no csv found for {sub}")
     aggregated = pd.concat(all_dfs, ignore_index = True, sort = False)
