@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
         # Similarity measure
         if drop_run is not None:
-            measure = prepost_roi_droprun('correlation', 1, comparison)
+            measure = prepost_roi_droprun('correlation', 1, comparison, drop_run)
         else:
             measure = prepost_roi('correlation', 1, comparison)
 
