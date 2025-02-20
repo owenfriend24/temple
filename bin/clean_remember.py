@@ -36,13 +36,13 @@ def process_subject(subject, master_dir):
             corr_triad = triad_2
 
         if sum(corr_triad) == 6:
-            tri_num = int(1)
+            tri_num = 1
         elif sum(corr_triad) == 15:
-            tri_num = int(2)
+            tri_num = 2
         elif sum(corr_triad) == 24:
-            tri_num = int(3)
+            tri_num = 3
         else:
-            tri_num = int(4)
+            tri_num = 4
 
         clean.loc[len(clean)] = [subject, row['trial'], triad_1, triad_2, tri_num, row['order_resp'],
                                  row['side'], row['side_resp'], row['acc'], row['response_time'], row['reps']]
