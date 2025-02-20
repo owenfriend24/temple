@@ -36,13 +36,13 @@ def process_subject(subject, master_dir):
             corr_triad = triad_2
 
         if sum(corr_triad) == 6:
-            tri_num = 1
+            tri_num = int(1)
         elif sum(corr_triad) == 15:
-            tri_num = 2
+            tri_num = int(2)
         elif sum(corr_triad) == 24:
-            tri_num = 3
+            tri_num = int(3)
         else:
-            tri_num = 4
+            tri_num = int(4)
 
         clean.loc[len(clean)] = [subject, row['trial'], triad_1, triad_2, tri_num, row['order_resp'],
                                  row['side'], row['side_resp'], row['acc'], row['response_time'], row['reps']]
@@ -110,9 +110,9 @@ if __name__ == "__main__":
                                         "AGGREGATE (combine all processed subjects)")
     parser.add_argument("master_dir", help="where subject directories are located")
     parser.add_argument("--by_subject", action=argparse.BooleanOptionalAction, default=False,
-                        help="summarize aggregate data by subject (default: False)")
+                        help="summarize aggregate data by subject")
     parser.add_argument("--by_triad", action=argparse.BooleanOptionalAction, default=False,
-                        help="summarize aggregate data by subject and triad (default: False)")
+                        help="summarize aggregate data by subject and triad")
     args = parser.parse_args()
     main(args.subject, args.master_dir, args.by_subject, args.by_triad)
 
