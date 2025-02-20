@@ -38,3 +38,22 @@ def pull_across_prepost_indices(triad):
     start_2 = 48 + (triad - 1) * 6
     indices.extend(range(start_2, start_2 + 6))
     return indices
+
+# takes in an int 1, 2, 3, or 4
+def pull_within_prepost_indices_droprun(triad):
+    indices = []
+    for comp_run in range(4):
+        indices.append((triad - 1) * 4 + comp_run)
+
+    for comp_run in range(2):
+        indices.append(16 + (triad - 1) * 2 + comp_run)
+    return indices
+
+# takes in an int 1, 2, 3, or 4
+def pull_across_prepost_indices_droprun(triad):
+    indices = []
+    start_1 = (triad - 1) * 12
+    indices.extend(range(start_1, start_1 + 12))
+    start_2 = 48 + (triad - 1) * 6
+    indices.extend(range(start_2, start_2 + 6))
+    return indices

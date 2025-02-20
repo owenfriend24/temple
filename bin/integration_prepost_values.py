@@ -25,7 +25,6 @@ def get_args():
     parser.add_argument("subject_id", help="Subject identifier (e.g., temple016)")
     parser.add_argument("comparison", help="Comparison type (e.g., AC)")
     parser.add_argument("masktype", help="Mask type (e.g., b_hip_subregions)")
-
     # Optional argument: drop a specific run
     parser.add_argument("--drop_run", type=int, choices=[1, 2, 3, 4, 5, 6], default=None,
                         help="Run number to drop (1 through 6). Default is None (keep all runs).")
