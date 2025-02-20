@@ -78,7 +78,7 @@ def summarize_by_subject(master_dir, aggregate_file):
 
 # summarize by subject and triad, pulling separate averages by triad
 def summarize_by_triad(master_dir, aggregate_file):
-    by_triad = aggregate_file.groupby(["subject", "triad"]).agg(
+    by_triad = aggregate_file.groupby(["subject", "correct_triad"]).agg(
         trials=("trial", "count"),
         accuracy=("correct_choice", "mean"),
         avg_RT=("RT", "mean"),
