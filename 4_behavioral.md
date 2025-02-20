@@ -1,8 +1,9 @@
 ## 1. Convert behavioral data into BIDS format within BIDS formatted subject directories
 ```
-temple_bids_events.py $WORK/temple/sourcebehav/ $FM
+events_bids.py $WORK/temple/sourcebehav/ $FM 19
+events_bids.py $WORK/temple/sourcebehav/ $FM ALL
 ```
- * need to make sure subject number listed in tasks.py to run
+ * need to make sure subject number listed in tasks.py to run (no longer need to do this)
 ```
 vim $WORK/tempenv/lib/python3.9/site-packages/temple/tasks.py
 ```
