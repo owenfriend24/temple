@@ -49,7 +49,7 @@ if __name__ == "__main__":
     else:
         raise ValueError('Invalid mask type')
 
-    if drop_run > 0:
+    if drop_run is not None:
         phase, run, triad, item = np.loadtxt(
             f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items_drop{drop_run}.txt',
             unpack=True
@@ -80,7 +80,7 @@ if __name__ == "__main__":
         ds.sa['item'] = item[:]
 
         # Similarity measure
-        if drop_run > 0:
+        if drop_run is not None:
             measure = prepost_roi_droprun('correlation', 1, comparison)
         else:
             measure = prepost_roi('correlation', 1, comparison)
