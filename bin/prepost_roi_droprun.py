@@ -77,22 +77,28 @@ class prepost_roi_droprun(Measure):
                             y_item = dataset.sa['item'][y]
 
                             within.append(dstmp)
+                           # print(f"within: run {x_run} triad {x_tri} item {x_item} to "
+                                 # f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
+
+                    elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
+                        x_tri = dataset.sa['triad'][x]
+                        y_tri = dataset.sa['triad'][y]
+
+                        if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
+                            x_item = dataset.sa['item'][x]
+                            y_item = dataset.sa['item'][y]
+
+                            across.append(dstmp)
                             print(f"within: run {x_run} triad {x_tri} item {x_item} to "
                                   f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
 
-                    elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
-
-                        if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
-
-                            across.append(dstmp)
-                            #print(f'across: x = {x}, y = {y}') 
 
         #### convert items to arrays ###
 
-        # length 24 - 
+        # length 8 -
         within = array(within)
         
-        # length 72 - 
+        # length  -
         across = array(across)
 
         # return both of these
