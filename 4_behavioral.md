@@ -26,4 +26,8 @@ fix_collector.py fmriprep_dir subject
 fix_arrow.py fmriprep_dir subject
 ```
 
-
+```
+clean_remember.py --by_subject --by_triad AGGREGATE $CORR
+clean_remember.py temple016 $CORR
+clean_remember.py ALL $CORR
+```
