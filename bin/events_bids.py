@@ -97,22 +97,22 @@ def main(study_dir, bids_dir, subject, mat=True):
     #     json_file = os.path.join(srcdir, "src/temple/data/task-collector_events.json")
     #     copy_json(json_file, os.path.join(bids_dir, "task-collector_events.json"))
     #
-    # keys_remember = [
-    #     "trial",
-    #     "item1",
-    #     "item2",
-    #     "item3",
-    #     "item4",
-    #     "item5",
-    #     "item6",
-    #     "order",
-    #     "order_resp",
-    #     "side",
-    #     "side_resp",
-    #     "acc",
-    #     "response_time",
-    #     "reps"
-    # ]
+    keys_remember = [
+        "trial",
+        "item1",
+        "item2",
+        "item3",
+        "item4",
+        "item5",
+        "item6",
+        "order",
+        "order_resp",
+        "side",
+        "side_resp",
+        "acc",
+        "response_time",
+        "reps"
+    ]
 
     # Load and filter data for `remember` task
     data = raw.load_remember(data_dir, subjects=subjects)  # Explicitly pass subjects
