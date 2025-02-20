@@ -26,75 +26,96 @@ class prepost_roi_droprun(Measure):
 
     def __call__(self, dataset):
 
-        self.dsm = rsa.PDist( \
-            square=True, \
-            pairwise_metric=self.metric, \
-            center_data=False)
-
-        ### split up the data set into pre and post ###
-        pre = dataset[dataset.sa.phase == 1]
-        post = dataset[dataset.sa.phase == 2]
-
-        ### calculate the dsm separately for each phase ###
-        dsm_pre = self.dsm(pre) # for AC only; len 24
-        dsm_post = self.dsm(post) # len 24
-        dsm_pre = 1 - dsm_pre.samples
-        dsm_post = 1 - dsm_post.samples
+        # self.dsm = rsa.PDist( \
+        #     square=True, \
+        #     pairwise_metric=self.metric, \
+        #     center_data=False)
+        #
+        # ### split up the data set into pre and post ###
+        # pre = dataset[dataset.sa.phase == 1]
+        # post = dataset[dataset.sa.phase == 2]
+        #
+        # ### calculate the dsm separately for each phase ###
+        # dsm_pre = self.dsm(pre) # for AC only; len 24
+        # dsm_post = self.dsm(post) # len 24
+        # dsm_pre = 1 - dsm_pre.samples
+        # dsm_post = 1 - dsm_post.samples
 
         dsm_pre = arctanh(dsm_pre)
         #print(f'length of pre-zs: {len(dsm_pre)}')
         dsm_post = arctanh(dsm_post)
         #print(f'length of post-zs: {len(dsm_post)}')
 
+        self.dsm = rsa.PDist(square=True, pairwise_metric=self.metric, center_data=False)
+        pre = dataset[dataset.sa.phase == 1]
+        post = dataset[dataset.sa.phase == 2]
 
-        if self.drop_run in [1, 2, 3]:  # Dropped a pre run
-            pre_indices = where(dataset.sa.phase == 1)[0]  # Indices for pre phase (16 trials)
-            post_indices = where(dataset.sa.phase == 2)[0]  # Indices for post phase (24 trials)
-        elif self.drop_run in [4, 5, 6]:  # Dropped a post run
-            pre_indices = where(dataset.sa.phase == 1)[0]  # Indices for pre phase (24 trials)
-            post_indices = where(dataset.sa.phase == 2)[0]  # Indices for post phase (16 trials)
-        else:
-            raise ValueError(f"Invalid drop_run value: {self.drop_run}. Must be 1-6.")
+        dsm_pre = self.dsm(pre)  # e.g., shape: 16x16 if pre has 2 runs
+        dsm_post = self.dsm(post)  # e.g., shape: 24x24 if post has 3 runs
 
-        pre_size = len(pre_indices)
-        post_size = len(post_indices)
+        # Convert distances to correlations (or similarity) as needed
+        dsm_pre = 1 - dsm_pre.samples
+        dsm_post = 1 - dsm_post.samples
 
-        print(f"Pre matrix size: {pre_size}x{pre_size}")
-        print(f"Post matrix size: {post_size}x{post_size}")
+        # Apply transformation
+        dsm_pre = arctanh(dsm_pre)
+        dsm_post = arctanh(dsm_post)
 
+        ### Now, instead of looping over a single index range, split by run.
+        # Get indices for each run in each phase.
+        # (Assume that dataset.sa['run'] is defined for each trial.)
+        pre_runs = {}  # e.g., if pre has 2 runs, keys might be 1 and 2
+        for r in unique(pre.sa['run']):
+            pre_runs[r] = where(pre.sa['run'] == r)[0]
 
-        ### set up the vectors to hold the sorted data ###
+        post_runs = {}  # e.g., if post has 3 runs, keys might be 4,5,6 (or whatever labels)
+        for r in unique(post.sa['run']):
+            post_runs[r] = where(post.sa['run'] == r)[0]
+
         within = []
         across = []
 
-        n_pre = len(dsm_pre)
-        n_post = len(dsm_post)
-        print(f"n_pre {n_pre}")
-        print(f"n_post {n_post}")
-        dsm_diff = dsm_post
-
-        x_len = max(n_pre, n_post)
-        y_len = min(n_pre, n_post)
-        print(f"x_len {x_len}")
-        print(f"y_len {y_len}")
-        within = []
-        across = []
-
-        for i, pre_x in enumerate(pre_indices):
-            for j, post_y in enumerate(post_indices):
-
-                if dataset.sa['run'][pre_x] != dataset.sa['run'][post_y]:  # Across-run only
-                    if dataset.sa['triad'][pre_x] == dataset.sa['triad'][post_y]:  # Within-triad
-                        if dataset.sa['item'][pre_x] != dataset.sa['item'][post_y]:  # A vs. C
-
-                            # Correct DSM index mapping
+        # Now iterate over every pair of runs—one from pre and one from post.
+        for r_pre, idx_pre in pre_runs.items():
+            for r_post, idx_post in post_runs.items():
+                # For each pair of runs, iterate over every trial in the pre run
+                # and every trial in the post run.
+                for i in idx_pre:
+                    for j in idx_post:
+                        # Only compare if triad matches and items are different (A vs. C)
+                        if pre.sa['triad'][i] == post.sa['triad'][j] and pre.sa['item'][i] != post.sa['item'][j]:
+                            # Now, here we must extract the DSM values.
+                            # Since dsm_pre is computed on the entire pre-phase dataset, the index i here
+                            # corresponds to the row/column in dsm_pre.
+                            # Similarly, j corresponds to the index in dsm_post.
                             dstmp = dsm_post[j, j] - dsm_pre[i, i]
                             within.append(dstmp)
+                            print(f"within: pre_run {r_pre}, triad {pre.sa['triad'][i]}, item {pre.sa['item'][i]} "
+                                  f"to post_run {r_post}, triad {post.sa['triad'][j]}, item {post.sa['item'][j]}: {dstmp}")
+                # (You can add similar logic for 'across' comparisons if needed.)
 
-                            print(
-                                f"within: pre_run={dataset.sa['run'][pre_x]} to post_run={dataset.sa['run'][post_y]}, "
-                                f"triad {dataset.sa['triad'][pre_x]}: {dstmp}")
+        ### Convert lists to arrays for output
+        within = array(within)
+        across = array(across)
 
+        return within, across
+
+
+        # ### set up the vectors to hold the sorted data ###
+        # within = []
+        # across = []
+        #
+        # n_pre = len(dsm_pre)
+        # n_post = len(dsm_post)
+        # print(f"n_pre {n_pre}")
+        # print(f"n_post {n_post}")
+        # dsm_diff = dsm_post
+        #
+        # x_len = max(n_pre, n_post)
+        # y_len = min(n_pre, n_post)
+        # print(f"x_len {x_len}")
+        # print(f"y_len {y_len}")
+        #
         # # iterate based on whichever phase has a dropped run
         # for x in range(y_len):
         #
