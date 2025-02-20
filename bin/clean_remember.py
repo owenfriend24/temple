@@ -13,8 +13,8 @@ from temple_utils import get_age_groups
 
 def process_subject(subject, master_dir):
     # load in data
-    rem_dir = f'{master_dir}/sub-{subject}/beh/sub-{subject}_task-remember_events'
-    rem = pd.read_table(f'{rem_dir}.tsv')
+    rem_dir = f'{master_dir}/sub-{subject}/beh/sub-{subject}_task-remember_events.tsv'
+    rem = pd.read_table(rem_dir)
 
     # check if file has already been processed
     processed_cols = {'triad_1', 'triad_2', 'correct_triad'}
@@ -33,7 +33,7 @@ def process_subject(subject, master_dir):
         clean.loc[len(clean)] = [subject, row['trial'], triad_1, triad_2, row['order'], row['order_resp'],
                                  row['side'], row['side_resp'], row['acc'], row['response_time'], row['reps']]
 
-    clean.to_csv(f'{rem_dir}.csv')
+    clean.to_csv(rem_dir, sep = '\t', index = False)
 
 def get_subdirectories(master_dir):
     return [d.name for d in Path(master_dir).iterdir() if d.is_dir() and d.name.startswith("sub-temple")]
