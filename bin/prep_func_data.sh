@@ -17,11 +17,8 @@ module load python3/3.9.7
 # Activate your virtual environment if you're using one
 source /home1/09123/ofriend/analysis/temple/profile
 
-# Move to the directory containing your Python script
-cd /home1/09123/ofriend/analysis/temple/bin
-
 # Run your Python script
-python prep_func_data.py $fsdir $fmdir $subject $task $num_runs
+python /home1/09123/ofriend/analysis/temple/bin/prep_func_data.py $fsdir $fmdir $subject $task $num_runs
 mni_transforms.sh $fmdir $subject
-temple_smooth_coll.sh $fmdir $fsdir $subject "collector"
-temple_smooth_arr.sh $fmdir $fsdir $subject "arrow"
+temple_smooth.sh $fmdir $fsdir $subject "collector"
+temple_smooth.sh $fmdir $fsdir $subject "arrow"

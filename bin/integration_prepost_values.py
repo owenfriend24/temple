@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-### import python libraries needed for the analysis ###
-import numpy as N
+### Import required Python libraries ###
+import numpy as np
 import nibabel
 import scipy.stats
 from scipy.stats.mstats import zscore
@@ -10,80 +10,87 @@ from scipy.sparse import spdiags
 from scipy.linalg import toeplitz
 from mvpa2.datasets.mri import *
 import os
-import sys
-from random import sample
-from mvpa2.datasets.mri import *
-from mvpa2.mappers.detrend import *
-from mvpa2.mappers.zscore import *
-from mvpa2.clfs.svm import *
-from mvpa2.generators.partition import *
-from mvpa2.measures.base import *
-from mvpa2.measures import *
-from mvpa2.measures.searchlight import *
-from mvpa2.misc.stats import *
-from mvpa2.base.node import *
-from mvpa2.clfs.meta import *
-from mvpa2.clfs.stats import *
-from mvpa2.featsel.base import *
-from mvpa2.featsel.helpers import *
-from mvpa2.generators.permutation import *
-from mvpa2.generators.base import *
-from mvpa2.mappers.fx import *
-from mvpa2.measures.anova import *
-from mvpa2.base.dataset import *
-import sys
 import subprocess
+import argparse
 
-### import custom searchlight function ###
+### Import custom searchlight function ###
 from prepost_roi import *
-if len(sys.argv) < 4:
-    print(f"Usage: {sys.argv[0]} <subject_id> <comparison> <masktype>")
-    print("Example: integration_prepost_values.py temple016 AC b_hip_subregions")
-    sys.exit(1)
-### set up experiment info ###
-expdir = '/corral-repl/utexas/prestonlab/temple/'
+from prepost_roi_droprun import *
 
-sbj = sys.argv[1]
-comparison = sys.argv[2]
-masktype = sys.argv[3]
+### use argument parser to set up experiment/subject info and drop runs if necessary
+def get_args():
+    parser = argparse.ArgumentParser(description="Process fMRI data for pre/post comparison.")
 
+    # Required arguments
+    parser.add_argument("subject_id", help="Subject identifier (e.g., temple016)")
+    parser.add_argument("comparison", help="Comparison type (e.g., AC)")
+    parser.add_argument("masktype", help="Mask type (e.g., b_hip_subregions)")
 
-### masks for data to analyze ###
-if masktype == 'b_hip_subregions':
-    masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
-else:
-    raise ValueError('no valid mask')
+    # Optional argument: drop a specific run
+    parser.add_argument("--drop_run", type=int, choices=[1, 2, 3, 4, 5, 6], default=None,
+                        help="Run number to drop (1 through 6). Default is None (keep all runs).")
 
-phase, run, triad, item = loadtxt(f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items.txt', unpack=1)
+    return parser.parse_args()
 
-### directories ###
-subjdir = expdir + '/sub-%s' % (sbj)
-betadir = subjdir + '/betaseries'
-resultdir = expdir + f'/integration_prepost/prepost_{comparison}'
+### Main script execution ###
+if __name__ == "__main__":
+    args = get_args()
 
-out_dir = f"{resultdir}/sub-{sbj}"
-os.makedirs(out_dir, exist_ok=True)
-for mask in masks:
+    ### Set up experiment info ###
+    expdir = '/corral-repl/utexas/prestonlab/temple/'
+    sbj = args.subject_id
+    comparison = args.comparison
+    masktype = args.masktype
+    drop_run = args.drop_run  # Store drop_run argument
+
+    ### Validate masks for data analysis ###
     if masktype == 'b_hip_subregions':
-        slmask = f'{subjdir}/transforms/{mask}.nii.gz'
+        masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
+    else:
+        raise ValueError('Invalid mask type')
 
-    # load in data
-    ds = fmri_dataset(betadir + f'/pre_post_{comparison}_items.nii.gz', mask=slmask)
-    ds.sa['phase'] = phase[:]
-    ds.sa['run'] = run[:]
-    ds.sa['triad'] = triad[:]
-    ds.sa['item'] = item[:]
+    if drop_run > 0:
+        phase, run, triad, item = np.loadtxt(
+            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items_drop{drop_run}.txt',
+            unpack=True
+        )
+    else:
+    # Load phase, run, triad, and item data
+        phase, run, triad, item = np.loadtxt(
+            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items.txt',
+            unpack=True
+        )
 
-    # similarity measure
-    measure = prepost_roi('correlation', 1, comparison)
+    ### Directories ###
+    subjdir = os.path.join(expdir, f'sub-{sbj}')
+    betadir = os.path.join(subjdir, 'betaseries')
+    resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
+    out_dir = os.path.join(resultdir, f'sub-{sbj}')
+    os.makedirs(out_dir, exist_ok=True)
 
-    # call the measure object to obtain within-pair and across-pair similarity values
-    within, across = measure(ds)
+    for mask in masks:
+        if masktype == 'b_hip_subregions':
+            slmask = os.path.join(subjdir, 'transforms', f'{mask}.nii.gz')
 
+        # Load fMRI data
+        ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
+        ds.sa['phase'] = phase[:]
+        ds.sa['run'] = run[:]
+        ds.sa['triad'] = triad[:]
+        ds.sa['item'] = item[:]
 
+        # Similarity measure
+        if drop_run > 0:
+            measure = prepost_roi_droprun('correlation', 1, comparison)
+        else:
+            measure = prepost_roi('correlation', 1, comparison)
 
-    out_file_w = f"{out_dir}/{sbj}_prepost_{comparison}_within_{mask}.txt"
-    out_file_a = f"{out_dir}/{sbj}_prepost_{comparison}_across_{mask}.txt"
+        # Obtain within-pair and across-pair similarity values
+        within, across = measure(ds)
 
-    savetxt(out_file_w, within, fmt="%.8f")
-    savetxt(out_file_a, across, fmt="%.8f")
+        # Save results
+        out_file_w = os.path.join(out_dir, f"{sbj}_prepost_{comparison}_within_{mask}.txt")
+        out_file_a = os.path.join(out_dir, f"{sbj}_prepost_{comparison}_across_{mask}.txt")
+
+        np.savetxt(out_file_w, within, fmt="%.8f")
+        np.savetxt(out_file_a, across, fmt="%.8f")

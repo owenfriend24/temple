@@ -41,18 +41,14 @@ class prepost_roi_droprun(Measure):
         dsm_post = 1 - dsm_post.samples
 
         dsm_pre = arctanh(dsm_pre)
-        print(f'length of pre-zs: {len(dsm_pre)}')
+        #print(f'length of pre-zs: {len(dsm_pre)}')
         dsm_post = arctanh(dsm_post)
-        print(f'length of post-zs: {len(dsm_post)}')
-
-        ### calculate the difference to determine representational change ###
-        #dsm_diff = numpy.subtract(arctanh(dsm_post), arctanh(dsm_pre)) # len 24
+        #print(f'length of post-zs: {len(dsm_post)}')
 
         ### set up the vectors to hold the sorted data ###
         within = []
         across = []
 
-        ### loop through the data to sort the within and across comparisons ###
         n_pre = len(dsm_pre)
         n_post = len(dsm_post)
 
@@ -79,7 +75,8 @@ class prepost_roi_droprun(Measure):
                         if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
 
                             within.append(dstmp)
-                            #print(f'within: x = {x}, y = {y}') 
+                            print(f"within: run {x_run} triad {x_tri} item {dataset.sa['item'][x]} to "
+                                  f"run {y_run} triad {y_tri} item {dataset.sa['item'][y]: {dstmp}}")
 
                     elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
 
@@ -89,16 +86,14 @@ class prepost_roi_droprun(Measure):
                             #print(f'across: x = {x}, y = {y}') 
 
         #### convert items to arrays ###
-        
+
         # length 24 - 
         within = array(within)
         
         # length 72 - 
         across = array(across)
-        
-        
-        # return both of these
 
-        return dsm_diff, within, across
+        # return both of these
+        return within, across
         
         

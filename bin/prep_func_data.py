@@ -123,36 +123,20 @@ def extract_func(fs_dir, fmriprep_dir, sub, task, num_runs):
         run(f'fslmaths {func_dir}/sub-{sub}_task-{task}_run-0{func_run}_space-T1w_desc-preproc_bold.nii.gz -mas {mask_func}_dilated.nii.gz {func_dir}/skullstripped_T1/sub-{sub}_task-{task}_run-0{func_run}_space-T1w_desc-preproc_bold_ss.nii.gz')
         print(f'skullstripped run {func_run}')
 
-  #     fslmaths /scratch/09123/ofriend/temple/skyra_prepro/derivatives/fmriprep/sub-temple029/func/sub-temple029_task-collector_run-01_space-T1w_desc-preproc_bold.nii.gz -mas /scratch/09123/ofriend/temple/skyra_prepro/derivatives/fmriprep/sourcedata/freesurfer/sub-temple029/mri/out/brainmask_func_dilated.nii.gz /scratch/09123/ofriend/temple/skyra_prepro/derivatives/fmriprep/sub-temple029/func/skullstripped_T1/workplz.nii.gz
-        
-# Function to smooth functional data with a 4.0 FWHM kernel
-def smooth_func(fs_dir, fmriprep_dir, sub, task, num_runs):
-    fs_dir = Path(fs_dir)
-    mask = fs_dir / f'sub-{sub}/mri/out/brainmask_func.nii.gz'
-    func_dir = Path(fmriprep_dir) / f'sub-{sub}/func'
-    kernel = 4.0
-    
-    for func_run in range(1, num_runs + 1):
-        func_input = func_dir / f'skullstripped_T1/sub-{sub}_task-{task}_run-0{func_run}_space-T1w_desc-preproc_bold_ss.nii.gz'
-        func_output = func_dir / f'skullstripped_T1/sub-{sub}_task-{task}_run-0{func_run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz'
-        run(f'smooth_susan {func_input} {mask} {kernel} {func_output}')
 
-def main(fs_dir, fmriprep_dir, sub, task, num_runs):
+def main(fs_dir, fmriprep_dir, sub):
     run('source /home1/09123/ofriend/analysis/temple/profile')
     extract_fs(fs_dir, sub)
     print(f'\n\nMASK EXTRACTED FOR SUB-{sub}\n\n')
     extract_func(fs_dir, fmriprep_dir, sub, 'arrow', 6)
     extract_func(fs_dir, fmriprep_dir, sub, 'collector', 4)
     print(f'\n\nSKULLSTRIPPING COMPLETE FOR SUB-{sub}\n\n')
-   # smooth_func(fs_dir, fmriprep_dir, sub, task, num_runs)
-   # print(f'\n\nSMOOTHING COMPLETE FOR SUB-{sub}\n\n')
+
           
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("fs_dir", help="freesurfer directory")
     parser.add_argument("fmriprep_dir", help="fmriprep derivatives directory")
     parser.add_argument("sub", help="subject number; include full templeXXX")
-    parser.add_argument("task", help="task_name")
-    parser.add_argument("num_runs", help="number of runs to skullstrip")
     args = parser.parse_args()
-    main(args.fs_dir, args.fmriprep_dir, args.sub, args.task, int(args.num_runs))
+
