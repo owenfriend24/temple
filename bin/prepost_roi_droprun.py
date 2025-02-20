@@ -41,10 +41,10 @@ class prepost_roi_droprun(Measure):
         # dsm_pre = 1 - dsm_pre.samples
         # dsm_post = 1 - dsm_post.samples
 
-        dsm_pre = arctanh(dsm_pre)
-        #print(f'length of pre-zs: {len(dsm_pre)}')
-        dsm_post = arctanh(dsm_post)
-        #print(f'length of post-zs: {len(dsm_post)}')
+        # dsm_pre = arctanh(dsm_pre)
+        # #print(f'length of pre-zs: {len(dsm_pre)}')
+        # dsm_post = arctanh(dsm_post)
+        # #print(f'length of post-zs: {len(dsm_post)}')
 
         self.dsm = rsa.PDist(square=True, pairwise_metric=self.metric, center_data=False)
         pre = dataset[dataset.sa.phase == 1]
