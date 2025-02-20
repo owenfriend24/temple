@@ -55,64 +55,64 @@ def main(study_dir, bids_dir, subject, mat=True):
     else:
         subjects = [int(subject)]
 
-    keys_arrow = [
-        "onset",
-        "trial",
-        "duration",
-        "object",
-        "position",
-        "triad",
-        "left_right",
-        "response",
-        "response_time",
-        "acc"
-    ]
+    # keys_arrow = [
+    #     "onset",
+    #     "trial",
+    #     "duration",
+    #     "object",
+    #     "position",
+    #     "triad",
+    #     "left_right",
+    #     "response",
+    #     "response_time",
+    #     "acc"
+    # ]
+    #
+    # # Load and filter data for `arrow` task
+    # data = raw.load_arrow_runs(data_dir)
+    # data = data[data["subject"].isin(subjects)]  # Filter for selected subjects
+    # if not data.empty:
+    #     write_events(data, keys_arrow, bids_dir, "arrow", "func", "events")
+    #     json_file = os.path.join(srcdir, "src/temple/data/task-arrow_events.json")
+    #     copy_json(json_file, os.path.join(bids_dir, "task-arrow_events.json"))
+    #
+    # keys_collector = [
+    #     "trial",
+    #     "onset",
+    #     "duration",
+    #     "object",
+    #     "position",
+    #     "triad",
+    #     "odd",
+    #     "response",
+    #     "response_time",
+    #     "acc"
+    # ]
 
-    # Load and filter data for `arrow` task
-    data = raw.load_arrow_runs(data_dir)
-    data = data[data["subject"].isin(subjects)]  # Filter for selected subjects
-    if not data.empty:
-        write_events(data, keys_arrow, bids_dir, "arrow", "func", "events")
-        json_file = os.path.join(srcdir, "src/temple/data/task-arrow_events.json")
-        copy_json(json_file, os.path.join(bids_dir, "task-arrow_events.json"))
-
-    keys_collector = [
-        "trial",
-        "onset",
-        "duration",
-        "object",
-        "position",
-        "triad",
-        "odd",
-        "response",
-        "response_time",
-        "acc"
-    ]
-
-    # Load and filter data for `collector` task
-    data = raw.load_collector_runs(data_dir, mat=True)
-    data = data[data["subject"].isin(subjects)]  # Filter for selected subjects
-    if not data.empty:
-        write_events(data, keys_collector, bids_dir, "collector", "func", "events")
-        json_file = os.path.join(srcdir, "src/temple/data/task-collector_events.json")
-        copy_json(json_file, os.path.join(bids_dir, "task-collector_events.json"))
-
-    keys_remember = [
-        "trial",
-        "item1",
-        "item2",
-        "item3",
-        "item4",
-        "item5",
-        "item6",
-        "order",
-        "order_resp",
-        "side",
-        "side_resp",
-        "acc",
-        "response_time",
-        "reps"
-    ]
+    # # Load and filter data for `collector` task
+    # data = raw.load_collector_runs(data_dir, mat=True)
+    # data = data[data["subject"].isin(subjects)]  # Filter for selected subjects
+    # if not data.empty:
+    #     write_events(data, keys_collector, bids_dir, "collector", "func", "events")
+    #     json_file = os.path.join(srcdir, "src/temple/data/task-collector_events.json")
+    #     copy_json(json_file, os.path.join(bids_dir, "task-collector_events.json"))
+    #
+    # keys_remember = [
+    #     "trial",
+    #     "item1",
+    #     "item2",
+    #     "item3",
+    #     "item4",
+    #     "item5",
+    #     "item6",
+    #     "order",
+    #     "order_resp",
+    #     "side",
+    #     "side_resp",
+    #     "acc",
+    #     "response_time",
+    #     "reps"
+    # ]
 
     # Load and filter data for `remember` task
     data = raw.load_remember(data_dir, subjects=subjects)  # Explicitly pass subjects
