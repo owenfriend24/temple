@@ -77,6 +77,7 @@ def summarize_by_subject(master_dir, aggregate_file):
     by_subject.to_csv(f'{master_dir}/beh/remember_by_subject.csv')
 
 # summarize by subject and triad, pulling separate averages by triad
+# issue where not all subs are getting all four triads pulled?
 def summarize_by_triad(master_dir, aggregate_file):
     by_triad = aggregate_file.groupby(["subject", "correct_triad"]).agg(
         trials=("trial", "count"),
