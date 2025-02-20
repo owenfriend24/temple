@@ -72,11 +72,13 @@ class prepost_roi_droprun(Measure):
                         x_tri = dataset.sa['triad'][x]
                         y_tri = dataset.sa['triad'][y]
                         #print(f'triad {x_tri} of run {x_run} vs triad {y_tri} of run {y_run} for within comparison')
-                        if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
+                        if dataset.sa['item'][x] != dataset.sa['item'][y]: # a vs. c
+                            x_item = dataset.sa['item'][x]
+                            y_item = dataset.sa['item'][y]
 
                             within.append(dstmp)
-                            print(f"within: run {x_run} triad {x_tri} item {dataset.sa['item'][x]} to "
-                                  f"run {y_run} triad {y_tri} item {dataset.sa['item'][y]: {dstmp}}")
+                            print(f"within: run {x_run} triad {x_tri} item {x_item} to "
+                                  f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
 
                     elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
 
