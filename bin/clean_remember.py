@@ -30,10 +30,26 @@ def process_subject(subject, master_dir):
         triad_1 = [row['item1'], row['item2'], row['item3']]
         triad_2 = [row['item4'], row['item5'], row['item6']]
 
-        clean.loc[len(clean)] = [subject, row['trial'], triad_1, triad_2, row['order'], row['order_resp'],
+        if row['side'] == 1:
+            corr_triad = triad_1
+        else:
+            corr_triad = triad_2
+
+        if sum(corr_triad) == 6:
+            tri_num = 1
+        elif sum(corr_triad) == 15:
+            tri_num = 2
+        elif sum(corr_triad) == 24:
+            tri_num = 3
+        else:
+            tri_num = 4
+
+        clean.loc[len(clean)] = [subject, row['trial'], triad_1, triad_2, tri_num, row['order_resp'],
                                  row['side'], row['side_resp'], row['acc'], row['response_time'], row['reps']]
 
     clean.to_csv(rem_dir, sep = '\t', index = False)
+
+
 
 def get_subdirectories(master_dir):
     return [d.name for d in Path(master_dir).iterdir() if d.is_dir() and d.name.startswith("sub-temple")]
@@ -48,23 +64,55 @@ def aggregate_subjects(master_dir):
             print(f"no csv found for {sub}")
     aggregated = pd.concat(all_dfs, ignore_index = True, sort = False)
     aggregated.to_csv(f'{master_dir}/beh/remember_aggregated.csv')
+    return aggregated
 
-def main(subject, master_dir):
+# summarize by subject while getting rid of non-numerical fields (i.e., collapsing all triads)
+def summarize_by_subject(master_dir, aggregate_file):
+    by_subject = aggregate_file.groupby("subject").agg(
+        trials=("trial","count"),
+        accuracy=("correct_choice","mean"),
+        avg_RT=("RT", "mean"),
+        avg_repetitions=("repetitions","mean")
+    ).reset_index()
+    by_subject.to_csv(f'{master_dir}/beh/remember_by_subject.csv')
+
+# summarize by subject and triad, pulling separate averages by triad
+def summarize_by_triad(master_dir, aggregate_file):
+    by_triad = aggregate_file.groupby(["subject", "triad"]).agg(
+        trials=("trial", "count"),
+        accuracy=("correct_choice", "mean"),
+        avg_RT=("RT", "mean"),
+        avg_repetitions=("repetitions", "mean")
+    ).reset_index()
+    by_triad.to_csv(f'{master_dir}/beh/remember_by_triad.csv')
+
+
+def main(subject, master_dir, by_subject, by_triad):
     if subject == 'ALL':
         print('processing all subjects')
         subs = get_age_groups.get_all_subjects()
         for sub in subs:
             process_subject(sub, master_dir)
+
     elif subject == 'AGGREGATE':
-        aggregate_subjects(master_dir)
+        aggregate = aggregate_subjects(master_dir)
+        if by_subject:
+            summarize_by_subject(master_dir, aggregate)
+        if by_triad:
+            summarize_by_triad(master_dir, aggregate)
+
     else:
         process_subject(subject, master_dir)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("subject", help="subject (e.g., temple100), ALL (process all subs),"
-                                        " or AGGREGATE (combine all processed subject")
+                                        "AGGREGATE (combine all processed subjects)")
     parser.add_argument("master_dir", help="where subject directories are located")
+    parser.add_argument("--by_subject", action=argparse.BooleanOptionalAction, default=False,
+                        help="summarize aggregate data by subject (default: False)")
+    parser.add_argument("--by_triad", action=argparse.BooleanOptionalAction, default=False,
+                        help="summarize aggregate data by subject and triad (default: False)")
     args = parser.parse_args()
-    main(args.subject, args.master_dir)
+    main(args.subject, args.master_dir, args.by_subject, args.by_triad)
 
