@@ -89,7 +89,7 @@ class prepost_roi_droprun(Measure):
                             y_item = dataset.sa['item'][y]
 
                             across.append(dstmp)
-                            print(f"within: run {x_run} triad {x_tri} item {x_item} to "
+                            print(f"across: run {x_run} triad {x_tri} item {x_item} to "
                                   f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
 
 
