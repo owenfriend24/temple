@@ -58,17 +58,16 @@ class prepost_roi_droprun(Measure):
         print(f"n_post {n_post}")
         dsm_diff = dsm_post
 
-        x_len = max(n_pre, n_post)
-        y_len = min(n_pre, n_post)
-        print(f"x_len {x_len}")
-        print(f"y_len {y_len}")
+        max_len = max(n_pre, n_post)
+        min_len = min(n_pre, n_post)
+
+        #print(f"x_len {x_len}")
+        #print(f"y_len {y_len}")
 
         # iterate based on whichever phase has a dropped run
-        for x in range(y_len):
+        for x in range(max_len):
 
-            for y in range(x + 1, x_len):
-
-
+            for y in range(x + 1, min_len):
 
                 if dataset.sa['run'][x] != dataset.sa['run'][y]:  # only do across run comparisons
                     x_run = dataset.sa['run'][x]
