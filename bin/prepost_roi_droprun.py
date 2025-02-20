@@ -2,8 +2,7 @@
 
 __docformat__ = 'restructuredtext'
 
-import numpy
-from numpy import *
+import numpy as np
 from numpy.random import randint
 import scipy.stats
 from scipy.stats.mstats import zscore
