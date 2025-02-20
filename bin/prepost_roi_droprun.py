@@ -47,14 +47,14 @@ class prepost_roi_droprun(Measure):
         #print(f'length of post-zs: {len(dsm_post)}')
 
 
-        if drop_run in [1, 2, 3]:  # Dropped a pre run
+        if self.drop_run in [1, 2, 3]:  # Dropped a pre run
             pre_indices = np.where(dataset.sa.phase == 1)[0]  # Indices for pre phase (16 trials)
             post_indices = np.where(dataset.sa.phase == 2)[0]  # Indices for post phase (24 trials)
-        elif drop_run in [4, 5, 6]:  # Dropped a post run
+        elif self.drop_run in [4, 5, 6]:  # Dropped a post run
             pre_indices = np.where(dataset.sa.phase == 1)[0]  # Indices for pre phase (24 trials)
             post_indices = np.where(dataset.sa.phase == 2)[0]  # Indices for post phase (16 trials)
         else:
-            raise ValueError(f"Invalid drop_run value: {drop_run}. Must be 1-6.")
+            raise ValueError(f"Invalid drop_run value: {self.drop_run}. Must be 1-6.")
 
         pre_size = len(pre_indices)
         post_size = len(post_indices)
