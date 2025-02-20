@@ -2,7 +2,8 @@
 
 __docformat__ = 'restructuredtext'
 
-import numpy as np
+
+from numpy import *
 from numpy.random import randint
 import scipy.stats
 from scipy.stats.mstats import zscore
@@ -47,11 +48,11 @@ class prepost_roi_droprun(Measure):
 
 
         if self.drop_run in [1, 2, 3]:  # Dropped a pre run
-            pre_indices = np.where(dataset.sa.phase == 1)[0]  # Indices for pre phase (16 trials)
-            post_indices = np.where(dataset.sa.phase == 2)[0]  # Indices for post phase (24 trials)
+            pre_indices = where(dataset.sa.phase == 1)[0]  # Indices for pre phase (16 trials)
+            post_indices = where(dataset.sa.phase == 2)[0]  # Indices for post phase (24 trials)
         elif self.drop_run in [4, 5, 6]:  # Dropped a post run
-            pre_indices = np.where(dataset.sa.phase == 1)[0]  # Indices for pre phase (24 trials)
-            post_indices = np.where(dataset.sa.phase == 2)[0]  # Indices for post phase (16 trials)
+            pre_indices = where(dataset.sa.phase == 1)[0]  # Indices for pre phase (24 trials)
+            post_indices = where(dataset.sa.phase == 2)[0]  # Indices for post phase (16 trials)
         else:
             raise ValueError(f"Invalid drop_run value: {self.drop_run}. Must be 1-6.")
 
