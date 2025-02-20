@@ -2,7 +2,7 @@
 
 __docformat__ = 'restructuredtext'
 
-
+import numpy
 from numpy import *
 from numpy.random import randint
 import scipy.stats
@@ -47,60 +47,54 @@ class prepost_roi_droprun(Measure):
         #print(f'length of post-zs: {len(dsm_post)}')
 
 
-        if self.drop_run in [1, 2, 3]:  # Dropped a pre run
-            pre_indices = where(dataset.sa.phase == 1)[0]  # Indices for pre phase (16 trials)
-            post_indices = where(dataset.sa.phase == 2)[0]  # Indices for post phase (24 trials)
-        elif self.drop_run in [4, 5, 6]:  # Dropped a post run
-            pre_indices = where(dataset.sa.phase == 1)[0]  # Indices for pre phase (24 trials)
-            post_indices = where(dataset.sa.phase == 2)[0]  # Indices for post phase (16 trials)
+        if drop_run in [1, 2, 3]:  # Dropped a pre run
+            pre_indices = np.where(dataset.sa.phase == 1)[0]  # Indices for pre phase (16 trials)
+            post_indices = np.where(dataset.sa.phase == 2)[0]  # Indices for post phase (24 trials)
+        elif drop_run in [4, 5, 6]:  # Dropped a post run
+            pre_indices = np.where(dataset.sa.phase == 1)[0]  # Indices for pre phase (24 trials)
+            post_indices = np.where(dataset.sa.phase == 2)[0]  # Indices for post phase (16 trials)
         else:
-            raise ValueError(f"Invalid drop_run value: {self.drop_run}. Must be 1-6.")
+            raise ValueError(f"Invalid drop_run value: {drop_run}. Must be 1-6.")
 
         pre_size = len(pre_indices)
         post_size = len(post_indices)
 
         print(f"Pre matrix size: {pre_size}x{pre_size}")
         print(f"Post matrix size: {post_size}x{post_size}")
+
+
+        ### set up the vectors to hold the sorted data ###
         within = []
         across = []
 
-        # Iterate fully over both pre and post phases
-        for i in range(pre_size):
-            for j in range(post_size):
+        n_pre = len(dsm_pre)
+        n_post = len(dsm_post)
+        print(f"n_pre {n_pre}")
+        print(f"n_post {n_post}")
+        dsm_diff = dsm_post
 
-                pre_x = pre_indices[i]
-                pre_y = pre_indices[i]  # Ensure pre comparisons are mapped correctly
-                post_x = post_indices[j]
-                post_y = post_indices[j]
+        x_len = max(n_pre, n_post)
+        y_len = min(n_pre, n_post)
+        print(f"x_len {x_len}")
+        print(f"y_len {y_len}")
+        within = []
+        across = []
 
-                # Across-run comparisons only
-                if dataset.sa['run'][pre_x] != dataset.sa['run'][post_x]:
-                    if dataset.sa['triad'][pre_x] == dataset.sa['triad'][post_x]:  # Within-triad
-                        if dataset.sa['item'][pre_x] != dataset.sa['item'][post_x]:  # A vs. C
+        for i, pre_x in enumerate(pre_indices):
+            for j, post_y in enumerate(post_indices):
 
-                            dstmp = dsm_post[j, j] - dsm_pre[i, i]  # Correctly index pre/post matrices
+                if dataset.sa['run'][pre_x] != dataset.sa['run'][post_y]:  # Across-run only
+                    if dataset.sa['triad'][pre_x] == dataset.sa['triad'][post_y]:  # Within-triad
+                        if dataset.sa['item'][pre_x] != dataset.sa['item'][post_y]:  # A vs. C
+
+                            # Correct DSM index mapping
+                            dstmp = dsm_post[j, j] - dsm_pre[i, i]
                             within.append(dstmp)
 
                             print(
-                                f"within: pre_run={dataset.sa['run'][pre_x]} to post_run={dataset.sa['run'][post_x]}, "
+                                f"within: pre_run={dataset.sa['run'][pre_x]} to post_run={dataset.sa['run'][post_y]}, "
                                 f"triad {dataset.sa['triad'][pre_x]}: {dstmp}")
 
-
-                    # ### set up the vectors to hold the sorted data ###
-        # within = []
-        # across = []
-        #
-        # n_pre = len(dsm_pre)
-        # n_post = len(dsm_post)
-        # print(f"n_pre {n_pre}")
-        # print(f"n_post {n_post}")
-        # dsm_diff = dsm_post
-        #
-        # x_len = max(n_pre, n_post)
-        # y_len = min(n_pre, n_post)
-        # print(f"x_len {x_len}")
-        # print(f"y_len {y_len}")
-        #
         # # iterate based on whichever phase has a dropped run
         # for x in range(y_len):
         #
@@ -124,12 +118,12 @@ class prepost_roi_droprun(Measure):
         #                     within.append(dstmp)
         #                     print(f"within: run {x_run} triad {x_tri} item {x_item} to "
         #                           f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
-
-                    # elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
-                    #
-                    #     if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
-                    #
-                    #         across.append(dstmp)
+        #
+        #             elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
+        #
+        #                 if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
+        #
+        #                     across.append(dstmp)
                             #print(f"across: run {x_run} triad {x_tri} item {x_item} to "
                               #    f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
 
