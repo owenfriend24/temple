@@ -15,14 +15,13 @@ from mvpa2.measures import rsa
 
 class prepost_roi_droprun(Measure):
 
-    def __init__(self, metric, output, comp, drop_run):
+    def __init__(self, metric, output, comp):
         Measure.__init__(self)
 
         self.metric = metric
         self.comp = comp
         self.dsm = []
         self.output = output
-        self.drop_run = drop_run
 
     def __call__(self, dataset):
 
@@ -46,8 +45,6 @@ class prepost_roi_droprun(Measure):
         dsm_post = arctanh(dsm_post)
         #print(f'length of post-zs: {len(dsm_post)}')
 
-
-
         ### set up the vectors to hold the sorted data ###
         within = []
         across = []
@@ -56,16 +53,12 @@ class prepost_roi_droprun(Measure):
         n_post = len(dsm_post)
         print(f"n_pre {n_pre}")
         print(f"n_post {n_post}")
-        dsm_diff = dsm_post
 
-        max_len = max(n_pre, n_post)
         min_len = min(n_pre, n_post)
 
-        #print(f"x_len {x_len}")
-        #print(f"y_len {y_len}")
 
         # iterate based on whichever phase has a dropped run
-        for x in range(max_len):
+        for x in range(min_len):
 
             for y in range(x + 1, min_len):
 
@@ -97,10 +90,7 @@ class prepost_roi_droprun(Measure):
 
         ### convert items to arrays ###
 
-        # length 8... should be 12-
-        # for example, if dropping run 3:
-        # A1C2 to A4C5, A4C6, A5C4, A5C6, A6C4, A6C5
-        # A2C1 to A4C5, A4C6, A5C4, A5C6, A6C4, A6C5
+        # length 8
         within = array(within)
 
         # length  - 24
