@@ -63,8 +63,8 @@ class prepost_roi_droprun(Measure):
             for y in range(x + 1, min_len):
 
                 if dataset.sa['run'][x] != dataset.sa['run'][y]:  # only do across run comparisons
-                    # x_run = dataset.sa['run'][x]
-                    # y_run = dataset.sa['run'][y]
+                    x_run = dataset.sa['run'][x]
+                    y_run = dataset.sa['run'][y]
                     #print(f'run {x_run} not equal to run {y_run}')
 
                     if dataset.sa['triad'][x] == dataset.sa['triad'][y]:  # within triad
