@@ -13,12 +13,21 @@ def pull_across_symm_indices(triad):
     return across_indices[(triad-1)]
 
 def pull_within_symm_indices(triad):
-    within_indices = [[0, 1, 2, 12, 13, 14, 24, 25, 26],
-                      [3, 4, 5, 15, 16, 17, 27, 28, 29],
-                      [6, 7, 8, 18, 19, 20, 30, 31, 32],
-                      [9, 10, 11, 21, 22, 23, 33, 34, 35]]
-    return within_indices[(triad-1)]
+    start = (triad - 1) * 3
+    return [start + i + j * 12 for j in range(3) for i in range(3)]
+    # within_indices = [[0, 1, 2, 12, 13, 14, 24, 25, 26],
+    #                   [3, 4, 5, 15, 16, 17, 27, 28, 29],
+    #                   [6, 7, 8, 18, 19, 20, 30, 31, 32],
+    #                   [9, 10, 11, 21, 22, 23, 33, 34, 35]]
 
+def pull_within_symm_indices_droprun(triad):
+    start = (triad - 1) * 2  # Each triad starts at (triad - 1) * 2
+    indices = [(start + i, start + i + 8, start + i + 16) for i in range(2)]
+    return [num for pair in indices for num in pair]
+
+
+def pull_across_symm_indices_droprun(triad):
+    #
 
 # takes in an int 1, 2, 3, or 4
 def pull_within_prepost_indices(triad):
