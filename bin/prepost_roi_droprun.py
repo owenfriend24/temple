@@ -87,8 +87,8 @@ class prepost_roi_droprun(Measure):
                             y_item = dataset.sa['item'][y]
                             dstmp = dsm_post[x, y] - dsm_pre[x, y]
                             across.append(dstmp)
-                            # print(f"across: run {x_run} triad {x_tri} item {x_item} to "
-                            #      f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
+                            print(f"across: run {x_run} triad {x_tri} item {x_item} to "
+                                 f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
 
 
         ### convert items to arrays ###

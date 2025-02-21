@@ -42,8 +42,8 @@ def pull_across_prepost_indices(triad):
 
 # takes in an int 1, 2, 3, or 4
 def pull_within_prepost_indices_droprun(triad):
-    start = (triad-1)*9
-    indices = [start, start + 4]
+    start = (triad*2)-2
+    indices = [start, start + 1]
     return indices
 
 
