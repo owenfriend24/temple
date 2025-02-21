@@ -62,8 +62,8 @@ def create_subject_file(subject, master_dir, comparison, mask, drop_run):
                     within_indices = integration_indices.pull_within_symm_indices_droprun(triad)
                     across_indices = integration_indices.pull_across_symm_indices_droprun(triad)
                 else:
-                    within_indices = integration_indices.pull_within_prepost_indices(triad)
-                    across_indices = integration_indices.pull_across_prepost_indices(triad)
+                    within_indices = integration_indices.pull_within_symm_indices(triad)
+                    across_indices = integration_indices.pull_across_symm_indices(triad)
 
                 within_df = within.iloc[within_indices]
                 within_sim = np.mean(within_df)
