@@ -22,16 +22,7 @@ def create_subject_file(subject, master_dir, comparison, mask, drop_run):
         raise ValueError('no age group assigned')
 
 
-    # makes sure we have forward and backward comparisons (e.g., 'AB' and 'BA')
-    bwd_comp=comparison[::-1]
-
     # sets up subject data table
-    comp_data = pd.DataFrame(columns = ['subject', 'age_group', 'roi', 'triplet',
-                                        'comparison', 'within_sim', 'across_sim', 'difference'])
-
-    # subject directory on tacc
-    sub_dir=f'{master_dir}/sub-{subject}'
-
     comp_data = pd.DataFrame(columns=['subject', 'age_group', 'roi', 'triplet',
                                       'comparison', 'within_sim', 'across_sim', 'difference'])
 
@@ -53,11 +44,15 @@ def create_subject_file(subject, master_dir, comparison, mask, drop_run):
         across = pd.read_csv(across_filename, sep='\t', header=None)
 
         for triad in [1, 2, 3, 4]:
-            within_indices = integration_indices.pull_within_prepost_indices(triad)
+            if drop_run is not None:
+                print('weebop')
+            else:
+                within_indices = integration_indices.pull_within_prepost_indices(triad)
+                across_indices = integration_indices.pull_across_prepost_indices(triad)
             within_df = within.iloc[within_indices]
             within_sim = np.mean(within_df)
 
-            across_indices = integration_indices.pull_across_prepost_indices(triad)
+
             across_df = across.iloc[across_indices]
             across_sim = np.mean(across_df)
 
