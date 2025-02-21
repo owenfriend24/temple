@@ -38,6 +38,8 @@ import subprocess
 
 ### import custom searchlight function ###
 from symmetry_function import *
+from symmetry_function_droprun import *
+import argparse
 
 ### set up expriment info ###
 if len(sys.argv) < 4:
@@ -45,60 +47,86 @@ if len(sys.argv) < 4:
     print("Example: symmetry_prepost_values.py temple016 AC b_hip_subregions")
     sys.exit(1)
 
-sbj = sys.argv[1]
-comp = sys.argv[2]
-masktype = sys.argv[3]
 
+### use argument parser to set up experiment/subject info and drop runs if necessary
+def get_args():
+    parser = argparse.ArgumentParser(description="Process fMRI data for pre/post representational symmetry")
+    parser.add_argument("subject_id", help="Subject identifier (e.g., temple016)")
+    parser.add_argument("comparison", help="Comparison type (e.g., AC)")
+    parser.add_argument("masktype", help="Mask type (e.g., b_hip_subregions)")
+    parser.add_argument("--drop_run", type=int, choices=[1, 2, 3, 4, 5, 6], default=None,
+                        help="Run number to drop (1 through 6). Default is None (keep all runs).")
 
-expdir = '/corral-repl/utexas/prestonlab/temple/'
+    return parser.parse_args()
 
-### masks for data to analyze ###
+### Main script execution ###
+if __name__ == "__main__":
+    args = get_args()
 
-if masktype == 'whole_brain':
-    masks = ['brainmask_func_dilated']
-elif masktype == 'b_hip':
-    masks = ['b_hip']
-elif masktype == 'b_hip_subregions':
-    masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
+    ### Set up experiment info ###
+    expdir = '/corral-repl/utexas/prestonlab/temple/'
+    sbj = args.subject_id
+    comparison = args.comparison
+    masktype = args.masktype
+    drop_run = args.drop_run
 
-### searchlight information ###
-if comp in ['BA', 'CB', 'CA']:
-    c_fwd = comp[::-1]
-else:
-    c_fwd = comp
+    if masktype == 'whole_brain':
+        masks = ['brainmask_func_dilated']
+    elif masktype == 'b_hip':
+        masks = ['b_hip']
+    elif masktype == 'b_hip_subregions':
+        masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
 
-phase, run, triad, item = loadtxt(f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{c_fwd}_items.txt',
-                                  unpack=1)
+    ### searchlight information ###
+    if comparison in ['BA', 'CB', 'CA']:
+        c_fwd = comparison[::-1]
+    else:
+        c_fwd = comparison
 
-### directories ###
-subjdir = f'{expdir}/sub-{sbj}/'
-betadir = subjdir + '/betaseries'
-
-
-for mask in masks:
-    if masktype == 'b_hip_subregions':
-        slmask = f'{subjdir}/transforms/{mask}.nii.gz'
-
-
-    # load in data - need to swap order if going backward
-
-    ds = fmri_dataset(betadir + f'/pre_post_{c_fwd}_items.nii.gz', mask=slmask)
-    ds.sa['phase'] = phase[:]
-    ds.sa['run'] = run[:]
-    ds.sa['triad'] = triad[:]
-    ds.sa['item'] = item[:]
-
-    # similarity measure
-    sl_func = symmetry_function('correlation', 1, comp)
-
-    within, across = sl_func(ds)
-
-    resultdir = expdir + f'/integration_prepost/symmetry_{comp}/sub-{sbj}'
-    os.makedirs(f'{resultdir}', exist_ok=True)
-    out_file_w = f"{resultdir}/{sbj}_symmetry_{comp}_within_{mask}.txt"
-    out_file_a = f"{resultdir}/{sbj}_symmetry_{comp}_across_{mask}.txt"
+    if drop_run is not None:
+        phase, run, triad, item = np.loadtxt(
+            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{c_fwd}_items_drop{drop_run}.txt',
+            unpack=True
+        )
+    else:
+    # Load phase, run, triad, and item data
+        phase, run, triad, item = np.loadtxt(
+            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{c_fwd}_items.txt',
+            unpack=True
+    )
 
 
 
-    savetxt(out_file_w, within, fmt="%.8f")
-    savetxt(out_file_a, across, fmt="%.8f")
+    ### directories ###
+    subjdir = f'{expdir}/sub-{sbj}/'
+    betadir = subjdir + '/betaseries'
+
+
+    for mask in masks:
+        if masktype == 'b_hip_subregions':
+            slmask = f'{subjdir}/transforms/{mask}.nii.gz'
+
+
+        # load in data - need to swap order if going backward
+
+        ds = fmri_dataset(betadir + f'/pre_post_{c_fwd}_items.nii.gz', mask=slmask)
+        ds.sa['phase'] = phase[:]
+        ds.sa['run'] = run[:]
+        ds.sa['triad'] = triad[:]
+        ds.sa['item'] = item[:]
+
+        # similarity measure - since these values are pulled at the level of single runs
+        #  do we actually need an additional function?
+        measure = symmetry_function('correlation', 1, comparison)
+
+        within, across = measure(ds)
+
+        resultdir = expdir + f'/integration_prepost/symmetry_{comparison}/sub-{sbj}'
+        os.makedirs(f'{resultdir}', exist_ok=True)
+        out_file_w = f"{resultdir}/{sbj}_symmetry_{comparison}_within_{mask}.txt"
+        out_file_a = f"{resultdir}/{sbj}_symmetry_{comparison}_across_{mask}.txt"
+
+
+
+        savetxt(out_file_w, within, fmt="%.8f")
+        savetxt(out_file_a, across, fmt="%.8f")

@@ -40,7 +40,7 @@ if __name__ == "__main__":
     sbj = args.subject_id
     comparison = args.comparison
     masktype = args.masktype
-    drop_run = args.drop_run  # Store drop_run argument
+    drop_run = args.drop_run
 
     ### Validate masks for data analysis ###
     if masktype == 'b_hip_subregions':
