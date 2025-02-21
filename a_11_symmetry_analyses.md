@@ -75,3 +75,8 @@ merge_integration.py temple016 $CORR/integration_prepost AB b_hip_subregions
 ```
 
 
+
+updated for dropped runs
+```
+integration_prepost_values.py --drop_run 6 temple023 AC b_hip_subregions
+```
