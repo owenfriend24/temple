@@ -38,7 +38,6 @@ import subprocess
 
 ### import custom searchlight function ###
 from symmetry_function import *
-from symmetry_function_droprun import *
 import argparse
 
 ### set up expriment info ###
