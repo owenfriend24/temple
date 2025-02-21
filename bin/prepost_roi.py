@@ -78,6 +78,7 @@ class prepost_roi(Measure):
                         if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
 
                             within.append(dstmp)
+                            print(f"within: x = {x}, y = {y}")
                             #w_distance.append(dst)
                             #print(f"within comparison: "
                                  # f"run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
@@ -88,6 +89,7 @@ class prepost_roi(Measure):
                         if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
 
                             across.append(dstmp)
+                            print(f"across: x = {x}, y = {y}")
                             #a_distance.append(dst)
                             #print(f"across comparison: "
                                 #  f"triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
