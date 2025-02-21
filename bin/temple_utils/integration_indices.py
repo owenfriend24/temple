@@ -31,6 +31,7 @@ def pull_across_symm_indices_droprun(triad):
                       [0, 3, 13, 16, 19, 22, 24, 27, 37, 40, 43, 46, 48, 51, 61, 64, 67, 70],
                       [1, 4, 7, 10, 20, 23, 25, 28, 31, 34, 44, 47, 49, 52, 55, 58, 68, 71],
                       [2, 5, 8, 11, 14, 17, 26, 29, 32, 35, 38, 41, 50, 53, 56, 59, 62, 65]]
+    return across_indices[(triad-1)]
 
 # takes in an int 1, 2, 3, or 4
 def pull_within_prepost_indices(triad):
