@@ -80,3 +80,6 @@ updated for dropped runs
 ```
 integration_prepost_values.py --drop_run 6 temple023 AC b_hip_subregions
 ```
+```
+merge_integration.py --drop_run 6 temple023 AC b_hip_subregions
+```
