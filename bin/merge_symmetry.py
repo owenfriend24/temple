@@ -87,5 +87,8 @@ if __name__ == "__main__":
     parser.add_argument("master_dir", help="where folders containing .txt files for each comparison are stored")
     parser.add_argument("comparison", help="options: AB, BC, AC")
     parser.add_argument("mask", help="mask name e.g., b_hip_subregions, b_hip_subfields, etc.")
+    # Optional argument: drop a specific run
+    parser.add_argument("--drop_run", type=int, choices=[1, 2, 3, 4, 5, 6], default=None,
+                        help="Run number to drop (1 through 6). Default is None (keep all runs).")
     args = parser.parse_args()
     main(args.subject, args.master_dir, args.comparison, args.mask)
