@@ -46,16 +46,9 @@ def pull_within_prepost_indices_droprun(triad):
     indices = [start, start + 4]
     return indices
 
-# takes in an int 1, 2, 3, or 4
+
 def pull_across_prepost_indices_droprun(triad):
     start = (triad - 1) * 9
-    end = (triad -1) + 9
-    indices = list(range(start, end))
-    del indices[4]
-    del indices[0]
+    indices = list(range((triad-1) * 8, (triad-1) * 8 + 8))
+    indices = [i for i in indices if i != start and i != start + 4]
     return indices
-
-print(pull_across_prepost_indices_droprun(1))
-print(pull_across_prepost_indices_droprun(2))
-print(pull_across_prepost_indices_droprun(3))
-print(pull_across_prepost_indices_droprun(4))

@@ -21,7 +21,6 @@ def create_subject_file(subject, master_dir, comparison, mask, drop_run):
     else:
         raise ValueError('no age group assigned')
 
-
     # sets up subject data table
     comp_data = pd.DataFrame(columns=['subject', 'age_group', 'roi', 'triplet',
                                       'comparison', 'within_sim', 'across_sim', 'difference'])
@@ -45,7 +44,8 @@ def create_subject_file(subject, master_dir, comparison, mask, drop_run):
 
         for triad in [1, 2, 3, 4]:
             if drop_run is not None:
-                print('weebop')
+                within_indices = integration_indices.pull_within_prepost_indices_droprun(triad)
+                across_indices = integration_indices.pull_across_prepost_indices_droprun(triad)
             else:
                 within_indices = integration_indices.pull_within_prepost_indices(triad)
                 across_indices = integration_indices.pull_across_prepost_indices(triad)

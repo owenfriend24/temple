@@ -51,8 +51,8 @@ class prepost_roi_droprun(Measure):
 
         n_pre = len(dsm_pre)
         n_post = len(dsm_post)
-        print(f"n_pre {n_pre}")
-        print(f"n_post {n_post}")
+        # print(f"n_pre {n_pre}")
+        # print(f"n_post {n_post}")
 
         min_len = min(n_pre, n_post)
 
@@ -63,21 +63,21 @@ class prepost_roi_droprun(Measure):
             for y in range(x + 1, min_len):
 
                 if dataset.sa['run'][x] != dataset.sa['run'][y]:  # only do across run comparisons
-                    x_run = dataset.sa['run'][x]
-                    y_run = dataset.sa['run'][y]
+                    # x_run = dataset.sa['run'][x]
+                    # y_run = dataset.sa['run'][y]
                     #print(f'run {x_run} not equal to run {y_run}')
 
                     if dataset.sa['triad'][x] == dataset.sa['triad'][y]:  # within triad
-                        x_tri = dataset.sa['triad'][x]
-                        y_tri = dataset.sa['triad'][y]
+                        # x_tri = dataset.sa['triad'][x]
+                        # y_tri = dataset.sa['triad'][y]
                         #print(f'triad {x_tri} of run {x_run} vs triad {y_tri} of run {y_run} for within comparison')
                         if dataset.sa['item'][x] != dataset.sa['item'][y]: # a vs. c
-                            x_item = dataset.sa['item'][x]
-                            y_item = dataset.sa['item'][y]
+                            # x_item = dataset.sa['item'][x]
+                            # y_item = dataset.sa['item'][y]
                             dstmp = dsm_post[x, y] - dsm_pre[x, y]
                             within.append(dstmp)
-                            print(f"within: run {x_run} triad {x_tri} item {x_item} to "
-                                  f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
+                            # print(f"within: run {x_run} triad {x_tri} item {x_item} to "
+                            #       f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
 
                     elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
                         x_tri = dataset.sa['triad'][x]
@@ -87,8 +87,8 @@ class prepost_roi_droprun(Measure):
                             y_item = dataset.sa['item'][y]
                             dstmp = dsm_post[x, y] - dsm_pre[x, y]
                             across.append(dstmp)
-                            print(f"across: run {x_run} triad {x_tri} item {x_item} to "
-                                 f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
+                            # print(f"across: run {x_run} triad {x_tri} item {x_item} to "
+                            #      f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
 
 
         ### convert items to arrays ###
