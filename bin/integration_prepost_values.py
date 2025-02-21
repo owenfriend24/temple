@@ -48,16 +48,16 @@ if __name__ == "__main__":
     else:
         raise ValueError('Invalid mask type')
 
-    # if drop_run is not None:
-    #     phase, run, triad, item = np.loadtxt(
-    #         f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items_drop{drop_run}.txt',
-    #         unpack=True
-    #     )
-   # else:
+    if drop_run is not None:
+        phase, run, triad, item = np.loadtxt(
+            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items_drop{drop_run}.txt',
+            unpack=True
+        )
+    else:
     # Load phase, run, triad, and item data
-    phase, run, triad, item = np.loadtxt(
-        f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items.txt',
-        unpack=True
+        phase, run, triad, item = np.loadtxt(
+            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items.txt',
+            unpack=True
     )
 
     ### Directories ###
@@ -91,5 +91,5 @@ if __name__ == "__main__":
         out_file_w = os.path.join(out_dir, f"{sbj}_prepost_{comparison}_within_{mask}.txt")
         out_file_a = os.path.join(out_dir, f"{sbj}_prepost_{comparison}_across_{mask}.txt")
 
-        #np.savetxt(out_file_w, within, fmt="%.8f")
-        #np.savetxt(out_file_a, across, fmt="%.8f")
+        np.savetxt(out_file_w, within, fmt="%.8f")
+        np.savetxt(out_file_a, across, fmt="%.8f")
