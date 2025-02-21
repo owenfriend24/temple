@@ -38,14 +38,18 @@ def create_subject_file(subject, master_dir, comparison, mask, drop_run):
     for mask in masks:
         within_filename = f'{sub_dir}/{subject}_prepost_{comparison}_within_{mask}.txt'
         within = pd.read_csv(within_filename, sep='\t', header=None)
+        print(f'within length: {len(within)}')
 
         across_filename = f'{sub_dir}/{subject}_prepost_{comparison}_across_{mask}.txt'
         across = pd.read_csv(across_filename, sep='\t', header=None)
+        print(f'across length: {len(across)}')
 
         for triad in [1, 2, 3, 4]:
             if drop_run is not None:
                 within_indices = integration_indices.pull_within_prepost_indices_droprun(triad)
                 across_indices = integration_indices.pull_across_prepost_indices_droprun(triad)
+                print(f'within indices: {within_indices}')
+                print(f'across indices: {across_indices}')
             else:
                 within_indices = integration_indices.pull_within_prepost_indices(triad)
                 across_indices = integration_indices.pull_across_prepost_indices(triad)
