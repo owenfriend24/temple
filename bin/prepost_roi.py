@@ -95,7 +95,7 @@ class prepost_roi(Measure):
                                 #  f"triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
                                  # f"triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
-
+#
         #### convert items to arrays ###
         
         # length 24 - 
