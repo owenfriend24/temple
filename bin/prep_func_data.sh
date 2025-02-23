@@ -1,15 +1,13 @@
 #!/bin/env bash
 
 if [[ $# -lt 3 ]]; then
-    echo "Usage: prep_func_data.sh freesurfer_dir fmriprep_dir subject task num_runs"
+    echo "Usage: prep_func_data.sh freesurfer_dir fmriprep_dir subject"
     exit 1
 fi
 
 fsdir=$1
 fmdir=$2
 subject=$3
-task=$4
-num_runs=$5
 
 # Load any necessary modules
 module load python3/3.9.7
@@ -18,7 +16,7 @@ module load python3/3.9.7
 source /home1/09123/ofriend/analysis/temple/profile
 
 # Run your Python script
-python /home1/09123/ofriend/analysis/temple/bin/prep_func_data.py $fsdir $fmdir $subject $task $num_runs
+python /home1/09123/ofriend/analysis/temple/bin/prep_func_data.py $fsdir $fmdir $subject
 mni_transforms.sh $fmdir $subject
 temple_smooth.sh $fmdir $fsdir $subject "collector"
 temple_smooth.sh $fmdir $fsdir $subject "arrow"
