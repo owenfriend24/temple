@@ -46,6 +46,7 @@ def copy_json(in_file, out_file):
 
 
 def main(study_dir, bids_dir, subject, mat=True):
+    print(f'subject: {subject}')
     data_dir = os.path.join(study_dir, "sourcebehav")
     scan_dir = os.path.join(study_dir, "sourcedata")
     srcdir = os.environ["SRCDIR"]
@@ -75,6 +76,8 @@ def main(study_dir, bids_dir, subject, mat=True):
         write_events(data, keys_arrow, bids_dir, "arrow", "func", "events")
         json_file = os.path.join(srcdir, "src/temple/data/task-arrow_events.json")
         copy_json(json_file, os.path.join(bids_dir, "task-arrow_events.json"))
+    else:
+        print('arrow data not found')
 
     keys_collector = [
         "trial",
@@ -96,7 +99,8 @@ def main(study_dir, bids_dir, subject, mat=True):
         write_events(data, keys_collector, bids_dir, "collector", "func", "events")
         json_file = os.path.join(srcdir, "src/temple/data/task-collector_events.json")
         copy_json(json_file, os.path.join(bids_dir, "task-collector_events.json"))
-
+    else:
+        print('collector data not found')
     keys_remember = [
         "trial",
         "item1",
@@ -120,8 +124,8 @@ def main(study_dir, bids_dir, subject, mat=True):
         write_events(data, keys_remember, bids_dir, "remember", "beh", "events")
         json_file = os.path.join(srcdir, "src/temple/data/task-remember_events.json")
         copy_json(json_file, os.path.join(bids_dir, "task-remember_events.json"))
-
-
+    else:
+        print('remember data not found')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
