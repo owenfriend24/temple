@@ -93,7 +93,7 @@ def main(study_dir, bids_dir, subject, mat=True):
     ]
 
     # Load and filter data for `collector` task
-    data = raw.load_collector_runs(data_dir, subjects=subjects mat=True)
+    data = raw.load_collector_runs(data_dir, subjects=subjects, mat=True)
     data = data[data["subject"].isin(subjects)]  # Filter for selected subjects
     if not data.empty:
         write_events(data, keys_collector, bids_dir, "collector", "func", "events")
