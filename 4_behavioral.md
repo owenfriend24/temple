@@ -1,4 +1,4 @@
-## 1. Convert behavioral data into BIDS format within BIDS formatted subject directories
+## 1. Convert behavioral data into BIDS format within BIDS formatted subject directories (something off here right now, tacc slow but will fix later this afternoon)
 ```
 events_bids.py $WORK/temple/sourcebehav/ $FM 19
 events_bids.py $WORK/temple/sourcebehav/ $FM ALL
