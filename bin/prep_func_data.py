@@ -129,6 +129,7 @@ def extract_func(fs_dir, fmriprep_dir, sub, task, num_runs):
 
 
 def main(fs_dir, fmriprep_dir, sub):
+    print('running main')
     run('source /home1/09123/ofriend/analysis/temple/profile')
     extract_fs(fs_dir, sub)
     print(f'\n\nMASK EXTRACTED FOR SUB-{sub}\n\n')
