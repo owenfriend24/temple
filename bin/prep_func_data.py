@@ -12,7 +12,7 @@ def run(command):
 def extract_fs(fs_dir, sub):
     fs = Path(fs_dir)
     src = fs/f'sub-{sub}/mri'
-    run(f'mkdir {src}/out') 
+    run(f'mkdir -p {src}/out')
     run('module load freesurfer')
     dest = src/'out'
     
