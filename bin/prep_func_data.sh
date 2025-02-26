@@ -16,6 +16,7 @@ module load python3/3.9.7
 source /home1/09123/ofriend/analysis/temple/profile
 
 # Run your Python script
+
 python /home1/09123/ofriend/analysis/temple/bin/prep_func_data.py "${fsdir}" "${fmdir}" "${subject}"
 #mni_transforms.sh $fmdir $subject
 #temple_smooth.sh $fmdir $fsdir $subject "collector"
