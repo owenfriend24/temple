@@ -129,7 +129,6 @@ def extract_func(fs_dir, fmriprep_dir, sub, task, num_runs):
 
 
 def main(fs_dir, fmriprep_dir, sub):
-    print('running main')
     run('source /home1/09123/ofriend/analysis/temple/profile')
     extract_fs(fs_dir, sub)
     print(f'\n\nMASK EXTRACTED FOR SUB-{sub}\n\n')
@@ -144,4 +143,4 @@ if __name__ == "__main__":
     parser.add_argument("fmriprep_dir", help="fmriprep derivatives directory")
     parser.add_argument("sub", help="subject number; include full templeXXX")
     args = parser.parse_args()
-
+    main(args.fs_dir, args.fmriprep_dir, args.sub)
