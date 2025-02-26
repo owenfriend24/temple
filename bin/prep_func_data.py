@@ -6,7 +6,7 @@ from pathlib import Path
 import argparse
 
 def run(command):
-    #print(f"Running command: {command}")
+    print(f"Running command: {command}")
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
     if result.stdout:
         print(f"Output: {result.stdout}")
