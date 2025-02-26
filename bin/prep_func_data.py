@@ -7,7 +7,11 @@ import argparse
 
 def run(command):
     #print(f"Running command: {command}")
-    subprocess.run(command, shell=True)
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    if result.stdout:
+        print(f"Output: {result.stdout}")
+    if result.stderr:
+        print(f"Error: {result.stderr}")
 
 def extract_fs(fs_dir, sub):
     fs = Path(fs_dir)
