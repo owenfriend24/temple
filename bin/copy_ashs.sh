@@ -1,12 +1,18 @@
 #!/bin/bash
 
-if [[ $# -lt 2 ]]; then
-    echo "Usage: copy_ashs.sh ashs_dir subject"
+if [[ $# -lt 1 ]]; then
+    echo "Usage: ashs_test.sh subject"
 
     exit 1
 fi
 
-ashs_dir=$1
-sub=$2
+corr=$1
 
-cp -R ${ashs_dir}/sub-${sub} /corral-repl/utexas/prestonlab/temple/ashs/
+cp -R $SCRATCH/ashs/bin $CORR/ashs/
+cp $SCRATCH/ashs/*.txt $CORR/ashs/
+cp -R $SCRATCH/ashs/ext $CORR/ashs/
+cp -R $SCRATCH/ashs/src $CORR/ashs/
+cp -R $SCRATCH/ashs/test_atlas $CORR/ashs/
+cp $SCRATCH/ashs/*.md $CORR/ashs/
+cp -R $SCRATCH/ashs/submodules $CORR/ashs/
+cp $SCRATCH/ashs/LICENSE $CORR/ashs
