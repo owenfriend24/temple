@@ -1,0 +1,78 @@
+#!/usr/bin/env python
+
+import os
+import subprocess
+from pathlib import Path
+import argparse
+import pandas as pd
+import numpy as np
+from temple_utils import get_age_groups
+
+
+def run(command):
+    subprocess.run(command, shell=True)
+
+def aggregate_csv_files(csv_files, master_dir):
+    # need to edit these for the correct paths/file names
+    aggregated_data = []
+
+    for file_path in csv_files:
+        if file_path.exists():  # Ensure the file exists before reading
+            df = pd.read_csv(file_path)
+            aggregated_data.append(df)
+
+    if aggregated_data:
+        master_df = pd.concat(aggregated_data, ignore_index=True)
+        master_output_path = Path(master_dir) / "aggregated_results.csv"
+        master_df.to_csv(master_output_path, index=False)
+        print(f"Aggregated CSV saved at: {master_output_path}")
+    else:
+        print("No CSV files were found for aggregation.")
+
+
+
+def main(measure, master_dir, comparison, mask, agg_file):
+    subjects = get_age_groups.get_all_subjects()
+
+    drop_runs = {
+        "temple023": 6,
+        "temple030": 6,
+        "temple070": 3,
+        "temple115": 3,
+        "temple116": 5,
+    }
+    output_csv_files = []
+
+    for sub in subjects:
+        # Check if subject has a run to drop
+        drop_run = drop_runs.get(sub, None)
+        drop_flag = f"--drop_run {drop_run} " if drop_run is not None else ""
+        if measure in ["prepost", "both"]:
+            run(f"integration_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
+            run(f"merge_integration.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
+
+            # fix for corrected filepath
+            output_csv_files.append(Path(master_dir) / f"{sub}_{comparison}_integration.csv")
+
+        elif measure in ["symmetry", "both"]:
+            bwd_comp = comparison[::-1]
+            run(f"symmetry_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
+            run(f"symmetry_prepost_values.py {drop_flag}{sub} {bwd_comp} {mask}")
+            run(f"merge_symmetry.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
+
+            # fix for corrected filepath
+            output_csv_files.append(Path(master_dir) / f"{sub}_{comparison}_integration.csv")
+
+    if agg_file:
+        aggregate_csv_files(output_csv_files, master_dir)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("measure", help="prepost, symmetry, both")
+    parser.add_argument("master_dir", help="where folders containing .txt files for each comparison are stored")
+    parser.add_argument("comparison", help="options: AB, BC, AC")
+    parser.add_argument("mask", help="mask name e.g., b_hip_subregions, b_hip_subfields, etc.")
+    parser.add_argument("--agg_file", type=bool, default=False,
+                        help="write aggregate file - boolean")
+    args = parser.parse_args()
+    main(args.measure, args.master_dir, args.comparison, args.mask, args.agg_file)
