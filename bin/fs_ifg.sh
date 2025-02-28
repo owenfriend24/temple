@@ -7,27 +7,27 @@ if [[ $# -lt 2 ]]; then
     exit 1
 fi
 
-FS=$1
+fs_dir=$1
 sub=$2
-mkdir -p $FS/sub-${sub}/mri/ifg_masks
+mkdir -p $fs_dir/sub-${sub}/mri/ifg_masks
 
-mri_binarize --i $FS/sub-$sub/mri/aparc+aseg.mgz --o $FS/sub-${sub}/mri/ifg_masks/b_pars_opercularis.nii.gz \
+mri_binarize --i $fs_dir/sub-$sub/mri/aparc+aseg.mgz --o $fs_dir/sub-${sub}/mri/ifg_masks/b_pars_opercularis.nii.gz \
 --match 1018 2018
 
-mri_binarize --i $FS/sub-$sub/mri/aparc+aseg.mgz --o $FS/sub-${sub}/mri/ifg_masks/b_pars_orbitalis.nii.gz \
+mri_binarize --i $fs_dir/sub-$sub/mri/aparc+aseg.mgz --o $fs_dir/sub-${sub}/mri/ifg_masks/b_pars_orbitalis.nii.gz \
 --match 1019 2019
 
-mri_binarize --i $FS/sub-$sub/mri/aparc+aseg.mgz --o $FS/sub-${sub}/mri/ifg_masks/b_pars_triangularis.nii.gz \
+mri_binarize --i $fs_dir/sub-$sub/mri/aparc+aseg.mgz --o $fs_dir/sub-${sub}/mri/ifg_masks/b_pars_triangularis.nii.gz \
 --match 1020 2020
 
-mri_binarize --i $FS/sub-$sub/mri/aparc+aseg.mgz --o $FS/sub-${sub}/mri/ifg_masks/b_ifg_full.nii.gz \
+mri_binarize --i $fs_dir/sub-$sub/mri/aparc+aseg.mgz --o $fs_dir/sub-${sub}/mri/ifg_masks/b_ifg_full.nii.gz \
 --match 1018 1019 1020 2018 2019 2020
 
-for mask in $FS/sub-$sub/mri/ifg_masks/*.nii.gz; do
+for mask in $fs_dir/sub-$sub/mri/ifg_masks/*.nii.gz; do
   mask_basename=$(basename "$mask" .nii.gz)
   output_file="${FS}/sub-${sub}/mri/ifg_masks/${mask_basename}_func.nii.gz"
   antsApplyTransforms -d 3 -i $mask -n NearestNeighbor \
 -o $output_file -t [/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/mask_to_func_ref_Affine.txt] \
--r $FS/sub-$sub/mri/out/brainmask_func_dilated.nii.gz
+-r $fs_dir/sub-$sub/mri/out/brainmask_func_dilated.nii.gz
 
 done
