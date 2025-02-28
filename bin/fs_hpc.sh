@@ -17,4 +17,4 @@ antsApplyTransforms -d 3 -i $FS/sub-$sub/mri/out/b_hip.nii.gz -n NearestNeighbor
 
 antsApplyTransforms -d 3 -i $FS/sub-$sub/mri/out/right_hip_mask.nii.gz -n NearestNeighbor -o $FS/sub-$sub/mri/out/right_hip_func.nii.gz -t [$FM/sub-$sub/transforms/mask_to_func_ref_Affine.txt] -r $FM/sub-$sub/func/sub-${sub}_task-arrow_run-01_space-T1w_desc-brain_mask.nii.gz
 
-antsApplyTransforms -d 3 -i $FS/sub-$sub/mri/out/left_hip_mask.nii.gz -n NearestNeighbor -o $FS/sub-$sub/mri/out/left_hip_func.nii.gz -t [$FM/sub-$sub/transforms/mask_to_func_ref_Affine.txt] -r $FM/sub-$sub/func/sub-${sub}_task-arrow_run-01_space-T1w_desc-brain_mask.nii.gz
+antsApplyTransforms -d 3 -i $FS/sub-$sub/mri/outfs_hpc.shleft_hip_mask.nii.gz -n NearestNeighbor -o $FS/sub-$sub/mri/out/left_hip_func.nii.gz -t [$FM/sub-$sub/transforms/mask_to_func_ref_Affine.txt] -r $FM/sub-$sub/func/sub-${sub}_task-arrow_run-01_space-T1w_desc-brain_mask.nii.gz
