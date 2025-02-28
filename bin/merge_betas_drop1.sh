@@ -3,7 +3,7 @@
 # using grep to change the commands wasn't working, can go back and make this code cleaner/less redundant later
 
 # set up experiment info
-expdir='/corral-repl/utexas/prestonlab/temple'
+expdir='/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
 sub=$1
 drop_run=$2
 
