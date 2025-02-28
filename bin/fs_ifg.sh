@@ -26,9 +26,8 @@ mri_binarize --i $FS/sub-$sub/mri/aparc+aseg.mgz --o $FS/sub-${sub}/mri/ifg_mask
 for mask in $FS/sub-$sub/mri/ifg_masks/*.nii.gz; do
   mask_basename=$(basename "$mask" .nii.gz)
   output_file="${FS}/sub-${sub}/mri/ifg_masks/${mask_basename}_func.nii.gz"
-  echo $output_file
   antsApplyTransforms -d 3 -i $mask -n NearestNeighbor \
--o $output_file -t [/corral-repl/utexas/prestonlab/temple/sub-$sub/transforms/mask_to_func_ref_Affine.txt] \
+-o $output_file -t [/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/mask_to_func_ref_Affine.txt] \
 -r $FS/sub-$sub/mri/out/brainmask_func_dilated.nii.gz
 
 done

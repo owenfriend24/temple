@@ -52,7 +52,7 @@ def get_args():
     parser = argparse.ArgumentParser(description="Process fMRI data for pre/post representational symmetry")
     parser.add_argument("subject_id", help="Subject identifier (e.g., temple016)")
     parser.add_argument("comparison", help="Comparison type (e.g., AC)")
-    parser.add_argument("masktype", help="Mask type (e.g., b_hip_subregions)")
+    parser.add_argument("masktype", help="Mask type (e.g., b_hip_subregions, b_ifg_subregions)")
     parser.add_argument("--drop_run", type=int, choices=[1, 2, 3, 4, 5, 6], default=None,
                         help="Run number to drop (1 through 6). Default is None (keep all runs).")
 
@@ -75,6 +75,8 @@ if __name__ == "__main__":
         masks = ['b_hip']
     elif masktype == 'b_hip_subregions':
         masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
+    elif masktype == 'b_ifg_subregions':
+        masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
 
     ### searchlight information ###
     if comparison in ['BA', 'CB', 'CA']:
@@ -104,6 +106,8 @@ if __name__ == "__main__":
     for mask in masks:
         if masktype == 'b_hip_subregions':
             slmask = f'{subjdir}/transforms/{mask}.nii.gz'
+        elif masktype == 'b_ifg_subregions':
+            slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
 
 
         # load in data - need to swap order if going backward

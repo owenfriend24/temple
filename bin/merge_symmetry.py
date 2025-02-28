@@ -42,6 +42,8 @@ def create_subject_file(subject, master_dir, comparison, mask, drop_run):
     # Define masks/ROIs to pull similarity values from
     if mask == 'b_hip_subregions':
         masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
+    elif mask == 'b_ifg_subregions':
+        masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
     else:
         raise ValueError('no valid mask')
 
@@ -92,7 +94,7 @@ if __name__ == "__main__":
     parser.add_argument("subject", help="e.g., temple100")
     parser.add_argument("master_dir", help="where folders containing .txt files for each comparison are stored")
     parser.add_argument("comparison", help="options: AB, BC, AC")
-    parser.add_argument("mask", help="mask name e.g., b_hip_subregions, b_hip_subfields, etc.")
+    parser.add_argument("mask", help="mask name e.g., b_hip_subregions, b_hip_subfields, b_ifg_subregions etc.")
     # Optional argument: drop a specific run
     parser.add_argument("--drop_run", type=int, choices=[1, 2, 3, 4, 5, 6], default=None,
                         help="Run number to drop (1 through 6). Default is None (keep all runs).")
