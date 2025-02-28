@@ -1,70 +1,147 @@
 #!/bin/bash
 
-### Set up experiment info ###
+# using grep to change the commands wasn't working, can go back and make this code cleaner/less redundant later
+
+# set up experiment info
 expdir='/corral-repl/utexas/prestonlab/temple'
 sub=$1
-run_to_drop=$2  # Run number to drop (optional)
+drop_run=$2
 
 betadir=$expdir/sub-${sub}/betaseries
 
-cd "$betadir" || { echo "Error: Failed to change directory to $betadir"; exit 1; }
+# changing the current directory sometimes causes problems when running jobs in parallel, so used the full path in all calls below
+cd $betadir
 
-# Function to filter out unwanted runs dynamically
-filter_runs() {
-    local pattern="betaOUT_run-${run_to_drop}"
-    local result=()
+#match
+if [ "$drop_run" = "3" ]; then
+  # ABC
+  fslmerge -t ${betadir}/pre_items.nii.gz ${betadir}/betaOUT_run-1* ${betadir}/betaOUT_run-2*
+  fslmerge -t ${betadir}/post_items.nii.gz ${betadir}/betaOUT_run-5* ${betadir}/betaOUT_run-4* ${betadir}/betaOUT_run-6*
 
-    for file in "$@"; do
-        [[ $file =~ $pattern ]] || result+=("$file")
-    done
+  # AC
+  fslmerge -t ${betadir}/pre_AC_items.nii.gz ${betadir}/betaOUT_run-1_ev-001 ${betadir}/betaOUT_run-1_ev-003 \
+  ${betadir}/betaOUT_run-1_ev-004 ${betadir}/betaOUT_run-1_ev-006 ${betadir}/betaOUT_run-1_ev-007 \
+  ${betadir}/betaOUT_run-1_ev-009 ${betadir}/betaOUT_run-1_ev-010 ${betadir}/betaOUT_run-1_ev-012 \
+  ${betadir}/betaOUT_run-2_ev-001 ${betadir}/betaOUT_run-2_ev-003 ${betadir}/betaOUT_run-2_ev-004 \
+  ${betadir}/betaOUT_run-2_ev-006 ${betadir}/betaOUT_run-2_ev-007 ${betadir}/betaOUT_run-2_ev-009 \
+  ${betadir}/betaOUT_run-2_ev-010 ${betadir}/betaOUT_run-2_ev-012
 
-    echo "${result[@]}"
-}
+  fslmerge -t ${betadir}/post_AC_items.nii.gz ${betadir}/betaOUT_run-4_ev-001 ${betadir}/betaOUT_run-4_ev-003 \
+  ${betadir}/betaOUT_run-4_ev-004 ${betadir}/betaOUT_run-4_ev-006 ${betadir}/betaOUT_run-4_ev-007 \
+  ${betadir}/betaOUT_run-4_ev-009 ${betadir}/betaOUT_run-4_ev-010 ${betadir}/betaOUT_run-4_ev-012 \
+  ${betadir}/betaOUT_run-5_ev-001 ${betadir}/betaOUT_run-5_ev-003 ${betadir}/betaOUT_run-5_ev-004 \
+  ${betadir}/betaOUT_run-5_ev-006 ${betadir}/betaOUT_run-5_ev-007 ${betadir}/betaOUT_run-5_ev-009 \
+  ${betadir}/betaOUT_run-5_ev-010 ${betadir}/betaOUT_run-5_ev-012 ${betadir}/betaOUT_run-6_ev-001 \
+  ${betadir}/betaOUT_run-6_ev-003 ${betadir}/betaOUT_run-6_ev-004 ${betadir}/betaOUT_run-6_ev-006 \
+  ${betadir}/betaOUT_run-6_ev-007 ${betadir}/betaOUT_run-6_ev-009 ${betadir}/betaOUT_run-6_ev-010 \
+  ${betadir}/betaOUT_run-6_ev-012
 
-# Define all files and filter them if run_to_drop is specified
-pre_items=($(filter_runs betaOUT_run-1* betaOUT_run-2* betaOUT_run-3*))
-post_items=($(filter_runs betaOUT_run-5* betaOUT_run-4* betaOUT_run-6*))
+  # AB
+  fslmerge -t ${betadir}/pre_AB_items.nii.gz ${betadir}/betaOUT_run-1_ev-001 ${betadir}/betaOUT_run-1_ev-002 \
+  ${betadir}/betaOUT_run-1_ev-004 ${betadir}/betaOUT_run-1_ev-005 ${betadir}/betaOUT_run-1_ev-007 \
+  ${betadir}/betaOUT_run-1_ev-008 ${betadir}/betaOUT_run-1_ev-010 ${betadir}/betaOUT_run-1_ev-011 \
+  ${betadir}/betaOUT_run-2_ev-001 ${betadir}/betaOUT_run-2_ev-002 ${betadir}/betaOUT_run-2_ev-004 \
+  ${betadir}/betaOUT_run-2_ev-005 ${betadir}/betaOUT_run-2_ev-007 ${betadir}/betaOUT_run-2_ev-008 \
+  ${betadir}/betaOUT_run-2_ev-010 ${betadir}/betaOUT_run-2_ev-011
 
-pre_AC_items=($(filter_runs betaOUT_run-1_ev-001 betaOUT_run-1_ev-003 betaOUT_run-1_ev-004 betaOUT_run-1_ev-006 \
-betaOUT_run-1_ev-007 betaOUT_run-1_ev-009 betaOUT_run-1_ev-010 betaOUT_run-1_ev-012 betaOUT_run-2_ev-001 \
-betaOUT_run-2_ev-003 betaOUT_run-2_ev-004 betaOUT_run-2_ev-006 betaOUT_run-2_ev-007 betaOUT_run-2_ev-009 \
-betaOUT_run-2_ev-010 betaOUT_run-2_ev-012 betaOUT_run-3_ev-001 betaOUT_run-3_ev-003 betaOUT_run-3_ev-004 \
-betaOUT_run-3_ev-006 betaOUT_run-3_ev-007 betaOUT_run-3_ev-009 betaOUT_run-3_ev-010 betaOUT_run-3_ev-012))
+  fslmerge -t ${betadir}/post_AB_items.nii.gz ${betadir}/betaOUT_run-4_ev-001 ${betadir}/betaOUT_run-4_ev-002 \
+  ${betadir}/betaOUT_run-4_ev-004 ${betadir}/betaOUT_run-4_ev-005 ${betadir}/betaOUT_run-4_ev-007 \
+  ${betadir}/betaOUT_run-4_ev-008 ${betadir}/betaOUT_run-4_ev-010 ${betadir}/betaOUT_run-4_ev-011 \
+  ${betadir}/betaOUT_run-5_ev-001 ${betadir}/betaOUT_run-5_ev-002 ${betadir}/betaOUT_run-5_ev-004 \
+  ${betadir}/betaOUT_run-5_ev-005 ${betadir}/betaOUT_run-5_ev-007 ${betadir}/betaOUT_run-5_ev-008 \
+  ${betadir}/betaOUT_run-5_ev-010 ${betadir}/betaOUT_run-5_ev-011 ${betadir}/betaOUT_run-6_ev-001 \
+  ${betadir}/betaOUT_run-6_ev-002 ${betadir}/betaOUT_run-6_ev-004 ${betadir}/betaOUT_run-6_ev-005 \
+  ${betadir}/betaOUT_run-6_ev-007 ${betadir}/betaOUT_run-6_ev-008 ${betadir}/betaOUT_run-6_ev-010 \
+  ${betadir}/betaOUT_run-6_ev-011
+fi
 
-post_AC_items=($(filter_runs betaOUT_run-4_ev-001 betaOUT_run-4_ev-003 betaOUT_run-4_ev-004 betaOUT_run-4_ev-006 \
-betaOUT_run-4_ev-007 betaOUT_run-4_ev-009 betaOUT_run-4_ev-010 betaOUT_run-4_ev-012 betaOUT_run-5_ev-001 \
-betaOUT_run-5_ev-003 betaOUT_run-5_ev-004 betaOUT_run-5_ev-006 betaOUT_run-5_ev-007 betaOUT_run-5_ev-009 \
-betaOUT_run-5_ev-010 betaOUT_run-5_ev-012 betaOUT_run-6_ev-001 betaOUT_run-6_ev-003 betaOUT_run-6_ev-004 \
-betaOUT_run-6_ev-006 betaOUT_run-6_ev-007 betaOUT_run-6_ev-009 betaOUT_run-6_ev-010 betaOUT_run-6_ev-012))
+if [ "$drop_run" = "6" ]; then
+  # ABC
+  fslmerge -t ${betadir}/pre_items.nii.gz ${betadir}/betaOUT_run-1* ${betadir}/betaOUT_run-2* ${betadir}/betaOUT_run-3*
+  fslmerge -t ${betadir}/post_items.nii.gz ${betadir}/betaOUT_run-4* ${betadir}/betaOUT_run-5*
 
-pre_AB_items=($(filter_runs betaOUT_run-1_ev-001 betaOUT_run-1_ev-002 betaOUT_run-1_ev-004 betaOUT_run-1_ev-005 \
-betaOUT_run-1_ev-007 betaOUT_run-1_ev-008 betaOUT_run-1_ev-010 betaOUT_run-1_ev-011 betaOUT_run-2_ev-001 \
-betaOUT_run-2_ev-002 betaOUT_run-2_ev-004 betaOUT_run-2_ev-005 betaOUT_run-2_ev-007 betaOUT_run-2_ev-008 \
-betaOUT_run-2_ev-010 betaOUT_run-2_ev-011 betaOUT_run-3_ev-001 betaOUT_run-3_ev-002 betaOUT_run-3_ev-004 \
-betaOUT_run-3_ev-005 betaOUT_run-3_ev-007 betaOUT_run-3_ev-008 betaOUT_run-3_ev-010 betaOUT_run-3_ev-011))
+  # AC
+  fslmerge -t ${betadir}/pre_AC_items.nii.gz ${betadir}/betaOUT_run-1_ev-001 ${betadir}/betaOUT_run-1_ev-003 \
+  ${betadir}/betaOUT_run-1_ev-004 ${betadir}/betaOUT_run-1_ev-006 ${betadir}/betaOUT_run-1_ev-007 \
+  ${betadir}/betaOUT_run-1_ev-009 ${betadir}/betaOUT_run-1_ev-010 ${betadir}/betaOUT_run-1_ev-012 \
+  ${betadir}/betaOUT_run-2_ev-001 ${betadir}/betaOUT_run-2_ev-003 ${betadir}/betaOUT_run-2_ev-004 \
+  ${betadir}/betaOUT_run-2_ev-006 ${betadir}/betaOUT_run-2_ev-007 ${betadir}/betaOUT_run-2_ev-009 \
+  ${betadir}/betaOUT_run-2_ev-010 ${betadir}/betaOUT_run-2_ev-012 ${betadir}/betaOUT_run-3_ev-001 \
+  ${betadir}/betaOUT_run-3_ev-003 ${betadir}/betaOUT_run-3_ev-004 ${betadir}/betaOUT_run-3_ev-006 \
+  ${betadir}/betaOUT_run-3_ev-007 ${betadir}/betaOUT_run-3_ev-009 ${betadir}/betaOUT_run-3_ev-010 \
+  ${betadir}/betaOUT_run-3_ev-012
 
-post_AB_items=($(filter_runs betaOUT_run-4_ev-001 betaOUT_run-4_ev-002 betaOUT_run-4_ev-004 betaOUT_run-4_ev-005 \
-betaOUT_run-4_ev-007 betaOUT_run-4_ev-008 betaOUT_run-4_ev-010 betaOUT_run-4_ev-011 betaOUT_run-5_ev-001 \
-betaOUT_run-5_ev-002 betaOUT_run-5_ev-004 betaOUT_run-5_ev-005 betaOUT_run-5_ev-007 betaOUT_run-5_ev-008 \
-betaOUT_run-5_ev-010 betaOUT_run-5_ev-011 betaOUT_run-6_ev-001 betaOUT_run-6_ev-002 betaOUT_run-6_ev-004 \
-betaOUT_run-6_ev-005 betaOUT_run-6_ev-007 betaOUT_run-6_ev-008 betaOUT_run-6_ev-010 betaOUT_run-6_ev-011))
+  fslmerge -t ${betadir}/post_AC_items.nii.gz ${betadir}/betaOUT_run-4_ev-001 ${betadir}/betaOUT_run-4_ev-003 \
+  ${betadir}/betaOUT_run-4_ev-004 ${betadir}/betaOUT_run-4_ev-006 ${betadir}/betaOUT_run-4_ev-007 \
+  ${betadir}/betaOUT_run-4_ev-009 ${betadir}/betaOUT_run-4_ev-010 ${betadir}/betaOUT_run-4_ev-012 \
+  ${betadir}/betaOUT_run-5_ev-001 ${betadir}/betaOUT_run-5_ev-003 ${betadir}/betaOUT_run-5_ev-004 \
+  ${betadir}/betaOUT_run-5_ev-006 ${betadir}/betaOUT_run-5_ev-007 ${betadir}/betaOUT_run-5_ev-009 \
+  ${betadir}/betaOUT_run-5_ev-010 ${betadir}/betaOUT_run-5_ev-012
 
-# Print filtered file lists (Debugging)
-echo "Pre items: ${pre_items[@]}"
-echo "Post items: ${post_items[@]}"
-echo "Pre AC items: ${pre_AC_items[@]}"
-echo "Post AC items: ${post_AC_items[@]}"
-echo "Pre AB items: ${pre_AB_items[@]}"
-echo "Post AB items: ${post_AB_items[@]}"
+  # AB
+  fslmerge -t ${betadir}/pre_AB_items.nii.gz ${betadir}/betaOUT_run-1_ev-001 ${betadir}/betaOUT_run-1_ev-002 \
+  ${betadir}/betaOUT_run-1_ev-004 ${betadir}/betaOUT_run-1_ev-005 ${betadir}/betaOUT_run-1_ev-007 \
+  ${betadir}/betaOUT_run-1_ev-008 ${betadir}/betaOUT_run-1_ev-010 ${betadir}/betaOUT_run-1_ev-011 \
+  ${betadir}/betaOUT_run-2_ev-001 ${betadir}/betaOUT_run-2_ev-002 ${betadir}/betaOUT_run-2_ev-004 \
+  ${betadir}/betaOUT_run-2_ev-005 ${betadir}/betaOUT_run-2_ev-007 ${betadir}/betaOUT_run-2_ev-008 \
+  ${betadir}/betaOUT_run-2_ev-010 ${betadir}/betaOUT_run-2_ev-011 ${betadir}/betaOUT_run-3_ev-001 \
+  ${betadir}/betaOUT_run-3_ev-002 ${betadir}/betaOUT_run-3_ev-004 ${betadir}/betaOUT_run-3_ev-005 \
+  ${betadir}/betaOUT_run-3_ev-007 ${betadir}/betaOUT_run-3_ev-008 ${betadir}/betaOUT_run-3_ev-010 \
+  ${betadir}/betaOUT_run-3_ev-011
 
-# Merge files excluding the dropped run
-fslmerge -t pre_items.nii.gz "${pre_items[@]}"
-fslmerge -t post_items.nii.gz "${post_items[@]}"
-fslmerge -t pre_AC_items.nii.gz "${pre_AC_items[@]}"
-fslmerge -t post_AC_items.nii.gz "${post_AC_items[@]}"
-fslmerge -t pre_AB_items.nii.gz "${pre_AB_items[@]}"
-fslmerge -t post_AB_items.nii.gz "${post_AB_items[@]}"
+  fslmerge -t ${betadir}/post_AB_items.nii.gz ${betadir}/betaOUT_run-4_ev-001 ${betadir}/betaOUT_run-4_ev-002 \
+  ${betadir}/betaOUT_run-4_ev-004 ${betadir}/betaOUT_run-4_ev-005 ${betadir}/betaOUT_run-4_ev-007 \
+  ${betadir}/betaOUT_run-4_ev-008 ${betadir}/betaOUT_run-4_ev-010 ${betadir}/betaOUT_run-4_ev-011 \
+  ${betadir}/betaOUT_run-5_ev-001 ${betadir}/betaOUT_run-5_ev-002 ${betadir}/betaOUT_run-5_ev-004 \
+  ${betadir}/betaOUT_run-5_ev-005 ${betadir}/betaOUT_run-5_ev-007 ${betadir}/betaOUT_run-5_ev-008 \
+  ${betadir}/betaOUT_run-5_ev-010 ${betadir}/betaOUT_run-5_ev-011
+fi
 
-fslmerge -t pre_post_items.nii.gz pre_items.nii.gz post_items.nii.gz
-fslmerge -t pre_post_AC_items.nii.gz pre_AC_items.nii.gz post_AC_items.nii.gz
-fslmerge -t pre_post_AB_items.nii.gz pre_AB_items.nii.gz post_AB_items.nii.gz
+
+if [ "$drop_run" = "5" ]; then
+  # ABC
+  fslmerge -t ${betadir}/pre_items.nii.gz ${betadir}/betaOUT_run-1* ${betadir}/betaOUT_run-2* ${betadir}/betaOUT_run-3*
+  fslmerge -t ${betadir}/post_items.nii.gz ${betadir}/betaOUT_run-4* ${betadir}/betaOUT_run-6*
+
+  # AC
+  fslmerge -t ${betadir}/pre_AC_items.nii.gz ${betadir}/betaOUT_run-1_ev-001 ${betadir}/betaOUT_run-1_ev-003 \
+  ${betadir}/betaOUT_run-1_ev-004 ${betadir}/betaOUT_run-1_ev-006 ${betadir}/betaOUT_run-1_ev-007 \
+  ${betadir}/betaOUT_run-1_ev-009 ${betadir}/betaOUT_run-1_ev-010 ${betadir}/betaOUT_run-1_ev-012 \
+  ${betadir}/betaOUT_run-2_ev-001 ${betadir}/betaOUT_run-2_ev-003 ${betadir}/betaOUT_run-2_ev-004 \
+  ${betadir}/betaOUT_run-2_ev-006 ${betadir}/betaOUT_run-2_ev-007 ${betadir}/betaOUT_run-2_ev-009 \
+  ${betadir}/betaOUT_run-2_ev-010 ${betadir}/betaOUT_run-2_ev-012 ${betadir}/betaOUT_run-3_ev-001 \
+  ${betadir}/betaOUT_run-3_ev-003 ${betadir}/betaOUT_run-3_ev-004 ${betadir}/betaOUT_run-3_ev-006 \
+  ${betadir}/betaOUT_run-3_ev-007 ${betadir}/betaOUT_run-3_ev-009 ${betadir}/betaOUT_run-3_ev-010 \
+  ${betadir}/betaOUT_run-3_ev-012
+
+  fslmerge -t ${betadir}/post_AC_items.nii.gz ${betadir}/betaOUT_run-4_ev-001 ${betadir}/betaOUT_run-4_ev-003 \
+  ${betadir}/betaOUT_run-4_ev-004 ${betadir}/betaOUT_run-4_ev-006 ${betadir}/betaOUT_run-4_ev-007 \
+  ${betadir}/betaOUT_run-4_ev-009 ${betadir}/betaOUT_run-4_ev-010 ${betadir}/betaOUT_run-4_ev-012 \
+  ${betadir}/betaOUT_run-6_ev-001 ${betadir}/betaOUT_run-6_ev-003 ${betadir}/betaOUT_run-6_ev-004 \
+  ${betadir}/betaOUT_run-6_ev-006 ${betadir}/betaOUT_run-6_ev-007 ${betadir}/betaOUT_run-6_ev-009 \
+  ${betadir}/betaOUT_run-6_ev-010 ${betadir}/betaOUT_run-6_ev-012
+
+  # AB
+  fslmerge -t ${betadir}/pre_AB_items.nii.gz ${betadir}/betaOUT_run-1_ev-001 ${betadir}/betaOUT_run-1_ev-002 \
+  ${betadir}/betaOUT_run-1_ev-004 ${betadir}/betaOUT_run-1_ev-005 ${betadir}/betaOUT_run-1_ev-007 \
+  ${betadir}/betaOUT_run-1_ev-008 ${betadir}/betaOUT_run-1_ev-010 ${betadir}/betaOUT_run-1_ev-011 \
+  ${betadir}/betaOUT_run-2_ev-001 ${betadir}/betaOUT_run-2_ev-002 ${betadir}/betaOUT_run-2_ev-004 \
+  ${betadir}/betaOUT_run-2_ev-005 ${betadir}/betaOUT_run-2_ev-007 ${betadir}/betaOUT_run-2_ev-008 \
+  ${betadir}/betaOUT_run-2_ev-010 ${betadir}/betaOUT_run-2_ev-011 ${betadir}/betaOUT_run-3_ev-001 \
+  ${betadir}/betaOUT_run-3_ev-002 ${betadir}/betaOUT_run-3_ev-004 ${betadir}/betaOUT_run-3_ev-005 \
+  ${betadir}/betaOUT_run-3_ev-007 ${betadir}/betaOUT_run-3_ev-008 ${betadir}/betaOUT_run-3_ev-010 \
+  ${betadir}/betaOUT_run-3_ev-011
+
+  fslmerge -t ${betadir}/post_AB_items.nii.gz ${betadir}/betaOUT_run-4_ev-001 ${betadir}/betaOUT_run-4_ev-002 \
+  ${betadir}/betaOUT_run-4_ev-004 ${betadir}/betaOUT_run-4_ev-005 ${betadir}/betaOUT_run-4_ev-007 \
+  ${betadir}/betaOUT_run-4_ev-008 ${betadir}/betaOUT_run-4_ev-010 ${betadir}/betaOUT_run-4_ev-011 \
+  ${betadir}/betaOUT_run-6_ev-001 ${betadir}/betaOUT_run-6_ev-002 ${betadir}/betaOUT_run-6_ev-004 \
+  ${betadir}/betaOUT_run-6_ev-005 ${betadir}/betaOUT_run-6_ev-007 ${betadir}/betaOUT_run-6_ev-008 \
+  ${betadir}/betaOUT_run-6_ev-010 ${betadir}/betaOUT_run-6_ev-011
+fi
+
+
+# merge the images by phase into pre post images
+fslmerge -t ${betadir}/pre_post_items.nii.gz ${betadir}/pre_items.nii.gz ${betadir}/post_items.nii.gz
+fslmerge -t ${betadir}/pre_post_AC_items.nii.gz ${betadir}/pre_AC_items.nii.gz ${betadir}/post_AC_items.nii.gz
+fslmerge -t ${betadir}/pre_post_AB_items.nii.gz ${betadir}/pre_AB_items.nii.gz ${betadir}/post_AB_items.nii.gz
