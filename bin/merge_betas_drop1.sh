@@ -44,12 +44,12 @@ betaOUT_run-5_ev-010 betaOUT_run-5_ev-011 betaOUT_run-6_ev-001 betaOUT_run-6_ev-
 betaOUT_run-6_ev-005 betaOUT_run-6_ev-007 betaOUT_run-6_ev-008 betaOUT_run-6_ev-010 betaOUT_run-6_ev-011)
 
 # Merge files excluding the dropped run
-fslmerge -t pre_items.nii.gz $pre_items
-fslmerge -t post_items.nii.gz $post_items
-fslmerge -t pre_AC_items.nii.gz $pre_AC_items
-fslmerge -t post_AC_items.nii.gz $post_AC_items
-fslmerge -t pre_AB_items.nii.gz $pre_AB_items
-fslmerge -t post_AB_items.nii.gz $post_AB_items
+fslmerge -t pre_items.nii.gz "${pre_items}"
+fslmerge -t post_items.nii.gz "${post_items}"
+fslmerge -t pre_AC_items.nii.gz "${pre_AC_items}"
+fslmerge -t post_AC_items.nii.gz "${post_AC_items}"
+fslmerge -t pre_AB_items.nii.gz "${pre_AB_items}"
+fslmerge -t post_AB_items.nii.gz "${post_AB_items}"
 
 fslmerge -t pre_post_items.nii.gz pre_items.nii.gz post_items.nii.gz
 fslmerge -t pre_post_AC_items.nii.gz pre_AC_items.nii.gz post_AC_items.nii.gz
