@@ -33,3 +33,11 @@ fslmaths ${sf_dir}/sub-${sub}_subiculum_mask_L.nii.gz -add ${sf_dir}/sub-${sub}_
 fslmaths ${sf_dir}/sub-${sub}_posthipp_mask_L.nii.gz -add ${sf_dir}/sub-${sub}_posthipp_mask_R.nii.gz ${sf_dir}/sub-${sub}_posthipp_mask_B.nii.gz
 fslmaths ${sf_dir}/sub-${sub}_CA23DG_mask_L.nii.gz -add ${sf_dir}/sub-${sub}_CA23DG_mask_R.nii.gz ${sf_dir}/sub-${sub}_CA23DG_mask_B.nii.gz
 
+for mask in ${sf_dir}/*; do
+  mask_basename=$(basename "$mask" .nii.gz)
+  output_file="${sf_dir}/${mask_basename}_func.nii.gz"
+  antsApplyTransforms -d 3 -i $mask -n NearestNeighbor \
+-o $output_file -t [/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/mask_to_func_ref_Affine.txt] \
+-r /corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/brainmask_func_dilated.nii.gz
+
+done
