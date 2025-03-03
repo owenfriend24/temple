@@ -1,10 +1,19 @@
-## Estimating betaseries images for each object during each run ##
-based on Jeannette Mumford's work, essentially runs a GLM for each voxel ~ stimulus and extracts the beta weight for the stimulus's effect on that voxel's activity
+## Estimating betaseries images for each object during each run
+based on Jeannette Mumford's work, essentially runs a GLM for each (voxel ~ stimulus) and extracts the beta weight for the stimulus's effect on that voxel's activity
 
-### running first level models with FSL and using design matrix to create beta images
+### creating first level models with FSL and using design matrix to create beta images (GLM matrix for stimulus and confound measures)
 
-### 1. fix arrow output and create .txt files for confounds and each EV
-will output into sub/func/arrow_txt
+### run all steps below using:
+```
+batch_betaseries.sh temple100
+```
+or
+```
+batch_betaseries.sh temple101 drop_run=6
+```
+
+### 1. fix arrow output (if not done already) and create .txt files for confounds and each EV
+will output into /func/arrow_txt
 ```
 fix_arrow.py $FM temple058
 prep_arrow.py $FM both temple058
@@ -27,8 +36,11 @@ betaseries_est.py temple058
 ```
 merge_betas_prepost.sh temple071
 ```
+or
+```
+merge_betas_drop1.sh temple0023 6
 
-
+```
 
 
 
