@@ -1,13 +1,13 @@
 # Image Registration:
 Notes:
-* need to use idev or jobs for ants transformation, too much memory to do in normal tacc terminal
-* see prep_func_data.sh and run_first_levels.sh for examples of transformations between three spaces
+* need to use idev or jobs for ants transformation, too much memory to do on login nodes
+* see mni_transforms.sh,, prep_func_data.sh, and run_first_levels.sh for examples of transformations between three spaces in action
 
 ## Components:
 * T1w anatomical image path (e.g. sub-temple057_desc-preproc_T1w.nii.gz)
 * Data to transform
   * BOLD data in T1 space (e.g. sub-temple057_task-collector_run-01_space-T1w_boldref.nii.gz)
-  *   Z-stat map from 1st level analyses
+  *   e.g., Z-stat map from 1st level analyses
 * MNI 1mm structural brain (/work/03206/mortonne/software/apps/fsl-5.0.11/data/standard/MNI152_T1_1mm_brain.nii.gz)
 
 ## Types of interpolation:
