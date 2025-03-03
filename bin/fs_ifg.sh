@@ -25,7 +25,7 @@ mri_binarize --i $fs_input_dir/sub-$sub/mri/aparc+aseg.mgz --o $fs_output_dir/su
 mri_binarize --i $fs_input_dir/sub-$sub/mri/aparc+aseg.mgz --o $fs_output_dir/sub-${sub}/masks/ifg_masks/b_ifg_full.nii.gz \
 --match 1018 1019 1020 2018 2019 2020
 
-for mask in $fs_output_dir/sub-$sub/mri/ifg_masks/*.nii.gz; do
+for mask in $fs_output_dir/sub-$sub/masks/ifg_masks/*.nii.gz; do
   mask_basename=$(basename "$mask" .nii.gz)
   output_file="${fs_output_dir}/sub-${sub}/masks/ifg_masks/${mask_basename}_func.nii.gz"
   antsApplyTransforms -d 3 -i $mask -n NearestNeighbor \
