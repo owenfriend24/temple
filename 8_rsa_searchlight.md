@@ -30,25 +30,3 @@ mds_sub.py $FM temple016 $FM/sub-temple016/transforms/adult_IFG_AC_mask.nii.gz a
 batch_mds_subs.sh $adults
 
 
-### symmetry analyses (in progress) - need to create dropped run version; current function compares A(POST) to B(PRE) or C(PRE) depending on the comparison specified. 
-* to run a searchlight:
-```
-sl_symmetry.py temple016 whole_brain AC
-```
-* to pull .txt files with within and across triad similarity values
-```
-sl_symmetry_values.py temple016 sl_hip AB
-```
-* for dropping run 6
-```
-sl_symmetry_values_droprun.py temple023 sl_hip AB 6
-```
-* for apre bpost
-```
-sl_symmetry_values_BA.py temple016 sl_hip AB
-sl_symmetry_values_CA.py temple016 sl_hip AC
-```
-
-sl_symmetry_values_CA_droprun.py temple016 sl_hip AC 6
-
-
