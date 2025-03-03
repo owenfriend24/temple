@@ -79,7 +79,7 @@ if __name__ == "__main__":
     parser.add_argument("measure", help="prepost, symmetry, both")
     parser.add_argument("master_dir", help="where folders containing .txt files for each comparison are stored")
     parser.add_argument("comparison", help="options: AB, BC, AC")
-    parser.add_argument("mask", help="mask name e.g., b_hip_subregions, b_hip_subfields, etc.")
+    parser.add_argument("mask", help="mask name e.g., b_hip_subregions, ifg_subregions, b_hip_subfields, etc.")
     parser.add_argument("--agg_file", type=bool, default=False,
                         help="write aggregate file - boolean")
     args = parser.parse_args()

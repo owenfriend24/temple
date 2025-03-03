@@ -11,7 +11,7 @@ fmriprep_dir=$1
 sub=$2
 corr=$3
 
-mkdir -p ${fmriprep_dir}/sourcedata/freesurfer/sub-${sub}/mri/hip_masks
+mkdir -p ${fmriprep_dir}/masks/sub-${sub}/hip_masks
 
 for mask in b_hip b_hip_ant b_hip_body b_hip_tail b_hip_post; do
 
@@ -25,7 +25,7 @@ for mask in b_hip b_hip_ant b_hip_body b_hip_tail b_hip_post; do
 #${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz
 
 WarpImageMultiTransform 3 /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz \
-${fmriprep_dir}/sourcedata/freesurfer/sub-${sub}/mri/hip_masks/warp-${mask}.nii.gz \
+${fmriprep_dir}/sub-${sub}/masks/hip_masks/warp-${mask}.nii.gz \
 -R ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
 -i ${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt \
 ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz
