@@ -26,7 +26,7 @@ ac_rs_values.py temple071 sl AC
 cluster -i {input} -t 0.99 --minextent= ### --oindex = {output mask}
 
 
-### MDS within extracted SL ROI masks - didn't really pan out with first try but can come back to later
+### MDS within extracted SL ROI masks - didn't really pan out with first try but can come back to later; these functions pull out run-level similarity/distances between the 12 items, jupyter notebook does the actual multidimensional scaling 
 sl_masks_to_func.sh temple016 $FM AC adult_IFG_AC_mask
 mds_sub.py $FM temple016 $FM/sub-temple016/transforms/adult_IFG_AC_mask.nii.gz adult_IFG_AC
 batch_mds_subs.sh $adults
