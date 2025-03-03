@@ -65,18 +65,18 @@ slaunch -J fmriprep “temple_fmriprep.sh $SCRATCH/temple/prepro_data {}" $BIDID
 prep_func_data.sh freesurfer_dir fmriprep_dir subject
 ```
 
-### 5.1.Create mask based on freesurfer parcellations and skullstrip functional runs (< 5 min. on dev node)
+### 5.1. Create mask based on freesurfer parcellations and skullstrip functional runs (< 5 min. on dev node)
 * fmriprep doesn't skullstrip the functional data, so we create a brainmask here using the freesurfer output and use it to skullstrip all functional runs
 ```
 prep_func_data.py freesurfer_dir fmriprep_dir subject
 ```
 
-## 6. Skullstrip anatomical image and create transform images/affine files for registration between functional, anatomical, and MNI space (~ 10 min. on dev. node)
+## 5.2. Skullstrip anatomical image and create transform images/affine files for registration between functional, anatomical, and MNI space (~ 10 min. on dev. node)
 * Now skullstrip the anatomical image and create all files necessary to transform between different spaces
 ```
 mni_transforms.sh fmriprep_dir subject
 ```
-## 7. Smooth functional data with 4mm kernel (~20 min.)
+## 5.3. Smooth functional data with 4mm kernel (~20 min.)
 ```
 temple_smooth.sh fmriprep_dir freesurfer_dir subject task
 temple_smooth.sh $FM $FS temple100 arrow
