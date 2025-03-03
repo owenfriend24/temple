@@ -4,7 +4,7 @@
 ```
 ppi_hpc_mean.sh freesurfer_dir fmriprep_dir subject task
 ```
-1. (new). use hippocampus mask reverse-normalized into participant space, extract eigenvalue and save out
+1. (new). use custom MNI hippocampus mask reverse-normalized into participant space, extract eigenvalue and save out
 * need to create the hippocampal masks first (mni_hip_masks.sh $FM $sub $CORR
 ```
 ppi_hip_new.sh $FM temple016 collector $CORR
