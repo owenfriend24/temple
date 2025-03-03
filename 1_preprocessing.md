@@ -56,7 +56,8 @@ slaunch -J quick "quick_heu.sh {}" $subject -N 1 -n 1 -r 01:00:00 -p development
 ```
 slaunch -J fmriprep “temple_fmriprep.sh $SCRATCH/temple/prepro_data {}" $BIDIDS -N 1 -n 1 -r 08:00:00 -p normal
 ```
-
+* run_freesurfer.sh subject image_dir to re-run freesurfer if necessary
+  * currently testing on temple_022 (only sub in which freesurfer didn't work correctly)
 ## 5. Post-process functional data
 * runs the three sub-commands below (which can be run separately)
 * skullstrips functional runs, creates transformation files between functional, anatomical, and MNI space, and smooths functional data
