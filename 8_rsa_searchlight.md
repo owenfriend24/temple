@@ -1,4 +1,6 @@
 ## Whole brain searchlight for within-triad similarity and AC similarity
+## to-do; write out the exact logic of the searchlight function, make sure all paths are absolute for parallel processing (no cd commands)
+
 ### 1. activate rsa profile
 ```
 source $HOME/analysis/temple/rsa/bin/activate
