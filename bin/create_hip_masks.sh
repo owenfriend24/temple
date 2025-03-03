@@ -31,6 +31,10 @@ ${fmriprep_dir}/masks/sub-${sub}/hip_masks/warp-${mask}.nii.gz \
 ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz
 
 
-#antsApplyTransforms -d 3  -i /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz -n NearestNeighbor -o ${corr}/sub-${sub}/transforms/fs_func_${mask}.nii.gz -t [${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz] -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt, 1] -r ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz
+#antsApplyTransforms -d 3  -i /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz -n NearestNeighbor -o \
+# ${corr}/sub-${sub}/transforms/fs_func_${mask}.nii.gz \
+# -t [${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz] \
+# -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt, 1] \
+# -r ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz
 
 done
