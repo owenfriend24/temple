@@ -11,7 +11,7 @@ fs_input_dir=$1
 sub=$2
 fs_output_dir=$3
 
-mkdir -p $fs_output_dir/sub-${sub}/mri/ifg_masks
+mkdir -p $fs_output_dir/sub-${sub}/masks/ifg_masks
 
 mri_binarize --i $fs_input_dir/sub-$sub/mri/aparc+aseg.mgz --o $fs_output_dir/sub-${sub}/masks/ifg_masks/b_pars_opercularis.nii.gz \
 --match 1018 2018
