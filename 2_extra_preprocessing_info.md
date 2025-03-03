@@ -1,4 +1,5 @@
 ## Remote desktop via TACC
+* use tap.tacc.utexas.edu for vm nodes, or can run below codes for development node
 ```
 sbatch /share/doc/slurm/job.dcv
 touch dcvserver.out ; tail -f dcvserver.out
@@ -12,36 +13,37 @@ touch dcvserver.out ; tail -f dcvserver.out
 ```
 fsleyes &
 ```
-* Ctrl + c in terminal to get back to normal TACC after running job commands
+
 
 ## Plotting motion using fmriprep confound files
-* fmriprep outputs some but I don't like their formatting, this script gives better ones including reports of mean, sd, and %/# over threshold for FD and DVARS
-* pull motion files to local machine:
-  ```
-  cd /Users/owenfriend/Documents/temple_local/motion_files
-  ./pull_behav.sh ofriend@ls6.tacc.utexas.edu:/scratch/09123/ofriend/temple/prisma_prepro/derivatives/fmriprep ./ temple060
-  ```
-* plot motion by run for subject
-  ```
-  cd /Users/owenfriend/Documents/temple_local/motion_files
-  python plot_motion.py
-  ```
-
-## Working between TACC and local machine
-* It's annoying to re-clone github repo in TACC every time I make a change, so I'm making changes on local machine and using CyberDuck to upload
-*   need to chmod 755 on new .py and .sh scripts to let me run them
-* To pull behavioral data from cluster onto local machine (e.g., to check motion):
-*   From local machine terminal:
+* plot motion confounds timeseries and display # of TR's > motion thresholds
 ```
-cd /Users/owenfriend/Documents/temple_local/analysis
-./temple_behav_data.sh ofriend@ls6.tacc.utexas.edu:/scratch/09123/ofriend/temple/rawdata2/derivatives/fmriprep-23.0.2 /Users/owenfriend/Documents/temple_local/motion_files
+plot_motion.py fmriprep_dir subject
+plot_motion.py $CORR temple100
 ```
 
-## using idev
-* should check on how often i should be using, need to use either idev or jobs for registration via ants
+## Working between TACC, github, and local machine
+* this repo is cloned on tacc/pycharm
+* to maintain consistency, try to only edit files on PyCharm and push to cluster/github
+```
+git pull
+git add .
+git commit -m "commit message"
+git push
+```
+* files created in PyCharm and pushed to cluster set restricted permissions, created alias function to make executable
+```
+bin
+```
+runs 
+```
+chmod 755 -R /home1/09123/ofriend/temple/analysis/bin
+```
 
-## betaseries-bids fields
-* example call, below each bulleted field is working example (not sure if all work)
+
+
+## betaseries-bids fields (mindstorm package; not currently using)
+* example call, below each bulleted field is working example 
 ```
 betaseries-bids [OPTIONS] data_dir fmriprep_dir out_dir subject task run space mask_name mask_file events_field
 ```
@@ -117,7 +119,7 @@ csf:csf_derivative1:white_matter:white_matter_derivative1:trans_x:trans_x_deriva
 find . -type f -name '*bold_ss_4mm.nii.gz' -exec bash -c 'mv "$1" "${1/bold_ss_4mm/bold}"' _ {} \;
 ```
 
-### setting up singularity image on tacc
+### setting up singularity image on tacc (i.e. setting up fmriprep)
 https://www.nipreps.org/apps/singularity/
 https://containers-at-tacc.readthedocs.io/en/latest/singularity/01.singularity_basics.html
 
