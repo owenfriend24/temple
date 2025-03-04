@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import argparse
 from temple_utils import get_age_groups
+import numpy as np
 
 # one important note to start - triplets/triads are ordered 1-4 based on the order of beta images
 #   within the pre_post betaseries. Those are organized by item 1-12, which is set by fix_arrow and prep_arrow
@@ -27,21 +28,21 @@ def process_subject(subject, master_dir):
 
     # for each row, aggregate presented items into a single array
     for index, row in rem.iterrows():
-        triad_1 = [row['item1'], row['item2'], row['item3']]
-        triad_2 = [row['item4'], row['item5'], row['item6']]
+        triad_1 = [int(row['item1']), int(row['item2']), int(row['item3'])]
+        triad_2 = [int(row['item4']), int(row['item5']), int(row['item6'])]
 
         if row['side'] == 1:
-            corr_triad = triad_1
+            corr_triad = np.array(triad_1)
         else:
-            corr_triad = triad_2
-
-        if sum(corr_triad) == 6:
+            corr_triad = np.array(triad_2)
+        print(f"correct triad: {corr_triad}")
+        if np.array_equal(corr_triad, np.array([1, 2, 3])):
             tri_num = 1
-        elif sum(corr_triad) == 15:
+        elif np.array_equal(corr_triad, np.array([4, 5, 6])):
             tri_num = 2
-        elif sum(corr_triad) == 24:
+        elif np.array_equal(corr_triad, np.array([7, 8, 9])):
             tri_num = 3
-        else:
+        elif np.array_equal(corr_triad, np.array([10, 11, 12])):
             tri_num = 4
 
         clean.loc[len(clean)] = [subject, row['trial'], triad_1, triad_2, tri_num, row['order_resp'],
