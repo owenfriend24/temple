@@ -12,7 +12,7 @@ from temple_utils import get_age_groups
 def run(command):
     subprocess.run(command, shell=True)
 
-def aggregate_csv_files(measure, comparison, csv_files, master_dir):
+def aggregate_csv_files(comparison, csv_files, master_dir, out_flag):
     aggregated_data = []
 
     for file_path in csv_files:
@@ -26,15 +26,10 @@ def aggregate_csv_files(measure, comparison, csv_files, master_dir):
     if aggregated_data:
         master_df = pd.concat(aggregated_data, ignore_index=True)
 
-        if measure in ['prepost', 'both']:
-            master_output_path = f"{master_dir}/aggregated_{comparison}_prepost.csv"
-            master_df.to_csv(master_output_path, index=False)
-            print(f"Aggregated prepost file saved at: {master_output_path}")
+        master_output_path = f"{master_dir}/aggregated_{comparison}_{out_flag}.csv"
+        master_df.to_csv(master_output_path, index=False)
+        print(f"Aggregated file saved at: {master_output_path}")
 
-        if measure in ['symmetry', 'both']:
-            master_output_path = f"{master_dir}/aggregated_{comparison}_symmetry.csv"
-            master_df.to_csv(master_output_path, index=False)
-            print(f"Aggregated symmetry file saved at: {master_output_path}")
     else:
         print("No CSV files were found for aggregation.")
 
@@ -51,7 +46,8 @@ def main(measure, master_dir, comparison, mask, agg_file):
         "temple115": 3,
         "temple116": 5,
     }
-    output_csv_files = []
+    integration_csv_files = []
+    symmetry_csv_files = []
 
     for sub in subjects:
         if sub not in excludes:
@@ -65,7 +61,7 @@ def main(measure, master_dir, comparison, mask, agg_file):
                 print(f"merging integration values for {sub}")
 
                 # fix for corrected filepath
-                output_csv_files.append(f"{master_dir}/prepost_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv")
+                integration_csv_files.append(f"{master_dir}/prepost_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv")
 
             if measure in ["symmetry", "both"]:
                 bwd_comp = comparison[::-1]
@@ -76,10 +72,15 @@ def main(measure, master_dir, comparison, mask, agg_file):
                 print(f"merging symmetry values for {sub}")
 
                 # fix for corrected filepath
-                output_csv_files.append(f"{master_dir}/symmetry_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv")
+                symmetry_csv_files.append(f"{master_dir}/symmetry_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv")
 
-    if agg_file:
-        aggregate_csv_files(measure, comparison, output_csv_files, master_dir)
+    if measure in ["prepost", "both"]:
+        if agg_file:
+            aggregate_csv_files(comparison, integration_csv_files, master_dir, 'prepost')
+    if measure in ["symmetry", "both"]:
+        if agg_file:
+            aggregate_csv_files(comparison, symmetry_csv_files, master_dir, 'symmetry')
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -87,7 +88,7 @@ if __name__ == "__main__":
     parser.add_argument("master_dir", help="where folders containing .txt files for each comparison are stored")
     parser.add_argument("comparison", help="options: AB, BC, AC")
     parser.add_argument("mask", help="mask name e.g., b_hip_subregions, ifg_subregions, b_hip_subfields, etc.")
-    parser.add_argument("--agg_file", type=bool, default=False,
-                        help="write aggregate file - boolean")
+    parser.add_argument("--agg_file", action=argparse.BooleanOptionalAction,
+                        default=False, help="write aggregate file - boolean")
     args = parser.parse_args()
     main(args.measure, args.master_dir, args.comparison, args.mask, args.agg_file)
