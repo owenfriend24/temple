@@ -16,6 +16,7 @@ def aggregate_csv_files(measure, comparison, csv_files, master_dir):
     aggregated_data = []
 
     for file_path in csv_files:
+        file_path = Path(file_path)
         if file_path.exists():
             df = pd.read_csv(file_path)
             aggregated_data.append(df)
