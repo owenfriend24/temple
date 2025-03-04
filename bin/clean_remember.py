@@ -31,19 +31,16 @@ def process_subject(subject, master_dir):
         triad_1 = [int(row['item1']), int(row['item2']), int(row['item3'])]
         triad_2 = [int(row['item4']), int(row['item5']), int(row['item6'])]
 
-        if int(row['side']) == 1:
-            corr_triad = np.array(triad_1)
-        else:
-            corr_triad = np.array(triad_2)
-        print(f"correct triad: {corr_triad}")
-        if np.array_equal(corr_triad, np.array([1, 2, 3])):
+        if np.array_equal(triad_1, np.array([1, 2, 3])) or np.array_equal(triad_2, np.array([1, 2, 3])):
             tri_num = 1
-        elif np.array_equal(corr_triad, np.array([4, 5, 6])):
+        elif np.array_equal(triad_1, np.array([4, 5, 6])) or np.array_equal(triad_2, np.array([4, 5, 6])):
             tri_num = 2
-        elif np.array_equal(corr_triad, np.array([7, 8, 9])):
+        elif np.array_equal(triad_1, np.array([7, 8, 9])) or np.array_equal(triad_2, np.array([7, 8, 9])):
             tri_num = 3
-        elif np.array_equal(corr_triad, np.array([10, 11, 12])):
+        elif np.array_equal(triad_1, np.array([10, 11, 12])) or np.array_equal(triad_2, np.array([10, 11, 12])):
             tri_num = 4
+
+        print(f"correct triad: {tri_num}")
 
         clean.loc[len(clean)] = [subject, row['trial'], triad_1, triad_2, tri_num, row['order_resp'],
                                  row['side'], row['side_resp'], row['acc'], row['response_time'], row['reps']]
