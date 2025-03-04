@@ -31,7 +31,7 @@ def process_subject(subject, master_dir):
         triad_1 = [int(row['item1']), int(row['item2']), int(row['item3'])]
         triad_2 = [int(row['item4']), int(row['item5']), int(row['item6'])]
 
-        if row['side'] == 1:
+        if int(row['side']) == 1:
             corr_triad = np.array(triad_1)
         else:
             corr_triad = np.array(triad_2)
