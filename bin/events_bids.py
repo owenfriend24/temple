@@ -46,7 +46,6 @@ def copy_json(in_file, out_file):
 
 
 def main(study_dir, bids_dir, subject, mat=True):
-    print(f'subject: {subject}')
     data_dir = os.path.join(study_dir, "sourcebehav")
     scan_dir = os.path.join(study_dir, "sourcedata")
     srcdir = os.environ["SRCDIR"]
@@ -55,7 +54,7 @@ def main(study_dir, bids_dir, subject, mat=True):
         subjects = tasks.get_subj_list()
     else:
         subjects = [int(subject)]
-
+    print(f"subjects: {subjects}")
     # keys_arrow = [
     #     "onset",
     #     "trial",
@@ -122,6 +121,7 @@ def main(study_dir, bids_dir, subject, mat=True):
     data = raw.load_remember(data_dir, subjects=subjects)  # Explicitly pass subjects
     data = data[data["subject"].isin(subjects)]
     if not data.empty:
+        print("writing events ...")
         write_events(data, keys_remember, bids_dir, "remember", "beh", "events")
         json_file = os.path.join(srcdir, "src/temple/data/task-remember_events.json")
         copy_json(json_file, os.path.join(bids_dir, "task-remember_events.json"))
