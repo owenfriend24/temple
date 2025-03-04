@@ -41,6 +41,7 @@ def aggregate_csv_files(measure, comparison, csv_files, master_dir):
 
 def main(measure, master_dir, comparison, mask, agg_file):
     subjects = get_age_groups.get_all_subjects()
+    excludes = ['temple115', 'temple116', 'temple022']
 
     drop_runs = {
         "temple023": 6,
@@ -52,28 +53,29 @@ def main(measure, master_dir, comparison, mask, agg_file):
     output_csv_files = []
 
     for sub in subjects:
-        # Check if subject has a run to drop
-        drop_run = drop_runs.get(sub, None)
-        drop_flag = f"--drop_run {drop_run} " if drop_run is not None else ""
-        if measure in ["prepost", "both"]:
-            run(f"integration_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
-            print(f"pulling prepost values for {sub}")
-            run(f"merge_integration.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
-            print(f"merging integration values for {sub}")
+        if sub not in excludes:
+            # Check if subject has a run to drop
+            drop_run = drop_runs.get(sub, None)
+            drop_flag = f"--drop_run {drop_run} " if drop_run is not None else ""
+            if measure in ["prepost", "both"]:
+                run(f"integration_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
+                print(f"pulling prepost values for {sub}")
+                run(f"merge_integration.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
+                print(f"merging integration values for {sub}")
 
-            # fix for corrected filepath
-            output_csv_files.append(f"{master_dir}/prepost_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv")
+                # fix for corrected filepath
+                output_csv_files.append(f"{master_dir}/prepost_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv")
 
-        if measure in ["symmetry", "both"]:
-            bwd_comp = comparison[::-1]
-            run(f"symmetry_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
-            print(f"pulling symmetry values for {sub}")
-            run(f"symmetry_prepost_values.py {drop_flag}{sub} {bwd_comp} {mask}")
-            run(f"merge_symmetry.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
-            print(f"merging symmetry values for {sub}")
+            if measure in ["symmetry", "both"]:
+                bwd_comp = comparison[::-1]
+                run(f"symmetry_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
+                print(f"pulling symmetry values for {sub}")
+                run(f"symmetry_prepost_values.py {drop_flag}{sub} {bwd_comp} {mask}")
+                run(f"merge_symmetry.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
+                print(f"merging symmetry values for {sub}")
 
-            # fix for corrected filepath
-            output_csv_files.append(f"{master_dir}/symmetry_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv")
+                # fix for corrected filepath
+                output_csv_files.append(f"{master_dir}/symmetry_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv")
 
     if agg_file:
         aggregate_csv_files(measure, comparison, output_csv_files, master_dir)
