@@ -52,13 +52,14 @@ def process_subject(subject, master_dir):
 
 
 def get_subdirectories(master_dir):
-    return [d.name for d in Path(master_dir).iterdir() if d.is_dir() and d.name.startswith("sub-temple")]
+    return sorted([d.name for d in Path(master_dir).iterdir() if d.is_dir() and d.name.startswith("sub-temple")])
 
 def aggregate_subjects(master_dir):
     all_dfs = []
     for sub in get_subdirectories(master_dir):
         tsv_path = f'{master_dir}/{sub}/beh/{sub}_task-remember_events.tsv'
         if os.path.exists(tsv_path):
+            print(f"adding sub {sub}")
             all_dfs.append(pd.read_table(tsv_path))
         else:
             print(f"no csv found for {sub}")
