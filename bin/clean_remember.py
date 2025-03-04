@@ -40,7 +40,6 @@ def process_subject(subject, master_dir):
         elif np.array_equal(triad_1, np.array([10, 11, 12])) or np.array_equal(triad_2, np.array([10, 11, 12])):
             tri_num = 4
 
-        print(f"correct triad: {tri_num}")
 
         clean.loc[len(clean)] = [subject, row['trial'], triad_1, triad_2, tri_num, row['order_resp'],
                                  row['side'], row['side_resp'], row['acc'], row['response_time'], row['reps']]
