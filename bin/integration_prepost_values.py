@@ -65,15 +65,19 @@ if __name__ == "__main__":
     ### Directories ###
     subjdir = os.path.join(expdir, f'sub-{sbj}')
     betadir = os.path.join(subjdir, 'betaseries')
-    resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
+    #resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
+    temp_result_dir = '/scratch/09123/ofriend/temple/derivatives/fmriprep/'
+    resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
     out_dir = os.path.join(resultdir, f'sub-{sbj}')
     os.makedirs(out_dir, exist_ok=True)
 
     for mask in masks:
         if masktype == 'b_hip_subregions':
-            slmask = os.path.join(subjdir, 'transforms', f'{mask}.nii.gz')
+            #slmask = os.path.join(subjdir, 'transforms', f'{mask}.nii.gz')
+            slmask = f"{temp_result_dir}/masks/sub-{sbj}/hip_masks/{mask}.nii.gz"
         elif masktype == 'b_ifg_subregions':
-            slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
+            #slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
+            slmask = f"{temp_result_dir}/masks/sub-{sbj}/ifg_masks/{mask}.nii.gz"
 
         # Load fMRI data
         ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)

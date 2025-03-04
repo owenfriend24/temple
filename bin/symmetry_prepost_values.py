@@ -101,14 +101,17 @@ if __name__ == "__main__":
     ### directories ###
     subjdir = f'{expdir}/sub-{sbj}/'
     betadir = subjdir + '/betaseries'
-
+    temp_result_dir = '/scratch/09123/ofriend/temple/derivatives/fmriprep/'
+    #resultdir = expdir + f'/integration_prepost/symmetry_{comparison}/sub-{sbj}'
+    resultdir = f'{temp_result_dir}/integration_prepost/symmetry_{comparison}/sub-{sbj}'
 
     for mask in masks:
         if masktype == 'b_hip_subregions':
-            slmask = f'{subjdir}/transforms/{mask}.nii.gz'
+            #slmask = f'{subjdir}/transforms/{mask}.nii.gz'
+            slmask = f"{temp_result_dir}/masks/sub-{sbj}/hip_masks/{mask}.nii.gz"
         elif masktype == 'b_ifg_subregions':
-            slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
-
+            #slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
+            slmask = f"{temp_result_dir}/masks/sub-{sbj}/ifg_masks/{mask}.nii.gz"
 
         # load in data - need to swap order if going backward
 
@@ -124,7 +127,7 @@ if __name__ == "__main__":
 
         within, across = measure(ds)
 
-        resultdir = expdir + f'/integration_prepost/symmetry_{comparison}/sub-{sbj}'
+
         os.makedirs(f'{resultdir}', exist_ok=True)
         out_file_w = f"{resultdir}/{sbj}_symmetry_{comparison}_within_{mask}.txt"
         out_file_a = f"{resultdir}/{sbj}_symmetry_{comparison}_across_{mask}.txt"
