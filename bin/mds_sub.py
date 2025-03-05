@@ -18,14 +18,17 @@ def run_com(command):
     print(f"Running command: {command}")
     subprocess.run(command, shell=True)
 
-def merge_betas(sub):
+def merge_betas(sub, fmriprep_dir):
     if sub in ['temple030', 'temple023']:
-    	run_com(f'fslmerge -t $FM/sub-{sub}/betaseries/run4_items.nii.gz $FM/sub-{sub}/betaseries/betaOUT_run-4*')
-    	run_com(f'fslmerge -t $FM/sub-{sub}/betaseries/run5_items.nii.gz $FM/sub-{sub}/betaseries/betaOUT_run-5*')
+        run_com(f'fslmerge -t {fmriprep_dir}/sub-{sub}/betaseries/run4_items.nii.gz {fmriprep_dir}/sub-{sub}/betaseries/betaOUT_run-4*')
+        run_com(f'fslmerge -t {fmriprep_dir}/sub-{sub}/betaseries/run5_items.nii.gz {fmriprep_dir}/sub-{sub}/betaseries/betaOUT_run-5*')
+    elif sub in ['temple116']:
+        run_com(f'fslmerge -t {fmriprep_dir}/sub-{sub}/betaseries/run4_items.nii.gz {fmriprep_dir}/sub-{sub}/betaseries/betaOUT_run-4*')
+        run_com(f'fslmerge -t {fmriprep_dir}/sub-{sub}/betaseries/run6_items.nii.gz {fmriprep_dir}/sub-{sub}/betaseries/betaOUT_run-6*')
     else:
-        run_com(f'fslmerge -t $FM/sub-{sub}/betaseries/run4_items.nii.gz $FM/sub-{sub}/betaseries/betaOUT_run-4*')
-        run_com(f'fslmerge -t $FM/sub-{sub}/betaseries/run5_items.nii.gz $FM/sub-{sub}/betaseries/betaOUT_run-5*')
-        run_com(f'fslmerge -t $FM/sub-{sub}/betaseries/run6_items.nii.gz $FM/sub-{sub}/betaseries/betaOUT_run-6*')
+        run_com(f'fslmerge -t {fmriprep_dir}/sub-{sub}/betaseries/run4_items.nii.gz {fmriprep_dir}/sub-{sub}/betaseries/betaOUT_run-4*')
+        run_com(f'fslmerge -t {fmriprep_dir}/sub-{sub}/betaseries/run5_items.nii.gz {fmriprep_dir}/sub-{sub}/betaseries/betaOUT_run-5*')
+        run_com(f'fslmerge -t {fmriprep_dir}/sub-{sub}/betaseries/run6_items.nii.gz {fmriprep_dir}/sub-{sub}/betaseries/betaOUT_run-6*')
 
 def sub_post(fmriprep_dir, sub, mask):
     #mask_path = os.path.join(fmriprep_dir, f'sub-{sub}', 'brainmask_func_dilated.nii.gz')
@@ -54,10 +57,11 @@ def sub_post(fmriprep_dir, sub, mask):
         return r_4, r_5, r_6
 
 def main(fmriprep_dir, sub, mask, mask_label):
+    # create an average df to pull average similarity across the four runs
     if sub in ['temple030', 'temple023']:
         run_com('source /home1/09123/ofriend/analysis/temple/profile')
         average_df = pd.DataFrame()
-        merge_betas(sub)
+        merge_betas(sub, fmriprep_dir)
         r_4, r_5 = sub_post(fmriprep_dir, sub, mask)
 
         dfs = [r_4, r_5]
@@ -72,7 +76,7 @@ def main(fmriprep_dir, sub, mask, mask_label):
     else:
         run_com('source /home1/09123/ofriend/analysis/temple/profile')
         average_df = pd.DataFrame()
-        merge_betas(sub)
+        merge_betas(sub, fmriprep_dir)
         sub_post(fmriprep_dir, sub, mask)
         r_4, r_5, r_6 = sub_post(fmriprep_dir, sub, mask)
 

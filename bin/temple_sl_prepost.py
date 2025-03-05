@@ -47,7 +47,7 @@ def get_args():
     # Required arguments
     parser.add_argument("subject_id", help="Subject identifier (e.g., temple016)")
     parser.add_argument("comparison", help="Comparison type (e.g., AC)")
-    parser.add_argument("masktype", help="Mask type (e.g., b_hip_subregions, b_ifg_subregions)")
+    parser.add_argument("masktype", help="Mask type (e.g., whole_brain)")
     # Optional argument: drop a specific run
     parser.add_argument("--drop_run", type=int, choices=[1, 2, 3, 4, 5, 6], default=None,
                         help="Run number to drop (1 through 6). Default is None (keep all runs).")
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     ###
     for mask in masks:
         if masktype == 'whole_brain':
-            slmask = f'{expdir}/sourcedata/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
+            slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
 
         #load in data
         ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
