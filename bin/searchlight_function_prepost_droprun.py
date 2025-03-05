@@ -14,13 +14,12 @@ from mvpa2.measures.base import Measure
 from mvpa2.measures import rsa
 
 
-class temple_function_prepost(Measure):
+class searchlight_function_prepost_droprun(Measure):
 
-    def __init__(self, metric, output, comp, niter):
+    def __init__(self, metric, output, niter):
         Measure.__init__(self)
 
         self.metric = metric
-        self.comp = comp
         self.dsm = []
         self.output = output
         self.niter = niter
@@ -42,34 +41,36 @@ class temple_function_prepost(Measure):
         dsm_pre = 1 - dsm_pre.samples
         dsm_post = 1 - dsm_post.samples
 
-        ### calculate the difference to determine representational change ###
-        dsm_diff = numpy.subtract(arctanh(dsm_post), arctanh(dsm_pre))
+        dsm_pre = arctanh(dsm_pre)
+        dsm_post = arctanh(dsm_post)
+
 
         ### set up the vectors to hold the sorted data ###
         within = []
         across = []
 
         ### loop through the data to sort the within and across comparisons ###
-        n = len(dsm_diff)
 
-        for x in range(n):
+        n_pre = len(dsm_pre)
+        n_post = len(dsm_post)
 
-            for y in range(x + 1, n):
+        min_len = min(n_pre, n_post)
 
-                dstmp = dsm_diff[x, y]
+        for x in range(min_len):
+
+            for y in range(x + 1, min_len):
 
                 if dataset.sa['run'][x] != dataset.sa['run'][y]:  # only do across run comparisons
 
                     if dataset.sa['triad'][x] == dataset.sa['triad'][y]:  # within triad
 
                         if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
-
+                            dstmp = dsm_post[x, y] - dsm_pre[x, y]
                             within.append(dstmp)
 
                     elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
-
                         if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
-
+                            dstmp = dsm_post[x, y] - dsm_pre[x, y]
                             across.append(dstmp)
 
         #### convert items to arrays ###
@@ -77,15 +78,13 @@ class temple_function_prepost(Measure):
         across = array(across)
 
         ### calculate the observed statistic ###
-        #obsstat = mean(within) - mean(across)
-        # just looking at within rather than within - across
-        obsstat = mean(within)
+        obsstat = mean(within) - mean(across)
+        #obsstat=mean(within)
 
         ### determine the number of within/across comparisons for the permutation test ###
         n_within = len(within)
         n_across = len(across)
         n_total = n_within + n_across
-        
 
         ### calculate the random statistic ###
         randstat = []
@@ -94,23 +93,10 @@ class temple_function_prepost(Measure):
             random.shuffle(randcat)
             within_shuff = randcat[0:n_within]
             across_shuff = randcat[n_within:n_total]
-         
-            # random statistic should also just be the randomized within statistic rather than within - across
-            randstat.append(mean(within_shuff))
-            
-            #randstat.append(mean(within_shuff) - mean(across_shuff))
+            #randstat.append(mean(within_shuff))
+            randstat.append(mean(within_shuff) - mean(across_shuff))
 
-        ### calculate the p-value for the center searchlight sphere voxel ###
+        ### calculate the z-stat for the center searchlight sphere voxel ###
         randstat = array(randstat)
 
-        ### for testing with whole roi ###
-        # if self.output == 1:
-        #	obsmns = []
-        #	obsmns.append(obsstat)
-        #	return obsmns
-
-        if self.comp == 'separation':
-            return mean(randstat <= obsstat)
-        elif self.comp == 'integration':
-            # return mean(randstat>=obsstat)
-            return (obsstat - mean(randstat)) / std(randstat)
+        return (obsstat - mean(randstat)) / std(randstat)

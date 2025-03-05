@@ -36,7 +36,7 @@ import sys
 import subprocess
 
 ### import custom searchlight function ###
-from temple_function_prepost_droprun import *
+from searchlight_function_prepost_droprun import *
 
 
 ### set up expriment info ###

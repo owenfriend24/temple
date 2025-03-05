@@ -35,7 +35,7 @@ import sys
 import subprocess
 
 ### import custom searchlight function ###
-from temple_function_prepost import *
+from searchlight_function_prepost import *
 
 subprocess.run('. /home1/09123/ofriend/analysis/temple/rsa/bin/activate', shell = True)
 
