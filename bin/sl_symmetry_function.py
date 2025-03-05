@@ -92,14 +92,10 @@ class sl_symmetry_function(Measure):
         ### calculate the p-value for the center searchlight sphere voxel ###
         randstat = array(randstat)
 
-        ### for testing with whole roi ###
-        # if self.output == 1:
-        #	obsmns = []
-        #	obsmns.append(obsstat)
-        #	return obsmns
-
         if self.comp == 'separation':
             return mean(randstat <= obsstat)
         elif self.comp == 'integration':
             # return mean(randstat>=obsstat)
             return (obsstat - mean(randstat)) / std(randstat)
+
+        return (z_stat_fwd + z_stat_bwd)/sqrt(2)
