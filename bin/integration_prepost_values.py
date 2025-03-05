@@ -36,8 +36,8 @@ if __name__ == "__main__":
     args = get_args()
 
     ### Set up experiment info ###
-    #expdir = '/corral-repl/utexas/prestonlab/temple/'
-    expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
+    expdir = '/corral-repl/utexas/prestonlab/temple/'
+    #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
     sbj = args.subject_id
     comparison = args.comparison
     masktype = args.masktype
