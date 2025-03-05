@@ -63,10 +63,16 @@ if __name__ == "__main__":
     masktype = args.masktype
     drop_run = args.drop_run
 
-    #expdir = '/corral-repl/utexas/prestonlab/temple/'
-    expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
-    resultdir = expdir+'/searchlight/prepost_AC'
-
+    expdir = '/corral-repl/utexas/prestonlab/temple/'
+    # expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
+    subjdir = os.path.join(expdir, f'sub-{sbj}')
+    betadir = os.path.join(subjdir, 'betaseries')
+    # resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
+    temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
+    resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
+    out_dir = os.path.join(resultdir, f'sub-{sbj}')
+    os.makedirs(out_dir, exist_ok=True)
+    #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
     niter= 1000
 
     ### masks for data to analyze ###
@@ -85,13 +91,6 @@ if __name__ == "__main__":
             unpack=True
         )
     ### directories ###
-    subjdir = os.path.join(expdir, f'sub-{sbj}')
-    betadir = os.path.join(subjdir, 'betaseries')
-    # resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
-    temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
-    resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
-    out_dir = os.path.join(resultdir, f'sub-{sbj}')
-    os.makedirs(out_dir, exist_ok=True)
 
     ###
     for mask in masks:
