@@ -36,69 +36,81 @@ import sys
 import subprocess
 
 ### import custom searchlight function ###
-from sl_symmetry_function import *
+from sl_symmetry_function_new import *
 
 
-### set up expriment info ###
+### use argument parser to set up experiment/subject info and drop runs if necessary
+def get_args():
+    parser = argparse.ArgumentParser(description="Process fMRI data for pre/post comparison.")
 
-sbj = sys.argv[1]
-masktype = sys.argv[2]
-comp = sys.argv[3]
+    # Required arguments
+    parser.add_argument("subject_id", help="Subject identifier (e.g., temple016)")
+    parser.add_argument("comparison", help="Comparison type (e.g., AC)")
+    parser.add_argument("masktype", help="Mask type (e.g., whole_brain)")
+    # Optional argument: drop a specific run
+    parser.add_argument("--drop_run", type=int, choices=[1, 2, 3, 4, 5, 6], default=None,
+                        help="Run number to drop (1 through 6). Default is None (keep all runs).")
 
-expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
-resultdir = expdir+f'/searchlight/prepost_{comp}_symm'
+    return parser.parse_args()
 
-### masks for data to analyze ###
 
-if masktype == 'whole_brain':
-    masks = ['brainmask_func_dilated']
-elif masktype == 'b_hip':
-    masks = ['b_hip']
+### Main script execution ###
+if __name__ == "__main__":
+    args = get_args()
+    sbj = args.subject_id
+    comparison = args.comparison
+    masktype = args.masktype
+    drop_run = args.drop_run
 
-### searchlight information ###
-niter = 1000
-phase,run,triad,item = loadtxt(f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comp}_items.txt',unpack=1)
-#comparisons = ['separation','integration']
-comparisons = ['integration']
+    expdir = '/corral-repl/utexas/prestonlab/temple/'
+    # expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
+    subjdir = os.path.join(expdir, f'sub-{sbj}')
+    betadir = os.path.join(subjdir, 'betaseries')
+    # resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
+    temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
+    resultdir = os.path.join(temp_result_dir, f'integration_prepost/symmetry_{comparison}')
+    out_dir = os.path.join(resultdir, f'sub-{sbj}')
+    os.makedirs(out_dir, exist_ok=True)
+    #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
+    niter= 1000
 
-### directories ###
-subjdir = expdir+'/sub-%s'%(sbj)
-betadir = subjdir+'/betaseries'
+    ### masks for data to analyze ###
+    if masktype == 'whole_brain':
+        masks = ['brainmask_func_dilated']
 
-###
-for comparison in comparisons:
+    if drop_run is not None:
+        phase, run, triad, item = np.loadtxt(
+            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items_drop{drop_run}.txt',
+            unpack=True
+        )
+    else:
+        # Load phase, run, triad, and item data
+        phase, run, triad, item = np.loadtxt(
+            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items.txt',
+            unpack=True
+        )
+    ### directories ###
 
+    ###
     for mask in masks:
-
-        if masktype == 'mni':
-            slmask = subjdir+'/anatomy/antsreg/data/funcunwarpspace/rois/mni/%s.nii.gz'%(mask)
-        elif masktype == 'freesurfer':
-            slmask = subjdir+'/anatomy/bbreg/data/freesurfer_rois/%s.nii.gz'%(mask)
-        elif masktype == 'ants':
-            slmask = subjdir+'/anatomy/antsreg/data/funcunwarpspace/rois/schlimack_ants/%s.nii.gz'%(mask)
-        elif masktype == 'seg':
-            slmask = subjdir+'/anatomy/antsreg/data/funcunwarpspace/rois/seg/%s.nii.gz'%(mask)
-        elif masktype == 'whole_brain':
-            slmask = expdir+'/sourcedata/freesurfer/sub-%s/mri/out/brainmask_func_dilated.nii.gz'%(sbj)
-        elif masktype == 'b_hip':
-            slmask = expdir+'/sub-%s/transforms/b_hip.nii.gz'%(sbj)
+        if masktype == 'whole_brain':
+            slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
 
         #load in data
-        ds = fmri_dataset(betadir+f'/pre_post_{comp}_items.nii.gz',mask=slmask)
+        if comparison == 'ABC':
+            ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
+        else:
+            ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
         ds.sa['phase'] = phase[:]
         ds.sa['run'] = run[:]
         ds.sa['triad'] = triad[:]
         ds.sa['item'] = item[:]
 
-        #similarity measure
-        sl_func = sl_symmetry_function('correlation',1,comparison,niter)
-        
-        #for testing with whole roi
-        #results = sl_func(ds)
-        #os.chdir("/corral-repl/utexas/prestonlab/garnet/results/searchlight")
-        #subjoutfile = "%s_prepost_%s_%s.txt"%(sbj,comparison,mask)
-        #savetxt(subjoutfile,results,fmt="%.8f")
 
+        if drop_run is not None:
+            sl_func = sl_symmetry_function_new('correlation',1,comparison,niter)
+        else:
+            sl_func = sl_symmetry_function_new('correlation',1,comparison,niter)
 
         #run the searchlight
         sl = sphere_searchlight(sl_func,radius = 3)
@@ -106,5 +118,5 @@ for comparison in comparisons:
 
         #save out map
         #subjoutfile = resultdir+'/%s_prepost_%s_%s.nii.gz'%(sbj,comparison,mask) #p-score computed within searchlight
-        subjoutfile = resultdir+'/%s_symm_%s_z.nii.gz'%(sbj,mask) #z-score computed within searchlight
+        subjoutfile = f'{out_dir}/{sbj}_symmetry_{comparison}_{mask}_z.nii.gz' #z-score computed within searchlight
         map2nifti(ds,sl_map.samples).to_filename(subjoutfile)
