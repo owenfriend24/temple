@@ -14,16 +14,16 @@ fs_output_dir=$3
 # output into a masks folder with subject level subfolders
 mkdir -p $fs_output_dir/masks/sub-${sub}/ifg_masks
 
-mri_binarize --i $fs_input_dir/sub-$sub/mri/out/aparc+aseg.nii.gz --o $fs_output_dir/masks/sub-${sub}/ifg_masks/b_pars_opercularis.nii.gz \
+mri_binarize --i $fs_input_dir/sub-$sub/mri/aparc+aseg.mgz --o $fs_output_dir/masks/sub-${sub}/ifg_masks/b_pars_opercularis.nii.gz \
 --match 1018 2018
 
-mri_binarize --i $fs_input_dir/sub-$sub/mri/out/aparc+aseg.nii.gz --o $fs_output_dir/masks/sub-${sub}/ifg_masks/b_pars_orbitalis.nii.gz \
+mri_binarize --i $fs_input_dir/sub-$sub/mri/aparc+aseg.mgz --o $fs_output_dir/masks/sub-${sub}/ifg_masks/b_pars_orbitalis.nii.gz \
 --match 1019 2019
 
-mri_binarize --i $fs_input_dir/sub-$sub/mri/out/aparc+aseg.nii.gz --o $fs_output_dir/masks/sub-${sub}/ifg_masks/b_pars_triangularis.nii.gz \
+mri_binarize --i $fs_input_dir/sub-$sub/mri/aparc+aseg.mgz --o $fs_output_dir/masks/sub-${sub}/ifg_masks/b_pars_triangularis.nii.gz \
 --match 1020 2020
 
-mri_binarize --i $fs_input_dir/sub-$sub/mri/out/aparc+aseg.nii.gz --o $fs_output_dir/masks/sub-${sub}/ifg_masks/b_ifg_full.nii.gz \
+mri_binarize --i $fs_input_dir/sub-$sub/mri/aparc+aseg.mgz --o $fs_output_dir/masks/sub-${sub}/ifg_masks/b_ifg_full.nii.gz \
 --match 1018 1019 1020 2018 2019 2020
 
 for mask in $fs_output_dir/masks/sub-$sub/ifg_masks/*.nii.gz; do
