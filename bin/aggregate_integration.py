@@ -9,10 +9,11 @@ import numpy as np
 from temple_utils import get_age_groups
 
 
+
 def run(command):
     subprocess.run(command, shell=True)
 
-def aggregate_csv_files(comparison, csv_files, master_dir, out_flag):
+def aggregate_csv_files(comparison, csv_files, master_dir, mask, out_flag):
     aggregated_data = []
 
     for file_path in csv_files:
@@ -26,18 +27,28 @@ def aggregate_csv_files(comparison, csv_files, master_dir, out_flag):
     if aggregated_data:
         master_df = pd.concat(aggregated_data, ignore_index=True)
 
-        master_output_path = f"{master_dir}/aggregated_{comparison}_{out_flag}.csv"
+        master_output_path = f"{master_dir}/aggregated_{comparison}_{mask}_{out_flag}.csv"
         master_df.to_csv(master_output_path, index=False)
         print(f"Aggregated file saved at: {master_output_path}")
 
     else:
         print("No CSV files were found for aggregation.")
 
+def is_processed (sub, comparison, master_dir, mask, measure):
+    prepost_file = Path(master_dir) / f"prepost_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv"
+    symmetry_file = Path(master_dir) / f"symmetry_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv"
 
+    if measure == "both":
+        return prepost_file.exists() and symmetry_file.exists()
+    elif measure == "prepost":
+        return prepost_file.exists()
+    elif measure == "symmetry":
+        return symmetry_file.exists()
+    return False  # defaults to false
 
 def main(measure, master_dir, comparison, mask, agg_file):
     subjects = get_age_groups.get_all_subjects()
-    excludes = ['temple115', 'temple116', 'temple022']
+    excludes = []
 
     drop_runs = {
         "temple023": 6,
@@ -50,36 +61,41 @@ def main(measure, master_dir, comparison, mask, agg_file):
     symmetry_csv_files = []
 
     for sub in subjects:
-        if sub not in excludes:
-            # Check if subject has a run to drop
-            drop_run = drop_runs.get(sub, None)
-            drop_flag = f"--drop_run {drop_run} " if drop_run is not None else ""
-            if measure in ["prepost", "both"]:
-                run(f"integration_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
-                print(f"pulling prepost values for {sub}")
-                run(f"merge_integration.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
-                print(f"merging integration values for {sub}")
+        if sub in excludes:
+            continue
 
-                # fix for corrected filepath
-                integration_csv_files.append(f"{master_dir}/prepost_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv")
+        drop_run = drop_runs.get(sub)
+        drop_flag = f"--drop_run {drop_run} " if drop_run else ""
 
-            if measure in ["symmetry", "both"]:
-                bwd_comp = comparison[::-1]
-                run(f"symmetry_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
-                print(f"pulling symmetry values for {sub}")
-                run(f"symmetry_prepost_values.py {drop_flag}{sub} {bwd_comp} {mask}")
-                run(f"merge_symmetry.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
-                print(f"merging symmetry values for {sub}")
+        sub_processed = is_processed(sub, comparison, master_dir, mask, measure)
 
-                # fix for corrected filepath
-                symmetry_csv_files.append(f"{master_dir}/symmetry_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv")
+        if measure in ["prepost", "both"] and not sub_processed:
+            print(f"Processing prepost values for {sub}...")
+            run(f"integration_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
+            run(f"merge_integration.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
+        else:
+            print(f"Already processed prepost for {sub}.")
 
-    if measure in ["prepost", "both"]:
-        if agg_file:
-            aggregate_csv_files(comparison, integration_csv_files, master_dir, 'prepost')
-    if measure in ["symmetry", "both"]:
-        if agg_file:
-            aggregate_csv_files(comparison, symmetry_csv_files, master_dir, 'symmetry')
+        integration_csv_files.append(
+            f"{master_dir}/prepost_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv")
+
+        if measure in ["symmetry", "both"] and not sub_processed:
+            bwd_comp = comparison[::-1]
+            print(f"Processing symmetry values for {sub}...")
+            run(f"symmetry_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
+            run(f"symmetry_prepost_values.py {drop_flag}{sub} {bwd_comp} {mask}")
+            run(f"merge_symmetry.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
+        else:
+            print(f"Already processed symmetry for {sub}.")
+
+        symmetry_csv_files.append(
+            f"{master_dir}/symmetry_{comparison}/sub-{sub}/sub-{sub}_{comparison}_{mask}_master.csv")
+
+    if agg_file:
+        if measure in ["prepost", "both"]:
+            aggregate_csv_files(comparison, integration_csv_files, master_dir, mask,"prepost")
+        if measure in ["symmetry", "both"]:
+            aggregate_csv_files(comparison, symmetry_csv_files, master_dir, mask, "symmetry")
 
 
 if __name__ == "__main__":
