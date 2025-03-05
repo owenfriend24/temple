@@ -73,7 +73,7 @@ def main(measure, master_dir, comparison, mask, agg_file):
             print(f"Processing prepost values for {sub}...")
             run(f"integration_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
             run(f"merge_integration.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
-        else:
+        elif measure in ["prepost", "both"] and sub_processed:
             print(f"Already processed prepost for {sub}.")
 
         integration_csv_files.append(
@@ -85,7 +85,7 @@ def main(measure, master_dir, comparison, mask, agg_file):
             run(f"symmetry_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
             run(f"symmetry_prepost_values.py {drop_flag}{sub} {bwd_comp} {mask}")
             run(f"merge_symmetry.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
-        else:
+        elif measure in ["symmetry", "both"] and sub_processed:
             print(f"Already processed symmetry for {sub}.")
 
         symmetry_csv_files.append(
