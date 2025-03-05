@@ -32,10 +32,6 @@ class sl_symmetry_function(Measure):
             pairwise_metric=self.metric, \
             center_data=False)
 
-        ### split up the data set into pre and post ### don't want to split up since we're not doing direct comparisons within pre and within post for this analysis
-        #pre = dataset[dataset.sa.phase == 1]
-        #post = dataset[dataset.sa.phase == 2]
-
         ### calculate the dsm ###
         dsm_data = self.dsm(dataset)
         dsm_data = 1 - dsm_data.samples
@@ -45,17 +41,16 @@ class sl_symmetry_function(Measure):
         within = []
         across = []
 
+        # what we need to do here is pull the observed stat for forward AND backward integration,
+        # then combine thsoe z-scores using Stouffer's method (dividing by sq. root of 2)
+
         ### loop through the data to sort the within and across comparisons ###
         n = len(dsm_diff)
 
         for x in range(n):
-
             for y in range(x + 1, n):
-                
                 dstmp = dsm_diff[x, y]
-
                 # comparing post representations to pre; only interested in post of A and pre of C (or B)
-                
                 # are the items different phases?
                 #if (dataset.sa['phase'][x] == 2) & (dataset.sa['item'][x] == 1):
                 if (dataset.sa['phase'][x] != dataset.sa['phase'][y]):
