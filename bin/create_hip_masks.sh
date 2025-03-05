@@ -13,7 +13,9 @@ corr=$3
 
 mkdir -p ${fmriprep_dir}/masks/sub-${sub}/hip_masks
 
-for mask in b_hip b_hip_ant b_hip_body b_hip_tail b_hip_post; do
+for mask in b_hip b_hip_ant b_hip_body b_hip_tail b_hip_post \
+l_hip l_hip_ant l_hip_body l_hip_tail l_hip_post \
+r_hip r_hip_atn r_hip_body r_hip_tail r_hip_post; do
 
 #antsApplyTransforms -d 3  -i /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz -n NearestNeighbor -o ${fmriprep_dir}/sub-${sub}/transforms/${mask}.nii.gz -t [${fmriprep_dir}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz] -t [${fmriprep_dir}/sub-${sub}/transforms/native_to_MNI_Affine.txt, 1] -r ${fmriprep_dir}/searchlight/prepost_AC/${sub}_prepost_brainmask_func_dilated_z.nii.gz
 

@@ -12,6 +12,8 @@ sub=$2
 fs_output_dir=$3
 
 # output into a masks folder with subject level subfolders
+
+# subject temple075 has a different structure in corral - needs to be mri/out/aparc+aseg.nii.gz
 mkdir -p $fs_output_dir/masks/sub-${sub}/ifg_masks
 
 mri_binarize --i $fs_input_dir/sub-$sub/mri/aparc+aseg.mgz --o $fs_output_dir/masks/sub-${sub}/ifg_masks/b_pars_opercularis.nii.gz \
