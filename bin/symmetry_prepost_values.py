@@ -107,6 +107,7 @@ if __name__ == "__main__":
     resultdir = f'{temp_result_dir}/integration_prepost/symmetry_{comparison}/sub-{sbj}'
 
     for mask in masks:
+        print(f"running in mask {mask}")
         if masktype == 'b_hip_subregions':
             #slmask = f'{subjdir}/transforms/{mask}.nii.gz'
             slmask = f"{temp_result_dir}/masks/sub-{sbj}/hip_masks/{mask}.nii.gz"
