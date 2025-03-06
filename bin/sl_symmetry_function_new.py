@@ -85,5 +85,5 @@ class sl_symmetry_function_new(Measure):
         z_stat_fwd = (obsstat_fwd - np.mean(randstat_fwd)) / np.std(randstat_fwd)
         z_stat_bwd = (obsstat_bwd - np.mean(randstat_bwd)) / np.std(randstat_bwd)
 
-        ### Combined Z-score (Stouffer's method) ###
-        return (z_stat_fwd + z_stat_bwd) / np.sqrt(2)
+        ### return minimum z score, ensuring that we're only looking for integration in both fwd and bwd directions
+        return min(z_stat_fwd, z_stat_bwd)
