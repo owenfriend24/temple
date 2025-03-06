@@ -80,7 +80,7 @@ if __name__ == "__main__":
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
 
     ### searchlight information ###
-    if comparison in ['BA', 'CB', 'CA']:
+    if comparison in ['BA', 'CB', 'CA', 'CBA']:
         c_fwd = comparison[::-1]
     else:
         c_fwd = comparison
