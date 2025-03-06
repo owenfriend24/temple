@@ -43,11 +43,11 @@ class symmetry_function(Measure):
 
         # loop through the data to sort the within and across comparisons
         # forward integration
-        if self.comp in ['AB', 'BC', 'AC']:
+        if self.comp in ['AB', 'BC', 'AC', 'ABC']:
             first_item = 2
             second_item = 1
         # backward integration
-        elif self.comp in ['BA', 'CB', 'CA']:
+        elif self.comp in ['BA', 'CB', 'CA', 'CBA']:
             first_item = 1
             second_item = 2
         else:
