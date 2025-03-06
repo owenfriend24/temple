@@ -127,8 +127,7 @@ if __name__ == "__main__":
         ds.sa['triad'] = triad[:]
         ds.sa['item'] = item[:]
 
-        # similarity measure - since these values are pulled at the level of single runs
-        #  do we actually need an additional function?
+        # similarity measure
         measure = symmetry_function('correlation', 1, comparison)
 
         within, across = measure(ds)

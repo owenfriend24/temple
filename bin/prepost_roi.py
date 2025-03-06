@@ -80,9 +80,9 @@ class prepost_roi(Measure):
                             within.append(dstmp)
                             # print(f"within: x = {x}, y = {y}")
                             #w_distance.append(dst)
-                            print(f"within comparison: "
-                                  f"run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
-                                  f"run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
+                            # print(f"within comparison: "
+                            #       f"run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
+                            #       f"run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
                     elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
 
@@ -91,9 +91,9 @@ class prepost_roi(Measure):
                             across.append(dstmp)
                             # print(f"across: x = {x}, y = {y}")
                             #a_distance.append(dst)
-                            print(f"across comparison: "
-                                  f"triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
-                                  f"triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
+                            # print(f"across comparison: "
+                            #       f"triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
+                            #       f"triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
 #
         #### convert items to arrays ###
