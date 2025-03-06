@@ -109,9 +109,10 @@ if __name__ == "__main__":
 
 
         if drop_run is not None:
-            sl_func = searchlight_function_prepost('correlation',1,niter)
+            sl_func = searchlight_function_prepost_droprun('correlation', 1, niter)
         else:
-            sl_func = searchlight_function_prepost_droprun('correlation',1,niter)
+            sl_func = searchlight_function_prepost('correlation', 1, niter)
+
 
 
         #run the searchlight
