@@ -73,6 +73,7 @@ if __name__ == "__main__":
     os.makedirs(out_dir, exist_ok=True)
 
     for mask in masks:
+        print(f"running in mask {mask}")
         if masktype == 'b_hip_subregions':
             #slmask = os.path.join(subjdir, 'transforms', f'{mask}.nii.gz')
             slmask = f"{temp_result_dir}/masks/sub-{sbj}/hip_masks/{mask}.nii.gz"
