@@ -37,7 +37,7 @@ import subprocess
 import argparse
 
 ### import custom searchlight function ###
-from sl_symmetry_function_new import *
+from sl_symmetry_function import *
 
 
 ### use argument parser to set up experiment/subject info and drop runs if necessary
@@ -109,9 +109,9 @@ if __name__ == "__main__":
 
 
         if drop_run is not None:
-            sl_func = sl_symmetry_function_new('correlation',1,comparison,niter)
+            sl_func = sl_symmetry_function('correlation',1,comparison,niter)
         else:
-            sl_func = sl_symmetry_function_new('correlation',1,comparison,niter)
+            sl_func = sl_symmetry_function('correlation',1,comparison,niter)
 
         #run the searchlight
         sl = sphere_searchlight(sl_func,radius = 3)

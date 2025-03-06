@@ -41,8 +41,7 @@ class sl_symmetry_function(Measure):
         within = []
         across = []
 
-        # what we need to do here is pull the observed stat for forward AND backward integration,
-        # then combine thsoe z-scores using Stouffer's method (dividing by sq. root of 2)
+        # what we need to do here is pull the observed stat for forward AND backward integration
 
         ### loop through the data to sort the within and across comparisons ###
 
@@ -81,8 +80,8 @@ class sl_symmetry_function(Measure):
 
         z_stat_fwd = (obsstat - mean(randstat)) / std(randstat)
 
-
-
+        within = []
+        across = []
      # go again in the backward direction
         for x in range(n):
             for y in range(x + 1, n):
@@ -118,5 +117,5 @@ class sl_symmetry_function(Measure):
         z_stat_bwd = (obsstat - mean(randstat)) / std(randstat)
 
 
-        return (z_stat_fwd + z_stat_bwd)/sqrt(2)
+        return min(z_stat_fwd, z_stat_bwd)
 
