@@ -34,6 +34,7 @@ from mvpa2.measures.anova import *
 from mvpa2.base.dataset import *
 import sys
 import subprocess
+import argparse
 
 ### import custom searchlight function ###
 from sl_symmetry_function_new import *
