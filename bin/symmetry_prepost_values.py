@@ -116,7 +116,11 @@ if __name__ == "__main__":
 
         # load in data - need to swap order if going backward
 
-        ds = fmri_dataset(betadir + f'/pre_post_{c_fwd}_items.nii.gz', mask=slmask)
+
+        if comparison == 'ABC':
+            ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
+        else:
+            ds = fmri_dataset(os.path.join(betadir, f'pre_post_{c_fwd}_items.nii.gz'), mask=slmask)
         ds.sa['phase'] = phase[:]
         ds.sa['run'] = run[:]
         ds.sa['triad'] = triad[:]
