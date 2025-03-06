@@ -47,14 +47,20 @@ def create_subject_file(subject, master_dir, comparison, mask, drop_run):
         print(f'across length: {len(across)}')
 
         for triad in [1, 2, 3, 4]:
-            if drop_run is not None:
-                within_indices = integration_indices.pull_within_prepost_indices_droprun(triad)
-                across_indices = integration_indices.pull_across_prepost_indices_droprun(triad)
-                print(f'within indices: {within_indices}')
-                print(f'across indices: {across_indices}')
+            if comparison == 'ABC':
+                if drop_run is not None:
+                    within_indices = integration_indices.pull_within_ABC_prepost_indices_droprun(triad)
+                    across_indices = integration_indices.pull_across_ABC_prepost_indices_droprun(triad)
+                else:
+                    within_indices = integration_indices.pull_within_ABC_prepost_indices(triad)
+                    across_indices = integration_indices.pull_across_ABC_prepost_indices(triad)
             else:
-                within_indices = integration_indices.pull_within_prepost_indices(triad)
-                across_indices = integration_indices.pull_across_prepost_indices(triad)
+                if drop_run is not None:
+                    within_indices = integration_indices.pull_within_prepost_indices_droprun(triad)
+                    across_indices = integration_indices.pull_across_prepost_indices_droprun(triad)
+                else:
+                    within_indices = integration_indices.pull_within_prepost_indices(triad)
+                    across_indices = integration_indices.pull_across_prepost_indices(triad)
             within_df = within.iloc[within_indices]
             within_sim = np.mean(within_df)
 
@@ -67,9 +73,6 @@ def create_subject_file(subject, master_dir, comparison, mask, drop_run):
                 within_sim, across_sim, (within_sim - across_sim)
             ]
     return comp_data
-
-
-
 
 
 
@@ -86,7 +89,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("subject", help="e.g., temple100")
     parser.add_argument("master_dir", help="where folders containing .txt files for each comparison are stored")
-    parser.add_argument("comparison", help="options: AB, BC, AC")
+    parser.add_argument("comparison", help="options: AB, BC, AC, ABC")
     parser.add_argument("mask", help="mask name e.g., b_hip_subregions, b_hip_subfields, b_ifg_subregions, etc.")
     # Optional argument: drop a specific run
     parser.add_argument("--drop_run", type=int, choices=[1, 2, 3, 4, 5, 6], default=None,

@@ -51,13 +51,20 @@ def create_subject_file(subject, master_dir, comparison, mask, drop_run):
             across = pd.read_csv(across_filename, sep='\t', header=None)
 
             for triad in [1, 2, 3, 4]:
-
-                if drop_run is not None:
-                    within_indices = integration_indices.pull_within_symm_indices_droprun(triad)
-                    across_indices = integration_indices.pull_across_symm_indices_droprun(triad)
+                if comparison == 'ABC':
+                    if drop_run is not None:
+                        within_indices = integration_indices.pull_within_ABC_symm_indices_droprun(triad)
+                        across_indices = integration_indices.pull_across_ABC_symm_indices_droprun(triad)
+                    else:
+                        within_indices = integration_indices.pull_within_ABC_symm_indices(triad)
+                        across_indices = integration_indices.pull_across_ABC_symm_indices(triad)
                 else:
-                    within_indices = integration_indices.pull_within_symm_indices(triad)
-                    across_indices = integration_indices.pull_across_symm_indices(triad)
+                    if drop_run is not None:
+                        within_indices = integration_indices.pull_within_symm_indices_droprun(triad)
+                        across_indices = integration_indices.pull_across_symm_indices_droprun(triad)
+                    else:
+                        within_indices = integration_indices.pull_within_symm_indices(triad)
+                        across_indices = integration_indices.pull_across_symm_indices(triad)
 
                 within_df = within.iloc[within_indices]
                 within_sim = np.mean(within_df)
@@ -85,7 +92,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("subject", help="e.g., temple100")
     parser.add_argument("master_dir", help="where folders containing .txt files for each comparison are stored")
-    parser.add_argument("comparison", help="options: AB, BC, AC")
+    parser.add_argument("comparison", help="options: AB, BC, AC, ABC")
     parser.add_argument("mask", help="mask name e.g., b_hip_subregions, b_hip_subfields, b_ifg_subregions etc.")
     # Optional argument: drop a specific run
     parser.add_argument("--drop_run", type=int, choices=[1, 2, 3, 4, 5, 6], default=None,
