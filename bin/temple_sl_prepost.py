@@ -120,5 +120,5 @@ if __name__ == "__main__":
         sl_map = sl(ds)
 
         #save out map
-        subjoutfile = f'{out_dir}/{sbj}_prepost_{comparison}_{mask}_z_2.nii.gz' #z-score computed within searchlight
+        subjoutfile = f'{out_dir}/{sbj}_prepost_{comparison}_{mask}_z.nii.gz' #z-score computed within searchlight
         map2nifti(ds,sl_map.samples).to_filename(subjoutfile)
