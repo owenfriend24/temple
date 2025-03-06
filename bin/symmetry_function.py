@@ -43,17 +43,24 @@ class symmetry_function(Measure):
 
         # loop through the data to sort the within and across comparisons
         # forward integration
-        if self.comp in ['AB', 'BC', 'AC', 'ABC']:
+        if self.comp in ['AB', 'BC', 'AC']:
+            valid_comps = [2, 1]
             first_item = 2
             second_item = 1
         # backward integration
-        elif self.comp in ['BA', 'CB', 'CA', 'CBA']:
+        elif self.comp in ['BA', 'CB', 'CA']:
+            valid_comps = [1, 2]
             first_item = 1
             second_item = 2
+
+        elif self.comp == 'ABC':
+            valid_comps = [[2, 1], [3, 2], [3, 1]]
+        elif self.comp == 'BCA':
+            valid_comps = [[1, 2,], [3, 2], [3, 1]]
+
         else:
-            raise ValueError("specify valid comparison (e.g., AB, CA")
-
-
+            raise ValueError('no valid comparisons provided')
+        # if ABC, need to run with first_item 2 second_item 1 as well as 3 and 2, 3 and 1
 
         n = len(dsm_diff)
         for x in range(n):
@@ -64,15 +71,16 @@ class symmetry_function(Measure):
                 # are the items different phases?
                 if (dataset.sa['phase'][x] != dataset.sa['phase'][y]):
                     # parse whether we're looking for forward or backward integration
-                    if (dataset.sa['item'][x] == first_item) & (dataset.sa['item'][y] == second_item):
-                        if dataset.sa['triad'][x] == dataset.sa['triad'][y]:  # within triad
-                            within.append(dstmp)
-                            print(f"within comparison: phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
+                    for valid_comp in valid_comps:
+                        if (dataset.sa['item'][x] == valid_comp[0]) & (dataset.sa['item'][y] == valid_comp[1]):
+                            if dataset.sa['triad'][x] == dataset.sa['triad'][y]:  # within triad
+                                within.append(dstmp)
+                                print(f"within comparison: phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
-                        elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
+                            elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
 
-                            across.append(dstmp)
-                            print(f"across comparison: phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
+                                across.append(dstmp)
+                                print(f"across comparison: phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
         within = array(within)
         across = array(across)
