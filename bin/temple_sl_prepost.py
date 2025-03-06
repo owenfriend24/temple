@@ -95,7 +95,7 @@ if __name__ == "__main__":
     ###
     for mask in masks:
         if masktype == 'whole_brain':
-            slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
+            slmask = f'{expdir}/sourcedata/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
 
         #load in data
         if comparison == 'ABC':
