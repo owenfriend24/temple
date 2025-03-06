@@ -55,7 +55,7 @@ class symmetry_function(Measure):
 
         elif self.comp == 'ABC':
             valid_comps = [[2, 1], [3, 2], [3, 1]]
-        elif self.comp == 'BCA':
+        elif self.comp == 'CBA':
             valid_comps = [[1, 2,], [3, 2], [3, 1]]
 
         else:
