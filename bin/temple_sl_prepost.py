@@ -63,8 +63,8 @@ if __name__ == "__main__":
     masktype = args.masktype
     drop_run = args.drop_run
 
-    #expdir = '/corral-repl/utexas/prestonlab/temple/'
-    expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
+    expdir = '/corral-repl/utexas/prestonlab/temple/'
+    #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
     subjdir = os.path.join(expdir, f'sub-{sbj}')
     betadir = os.path.join(subjdir, 'betaseries')
     # resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     ###
     for mask in masks:
         if masktype == 'whole_brain':
-            slmask = f'{expdir}/sourcedata/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
+            slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
 
         #load in data
         if comparison == 'ABC':
@@ -120,5 +120,5 @@ if __name__ == "__main__":
         sl_map = sl(ds)
 
         #save out map
-        subjoutfile = f'{out_dir}/{sbj}_prepost_{comparison}_{mask}_z.nii.gz' #z-score computed within searchlight
+        subjoutfile = f'{out_dir}/{sbj}_prepost_{comparison}_{mask}_z_2.nii.gz' #z-score computed within searchlight
         map2nifti(ds,sl_map.samples).to_filename(subjoutfile)
