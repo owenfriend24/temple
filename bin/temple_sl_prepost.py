@@ -95,8 +95,7 @@ if __name__ == "__main__":
     ###
     for mask in masks:
         if masktype == 'whole_brain':
-            expdir2 = '/corral-repl/utexas/prestonlab/temple/'
-            slmask = f'{expdir2}/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
+            slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
 
         #load in data
         if comparison == 'ABC':
