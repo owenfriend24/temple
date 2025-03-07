@@ -30,10 +30,10 @@ fslmaths ${sub_dir}/final/sub-${sub}_right_lfseg_corr_nogray.nii.gz -thr 3 -uthr
 fslmaths ${sub_dir}/final/sub-${sub}_right_lfseg_corr_nogray.nii.gz -thr 4 -uthr 4 -bin ${sf_dir}/anat/sub-${sub}_CA23DG_mask_R.nii.gz
 
 # create bilateral masks
-fslmaths ${sf_dir}/sub-${sub}_CA1_mask_L.nii.gz -add ${sf_dir}/sub-${sub}_CA1_mask_R.nii.gz ${sf_dir}/anat/sub-${sub}_CA1_mask_B.nii.gz
-fslmaths ${sf_dir}/sub-${sub}_subiculum_mask_L.nii.gz -add ${sf_dir}/sub-${sub}_subiculum_mask_R.nii.gz ${sf_dir}/anat/sub-${sub}_subiculum_mask_B.nii.gz
-fslmaths ${sf_dir}/sub-${sub}_posthipp_mask_L.nii.gz -add ${sf_dir}/sub-${sub}_posthipp_mask_R.nii.gz ${sf_dir}/anat/sub-${sub}_posthipp_mask_B.nii.gz
-fslmaths ${sf_dir}/sub-${sub}_CA23DG_mask_L.nii.gz -add ${sf_dir}/sub-${sub}_CA23DG_mask_R.nii.gz ${sf_dir}/anat/sub-${sub}_CA23DG_mask_B.nii.gz
+fslmaths ${sf_dir}/anat/sub-${sub}_CA1_mask_L.nii.gz -add ${sf_dir}/anat/sub-${sub}_CA1_mask_R.nii.gz ${sf_dir}/anat/sub-${sub}_CA1_mask_B.nii.gz
+fslmaths ${sf_dir}/anat/sub-${sub}_subiculum_mask_L.nii.gz -add ${sf_dir}/anat/sub-${sub}_subiculum_mask_R.nii.gz ${sf_dir}/anat/sub-${sub}_subiculum_mask_B.nii.gz
+fslmaths ${sf_dir}/anat/sub-${sub}_posthipp_mask_L.nii.gz -add ${sf_dir}/anat/sub-${sub}_posthipp_mask_R.nii.gz ${sf_dir}/anat/sub-${sub}_posthipp_mask_B.nii.gz
+fslmaths ${sf_dir}/anat/sub-${sub}_CA23DG_mask_L.nii.gz -add ${sf_dir}/anat/sub-${sub}_CA23DG_mask_R.nii.gz ${sf_dir}/anat/sub-${sub}_CA23DG_mask_B.nii.gz
 
 for mask in ${sf_dir}/anat/*; do
   mask_basename=$(basename "$mask" .nii.gz)
