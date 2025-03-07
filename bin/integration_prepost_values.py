@@ -14,6 +14,8 @@ import subprocess
 import argparse
 import pandas as pd
 
+# ignore division by zero errors for NaN values when transforming to fisher's Z
+np.seterr(divide='ignore', invalid='ignore')
 
 ### Import custom searchlight function ###
 from prepost_roi import *
