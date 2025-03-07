@@ -12,6 +12,7 @@ from scipy.sparse import spdiags
 from scipy.linalg import toeplitz
 from mvpa2.measures.base import Measure
 from mvpa2.measures import rsa
+import pandas as pd
 
 
 class symmetry_function(Measure):
@@ -38,20 +39,20 @@ class symmetry_function(Measure):
         # convert coefficients to Fisher's Z
         dsm_diff = (arctanh(dsm_data))
         # set up the vectors to hold the sorted data
-        within = []
-        across = []
-
+        # within = []
+        # across = []
+        df = pd.DataFrame(columns=['comparison', 'run_1', 'triad_1', 'item_1', 'run_2', 'triad_2', 'item_2', 'value'])
         # loop through the data to sort the within and across comparisons
         # forward integration
         if self.comp in ['AB', 'BC', 'AC']:
             valid_comps = [[2, 1]]
-            first_item = 2
-            second_item = 1
+            # first_item = 2
+            # second_item = 1
         # backward integration
         elif self.comp in ['BA', 'CB', 'CA']:
             valid_comps = [[1, 2]]
-            first_item = 1
-            second_item = 2
+            # first_item = 1
+            # second_item = 2
 
         elif self.comp == 'ABC':
             valid_comps = [[2, 1], [3, 2], [3, 1]]
@@ -74,15 +75,22 @@ class symmetry_function(Measure):
                     for valid_comp in valid_comps:
                         if (dataset.sa['item'][x] == valid_comp[0]) & (dataset.sa['item'][y] == valid_comp[1]):
                             if dataset.sa['triad'][x] == dataset.sa['triad'][y]:  # within triad
-                                within.append(dstmp)
-                                print(f"within comparison: phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
+                                df.loc[len(df)] = ['within', dataset.sa['run'][x], dataset.sa['triad'][x],
+                                                  dataset.sa['item'][x],
+                                                  dataset.sa['run'][y], dataset.sa['triad'][y], dataset.sa['item'][y],
+                                                  dstmp]
+                                #within.append(dstmp)
+                                #print(f"within comparison: phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
                             elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
+                                #across.append(dstmp)
+                                df.loc[len(df)] = ['across', dataset.sa['run'][x], dataset.sa['triad'][x],
+                                                  dataset.sa['item'][x],
+                                                  dataset.sa['run'][y], dataset.sa['triad'][y], dataset.sa['item'][y],
+                                                  dstmp]
+                                #print(f"across comparison: phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
-                                across.append(dstmp)
-                                print(f"across comparison: phase {dataset.sa['phase'][x]} run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to phase {dataset.sa['phase'][y]} run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
+        #within = array(within)
+        #across = array(across)
 
-        within = array(within)
-        across = array(across)
-
-        return within, across
+        return df

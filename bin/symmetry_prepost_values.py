@@ -130,14 +130,16 @@ if __name__ == "__main__":
         # similarity measure
         measure = symmetry_function('correlation', 1, comparison)
 
-        within, across = measure(ds)
-
+        df = measure(ds)
 
         os.makedirs(f'{resultdir}', exist_ok=True)
-        out_file_w = f"{resultdir}/{sbj}_symmetry_{comparison}_within_{mask}.txt"
-        out_file_a = f"{resultdir}/{sbj}_symmetry_{comparison}_across_{mask}.txt"
 
+        out_file_df = os.path.join(resultdir, f"{sbj}_symmetry_{comparison}_{mask}_full.csv")
+        # np.savetxt(out_file_w, within, fmt="%.8f")
+        # np.savetxt(out_file_a, across, fmt="%.8f")
+        df.to_csv(out_file_df)
 
-
-        savetxt(out_file_w, within, fmt="%.8f")
-        savetxt(out_file_a, across, fmt="%.8f")
+        # out_file_w = f"{resultdir}/{sbj}_symmetry_{comparison}_within_{mask}.txt"
+        # out_file_a = f"{resultdir}/{sbj}_symmetry_{comparison}_across_{mask}.txt"
+        # savetxt(out_file_w, within, fmt="%.8f")
+        # savetxt(out_file_a, across, fmt="%.8f")
