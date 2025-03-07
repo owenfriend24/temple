@@ -100,14 +100,14 @@ if __name__ == "__main__":
             measure = prepost_roi('correlation', 1, comparison)
 
         # Obtain within-pair and across-pair similarity values
-        within, across, df = measure(ds)
+        df = measure(ds)
 
         # Save results
-        out_file_w = os.path.join(out_dir, f"{sbj}_prepost_{comparison}_within_{mask}.txt")
-        out_file_a = os.path.join(out_dir, f"{sbj}_prepost_{comparison}_across_{mask}.txt")
+        # out_file_w = os.path.join(out_dir, f"{sbj}_prepost_{comparison}_within_{mask}.txt")
+        # out_file_a = os.path.join(out_dir, f"{sbj}_prepost_{comparison}_across_{mask}.txt")
         out_file_df = os.path.join(out_dir, f"{sbj}_prepost_{comparison}_{mask}_full.csv")
 
-        np.savetxt(out_file_w, within, fmt="%.8f")
-        np.savetxt(out_file_a, across, fmt="%.8f")
+        # np.savetxt(out_file_w, within, fmt="%.8f")
+        # np.savetxt(out_file_a, across, fmt="%.8f")
         df.to_csv(out_file_df)
 

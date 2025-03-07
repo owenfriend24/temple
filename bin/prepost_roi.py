@@ -56,8 +56,8 @@ class prepost_roi(Measure):
 
 
         # ### set up the vectors to hold the sorted data ###
-        within = []
-        across = []
+        # within = []
+        # across = []
 
         # set up a DATAFRAME to hold the sorted data
         df = pd.DataFrame(columns = ['comparison', 'run_1', 'triad_1', 'item_1', 'run_2', 'triad_2', 'item_2', 'value'])
@@ -78,40 +78,34 @@ class prepost_roi(Measure):
 
                         if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
 
-                            within.append(dstmp)
+                            # within.append(dstmp)
                             # add the comparison information and value to the end of the dataframe
                             df.loc[len(df)] = ['within', dataset.sa['run'][x], dataset.sa['triad'][x], dataset.sa['item'][x],
                                                dataset.sa['run'][y], dataset.sa['triad'][y], dataset.sa['item'][y], dstmp]
-
-                            # print(f"within: x = {x}, y = {y}")
-                            print(f"within comparison: "
-                                  f"run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
-                                  f"run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
+                            # print(f"within comparison: "
+                            #       f"run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
+                            #       f"run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
                     elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
 
                         if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
-
-                            across.append(dstmp)
+                            # across.append(dstmp)
                             df.loc[len(df)] = ['across', dataset.sa['run'][x], dataset.sa['triad'][x], dataset.sa['item'][x],
                                                dataset.sa['run'][y], dataset.sa['triad'][y], dataset.sa['item'][y], dstmp]
-                            # print(f"across: x = {x}, y = {y}")
-                            #a_distance.append(dst)
-                            print(f"across comparison: "
-                                  f"triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
-                                  f"triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
+                            # print(f"across comparison: "
+                            #       f"triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
+                            #       f"triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
 #
-        #### convert items to arrays ###
+        #### convert items to arrays ### - changed this to output a csv with more information than the raw values to
+        ###         properly save out values by triplet
         
-        # length 24 - for AB/BC/AC duo pairs; 36 for full ABC
-        within = array(within)
-        
-        # length 72 (or 108 for full ABC) -
-        across = array(across)
+        # # length 24 - for AB/BC/AC duo pairs; 36 for full ABC
+        # within = array(within)
+        # # length 72 (or 108 for full ABC) -
+        # across = array(across)
 
-        # return both of these
-
-        return within, across, df
+        #return within, across, df
+        return df
         
         
