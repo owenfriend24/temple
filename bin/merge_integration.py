@@ -38,7 +38,7 @@ def create_subject_file(subject, master_dir, comparison, mask):
     comp_dir = f'{master_dir}/prepost_{comparison}/'
     sub_dir = f'{comp_dir}/sub-{subject}'
     for mask in masks:
-        prepost_file = f'{sub_dir}/{subject}_prepost_{comparison}_{mask}full.csv'
+        prepost_file = f'{sub_dir}/{subject}_prepost_{comparison}_{mask}_full.csv'
         prepost_vals = pd.read_csv(prepost_file)
         # print(f'file length: {len(prepost_vales)}')
         within_vals = prepost_vals[prepost_vals['comparison'] == 'within']
