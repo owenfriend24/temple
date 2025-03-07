@@ -35,6 +35,10 @@ from mvpa2.measures.anova import *
 from mvpa2.base.dataset import *
 import sys
 import subprocess
+import numpy as np
+# ignore division by zero errors for NaN values when transforming to fisher's Z
+np.seterr(divide='ignore', invalid='ignore')
+
 
 ### import custom searchlight function ###
 from symmetry_function import *

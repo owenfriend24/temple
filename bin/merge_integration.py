@@ -38,42 +38,29 @@ def create_subject_file(subject, master_dir, comparison, mask, drop_run):
     comp_dir = f'{master_dir}/prepost_{comparison}/'
     sub_dir = f'{comp_dir}/sub-{subject}'
     for mask in masks:
-        within_filename = f'{sub_dir}/{subject}_prepost_{comparison}_within_{mask}.txt'
-        within = pd.read_csv(within_filename, sep='\t', header=None)
-        print(f'within length: {len(within)}')
-
-        across_filename = f'{sub_dir}/{subject}_prepost_{comparison}_across_{mask}.txt'
-        across = pd.read_csv(across_filename, sep='\t', header=None)
-        print(f'across length: {len(across)}')
+        prepost_file = f'{sub_dir}/{subject}_prepost_{comparison}_{mask}full.csv'
+        prepost_vals = pd.read_csv(prepost_file)
+        # print(f'file length: {len(prepost_vales)}')
+        within_vals = prepost_vals[prepost_vals['comparison'] == 'within']
+        across_vals = prepost_vals[prepost_vals['comparison'] == 'across']
 
         for triad in [1, 2, 3, 4]:
-            if comparison == 'ABC':
-                if drop_run is not None:
-                    within_indices = integration_indices.pull_within_ABC_prepost_indices_droprun(triad)
-                    across_indices = integration_indices.pull_across_ABC_prepost_indices_droprun(triad)
-                else:
-                    within_indices = integration_indices.pull_within_ABC_prepost_indices(triad)
-                    across_indices = integration_indices.pull_across_ABC_prepost_indices(triad)
-            else:
-                if drop_run is not None:
-                    within_indices = integration_indices.pull_within_prepost_indices_droprun(triad)
-                    across_indices = integration_indices.pull_across_prepost_indices_droprun(triad)
-                else:
-                    within_indices = integration_indices.pull_within_prepost_indices(triad)
-                    across_indices = integration_indices.pull_across_prepost_indices(triad)
-            within_df = within.iloc[within_indices]
-            within_sim = np.mean(within_df)
+            # within values are only compared within triad so it doesn't matter if we index based on triad_1 or triad_2,
+            #   as both will be the same
+            tri_within = within_vals[within_vals['triad_1'] == triad]
 
+            # across triplet comparisons can have either triad_1 or triad_2 as the triad of interest (coming back to this
+            #   as I refine what the baseline comparison will end up being)
+            tri_across = across_vals[(across_vals['triad_1'] == triad) or (across_vals['triad_2'] == triad)]
 
-            across_df = across.iloc[across_indices]
-            across_sim = np.mean(across_df)
+            within_sim = np.mean(tri_within['value'])
+            across_sim = np.mean(tri_across['value'])
 
             comp_data.loc[len(comp_data)] = [
                 subject, age_group, mask, triad, comparison,
                 within_sim, across_sim, (within_sim - across_sim)
             ]
     return comp_data
-
 
 
 def run(command):
