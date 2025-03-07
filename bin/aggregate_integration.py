@@ -72,7 +72,7 @@ def main(measure, master_dir, comparison, mask, agg_file):
         if measure in ["prepost", "both"] and not sub_processed:
             print(f"Processing prepost values for {sub}...")
             run(f"integration_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
-            run(f"merge_integration.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
+            run(f"merge_integration.py {sub} {master_dir} {comparison} {mask}")
         elif measure in ["prepost", "both"] and sub_processed:
             print(f"Already processed prepost for {sub}.")
 
@@ -84,7 +84,7 @@ def main(measure, master_dir, comparison, mask, agg_file):
             print(f"Processing symmetry values for {sub}...")
             run(f"symmetry_prepost_values.py {drop_flag}{sub} {comparison} {mask}")
             run(f"symmetry_prepost_values.py {drop_flag}{sub} {bwd_comp} {mask}")
-            run(f"merge_symmetry.py {drop_flag}{sub} {master_dir} {comparison} {mask}")
+            run(f"merge_symmetry.py {sub} {master_dir} {comparison} {mask}")
         elif measure in ["symmetry", "both"] and sub_processed:
             print(f"Already processed symmetry for {sub}.")
 

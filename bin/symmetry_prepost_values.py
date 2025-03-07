@@ -80,6 +80,10 @@ if __name__ == "__main__":
         masks = ['b_hip']
     elif masktype == 'b_hip_subregions':
         masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
+    elif mask == 'lat_hip_subregions':
+        masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body',
+                 'warp-l_hip', 'warp-l_hip_ant', 'warp-l_hip_post', 'warp-l_hip_body',
+                 'warp-r_hip', 'warp-r_hip_ant', 'warp-r_hip_post', 'warp-r_hip_body']
     elif masktype == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
 
@@ -112,7 +116,7 @@ if __name__ == "__main__":
 
     for mask in masks:
         print(f"running in mask {mask}")
-        if masktype == 'b_hip_subregions':
+        if masktype in ['b_hip_subregions', 'lat_hip_subregions']:
             #slmask = f'{subjdir}/transforms/{mask}.nii.gz'
             slmask = f"{temp_result_dir}/masks/sub-{sbj}/hip_masks/{mask}.nii.gz"
         elif masktype == 'b_ifg_subregions':

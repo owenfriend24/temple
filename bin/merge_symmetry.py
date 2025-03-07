@@ -34,6 +34,10 @@ def create_subject_file(subject, master_dir, comparison, mask):
     # Define masks/ROIs to pull similarity values from
     if mask == 'b_hip_subregions':
         masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
+    elif mask == 'lat_hip_subregions':
+        masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body',
+                 'warp-l_hip', 'warp-l_hip_ant', 'warp-l_hip_post', 'warp-l_hip_body',
+                 'warp-r_hip', 'warp-r_hip_ant', 'warp-r_hip_post', 'warp-r_hip_body']
     elif mask == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
     else:
@@ -88,6 +92,6 @@ if __name__ == "__main__":
     parser.add_argument("subject", help="e.g., temple100")
     parser.add_argument("master_dir", help="where folders containing .txt files for each comparison are stored")
     parser.add_argument("comparison", help="options: AB, BC, AC, ABC")
-    parser.add_argument("mask", help="mask name e.g., b_hip_subregions, b_hip_subfields, b_ifg_subregions etc.")
+    parser.add_argument("mask", help="mask name e.g., b_hip_subregions, b_hip_subfields,lat_hip_subregions etc.")
     args = parser.parse_args()
     main(args.subject, args.master_dir, args.comparison, args.mask)
