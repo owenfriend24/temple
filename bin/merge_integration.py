@@ -6,9 +6,9 @@ from pathlib import Path
 import argparse
 import pandas as pd
 import numpy as np
-from temple_utils import get_age_groups, integration_indices
+from temple_utils import get_age_groups
 
-def create_subject_file(subject, master_dir, comparison, mask, drop_run):
+def create_subject_file(subject, master_dir, comparison, mask):
     children = get_age_groups.get_children()
     adolescents = get_age_groups.get_adolescents()
     adults = get_age_groups.get_adults()
@@ -66,10 +66,10 @@ def create_subject_file(subject, master_dir, comparison, mask, drop_run):
 def run(command):
     subprocess.run(command, shell=True)
 
-def main(subject, master_dir, comparison, mask, drop_run):
+def main(subject, master_dir, comparison, mask):
     run('source /home1/09123/ofriend/analysis/temple/profile')
     out_file = f'{master_dir}/prepost_{comparison}/sub-{subject}/sub-{subject}_{comparison}_{mask}_master.csv'
-    df = create_subject_file(subject, master_dir, comparison, mask, drop_run)
+    df = create_subject_file(subject, master_dir, comparison, mask)
     df.to_csv(out_file)
 
 if __name__ == "__main__":
@@ -78,8 +78,5 @@ if __name__ == "__main__":
     parser.add_argument("master_dir", help="where folders containing .txt files for each comparison are stored")
     parser.add_argument("comparison", help="options: AB, BC, AC, ABC")
     parser.add_argument("mask", help="mask name e.g., b_hip_subregions, b_hip_subfields, b_ifg_subregions, etc.")
-    # Optional argument: drop a specific run
-    parser.add_argument("--drop_run", type=int, choices=[1, 2, 3, 4, 5, 6], default=None,
-                        help="Run number to drop (1 through 6). Default is None (keep all runs).")
     args = parser.parse_args()
-    main(args.subject, args.master_dir, args.comparison, args.mask, args.drop_run)
+    main(args.subject, args.master_dir, args.comparison, args.mask)
