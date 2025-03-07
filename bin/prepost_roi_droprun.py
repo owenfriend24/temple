@@ -12,6 +12,7 @@ from scipy.sparse import spdiags
 from scipy.linalg import toeplitz
 from mvpa2.measures.base import Measure
 from mvpa2.measures import rsa
+import pandas as pd
 
 class prepost_roi_droprun(Measure):
 
@@ -46,13 +47,13 @@ class prepost_roi_droprun(Measure):
         #print(f'length of post-zs: {len(dsm_post)}')
 
         ### set up the vectors to hold the sorted data ###
-        within = []
-        across = []
+        # within = []
+        # across = []
+        # set up a DATAFRAME to hold the sorted data
+        df = pd.DataFrame(columns=['comparison', 'run_1', 'triad_1', 'item_1', 'run_2', 'triad_2', 'item_2', 'value'])
 
         n_pre = len(dsm_pre)
         n_post = len(dsm_post)
-        # print(f"n_pre {n_pre}")
-        # print(f"n_post {n_post}")
 
         min_len = min(n_pre, n_post)
 
@@ -75,7 +76,15 @@ class prepost_roi_droprun(Measure):
                             # x_item = dataset.sa['item'][x]
                             # y_item = dataset.sa['item'][y]
                             dstmp = dsm_post[x, y] - dsm_pre[x, y]
-                            within.append(dstmp)
+                            # within.append(dstmp)
+                            df.loc[len(df)] = ['within', dataset.sa['run'][x], dataset.sa['triad'][x],
+                                               dataset.sa['item'][x],
+                                               dataset.sa['run'][y], dataset.sa['triad'][y], dataset.sa['item'][y],
+                                               dstmp]
+
+
+
+
                             # print(f"within: run {x_run} triad {x_tri} item {x_item} to "
                             #       f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
 
@@ -86,20 +95,24 @@ class prepost_roi_droprun(Measure):
                             # x_item = dataset.sa['item'][x]
                             # y_item = dataset.sa['item'][y]
                             dstmp = dsm_post[x, y] - dsm_pre[x, y]
-                            across.append(dstmp)
+                            # across.append(dstmp)
+                            df.loc[len(df)] = ['across', dataset.sa['run'][x], dataset.sa['triad'][x],
+                                               dataset.sa['item'][x],
+                                               dataset.sa['run'][y], dataset.sa['triad'][y], dataset.sa['item'][y],
+                                               dstmp]
                             # print(f"across: run {x_run} triad {x_tri} item {x_item} to "
                             #   f"run {y_run} triad {y_tri} item {y_item}: {dstmp}")
 
 
         ### convert items to arrays ###
 
-        # length 8
-        within = array(within)
-
-        # length  - 24
-        across = array(across)
+        # # length 8
+        # within = array(within)
+        #
+        # # length  - 24
+        # across = array(across)
 
         # return both of these
-        return within, across
+        return df
         
         
