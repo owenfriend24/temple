@@ -12,6 +12,7 @@ from scipy.sparse import spdiags
 from scipy.linalg import toeplitz
 from mvpa2.measures.base import Measure
 from mvpa2.measures import rsa
+import pandas as pd
 
 class prepost_roi(Measure):
 
@@ -54,12 +55,12 @@ class prepost_roi(Measure):
         #dist_df = numpy.subtract(post_dist, pre_dist)
 
 
-        ### set up the vectors to hold the sorted data ###
+        # ### set up the vectors to hold the sorted data ###
         within = []
         across = []
-        
-        #w_distance = []
-        #a_distance = []
+
+        # set up a DATAFRAME to hold the sorted data
+        df = pd.DataFrame(columns = ['comparison', 'run_1', 'triad_1', 'item_1', 'run_2', 'triad_2', 'item_2', 'value'])
 
         ### loop through the data to sort the within and across comparisons ###
         n = len(dsm_diff)
@@ -78,8 +79,11 @@ class prepost_roi(Measure):
                         if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
 
                             within.append(dstmp)
+                            # add the comparison information and value to the end of the dataframe
+                            df.loc[len(df)] = ['within', dataset.sa['run'][x], dataset.sa['triad'][x], dataset.sa['item'][x],
+                                               dataset.sa['run'][y], dataset.sa['triad'][y], dataset.sa['item'][y], dstmp]
+
                             # print(f"within: x = {x}, y = {y}")
-                            #w_distance.append(dst)
                             print(f"within comparison: "
                                   f"run {dataset.sa['run'][x]} triad {dataset.sa['triad'][x]} item {dataset.sa['item'][x]} to "
                                   f"run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
@@ -89,6 +93,8 @@ class prepost_roi(Measure):
                         if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
 
                             across.append(dstmp)
+                            df.loc[len(df)] = ['across', dataset.sa['run'][x], dataset.sa['triad'][x], dataset.sa['item'][x],
+                                               dataset.sa['run'][y], dataset.sa['triad'][y], dataset.sa['item'][y], dstmp]
                             # print(f"across: x = {x}, y = {y}")
                             #a_distance.append(dst)
                             print(f"across comparison: "
@@ -98,14 +104,14 @@ class prepost_roi(Measure):
 #
         #### convert items to arrays ###
         
-        # length 24 - for AB/BC/AC duo pairs
+        # length 24 - for AB/BC/AC duo pairs; 36 for full ABC
         within = array(within)
         
-        # length 72 - 
+        # length 72 (or 108 for full ABC) -
         across = array(across)
 
         # return both of these
 
-        return within, across
+        return within, across, df
         
         
