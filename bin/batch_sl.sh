@@ -14,5 +14,5 @@ temple091 temple092 temple093 temple094 temple095 temple096 temple097 temple098 
 temple099 temple103 temple105 temple106 temple107 temple108 temple109 temple110 \
 temple111 temple112 temple113 temple114 temple119 temple120; do
 
-  temple_sl_prepost.py $sub $comp whole_brain
+  sl_symmetry.py $sub $comp whole_brain
 done
