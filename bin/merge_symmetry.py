@@ -44,7 +44,7 @@ def create_subject_file(subject, master_dir, comparison, mask):
         comp_dir = f'{master_dir}/symmetry_{comp}/'
         sub_dir = f'{comp_dir}/sub-{subject}'
         for mask in masks:
-            symm_file = f'{sub_dir}/{subject}_symmetry_{comparison}_{mask}_full.csv'
+            symm_file = f'{sub_dir}/{subject}_symmetry_{comp}_{mask}_full.csv'
             symm_vals = pd.read_csv(symm_file)
             # print(f'file length: {len(prepost_vales)}')
             within_vals = symm_vals[symm_vals['comparison'] == 'within']
