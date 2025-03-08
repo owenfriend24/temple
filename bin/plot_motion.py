@@ -80,7 +80,7 @@ def plot_arrow(sub, base_dir, out_path):
             a_t = round(num_t / len(run['tr']) * 100, 3)
             l = f'run{run_number}: m={mn}, sd={sd}, above_threshold={a_t}% ({num_t} TRs)'
             
-            if a_t > 0.3:
+            if a_t > 30:
                 plt.plot(np.array(run['tr']), np.array(run[measure]), linestyle='-', linewidth=2, label=l, color='red')
             else:
                 plt.plot(np.array(run['tr']), np.array(run[measure]), linestyle='-', linewidth=2, label=l)
@@ -141,7 +141,7 @@ def plot_collector(sub, base_dir, out_path):
             a_t = round(num_t / len(run['tr']) * 100, 3)
             l = f'run{run_number}: m={mn}, sd={sd}, above_threshold={a_t}% ({num_t} TRs)'
             
-            if a_t > 0.3:
+            if a_t > 30:
                 plt.plot(np.array(run['tr']), np.array(run[measure]), linestyle='-', linewidth=2, label=l, color='red')
             else:
                 plt.plot(np.array(run['tr']), np.array(run[measure]), linestyle='-', linewidth=2, label=l)
@@ -200,7 +200,7 @@ def plot_movie(sub, base_dir, out_path):
             a_t = round(num_t / len(run['tr']) * 100, 3)
             l = f'run{run_number}: m={mn}, sd={sd}, above_threshold={a_t}% ({num_t} TRs)'
             
-            if a_t > 0.3:
+            if a_t > 30:
                 plt.plot(np.array(run['tr']), np.array(run[measure]), linestyle='-', linewidth=2, label=l, color='red')
             else:
                 plt.plot(np.array(run['tr']), np.array(run[measure]), linestyle='-', linewidth=2, label=l)
