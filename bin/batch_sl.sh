@@ -4,7 +4,7 @@ comp=$1
 
 source /home1/09123/ofriend/analysis/temple/rsa/bin/activate
 
-for sub in temple016 temple019 temple020 temple022 temple024 temple025 temple029 \
+for sub in temple016 temple019 temple020 temple024 temple025 temple029 \
 temple032 temple033 temple034 temple035 temple036 temple037 temple038 temple041 \
 temple042 temple045 temple050 temple051 temple053 temple056 temple057 temple058 \
 temple059 temple060 temple063 temple064 temple065 temple066 temple068 temple069 \
