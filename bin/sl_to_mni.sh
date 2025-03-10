@@ -1,6 +1,6 @@
 #!/bin/env bash
 #
-# cluster simulations for preliminary age group RS analyses
+# transform searchlight outputs to template space for across participant comparisons
 
 if [[ $# -lt 1 ]]; then
     echo "Usage:  sl_to_mni.sh sub fmriprep_dir comp roi measure (e.g., sl_to_mni.sh temple024 FM AB brainmask_func_dilated symmetry)"
