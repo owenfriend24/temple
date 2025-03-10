@@ -63,8 +63,8 @@ if __name__ == "__main__":
     masktype = args.masktype
     drop_run = args.drop_run
 
-    #expdir = '/corral-repl/utexas/prestonlab/temple/'
-    expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
+    expdir = '/corral-repl/utexas/prestonlab/temple/'
+    # expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
     subjdir = os.path.join(expdir, f'sub-{sbj}')
     betadir = os.path.join(subjdir, 'betaseries')
     # resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
@@ -95,8 +95,8 @@ if __name__ == "__main__":
     ###
     for mask in masks:
         if masktype == 'whole_brain':
-            #slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
-            slmask = f'{expdir}/sourcedata/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
+            slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
+            # slmask = f'{expdir}/sourcedata/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
 
         #load in data
         if comparison == 'ABC':
