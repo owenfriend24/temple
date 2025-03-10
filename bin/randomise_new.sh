@@ -12,14 +12,14 @@ comp=$2
 
 source $HOME/analysis/temple/rsa/bin/activate
 
-randomise -i ${fmriprep_dir}/integration_prepost/mni_${comp}/dev_z_${comp}.nii.gz \
--o ${fmriprep_dir}/integration_prepost/mni_${comp}/randomise_out/child_parametric_age_ \
--d ${fmriprep_dir}/randomise/age_parametric_child_only.mat \
--t ${fmriprep_dir}/randomise/age_parametric_child_only.con \
+randomise -i ${fmriprep_dir}/integration_prepost/mni_${comp}/symmetry/group_z_${comp}.nii.gz \
+-o ${fmriprep_dir}/integration_prepost/mni_${comp}/symmetry/randomise_out/parametric_age_ \
+-d ${fmriprep_dir}/randomise/age_parametric.mat \
+-t ${fmriprep_dir}/randomise/age_parametric.con \
 -n 5000 -x  --uncorrp
 
-randomise -i ${fmriprep_dir}/integration_prepost/mni_${comp}/group_z_${comp}.nii.gz \
--o ${fmriprep_dir}/integration_prepost/mni_${comp}/randomise_out/grouped_age_2_ \
--d ${fmriprep_dir}/randomise/age_grouped_2.mat \
--t ${fmriprep_dir}/randomise/age_grouped_2.con \
+randomise -i ${fmriprep_dir}/integration_prepost/mni_${comp}/symmetry/group_z_${comp}.nii.gz \
+-o ${fmriprep_dir}/integration_prepost/mni_${comp}/symmetry/randomise_out/grouped_age_ \
+-d ${fmriprep_dir}/randomise/age_grouped.mat \
+-t ${fmriprep_dir}/randomise/age_grouped.con \
 -n 5000 -x  --uncorrp
