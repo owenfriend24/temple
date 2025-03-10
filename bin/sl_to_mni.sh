@@ -21,6 +21,10 @@ WarpImageMultiTransform 3 "${fmriprep_dir}/integration_prepost/${measure}_${comp
  "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Warp.nii.gz" \
  "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Affine.txt"
 
+fslmaths "${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}/${sub}_${comp}_${roi}_mni.nii.gz" -mas \
+/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain_mask.nii.gz \
+"${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}/${sub}_${comp}_${roi}_mni.nii.gz"
+
 #WarpImageMultiTransform 3 "${fmriprep_dir}/integration_prepost/prepost_${comp}/sub-${sub}/${sub}_prepost_${comp}_${roi}_z.nii.gz"\
 # "${fmriprep_dir}/integration_prepost/mni_${comp}/${sub}_${comp}_${roi}_mni.nii.gz" -R \
 # "/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz" \
