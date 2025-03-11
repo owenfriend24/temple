@@ -3,7 +3,7 @@
 $HOME/analysis/temple/bin/run_descriptives/tsnr_maps.sh $FM temple100
 $HOME/analysis/temple/bin/run_descriptives/tsnr_by_roi.sh $FM temple100 hip_subfields
 aggregate_tsnr.py $CORR hip_subfields
-
+```
 
 
 ## Remote desktop via TACC
