@@ -12,8 +12,8 @@ mkdir ${fmdir}/sub-${subject}/func/tsnr/
 func_dir=${fmdir}/sub-${subject}/func
 
 for run in 1 2 3 4 5 6; do
-  fslmaths ${func_dir}/sub-${sub}_task-arrow_run-0${run}_space-T1w_desc-preproc_bold.nii.gz -mas \
-  ${fmdir}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
+  fslmaths ${func_dir}/sub-${subject}_task-arrow_run-0${run}_space-T1w_desc-preproc_bold.nii.gz -mas \
+  ${fmdir}/freesurfer/sub-${subject}/mri/out/brainmask_func_dilated.nii.gz \
   ${func_dir}/tsnr/arrow_run_${run}_stripped.nii.gz
 
   fslmaths ${func_dir}/tsnr/arrow_run_${run}_stripped.nii.gz -Tmean ${func_dir}/tsnr/arrow_run_${run}_meanfunc.nii.gz
