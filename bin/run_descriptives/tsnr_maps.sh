@@ -1,7 +1,7 @@
 #!/bin/env bash
 
 if [[ $# -lt 2 ]]; then
-    echo "Usage: tsnr_by_roi data_dir subject"
+    echo "Usage: tsnr_maps data_dir subject"
     exit 1
 fi
 

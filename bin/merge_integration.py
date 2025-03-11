@@ -48,6 +48,8 @@ def create_subject_file(subject, master_dir, comparison, mask):
         within_vals = prepost_vals[prepost_vals['comparison'] == 'within']
         across_vals = prepost_vals[prepost_vals['comparison'] == 'across']
 
+
+
         for triad in [1, 2, 3, 4]:
             # within values are only compared within triad so it doesn't matter if we index based on triad_1 or triad_2,
             #   as both will be the same
@@ -67,11 +69,11 @@ def create_subject_file(subject, master_dir, comparison, mask):
     return comp_data
 
 
-def run(command):
+def run_cmd(command):
     subprocess.run(command, shell=True)
 
 def main(subject, master_dir, comparison, mask):
-    run('source /home1/09123/ofriend/analysis/temple/profile')
+    run_cmd('source /home1/09123/ofriend/analysis/temple/profile')
     out_file = f'{master_dir}/prepost_{comparison}/sub-{subject}/sub-{subject}_{comparison}_{mask}_master.csv'
     df = create_subject_file(subject, master_dir, comparison, mask)
     df.to_csv(out_file)
