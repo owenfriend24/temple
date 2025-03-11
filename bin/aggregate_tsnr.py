@@ -1,10 +1,14 @@
+#!/usr/bin/env python
+
 import os
 import pandas as pd
+import argparse
+from temple_utils import get_age_groups
 
 def aggregate_tsnr(data_dir, subjects, masktype):
     """
     Aggregates tSNR values from `tsnr_by_roi` CSVs and whole-brain `tsnr_values.txt`
-    for each subject across runs.
+    for each subject across runs. Also cleans up mask names by keeping only the filename.
 
     Parameters:
     - data_dir: str, path to the root directory containing subject folders.
@@ -26,6 +30,9 @@ def aggregate_tsnr(data_dir, subjects, masktype):
         if os.path.exists(roi_csv_path):
             df_roi = pd.read_csv(roi_csv_path)
             df_roi["subject"] = subject  # Add subject column
+
+            # Clean up mask names by keeping only the filename (last part of the path)
+            df_roi["mask"] = df_roi["mask"].apply(lambda x: os.path.basename(x).replace(".nii.gz", ""))
         else:
             print(f"Warning: Missing ROI CSV for subject {subject}")
             continue
@@ -73,3 +80,15 @@ def aggregate_tsnr(data_dir, subjects, masktype):
     else:
         print("No valid data found for aggregation.")
         return None
+
+def main(data_dir, masktype):
+    subjects = get_age_groups.get_all_subjects()
+    aggregate_tsnr(data_dir, subjects, masktype)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("data_dir", help="where folders containing .txt/.csv files are stored (i.e. $CORR)")
+    parser.add_argument("masktype", help="mask name e.g., b_hip_subregions, b_hip_subfields, lat_hip_subregions, etc.")
+    args = parser.parse_args()
+    main(args.data_dir, args.masktype)
