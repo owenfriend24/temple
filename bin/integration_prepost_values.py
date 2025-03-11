@@ -118,9 +118,11 @@ if __name__ == "__main__":
         # Save results
         # out_file_w = os.path.join(out_dir, f"{sbj}_prepost_{comparison}_within_{mask}.txt")
         # out_file_a = os.path.join(out_dir, f"{sbj}_prepost_{comparison}_across_{mask}.txt")
+
         out_file_df = os.path.join(out_dir, f"{sbj}_prepost_{comparison}_{mask}_full.csv")
 
         # np.savetxt(out_file_w, within, fmt="%.8f")
         # np.savetxt(out_file_a, across, fmt="%.8f")
+        print(f"saving file to {out_file_df}")
         df.to_csv(out_file_df)
 
