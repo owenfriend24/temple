@@ -67,12 +67,15 @@ def aggregate_tsnr(data_dir, subjects, masktype):
         # Merge ROI and Whole-Brain tSNR Data
         df_combined = pd.merge(df_roi, df_wholebrain, on=["subject", "run"], how="left")
 
+        # Reorder columns to have "subject" first
+        df_combined = df_combined[["subject", "run", "mask", "tsnr", "nvoxs", "wholebrain_tsnr"]]
+
         all_data.append(df_combined)
 
     # Concatenate all subject data
     if all_data:
         df_final = pd.concat(all_data, ignore_index=True)
-        output_csv = os.path.join(data_dir, "tsnr_aggregated.csv")
+        output_csv = os.path.join(data_dir, f"tsnr_aggregated_{masktype}.csv")
         df_final.to_csv(output_csv, index=False)
         print(f"Saved aggregated tSNR data to {output_csv}")
 
@@ -84,7 +87,6 @@ def aggregate_tsnr(data_dir, subjects, masktype):
 def main(data_dir, masktype):
     subjects = get_age_groups.get_all_subjects()
     aggregate_tsnr(data_dir, subjects, masktype)
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
