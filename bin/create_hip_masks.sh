@@ -26,17 +26,20 @@ r_hip r_hip_ant r_hip_body r_hip_tail r_hip_post; do
 #-i ${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt \
 #${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz
 
-WarpImageMultiTransform 3 /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz \
-${corr}/sub-${sub}/masks/hip_masks/warp-${mask}.nii.gz \
--R ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
--i ${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt \
-${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz --use-NN
+#WarpImageMultiTransform 3 /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz \
+#${corr}/sub-${sub}/masks/hip_masks/warp-${mask}.nii.gz \
+#-R ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
+#-i ${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt \
+#${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz --use-NN
+#
 
+antsApplyTransforms -d 3 \
+    -i /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz \
+    -o ${corr}/sub-${sub}/masks/hip_masks/func-${mask}.nii.gz \
+    -r ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
+    -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
+    -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt,1] \
+    -n NearestNeighbor
 
-#antsApplyTransforms -d 3  -i /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz -n NearestNeighbor -o \
-# ${corr}/sub-${sub}/transforms/fs_func_${mask}.nii.gz \
-# -t [${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz] \
-# -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt, 1] \
-# -r ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz
 
 done
