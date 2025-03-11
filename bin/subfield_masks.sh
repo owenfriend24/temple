@@ -35,11 +35,16 @@ fslmaths ${sf_dir}/anat/sub-${sub}_subiculum_mask_L.nii.gz -add ${sf_dir}/anat/s
 fslmaths ${sf_dir}/anat/sub-${sub}_posthipp_mask_L.nii.gz -add ${sf_dir}/anat/sub-${sub}_posthipp_mask_R.nii.gz ${sf_dir}/anat/sub-${sub}_posthipp_mask_B.nii.gz
 fslmaths ${sf_dir}/anat/sub-${sub}_CA23DG_mask_L.nii.gz -add ${sf_dir}/anat/sub-${sub}_CA23DG_mask_R.nii.gz ${sf_dir}/anat/sub-${sub}_CA23DG_mask_B.nii.gz
 
+ANTS 3 -m MI[$CORR/sub-${sub}/func/sub-${sub}_task-arrow_run-01_space-T1w_boldref.nii.gz, \
+$CORR/ashs/masks/sub-${sub}/subfield_masks/anat/sub-${sub}_CA1_mask_B.nii.gz,1,32] \
+-o $CORR/ashs/masks/sub-${sub}/subfield_masks/anat/T2_to_func_affine_ --rigid-affine true -i 0
+
 for mask in ${sf_dir}/anat/*; do
   mask_basename=$(basename "$mask" .nii.gz)
   output_file="${sf_dir}/func/${mask_basename}_func.nii.gz"
   antsApplyTransforms -d 3 -i $mask -n NearestNeighbor \
--o $output_file -t [/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/mask_to_func_ref_Affine.txt] \
+-o $output_file \
+-t [$CORR/ashs/masks/sub-${sub}/subfield_masks/anat/T2_to_func_affine_Affine.txt] \
 -r /corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/brainmask_func_dilated.nii.gz
 
 done
