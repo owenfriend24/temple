@@ -19,21 +19,21 @@ echo "run,mask,tsnr,nvoxs" > ${output_csv}
 # Define mask paths
 if [[ "$masktype" == "b_hip_subregions" ]]; then
     masks=(
-        "${fmdir}/sub-${subject}/masks/warp-b_hip.nii.gz"
-        "${fmdir}/sub-${subject}/masks/warp-b_hip_ant.nii.gz"
-        "${fmdir}/sub-${subject}/masks/warp-b_hip_body.nii.gz"
-        "${fmdir}/sub-${subject}/masks/warp-b_hip_post.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/warp-b_hip.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/warp-b_hip_ant.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/warp-b_hip_body.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/warp-b_hip_post.nii.gz"
     )
 elif [[ "$masktype" == "lat_hip_subregions" ]]; then
     masks=(
-        "${fmdir}/sub-${subject}/masks/warp-l_hip.nii.gz"
-        "${fmdir}/sub-${subject}/masks/warp-l_hip_ant.nii.gz"
-        "${fmdir}/sub-${subject}/masks/warp-l_hip_body.nii.gz"
-        "${fmdir}/sub-${subject}/masks/warp-l_hip_post.nii.gz"
-        "${fmdir}/sub-${subject}/masks/warp-r_hip.nii.gz"
-        "${fmdir}/sub-${subject}/masks/warp-r_hip_ant.nii.gz"
-        "${fmdir}/sub-${subject}/masks/warp-r_hip_body.nii.gz"
-        "${fmdir}/sub-${subject}/masks/warp-r_hip_post.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/warp-l_hip.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/warp-l_hip_ant.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/warp-l_hip_body.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/warp-l_hip_post.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/warp-r_hip.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/warp-r_hip_ant.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/warp-r_hip_body.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/warp-r_hip_post.nii.gz"
     )
 elif [[ "$masktype" == "hip_subfields" ]]; then
     masks=(
