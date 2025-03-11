@@ -23,4 +23,8 @@ for run in 1 2 3 4 5 6; do
 
   fslstats ${func_dir}/tsnr/arrow_run_${run}_tsnr_map.nii.gz -M >> ${func_dir}/tsnr/tsnr_values.txt
 
+  rm ${func_dir}/tsnr/arrow_run_${run}_stripped.nii.gz
+  rm ${func_dir}/tsnr/arrow_run_${run}_meanfunc.nii.gz
+  rm ${func_dir}/tsnr/arrow_run_${run}_stdfunc.nii.gz
+
 done
