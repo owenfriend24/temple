@@ -1,3 +1,11 @@
+### pull run-level covariates (whole brian tsnr, tsnr by roi, number of voxels within roi)
+```
+$HOME/analysis/temple/bin/run_descriptives/tsnr_maps.sh $FM temple100
+$HOME/analysis/temple/bin/run_descriptives/tsnr_by_roi.sh $FM temple100 hip_subfields
+aggregate_tsnr.py $CORR hip_subfields
+
+
+
 ## Remote desktop via TACC
 * use tap.tacc.utexas.edu for vm nodes, or can run below codes for development node
 ```
