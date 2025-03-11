@@ -54,6 +54,11 @@ if __name__ == "__main__":
         masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body',
                  'warp-l_hip', 'warp-l_hip_ant', 'warp-l_hip_post', 'warp-l_hip_body',
                  'warp-r_hip', 'warp-r_hip_ant', 'warp-r_hip_post', 'warp-r_hip_body']
+    elif masktype == 'hip_subfields':
+        masks = ['CA1_mask_B_func', 'CA1_mask_L_func', 'CA1_mask_R_func',
+                 'CA23DG_mask_B_func', 'CA23DG_mask_L_func', 'CA23DG_mask_R_func',
+                 'posthipp_mask_B_func', 'posthipp_mask_L_func', 'posthipp_mask_R_func',
+                 'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
     elif masktype == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
     else:
@@ -74,9 +79,9 @@ if __name__ == "__main__":
     ### Directories ###
     subjdir = os.path.join(expdir, f'sub-{sbj}')
     betadir = os.path.join(subjdir, 'betaseries')
-    #resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
-    temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
-    resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
+    resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
+    #temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
+    # resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
     out_dir = os.path.join(resultdir, f'sub-{sbj}')
     os.makedirs(out_dir, exist_ok=True)
 
@@ -84,10 +89,12 @@ if __name__ == "__main__":
         print(f"running in mask {mask}")
         if masktype in ['b_hip_subregions', 'lat_hip_subregions']:
             #slmask = os.path.join(subjdir, 'transforms', f'{mask}.nii.gz')
-            slmask = f"{temp_result_dir}/masks/sub-{sbj}/hip_masks/{mask}.nii.gz"
+            slmask = f"{subjdir}/masks/hip_masks/{mask}.nii.gz"
+        elif masktype == 'hip_subfields':
+            slmask = f"{expdir}/ashs/masks/sub-{sbj}/subfield_masks/func/sub-{sbj}_{mask}.nii.gz"
         elif masktype == 'b_ifg_subregions':
             #slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
-            slmask = f"{temp_result_dir}/masks/sub-{sbj}/ifg_masks/{mask}.nii.gz"
+            slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
 
         # Load fMRI data
         if comparison == 'ABC':

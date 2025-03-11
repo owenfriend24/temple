@@ -80,10 +80,15 @@ if __name__ == "__main__":
         masks = ['b_hip']
     elif masktype == 'b_hip_subregions':
         masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
-    elif mask == 'lat_hip_subregions':
+    elif masktype == 'lat_hip_subregions':
         masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body',
                  'warp-l_hip', 'warp-l_hip_ant', 'warp-l_hip_post', 'warp-l_hip_body',
                  'warp-r_hip', 'warp-r_hip_ant', 'warp-r_hip_post', 'warp-r_hip_body']
+    elif masktype == 'hip_subfields':
+        masks = ['CA1_mask_B_func', 'CA1_mask_L_func', 'CA1_mask_R_func',
+                 'CA23DG_mask_B_func', 'CA23DG_mask_L_func', 'CA23DG_mask_R_func',
+                 'posthipp_mask_B_func', 'posthipp_mask_L_func', 'posthipp_mask_R_func',
+                 'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
     elif masktype == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
 
@@ -110,18 +115,20 @@ if __name__ == "__main__":
     ### directories ###
     subjdir = f'{expdir}/sub-{sbj}/'
     betadir = subjdir + '/betaseries'
-    temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
-    #resultdir = expdir + f'/integration_prepost/symmetry_{comparison}/sub-{sbj}'
-    resultdir = f'{temp_result_dir}/integration_prepost/symmetry_{comparison}/sub-{sbj}'
+    # temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
+    resultdir = expdir + f'/integration_prepost/symmetry_{comparison}/sub-{sbj}'
+    # resultdir = f'{temp_result_dir}/integration_prepost/symmetry_{comparison}/sub-{sbj}'
 
     for mask in masks:
         print(f"running in mask {mask}")
         if masktype in ['b_hip_subregions', 'lat_hip_subregions']:
             #slmask = f'{subjdir}/transforms/{mask}.nii.gz'
-            slmask = f"{temp_result_dir}/masks/sub-{sbj}/hip_masks/{mask}.nii.gz"
+            slmask = f"{subjdir}/masks/hip_masks/{mask}.nii.gz"
+        elif masktype == 'hip_subfields':
+            slmask = f"{expdir}/ashs/masks/sub-{sbj}/subfield_masks/func/sub-{sbj}_{mask}.nii.gz"
         elif masktype == 'b_ifg_subregions':
             #slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
-            slmask = f"{temp_result_dir}/masks/sub-{sbj}/ifg_masks/{mask}.nii.gz"
+            slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
 
         # load in data - need to swap order if going backward
 

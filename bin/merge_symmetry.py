@@ -38,6 +38,11 @@ def create_subject_file(subject, master_dir, comparison, mask):
         masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body',
                  'warp-l_hip', 'warp-l_hip_ant', 'warp-l_hip_post', 'warp-l_hip_body',
                  'warp-r_hip', 'warp-r_hip_ant', 'warp-r_hip_post', 'warp-r_hip_body']
+    elif mask == 'hip_subfields':
+        masks = ['CA1_mask_B_func', 'CA1_mask_L_func', 'CA1_mask_R_func',
+                 'CA23DG_mask_B_func', 'CA23DG_mask_L_func', 'CA23DG_mask_R_func',
+                 'posthipp_mask_B_func', 'posthipp_mask_L_func', 'posthipp_mask_R_func',
+                 'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
     elif mask == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
     else:
