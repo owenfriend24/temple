@@ -13,6 +13,13 @@ from temple_utils import get_age_groups
 def run(command):
     subprocess.run(command, shell=True)
 
+def run_descriptives():
+
+
+
+
+
+
 def aggregate_csv_files(comparison, csv_files, master_dir, mask, out_flag):
     aggregated_data = []
 
