@@ -91,6 +91,6 @@ def main(data_dir, masktype):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("data_dir", help="where folders containing .txt/.csv files are stored (i.e. $CORR)")
-    parser.add_argument("masktype", help="mask name e.g., b_hip_subregions, b_hip_subfields, lat_hip_subregions, etc.")
+    parser.add_argument("masktype", help="mask name e.g., b_hip_subregions, hip_subfields, lat_hip_subregions, etc.")
     args = parser.parse_args()
     main(args.data_dir, args.masktype)
