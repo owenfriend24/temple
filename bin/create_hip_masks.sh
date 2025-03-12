@@ -31,7 +31,7 @@ r_hip r_hip_ant r_hip_body r_hip_tail r_hip_post; do
 #-R ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
 #-i ${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt \
 #${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz --use-NN
-#
+
 
 antsApplyTransforms -d 3 \
     -i /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz \
