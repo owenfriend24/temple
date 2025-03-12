@@ -2,7 +2,7 @@
 #
 # Run randomise to test z-statistic images.
 
-if [[ $# -lt 3 ]]; then
+if [[ $# -lt 2 ]]; then
     echo "create_gm_mask.sh freesurfer_dir sub"
     exit 1
 fi
