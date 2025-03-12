@@ -3,7 +3,7 @@
 # Run randomise to test z-statistic images.
 
 if [[ $# -lt 3 ]]; then
-    echo "mni_hip_masks.sh fmriprep_dir sub corall_dir"
+    echo "create_hip_masks.sh fmriprep_dir sub corall_dir"
     exit 1
 fi
 
