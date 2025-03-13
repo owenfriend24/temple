@@ -14,7 +14,7 @@ from mvpa2.measures.base import Measure
 from mvpa2.measures import rsa
 
 
-class searchlight_AC_shuiffle_droprun(Measure):
+class searchlight_AC_shuffle_droprun(Measure):
 
     def __init__(self, metric, output, niter):
         Measure.__init__(self)
