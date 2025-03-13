@@ -72,9 +72,9 @@ if __name__ == "__main__":
     #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
     subjdir = os.path.join(expdir, f'sub-{sbj}')
     betadir = os.path.join(subjdir, 'betaseries')
-    # resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
-    temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
-    resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
+    resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}_shuffle/')
+    # temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
+    # resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
     out_dir = os.path.join(resultdir, f'sub-{sbj}')
     os.makedirs(out_dir, exist_ok=True)
     #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
@@ -82,7 +82,7 @@ if __name__ == "__main__":
 
     ### masks for data to analyze ###
     if masktype == 'gm':
-        masks = 'b_gray_func'
+        masks = ['b_gray_func']
     elif masktype == 'whole_brain':
         masks = ['brainmask_func_dilated']
 
