@@ -112,7 +112,7 @@ if __name__ == "__main__":
             slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
 
         #load in data
-        if comparison == 'ABC' | comparison == 'AC':
+        if comparison == 'ABC' or comparison == 'AC':
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
         else:
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
