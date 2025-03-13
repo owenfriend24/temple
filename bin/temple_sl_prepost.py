@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
         if comparison == 'AC':
             if drop_run is not None:
-                sl_func = searchlight_AC_shuiffle_droprun('correlation', 1, niter)
+                sl_func = searchlight_AC_shuffle_droprun('correlation', 1, niter)
             else:
                 sl_func = searchlight_function_AC_shuffle('correlation', 1, niter)
         else:
