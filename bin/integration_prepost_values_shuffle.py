@@ -99,7 +99,7 @@ if __name__ == "__main__":
             slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
 
 
-        ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
+        ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
         ds.sa['phase'] = phase[:]
         ds.sa['run'] = run[:]
         ds.sa['triad'] = triad[:]
