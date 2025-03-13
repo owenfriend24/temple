@@ -1,12 +1,12 @@
 #!/bin/bash
 
 ### set up experiment info ###
-expdir='/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
+#expdir='/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
 expdir='/corral-repl/utexas/prestonlab/temple/'
 sub=$1
 
 
-betadir=$expdir/sub-${sub}/betaseries
+betadir=${expdir}/sub-${sub}/betaseries
 
 #match
 fslmerge -t ${betadir}/pre_items.nii.gz ${betadir}/betaOUT_run-1* ${betadir}/betaOUT_run-2* ${betadir}/betaOUT_run-3*
