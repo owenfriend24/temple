@@ -76,7 +76,7 @@ class prepost_roi_shuffle(Measure):
 
                     if dataset.sa['triad'][x] == dataset.sa['triad'][y]:  # within triad
 
-                        if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
+                        if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 2:  # a vs. c (i.e., distance of two items between items)
 
                             # within.append(dstmp)
                             # add the comparison information and value to the end of the dataframe
@@ -88,8 +88,8 @@ class prepost_roi_shuffle(Measure):
 
                     elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
                         # for 'shuffled' pairs that never appear together, we only want AB and BC
-                        # so, 1 to 2 and 2 to 3 comparisons, meaning the difference between the two has to be 1, right? test
-                        if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 1:  # a vs. c
+                        # so, 1 to 2 and 2 to 3 comparisons, meaning the difference between the two has to be 1
+                        if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 1:  #
                             # across.append(dstmp)
                             df.loc[len(df)] = ['across', dataset.sa['run'][x], dataset.sa['triad'][x], dataset.sa['item'][x],
                                                dataset.sa['run'][y], dataset.sa['triad'][y], dataset.sa['item'][y], dstmp]
