@@ -18,7 +18,7 @@ import pandas as pd
 np.seterr(divide='ignore', invalid='ignore')
 
 ### Import custom searchlight function ###
-from prepost_roi import *
+from prepost_roi_shuffle import *
 from prepost_roi_droprun import *
 
 ### use argument parser to set up experiment/subject info and drop runs if necessary
@@ -54,6 +54,8 @@ if __name__ == "__main__":
         masks = ['func-b_hip', 'func-b_hip_ant', 'func-b_hip_post', 'func-b_hip_body',
                  'func-l_hip', 'func-l_hip_ant', 'func-l_hip_post', 'func-l_hip_body',
                  'func-r_hip', 'func-r_hip_ant', 'func-r_hip_post', 'func-r_hip_body']
+    elif masktype == 'testing':
+        masks = ['func-b_hip']
     elif masktype == 'hip_subfields':
         masks = ['CA1_mask_B_func', 'CA1_mask_L_func', 'CA1_mask_R_func',
                  'CA23DG_mask_B_func', 'CA23DG_mask_L_func', 'CA23DG_mask_R_func',
@@ -79,7 +81,7 @@ if __name__ == "__main__":
     ### Directories ###
     subjdir = os.path.join(expdir, f'sub-{sbj}')
     betadir = os.path.join(subjdir, 'betaseries')
-    resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
+    resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}_shuffle')
     #temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
     # resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
     out_dir = os.path.join(resultdir, f'sub-{sbj}')
@@ -87,7 +89,7 @@ if __name__ == "__main__":
 
     for mask in masks:
         print(f"running in mask {mask}")
-        if masktype in ['b_hip_subregions', 'lat_hip_subregions']:
+        if masktype in ['b_hip_subregions', 'lat_hip_subregions', 'testing']:
             #slmask = os.path.join(subjdir, 'transforms', f'{mask}.nii.gz')
             slmask = f"{subjdir}/masks/hip_masks/{mask}.nii.gz"
         elif masktype == 'hip_subfields':
@@ -96,11 +98,8 @@ if __name__ == "__main__":
             #slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
             slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
 
-        # Load fMRI data
-        if comparison == 'ABC':
-            ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
-        else:
-            ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
+
+        ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
         ds.sa['phase'] = phase[:]
         ds.sa['run'] = run[:]
         ds.sa['triad'] = triad[:]
@@ -110,7 +109,7 @@ if __name__ == "__main__":
         if drop_run is not None:
             measure = prepost_roi_droprun('correlation', 1, comparison)
         else:
-            measure = prepost_roi('correlation', 1, comparison)
+            measure = prepost_roi_shuffle('correlation', 1, comparison)
 
         # Obtain within-pair and across-pair similarity values
         df = measure(ds)

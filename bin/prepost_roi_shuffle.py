@@ -14,7 +14,7 @@ from mvpa2.measures.base import Measure
 from mvpa2.measures import rsa
 import pandas as pd
 
-class prepost_roi(Measure):
+class prepost_roi_shuffle(Measure):
 
     def __init__(self, metric, output, comp):
         Measure.__init__(self)
@@ -87,8 +87,9 @@ class prepost_roi(Measure):
                             #       f"run {dataset.sa['run'][y]} triad {dataset.sa['triad'][y]} item {dataset.sa['item'][y]}: {dstmp}")
 
                     elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
-
-                        if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
+                        # for 'shuffled' pairs that never appear together, we only want AB and BC
+                        # so, 1 to 2 and 2 to 3 comparisons, meaning the difference between the two has to be 1, right? test
+                        if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 1:  # a vs. c
                             # across.append(dstmp)
                             df.loc[len(df)] = ['across', dataset.sa['run'][x], dataset.sa['triad'][x], dataset.sa['item'][x],
                                                dataset.sa['run'][y], dataset.sa['triad'][y], dataset.sa['item'][y], dstmp]
