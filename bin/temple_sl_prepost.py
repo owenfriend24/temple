@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import subprocess
 
-from bin.searchlight_AC_shuffle_droprun import searchlight_AC_shuiffle_droprun
-from bin.searchlight_function_AC_shuffle import searchlight_function_AC_shuffle
+
 
 subprocess.run(['/bin/bash', '-c', 'source /home1/09123/ofriend/analysis/temple/rsa/bin/activate'])
 ### import python libraries needed for the analysis ###
