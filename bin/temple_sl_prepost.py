@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 import subprocess
+
+from bin.searchlight_AC_shuffle_droprun import searchlight_AC_shuiffle_droprun
+from bin.searchlight_function_AC_shuffle import searchlight_function_AC_shuffle
+
 subprocess.run(['/bin/bash', '-c', 'source /home1/09123/ofriend/analysis/temple/rsa/bin/activate'])
 ### import python libraries needed for the analysis ###
 import numpy as N
@@ -39,6 +43,8 @@ import argparse
 ### import custom searchlight function ###
 from searchlight_function_prepost import *
 from searchlight_function_prepost_droprun import *
+from searchlight_function_AC_shuffle import *
+from searchlight_AC_shuffle_droprun import *
 
 ### use argument parser to set up experiment/subject info and drop runs if necessary
 def get_args():
@@ -81,15 +87,20 @@ if __name__ == "__main__":
     elif masktype == 'whole_brain':
         masks = ['brainmask_func_dilated']
 
+    if comparison == 'AC':
+        comp_file = 'ABC'
+    else:
+        comp_file = comparison
+
     if drop_run is not None:
         phase, run, triad, item = np.loadtxt(
-            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items_drop{drop_run}.txt',
+            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comp_file}_items_drop{drop_run}.txt',
             unpack=True
         )
     else:
         # Load phase, run, triad, and item data
         phase, run, triad, item = np.loadtxt(
-            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items.txt',
+            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comp_file}_items.txt',
             unpack=True
         )
     ### directories ###
@@ -102,7 +113,7 @@ if __name__ == "__main__":
             slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
 
         #load in data
-        if comparison == 'ABC':
+        if comparison == 'ABC' | comparison == 'AC':
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
         else:
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
@@ -111,11 +122,16 @@ if __name__ == "__main__":
         ds.sa['triad'] = triad[:]
         ds.sa['item'] = item[:]
 
-
-        if drop_run is not None:
-            sl_func = searchlight_function_prepost_droprun('correlation', 1, niter)
+        if comparison == 'AC':
+            if drop_run is not None:
+                sl_func = searchlight_AC_shuiffle_droprun('correlation', 1, niter)
+            else:
+                sl_func = searchlight_function_AC_shuffle('correlation', 1, niter)
         else:
-            sl_func = searchlight_function_prepost('correlation', 1, niter)
+            if drop_run is not None:
+                sl_func = searchlight_function_prepost_droprun('correlation', 1, niter)
+            else:
+                sl_func = searchlight_function_prepost('correlation', 1, niter)
 
 
 
