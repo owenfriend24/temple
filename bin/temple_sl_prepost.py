@@ -76,7 +76,9 @@ if __name__ == "__main__":
     niter= 1000
 
     ### masks for data to analyze ###
-    if masktype == 'whole_brain':
+    if masktype == 'gm':
+        masks = 'b_gray_func'
+    elif masktype == 'whole_brain':
         masks = ['brainmask_func_dilated']
 
     if drop_run is not None:
@@ -94,7 +96,9 @@ if __name__ == "__main__":
 
     ###
     for mask in masks:
-        if masktype == 'whole_brain':
+        if masktype == 'gm':
+            slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/b_gray_func.nii.gz'
+        elif masktype == 'whole_brain':
             slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
 
         #load in data
