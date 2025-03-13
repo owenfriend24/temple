@@ -49,11 +49,11 @@ if __name__ == "__main__":
 
     ### Validate masks for data analysis ###
     if masktype == 'b_hip_subregions':
-        masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body']
+        masks = ['func-b_hip', 'func-b_hip_ant', 'func-b_hip_post', 'func-b_hip_body']
     elif masktype == 'lat_hip_subregions':
-        masks = ['warp-b_hip', 'warp-b_hip_ant', 'warp-b_hip_post', 'warp-b_hip_body',
-                 'warp-l_hip', 'warp-l_hip_ant', 'warp-l_hip_post', 'warp-l_hip_body',
-                 'warp-r_hip', 'warp-r_hip_ant', 'warp-r_hip_post', 'warp-r_hip_body']
+        masks = ['func-b_hip', 'func-b_hip_ant', 'func-b_hip_post', 'func-b_hip_body',
+                 'func-l_hip', 'func-l_hip_ant', 'func-l_hip_post', 'func-l_hip_body',
+                 'func-r_hip', 'func-r_hip_ant', 'func-r_hip_post', 'func-r_hip_body']
     elif masktype == 'hip_subfields':
         masks = ['CA1_mask_B_func', 'CA1_mask_L_func', 'CA1_mask_R_func',
                  'CA23DG_mask_B_func', 'CA23DG_mask_L_func', 'CA23DG_mask_R_func',
