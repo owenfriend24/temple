@@ -12,11 +12,11 @@ fmriprep_dir=$2
 comp=$3
 roi=$4
 measure=$5
-mkdir -p ${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}
+mkdir -p ${fmriprep_dir}/integration_prepost/mni_${comp}_shuffle/${measure}
 #WarpImageMultiTransform 3 "${fmriprep_dir}/searchlight/prepost_${comp}_symm/${sub}_symm_${roi}_z.nii.gz" "${fmriprep_dir}/searchlight/mni_${comp}_symm/${sub}_${comp}_symm_${roi}_mni.nii.gz" -R "/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz" "${fmriprep_dir}/sub-${sub}/transforms/native_to_MNI_Warp.nii.gz" "${fmriprep_dir}/sub-${sub}/transforms/native_to_MNI_Affine.txt"
 
-WarpImageMultiTransform 3 "${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/${sub}_${measure}_${comp}_${roi}_z.nii.gz"\
- "${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}/${sub}_${comp}_${roi}_mni.nii.gz" -R \
+WarpImageMultiTransform 3 "${fmriprep_dir}/integration_prepost/${measure}_${comp}_shuffle/sub-${sub}/${sub}_${measure}_${comp}_${roi}_z.nii.gz"\
+ "${fmriprep_dir}/integration_prepost/mni_${comp}_shuffle/${measure}/${sub}_${comp}_${roi}_mni.nii.gz" -R \
  "/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz" \
  "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Warp.nii.gz" \
  "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Affine.txt"
