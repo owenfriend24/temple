@@ -5,11 +5,11 @@ subject=$1
 
 source /home1/09123/ofriend/analysis/temple/rsa/bin/activate
 
-aggregate_integration.py both /corral-repl/utexas/prestonlab/temple/integration_prepost \
-AC lat_hip_subregions --agg_file
-
-aggregate_integration.py both /corral-repl/utexas/prestonlab/temple/integration_prepost \
-AB lat_hip_subregions --agg_file
+#aggregate_integration.py both /corral-repl/utexas/prestonlab/temple/integration_prepost \
+#AC lat_hip_subregions --agg_file
+#
+#aggregate_integration.py both /corral-repl/utexas/prestonlab/temple/integration_prepost \
+#AB lat_hip_subregions --agg_file
 
 for sub in temple016 temple019 temple020 temple022 temple024 temple025 temple029 \
 temple032 temple033 temple034 temple035 temple036 temple037 temple038 temple041 \
@@ -19,19 +19,23 @@ temple071 temple072 temple073 temple074 temple075 temple076 temple078 temple079 
 temple082 temple083 temple084 temple085 temple087 temple089 temple088 temple090 \
 temple091 temple092 temple093 temple094 temple095 temple096 temple097 temple098 \
 temple099 temple103 temple105 temple106 temple107 temple108 temple109 temple110 \
-temple111 temple112 temple113 temple114 temple115 temple119 temple120 temple122 temple123; do
+temple111 temple112 temple113 temple114 temple115 temple119 temple120 temple122 temple123 temple124; do
 
-  temple_sl_prepost.py ${sub} AC gm
-  temple_sl_prepost.py temple023 AC gm --drop_run=6
-  temple_sl_prepost.py temple030 AC gm --drop_run=6
-  temple_sl_prepost.py temple070 AC gm --drop_run=3
-  temple_sl_prepost.py temple116 AC gm --drop_run=5
-
-  /home1/09123/ofriend/analysis/temple/bin/run_descriptives/tsnr_by_roi.sh /corral-repl/utexas/prestonlab/temple/ ${sub} lat_hip_subregions
+  temple_sl_prepost.py ${sub} AB gm
+  sl_to_mni.sh ${sub} ${CORR} AB b_gray_func prepost
+#  /home1/09123/ofriend/analysis/temple/bin/run_descriptives/tsnr_by_roi.sh /corral-repl/utexas/prestonlab/temple/ ${sub} lat_hip_subregions
 
 
 done
 
+temple_sl_prepost.py temple023 AB gm --drop_run=6
+sl_to_mni.sh temple023 ${CORR} AB b_gray_func prepost
+temple_sl_prepost.py temple030 AB gm --drop_run=6
+sl_to_mni.sh temple030 ${CORR} AB b_gray_func prepost
+temple_sl_prepost.py temple070 AB gm --drop_run=3
+sl_to_mni.sh temple070 ${CORR} AB b_gray_func prepost
+temple_sl_prepost.py temple116 AB gm --drop_run=5
+sl_to_mni.sh temple116 ${CORR} AB b_gray_func prepost
 
 
 #aggregate_integration.py both /corral-repl/utexas/prestonlab/temple/integration_prepost \
