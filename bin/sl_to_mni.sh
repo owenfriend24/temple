@@ -28,9 +28,9 @@ WarpImageMultiTransform 3 "${fmriprep_dir}/integration_prepost/${measure}_${comp
 # "${fmriprep_dir}/sub-${sub}/transforms/native_to_MNI_Warp.nii.gz" \
 # "${fmriprep_dir}/sub-${sub}/transforms/native_to_MNI_Affine.txt"
 
-fslmaths "${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}/${sub}_${comp}_${roi}_mni.nii.gz" -mas \
-/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain_mask.nii.gz \
-"${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}/${sub}_${comp}_${roi}_mni.nii.gz"
+#fslmaths "${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}/${sub}_${comp}_${roi}_mni.nii.gz" -mas \
+#/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain_mask.nii.gz \
+#"${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}/${sub}_${comp}_${roi}_mni.nii.gz"
 
 
 
