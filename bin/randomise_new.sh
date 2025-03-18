@@ -16,10 +16,12 @@ randomise -i ${fmriprep_dir}/integration_prepost/mni_${comp}/symmetry/group_z_${
 -o ${fmriprep_dir}/integration_prepost/mni_${comp}/symmetry/randomise_out/parametric_age_ \
 -d ${fmriprep_dir}/randomise/age_parametric.mat \
 -t ${fmriprep_dir}/randomise/age_parametric.con \
+-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
 -n 5000 -x  --uncorrp
 
 randomise -i ${fmriprep_dir}/integration_prepost/mni_${comp}/symmetry/group_z_${comp}.nii.gz \
 -o ${fmriprep_dir}/integration_prepost/mni_${comp}/symmetry/randomise_out/grouped_age_ \
 -d ${fmriprep_dir}/randomise/age_grouped.mat \
 -t ${fmriprep_dir}/randomise/age_grouped.con \
+-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
 -n 5000 -x  --uncorrp
