@@ -44,6 +44,8 @@ from searchlight_function_prepost import *
 from searchlight_function_prepost_droprun import *
 from searchlight_function_AC_shuffle import *
 from searchlight_AC_shuffle_droprun import *
+from searchlight_function_adjacent import *
+from searchlight_adjacent_droprun import *
 
 ### use argument parser to set up experiment/subject info and drop runs if necessary
 def get_args():
@@ -72,9 +74,9 @@ if __name__ == "__main__":
     #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
     subjdir = os.path.join(expdir, f'sub-{sbj}')
     betadir = os.path.join(subjdir, 'betaseries')
-    resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}_shuffle/')
-    # temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
-    # resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
+    #resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}_shuffle/')
+    temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
+    resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
     out_dir = os.path.join(resultdir, f'sub-{sbj}')
     os.makedirs(out_dir, exist_ok=True)
     #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
@@ -121,11 +123,17 @@ if __name__ == "__main__":
         ds.sa['triad'] = triad[:]
         ds.sa['item'] = item[:]
 
+# choose the function based on the comparison as some sl logic changes by comparison
         if comparison == 'AC':
             if drop_run is not None:
                 sl_func = searchlight_AC_shuffle_droprun('correlation', 1, niter)
             else:
                 sl_func = searchlight_function_AC_shuffle('correlation', 1, niter)
+        elif comparison == 'ABC':
+            if drop_run is not None:
+                sl_func = searchlight_adjacent_droprun('correlation', 1, niter)
+            else:
+                sl_func = searchlight_function_adjacent('correlation', 1, niter)
         else:
             if drop_run is not None:
                 sl_func = searchlight_function_prepost_droprun('correlation', 1, niter)

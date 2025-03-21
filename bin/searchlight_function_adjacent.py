@@ -14,7 +14,7 @@ from mvpa2.measures.base import Measure
 from mvpa2.measures import rsa
 
 
-class searchlight_function_AC_shuffle(Measure):
+class searchlight_function_adjacent(Measure):
 
     def __init__(self, metric, output, niter):
         Measure.__init__(self)
@@ -56,11 +56,12 @@ class searchlight_function_AC_shuffle(Measure):
                 dstmp = dsm_diff[x, y]
                 if dataset.sa['run'][x] != dataset.sa['run'][y]:  # only do across run comparisons
                     if dataset.sa['triad'][x] == dataset.sa['triad'][y]:  # within triad
-                        if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 2:  # e.g., a vs. c
+                        if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 1:  # ignore ac
                             within.append(dstmp)
                     elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
-                        if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 1:  # a and b or b and c for shuffle
+                        if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 1:  # still ignoring ac
                             across.append(dstmp)
+
 
         #### convert items to arrays ###
         within = array(within)
