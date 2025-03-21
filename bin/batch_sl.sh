@@ -12,7 +12,7 @@ temple071 temple072 temple073 temple074 temple075 temple076 temple078 temple079 
 temple082 temple083 temple084 temple085 temple087 temple089 temple088 temple090 \
 temple091 temple092 temple093 temple094 temple095 temple096 temple097 temple098 \
 temple099 temple103 temple105 temple106 temple107 temple108 temple109 temple110 \
-temple111 temple112 temple113 temple114 temple119 temple120; do
+temple111 temple112 temple113 temple114 temple119 temple120 temple; do
 
   sl_symmetry.py $sub $comp whole_brain
 done
