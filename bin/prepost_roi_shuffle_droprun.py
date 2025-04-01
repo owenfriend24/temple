@@ -14,7 +14,7 @@ from mvpa2.measures.base import Measure
 from mvpa2.measures import rsa
 import pandas as pd
 
-class prepost_roi_droprun(Measure):
+class prepost_roi_shuffle_droprun(Measure):
 
     def __init__(self, metric, output, comp):
         Measure.__init__(self)
@@ -72,7 +72,7 @@ class prepost_roi_droprun(Measure):
                         # x_tri = dataset.sa['triad'][x]
                         # y_tri = dataset.sa['triad'][y]
                         #print(f'triad {x_tri} of run {x_run} vs triad {y_tri} of run {y_run} for within comparison')
-                        if dataset.sa['item'][x] != dataset.sa['item'][y]: # a vs. c
+                        if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 2: # a vs. c
                             # x_item = dataset.sa['item'][x]
                             # y_item = dataset.sa['item'][y]
                             dstmp = dsm_post[x, y] - dsm_pre[x, y]
@@ -88,7 +88,7 @@ class prepost_roi_droprun(Measure):
                     elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
                         # x_tri = dataset.sa['triad'][x]
                         # y_tri = dataset.sa['triad'][y]
-                        if dataset.sa['item'][x] != dataset.sa['item'][y]:  # a vs. c
+                        if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 1:  # a vs. c
                             # x_item = dataset.sa['item'][x]
                             # y_item = dataset.sa['item'][y]
                             dstmp = dsm_post[x, y] - dsm_pre[x, y]

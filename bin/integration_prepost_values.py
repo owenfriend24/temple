@@ -20,6 +20,8 @@ np.seterr(divide='ignore', invalid='ignore')
 ### Import custom searchlight function ###
 from prepost_roi import *
 from prepost_roi_droprun import *
+from prepost_roi_shuffle import *
+from prepost_roi_shuffle_droprun import *
 
 ### use argument parser to set up experiment/subject info and drop runs if necessary
 def get_args():
@@ -97,7 +99,7 @@ if __name__ == "__main__":
             slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
 
         # Load fMRI data
-        if comparison == 'ABC':
+        if comparison in ['ABC', 'AC']:
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
         else:
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
@@ -107,10 +109,16 @@ if __name__ == "__main__":
         ds.sa['item'] = item[:]
 
         # Similarity measure
-        if drop_run is not None:
-            measure = prepost_roi_droprun('correlation', 1, comparison)
+        if comparison == 'AC':
+            if drop_run is not None:
+                measure = prepost_roi_shuffle_droprun('correlation', 1, comparison)
+            else:
+                measure = prepost_roi_shuffle('correlation', 1, comparison)
         else:
-            measure = prepost_roi('correlation', 1, comparison)
+            if drop_run is not None:
+                measure = prepost_roi_droprun('correlation', 1, comparison)
+            else:
+                measure = prepost_roi('correlation', 1, comparison)
 
         # Obtain within-pair and across-pair similarity values
         df = measure(ds)
