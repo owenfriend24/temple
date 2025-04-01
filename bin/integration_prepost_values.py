@@ -66,15 +66,19 @@ if __name__ == "__main__":
     else:
         raise ValueError('Invalid mask type')
 
+    comp_file = comparison
+    if comparison == 'AC':
+        comp_file = 'ABC'
+
     if drop_run is not None:
         phase, run, triad, item = np.loadtxt(
-            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items_drop{drop_run}.txt',
+            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comp_file}_items_drop{drop_run}.txt',
             unpack=True
         )
     else:
     # Load phase, run, triad, and item data
         phase, run, triad, item = np.loadtxt(
-            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comparison}_items.txt',
+            f'/home1/09123/ofriend/analysis/temple/bin/templates/pre_post_{comp_file}_items.txt',
             unpack=True
     )
 
