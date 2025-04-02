@@ -27,16 +27,17 @@ comp=$2
 #
 ##-o ${fmriprep_dir}/integration_prepost/mni_${comp}/prepost/randomise_out/grouped_age_new \
 #
-#randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/child_group_z.nii.gz \
-#-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/child_parametric_age_ \
-#-d ${fmriprep_dir}/integration_prepost/randomise/age_param_child.mat \
-#-t ${fmriprep_dir}/integration_prepost/randomise/age_param_child.con \
-#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
-#-n 5000 -x  --uncorrp
-##
-##
-randomise -i ${fmriprep_dir}/integration_prepost/mni_${comp}/prepost/child_group_z.nii.gz \
--o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/child_full_z_ \
+randomise -i /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/prepost/child_group_z.nii.gz \
+-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/child_parametric_demeaned_ \
+-d ${fmriprep_dir}/randomise/age_param_demeand.mat \
+-t ${fmriprep_dir}/randomise/age_param_demeaned.con \
 -m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
--1 \
 -n 5000 -x  --uncorrp
+
+##
+##
+#randomise -i ${fmriprep_dir}/integration_prepost/mni_${comp}/prepost/child_group_z.nii.gz \
+#-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/child_full_z_ \
+#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+#-1 \
+#-n 5000 -x  --uncorrp
