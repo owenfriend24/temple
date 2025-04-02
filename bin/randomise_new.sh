@@ -27,7 +27,7 @@ comp=$2
 #
 ##-o ${fmriprep_dir}/integration_prepost/mni_${comp}/prepost/randomise_out/grouped_age_new \
 #
-randomise -i /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/prepost/child_group_z.nii.gz \
+randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/child_group_z.nii.gz \
 -o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/child_parametric_demeaned_ \
 -d ${fmriprep_dir}/randomise/age_param_demeaned.mat \
 -t ${fmriprep_dir}/randomise/age_param_demeaned.con \
