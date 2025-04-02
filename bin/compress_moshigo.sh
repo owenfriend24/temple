@@ -9,4 +9,5 @@ fi
 
 sub=$1
 
-tar -czvf /work/09123/ofriend/ls6/temple/sourcedata2/${sub}.tar.gz /work/09123/ofriend/ls6/temple/sourcedata2/${sub}
+tar -czvf /scratch/09123/ofriend/moshi/${sub}_univariate.tar.gz \
+    -C /corral-repl/utexas/prestonlab/moshiGO1/moshiGO_201/${sub}/BOLD univariate
