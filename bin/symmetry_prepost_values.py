@@ -101,7 +101,7 @@ if __name__ == "__main__":
                 name = f.replace('.nii.gz', '').replace('.nii', '')
                 masks.append(name)
     elif masktype == 'searchlight_contrast':
-        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/contrast_040325/{comparison}/cluster_masks'
+        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/contrast_040325/{c_fwd}/cluster_masks'
         masks = []
         for f in os.listdir(cluster_dir):
             if f.endswith('.nii') or f.endswith('.nii.gz'):
@@ -145,7 +145,7 @@ if __name__ == "__main__":
         elif masktype == 'searchlight':
             slmask = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-{sbj}/sl-{c_fwd}/sl-{mask}.nii.gz'
         elif masktype == 'searchlight_contrast':
-            slmask = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-{sbj}/sl-{comparison}_con/sl-{mask}.nii.gz'
+            slmask = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-{sbj}/sl-{c_fwd}_con/sl-{mask}.nii.gz'
         # load in data - need to swap order if going backward
 
 
