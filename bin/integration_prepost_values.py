@@ -110,7 +110,7 @@ if __name__ == "__main__":
             #slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
             slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
         elif masktype == 'searchlight':
-            slmask = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-${sbj}/sl-${comparison}/sl-{mask}.nii.gz'
+            slmask = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-{sbj}/sl-{comparison}/sl-{mask}.nii.gz'
 
         # Load fMRI data
         if comparison in ['ABC', 'AC']:
