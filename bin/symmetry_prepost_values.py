@@ -73,6 +73,10 @@ if __name__ == "__main__":
     comparison = args.comparison
     masktype = args.masktype
     drop_run = args.drop_run
+    if comparison in ['BA', 'CB', 'CA', 'CBA']:
+        c_fwd = comparison[::-1]
+    else:
+        c_fwd = comparison
 
     if masktype == 'whole_brain':
         masks = ['brainmask_func_dilated']
@@ -90,17 +94,14 @@ if __name__ == "__main__":
     elif masktype == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
     elif masktype == 'searchlight':
-        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/040325/{comparison}/cluster_masks'
+        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/040325/{c_fwd}/cluster_masks'
         masks = []
         for f in os.listdir(cluster_dir):
             if f.endswith('.nii') or f.endswith('.nii.gz'):
                 name = f.replace('.nii.gz', '').replace('.nii', '')
                 masks.append(name)
     ### searchlight information ###
-    if comparison in ['BA', 'CB', 'CA', 'CBA']:
-        c_fwd = comparison[::-1]
-    else:
-        c_fwd = comparison
+
 
     if drop_run is not None:
         phase, run, triad, item = np.loadtxt(
