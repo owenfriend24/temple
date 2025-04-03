@@ -13,11 +13,11 @@ comp=$3
 corr=$4
 
 comp=AC
-mask_dir=${fmriprep_dir}/masks/sub-${sub}/sl-${comp}/
+mask_dir=${fmriprep_dir}/masks/sub-${sub}/sl-${comp}_con/
 
 mkdir -p ${mask_dir}
 
-for mask in ${fmriprep_dir}/masks/sl_clusters/040325/${comp}/cluster_masks/*.nii.gz; do
+for mask in ${fmriprep_dir}/masks/sl_clusters/contrast_040325/${comp}/cluster_masks/*.nii.gz; do
   filename=$(basename "$mask")                     # e.g., "cluster1.nii.gz"
   maskname="${filename%%.*}"
   antsApplyTransforms -d 3 \
@@ -31,11 +31,11 @@ for mask in ${fmriprep_dir}/masks/sl_clusters/040325/${comp}/cluster_masks/*.nii
 done
 
 comp=AB
-mask_dir=${fmriprep_dir}/masks/sub-${sub}/sl-${comp}/
+mask_dir=${fmriprep_dir}/masks/sub-${sub}/sl-${comp}_con/
 
 mkdir -p ${mask_dir}
 
-for mask in ${fmriprep_dir}/masks/sl_clusters/040325/${comp}/cluster_masks/*.nii.gz; do
+for mask in ${fmriprep_dir}/masks/sl_clusters/contrast_040325/${comp}/cluster_masks/*.nii.gz; do
   filename=$(basename "$mask")                     # e.g., "cluster1.nii.gz"
   maskname="${filename%%.*}"
   antsApplyTransforms -d 3 \
@@ -50,11 +50,11 @@ done
 
 
 comp=ABC
-mask_dir=${fmriprep_dir}/masks/sub-${sub}/sl-${comp}/
+mask_dir=${fmriprep_dir}/masks/sub-${sub}/sl-${comp}_con/
 
 mkdir -p ${mask_dir}
 
-for mask in ${fmriprep_dir}/masks/sl_clusters/040325/${comp}/cluster_masks/*.nii.gz; do
+for mask in ${fmriprep_dir}/masks/sl_clusters/contrast_040325/${comp}/cluster_masks/*.nii.gz; do
   filename=$(basename "$mask")                     # e.g., "cluster1.nii.gz"
   maskname="${filename%%.*}"
   antsApplyTransforms -d 3 \

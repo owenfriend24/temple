@@ -46,8 +46,17 @@ def create_subject_file(subject, master_dir, comparison, mask):
             if f.endswith('.nii') or f.endswith('.nii.gz'):
                 name = f.replace('.nii.gz', '').replace('.nii', '')
                 masks.append(name)
+
+    elif mask == 'searchlight_contrast':
+        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/contrast_040325/{comparison}/cluster_masks'
+        masks = []
+        for f in os.listdir(cluster_dir):
+            if f.endswith('.nii') or f.endswith('.nii.gz'):
+                name = f.replace('.nii.gz', '').replace('.nii', '')
+                masks.append(name)
+
     else:
-        raise ValueError('no valid mask')
+            raise ValueError('no valid mask')
 
     # Process both forward and backward integration within an ROI
 

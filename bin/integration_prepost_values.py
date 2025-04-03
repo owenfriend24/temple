@@ -70,6 +70,13 @@ if __name__ == "__main__":
             if f.endswith('.nii') or f.endswith('.nii.gz'):
                 name = f.replace('.nii.gz', '').replace('.nii', '')
                 masks.append(name)
+    elif masktype == 'searchlight_contrast':
+        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/contrast_040325/{comparison}/cluster_masks'
+        masks = []
+        for f in os.listdir(cluster_dir):
+            if f.endswith('.nii') or f.endswith('.nii.gz'):
+                name = f.replace('.nii.gz', '').replace('.nii', '')
+                masks.append(name)
 
     else:
         raise ValueError('Invalid mask type')
@@ -111,6 +118,8 @@ if __name__ == "__main__":
             slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
         elif masktype == 'searchlight':
             slmask = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-{sbj}/sl-{comparison}/sl-{mask}.nii.gz'
+        elif masktype == 'searchlight_contrast':
+            slmask = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-{sbj}/sl-{comparison}_con/sl-{mask}.nii.gz'
 
         # Load fMRI data
         if comparison in ['ABC', 'AC']:
