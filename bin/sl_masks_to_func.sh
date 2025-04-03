@@ -17,10 +17,11 @@ mask_dir=${fmriprep_dir}/masks/sub-${sub}
 mkdir -p ${mask_dir}
 
 for mask in ${fmriprep_dir}/masks/sl_clusters/040325/${comp}/*; do
-
+  filename=$(basename "$mask")                     # e.g., "cluster1.nii.gz"
+  maskname="${filename%%.*}"
   antsApplyTransforms -d 3 \
       -i ${mask} \
-      -o ${mask_dir}/sl-${mask}.nii.gz \
+      -o ${mask_dir}/sl-${maskname}.nii.gz \
       -r ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
       -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
       -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt,1] \
