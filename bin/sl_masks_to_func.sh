@@ -12,7 +12,7 @@ fmriprep_dir=$2
 comp=$3
 corr=$4
 
-mask_dir=${fmriprep_dir}/masks/sub-${sub}
+mask_dir=${fmriprep_dir}/masks/sub-${sub}/sl-${comp}/
 
 mkdir -p ${mask_dir}
 
