@@ -9,7 +9,7 @@ source /home1/09123/ofriend/analysis/temple/rsa/bin/activate
 #aggregate_integration.py both /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost \
 #AB hip_subfields --agg_file
 
-aggregate_integration.py both /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost \
+aggregate_integration.py symmetry /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost \
 ${comps} searchlight --agg_file
 
 #aggregate_integration.py both /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost \
