@@ -10,7 +10,7 @@ source /home1/09123/ofriend/analysis/temple/rsa/bin/activate
 #AB hip_subfields --agg_file
 
 aggregate_integration.py both /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost \
-${comps} hip_subfields --agg_file
+${comps} searchlight --agg_file
 
 #aggregate_integration.py both /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost \
 #BC hip_subfields --agg_file
