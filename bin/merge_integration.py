@@ -39,6 +39,13 @@ def create_subject_file(subject, master_dir, comparison, mask):
                  'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
     elif mask == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
+    elif mask == 'searchlight':
+        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/040325/{comparison}/cluster_masks'
+        masks = []
+        for f in os.listdir(cluster_dir):
+            if f.endswith('.nii') or f.endswith('.nii.gz'):
+                name = f.replace('.nii.gz', '').replace('.nii', '')
+                masks.append(name)
     else:
         raise ValueError('no valid mask')
 

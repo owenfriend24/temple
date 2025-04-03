@@ -63,6 +63,14 @@ if __name__ == "__main__":
                  'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
     elif masktype == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
+    elif masktype == 'searchlight':
+        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/040325/{comparison}/cluster_masks'
+        masks = []
+        for f in os.listdir(cluster_dir):
+            if f.endswith('.nii') or f.endswith('.nii.gz'):
+                name = f.replace('.nii.gz', '').replace('.nii', '')
+                masks.append(name)
+
     else:
         raise ValueError('Invalid mask type')
 
@@ -101,6 +109,8 @@ if __name__ == "__main__":
         elif masktype == 'b_ifg_subregions':
             #slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
             slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
+        elif masktype == 'searchlight':
+            slmask = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-${sbj}/sl-${comparison}/sl-{mask}.nii.gz'
 
         # Load fMRI data
         if comparison in ['ABC', 'AC']:
