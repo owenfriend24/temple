@@ -16,7 +16,7 @@ mask_dir=${fmriprep_dir}/masks/sub-${sub}
 
 mkdir -p ${mask_dir}
 
-for mask in ${fmriprep_dir}/masks/sl_clusters/040325/${comp}/*; do
+for mask in ${fmriprep_dir}/masks/sl_clusters/040325/${comp}/cluster_masks/*.nii.gz; do
   filename=$(basename "$mask")                     # e.g., "cluster1.nii.gz"
   maskname="${filename%%.*}"
   antsApplyTransforms -d 3 \
