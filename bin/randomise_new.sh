@@ -29,7 +29,7 @@ comp=$2
 #
 
 randomise -i /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/prepost/adult_group_z.nii.gz \
--o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/full_sample_mean \
+-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/adult_sample_mean \
 -m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
 -1 \
 -n 5000 -x  --uncorrp
@@ -37,7 +37,7 @@ randomise -i /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${com
 #
 #
 randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/adult_group_z.nii.gz \
--o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/randomise_out/full_sample_mean \
+-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/randomise_out/adult_sample_mean \
 -m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
 -1 \
 -n 5000 -x  --uncorrp
