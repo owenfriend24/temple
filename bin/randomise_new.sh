@@ -30,19 +30,51 @@ comp=$2
 
 randomise -i /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
 -o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/full_sample_mean \
--d ${fmriprep_dir}/randomise/full_sample_mean.mat \
--t ${fmriprep_dir}/randomise/full_sample_mean.con \
 -m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+-1 \
 -n 5000 -x  --uncorrp
 
 
 
 randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/group_z_image.nii.gz \
 -o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/randomise_out/full_sample_mean \
--d ${fmriprep_dir}/randomise/full_sample_mean.mat \
--t ${fmriprep_dir}/randomise/full_sample_mean.con \
 -m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+-1 \
 -n 5000 -x  --uncorrp
+
+
+randomise -i /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/prepost/child_group_z.nii.gz \
+-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/full_child_mean \
+-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+-1 \
+-n 5000 -x  --uncorrp
+
+
+
+randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/child_group_z.nii.gz \
+-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/randomise_out/full_child_mean \
+-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+-1 \
+-n 5000 -x  --uncorrp
+
+
+
+
+#randomise -i /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
+#-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/full_sample_mean \
+#-d ${fmriprep_dir}/randomise/full_sample_mean.mat \
+#-t ${fmriprep_dir}/randomise/full_sample_mean.con \
+#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+#-n 5000 -x  --uncorrp
+#
+#
+#
+#randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/group_z_image.nii.gz \
+#-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/randomise_out/full_sample_mean \
+#-d ${fmriprep_dir}/randomise/full_sample_mean.mat \
+#-t ${fmriprep_dir}/randomise/full_sample_mean.con \
+#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+#-n 5000 -x  --uncorrp
 
 ##
 ##
