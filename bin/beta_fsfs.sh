@@ -24,13 +24,19 @@ for subject in "${subjects[@]}"; do
 
     # Use fslnvols to get the number of TRs in the fMRI file
     num_trs=$(fslnvols "$fmri_file_path")
+
+    # pull the number of voxels for the given functional run
+    dims=($(fslinfo "$fmri_file_path" | awk '/^dim[1234]/ {print $2}'))
+    total_voxels=$(( dims[0] * dims[1] * dims[2] * dims[3] ))
+
     # output files are stored in the subject_output_directory
     output_file="${subject_output_directory}/sub-${subject}_betaL1_run-${run}.fsf"
 
     # Use sed to replace the subject, run, and number of TRs in the template
     sed -e "s/sub-999/sub-${subject}/g" \
         -e "s/run-1/run-${run}/g" \
-	-e "s/run-01/run-0${run}/g" \
+        -e "s/69056000/${total_voxels}/g" \
+	      -e "s/run-01/run-0${run}/g" \
         -e "s/222/${num_trs}/g" \
         "$template_file" > "$output_file"
 
