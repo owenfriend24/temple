@@ -11,16 +11,16 @@ base_dir=$2
 
 ash_dir=${base_dir}/sub-${sub}/
 
-## save original output with incorrect transformation
-#mv ${ash_dir}/final ${ash_dir}/final_orig
-#
-#mkdir -p ${ash_dir}/final
-#
-## create new warp/affine files for T1 to T2 transformation
-#ANTS 3 -m CC[${ash_dir}/coronal.nii.gz, ${ash_dir}/mprage.nii.gz,1,5] \
-#-t SyN[0.25] -r Gauss[3,0] -o T1_to_T2_manual_ \
-#-i 30x90x20 --use-Histogram-Matching \
-#--number-of-affine-iterations 10000x10000x10000x10000x10000 --MI-option 32x16000
+# save original output with incorrect transformation
+mv ${ash_dir}/final ${ash_dir}/final_orig
+
+mkdir -p ${ash_dir}/final
+
+# create new warp/affine files for T1 to T2 transformation
+ANTS 3 -m CC[${ash_dir}/coronal.nii.gz, ${ash_dir}/mprage.nii.gz,1,5] \
+-t SyN[0.25] -r Gauss[3,0] -o T1_to_T2_manual_ \
+-i 30x90x20 --use-Histogram-Matching \
+--number-of-affine-iterations 10000x10000x10000x10000x10000 --MI-option 32x16000
 
 # create the new manual masks from the multiatlas directory
 antsApplyTransforms -d 3 -i ${ash_dir}/multiatlas/fusion/lfseg_corr_nogray_left.nii.gz \
