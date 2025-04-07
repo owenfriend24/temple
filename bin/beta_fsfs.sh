@@ -26,6 +26,7 @@ for subject in "${subjects[@]}"; do
     num_trs=$(fslnvols "$fmri_file_path")
 
     # pull the number of voxels for the given functional run
+    # this isn't actually necessary since we're not running a univariate analysis in feat, just creating the design matrix
     dims=($(fslinfo "$fmri_file_path" | awk '/^dim[1234]/ {print $2}'))
     total_voxels=$(( dims[0] * dims[1] * dims[2] * dims[3] ))
 

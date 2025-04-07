@@ -8,6 +8,7 @@ fi
 
 sub=$1
 
+
 export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=24
 export ASHS_ROOT=/scratch/09123/ofriend/ashs
 
