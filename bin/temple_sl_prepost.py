@@ -70,8 +70,8 @@ if __name__ == "__main__":
     masktype = args.masktype
     drop_run = args.drop_run
 
-    expdir = '/work/09123/ofriend/ls6/temple/backups/'
-    # expdir = '/corral-repl/utexas/prestonlab/temple/'
+    # expdir = '/work/09123/ofriend/ls6/temple/backups/'
+    expdir = '/corral-repl/utexas/prestonlab/temple/'
     #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
     subjdir = os.path.join(expdir, f'sub-{sbj}')
     betadir = os.path.join(subjdir, 'betaseries')
@@ -91,6 +91,8 @@ if __name__ == "__main__":
 
     if comparison == 'AC':
         comp_file = 'ABC'
+    elif comparison == 'AC_weak':
+        comp_file = 'AC'
     else:
         comp_file = comparison
 
@@ -117,6 +119,8 @@ if __name__ == "__main__":
         #load in data
         if comparison == 'ABC' or comparison == 'AC':
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
+        elif comparison == 'AC_weak':
+            ds = fmri_dataset(os.path.join(betadir, f'pre_post_AC_items.nii.gz'), mask=slmask)
         else:
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
         ds.sa['phase'] = phase[:]
