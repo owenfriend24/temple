@@ -70,8 +70,8 @@ if __name__ == "__main__":
     masktype = args.masktype
     drop_run = args.drop_run
 
-    expdir = '/work/09123/ofriend/ls6/temple/backups/'
-    # expdir = '/corral-repl/utexas/prestonlab/temple/'
+    # expdir = '/work/09123/ofriend/ls6/temple/backups/'
+    expdir = '/corral-repl/utexas/prestonlab/temple/'
     #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
     subjdir = os.path.join(expdir, f'sub-{sbj}')
     betadir = os.path.join(subjdir, 'betaseries')
