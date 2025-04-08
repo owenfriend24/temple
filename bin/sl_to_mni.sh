@@ -22,18 +22,18 @@ mkdir -p ${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}
 #
 
 
-#WarpImageMultiTransform 3 "${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/${sub}_${measure}_${comp}_${roi}_z.nii.gz"\
-# "${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}/${sub}_${comp}_${roi}_mni.nii.gz" -R \
-# "/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz" \
-# "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Warp.nii.gz" \
-# "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Affine.txt"
-
-
 WarpImageMultiTransform 3 "${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/${sub}_${measure}_${comp}_${roi}_z.nii.gz"\
  "${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}/${sub}_${comp}_${roi}_mni.nii.gz" -R \
  "/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz" \
- "/work/09123/ofriend/ls6/temple/backups/sub-${sub}/transforms/native_to_MNI_Warp.nii.gz" \
- "/work/09123/ofriend/ls6/temple/backups/sub-${sub}/transforms/native_to_MNI_Affine.txt"
+ "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Warp.nii.gz" \
+ "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Affine.txt"
+#
+#
+#WarpImageMultiTransform 3 "${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/${sub}_${measure}_${comp}_${roi}_z.nii.gz"\
+# "${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}/${sub}_${comp}_${roi}_mni.nii.gz" -R \
+# "/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz" \
+# "/work/09123/ofriend/ls6/temple/backups/sub-${sub}/transforms/native_to_MNI_Warp.nii.gz" \
+# "/work/09123/ofriend/ls6/temple/backups/sub-${sub}/transforms/native_to_MNI_Affine.txt"
 
 
 #WarpImageMultiTransform 3 "${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/${sub}_${measure}_${comp}_${roi}_z.nii.gz"\
