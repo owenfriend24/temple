@@ -15,7 +15,7 @@ mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/
 randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/group_z_image.nii.gz \
 -o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/grouped_age_80 \
 -d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/age_grouped_80.mat \
--t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/age_grouped_80.con \
+-t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/follow_age_grouped_80.con \
 -m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
 -n 5000 -x --uncorrp
 #
