@@ -91,7 +91,7 @@ if __name__ == "__main__":
     rem = pd.read_csv('/corral-repl/utexas/prestonlab/temple/beh/remember_by_triad.csv')
     ref = rem[rem['subject'] == sbj]
     for triplet in [1, 2, 3, 4]:
-        triad_acc.append(np.mean(ref[ref['triad'] == triplet]['accuracy']))
+        triad_acc.append(np.mean(ref[ref['correct_triad'] == triplet]['accuracy']))
         print(f' accuracy for triplet {triplet} = {triad_acc[triplet-1]}')
 
 
