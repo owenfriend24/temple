@@ -10,15 +10,15 @@ fi
 fmriprep_dir=$1
 comp=$2
 
-mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/
+mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/continuous/
 #
-#randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/group_z_image.nii.gz \
-#-o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/follow_grouped_age_80 \
-#-d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/age_grouped_80.mat \
-#-t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/follow_age_grouped_80.con \
-#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
-#-n 5000 -x --uncorrp
-#
+randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/group_z_image.nii.gz \
+-o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/continuous/cont_tests_ \
+-d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_tests.mat \
+-t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_tests.con \
+-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+-n 5000 -x --uncorrp
+
 #randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
 #-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/randomise_out/grouped_age_new \
 #-d ${fmriprep_dir}/integration_prepost/randomise/age_grouped.mat \
@@ -28,12 +28,16 @@ mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/
 #
 ##-o ${fmriprep_dir}/integration_prepost/mni_${comp}/prepost/randomise_out/grouped_age_new \
 #
+#
+#randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/group_z_image.nii.gz \
+#-o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/full_group_80 \
+#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+#-1 \
+#-n 5000 -x  --uncorrp
 
-randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/group_z_image.nii.gz \
--o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/full_group_80 \
--m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
--1 \
--n 5000 -x  --uncorrp
+
+
+
 #
 ##
 ##

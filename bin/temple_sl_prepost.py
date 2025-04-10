@@ -38,7 +38,6 @@ from mvpa2.base.dataset import *
 import sys
 import subprocess
 import argparse
-import pandas as pd
 
 ### import custom searchlight function ###
 from searchlight_function_prepost import *
@@ -47,8 +46,6 @@ from searchlight_function_AC_shuffle import *
 from searchlight_AC_shuffle_droprun import *
 from searchlight_function_adjacent import *
 from searchlight_adjacent_droprun import *
-
-from searchlight_function_prepost_accuracy import *
 
 ### use argument parser to set up experiment/subject info and drop runs if necessary
 def get_args():
@@ -73,8 +70,8 @@ if __name__ == "__main__":
     masktype = args.masktype
     drop_run = args.drop_run
 
-    # expdir = '/work/09123/ofriend/ls6/temple/backups/'
-    expdir = '/corral-repl/utexas/prestonlab/temple/'
+    expdir = '/work/09123/ofriend/ls6/temple/backups/'
+    # expdir = '/corral-repl/utexas/prestonlab/temple/'
     #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
     subjdir = os.path.join(expdir, f'sub-{sbj}')
     betadir = os.path.join(subjdir, 'betaseries')
@@ -85,15 +82,6 @@ if __name__ == "__main__":
     os.makedirs(out_dir, exist_ok=True)
     #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
     niter= 1000
-
-
-    triad_acc = []
-    rem = pd.read_csv('/corral-repl/utexas/prestonlab/temple/beh/remember_by_triad.csv')
-    ref = rem[rem['subject'] == sbj]
-    for triplet in [1, 2, 3, 4]:
-        triad_acc.append(np.mean(ref[ref['correct_triad'] == triplet]['accuracy']))
-        print(f' accuracy for triplet {triplet} = {triad_acc[triplet-1]}')
-
 
     ### masks for data to analyze ###
     if masktype == 'gm':
@@ -156,8 +144,7 @@ if __name__ == "__main__":
             if drop_run is not None:
                 sl_func = searchlight_function_prepost_droprun('correlation', 1, niter)
             else:
-                sl_func = searchlight_function_prepost_accuracy('correlation', 1, niter, acc_array = triad_acc)
-                # sl_func = searchlight_function_prepost('correlation', 1, niter)
+                sl_func = searchlight_function_prepost('correlation', 1, niter)
 
 
 
