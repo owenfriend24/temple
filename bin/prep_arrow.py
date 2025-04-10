@@ -51,7 +51,6 @@ def main(data_dir, file_type, sub):
         arrs = [(c1, 'c1'), (c2, 'c2'), (c3, 'c3'), (c4, 'c4'),(c5, 'c5'),(c6, 'c6')]
         for arr, name in arrs:
             run = name[-1]
-            # third items in triad
             for item in range(1, 13, 1):
                 items = pd.DataFrame(columns = ['onset', 'duration', 'weight'])
                 ref = arr[arr['object'] == item]
@@ -59,7 +58,7 @@ def main(data_dir, file_type, sub):
                     items.loc[len(items)] = [float(row['onset']), float(row['duration']), float(1.0)]
                 out = out_dir + f'/sub-{sub}_task-arrow_run-{run}_item-{item}.txt'
                 items.to_csv(out, sep='\t', header=False, index=False)
-            #run += 1
+
             
         
             
