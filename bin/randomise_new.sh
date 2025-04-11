@@ -12,7 +12,7 @@ comp=$2
 
 mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/continuous/
 #
-randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/group_z_image.nii.gz \
+randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
 -o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/continuous/cont_tests_ \
 -d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_tests.mat \
 -t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_tests.con \
