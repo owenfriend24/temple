@@ -70,8 +70,10 @@ if __name__ == "__main__":
     masktype = args.masktype
     drop_run = args.drop_run
 
-    expdir = '/work/09123/ofriend/ls6/temple/backups/'
-    # expdir = '/corral-repl/utexas/prestonlab/temple/'
+    if sbj in ['temple117', 'temple121', 'temple125']:
+        expdir = '/work/09123/ofriend/ls6/temple/backups/'
+    else:
+        expdir = '/corral-repl/utexas/prestonlab/temple/'
     #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
     subjdir = os.path.join(expdir, f'sub-{sbj}')
 
