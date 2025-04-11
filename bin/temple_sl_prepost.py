@@ -74,7 +74,9 @@ if __name__ == "__main__":
     # expdir = '/corral-repl/utexas/prestonlab/temple/'
     #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
     subjdir = os.path.join(expdir, f'sub-{sbj}')
-    betadir = os.path.join(subjdir, 'betaseries')
+
+    # betadir = os.path.join(subjdir, 'betaseries')
+    betadir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-{sbj}/betaseries/'
     #resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}_shuffle/')
     temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
     resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
