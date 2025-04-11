@@ -67,7 +67,7 @@ def main(data_dir, file_type, sub):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("data_dir", help="main directory where subjects are located (e.g., derivatives/fmriprep/)")
-    parser.add_argument("file_type", help="motion, collector, or both")
+    parser.add_argument("file_type", help="motion, arrow, or both")
     parser.add_argument("sub", help="subject number e.g. temple001")
     args = parser.parse_args()
     main(args.data_dir, args.file_type, args.sub)
