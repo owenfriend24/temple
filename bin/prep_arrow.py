@@ -9,6 +9,8 @@ import argparse
 
 
 def main(data_dir, file_type, sub):
+    os.makedirs(f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-{sub}/', exist_ok=True)
+    os.makedirs(f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-{sub}/func', exist_ok=True)
     out_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-{sub}/func/arrow_txt'
     os.makedirs(out_dir, exist_ok=True)
     func_dir = data_dir + f'/sub-{sub}/func/'
