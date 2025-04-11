@@ -22,7 +22,7 @@ def main(data_dir, file_type, sub):
         conf6 = pd.read_table(func_dir + f'/sub-{sub}_task-arrow_run-06_desc-confounds_timeseries.tsv')
         
         col_names = ['csf', 'white_matter', 'trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z', 'framewise_displacement', 'dvars']
-
+        print(f'confounds: {col_names}')
         for c in range(8):
             col_names.append(col_names[c] + '_derivative1')
         
