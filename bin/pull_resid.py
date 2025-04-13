@@ -24,7 +24,7 @@ def estimate_residuals(fs_dir, fm_dir, sub):
         mat = np.loadtxt(f'{fm_dir}/sub-{sub}/betaseries/sub-{sub}_betaL1_run-{run}.txt')
         design = np.hstack((mat, conf))
         
-        func = (f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/func/skullstripped_T1/sub-{sub}_task-arrow_run-0{run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz')
+        func = (f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/func/sub-{sub}_task-arrow_run-0{run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz')
         bold = nib.load(func).get_fdata()
 
         mask_img = nib.load(f'{fs_dir}/sub-{sub}/mri/out/brainmask_func_dilated.nii.gz').get_fdata() > 0
