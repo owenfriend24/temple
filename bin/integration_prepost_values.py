@@ -42,9 +42,14 @@ if __name__ == "__main__":
     args = get_args()
 
     ### Set up experiment info ###
-    expdir = '/corral-repl/utexas/prestonlab/temple/'
-    #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
+
     sbj = args.subject_id
+
+    if sbj in []:
+        expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
+    else:
+        expdir = '/corral-repl/utexas/prestonlab/temple/'
+
     comparison = args.comparison
     masktype = args.masktype
     drop_run = args.drop_run
@@ -65,14 +70,7 @@ if __name__ == "__main__":
     elif masktype == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
     elif masktype == 'searchlight':
-        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/040325/{comparison}/cluster_masks'
-        masks = []
-        for f in os.listdir(cluster_dir):
-            if f.endswith('.nii') or f.endswith('.nii.gz'):
-                name = f.replace('.nii.gz', '').replace('.nii', '')
-                masks.append(name)
-    elif masktype == 'searchlight_contrast':
-        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/contrast_040325/{comparison}/cluster_masks'
+        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_masks/'
         masks = []
         for f in os.listdir(cluster_dir):
             if f.endswith('.nii') or f.endswith('.nii.gz'):
@@ -111,16 +109,14 @@ if __name__ == "__main__":
         print(f"running in mask {mask}")
         if masktype in ['b_hip_subregions', 'lat_hip_subregions']:
             #slmask = os.path.join(subjdir, 'transforms', f'{mask}.nii.gz')
-            slmask = f"{subjdir}/masks/hip_masks/{mask}.nii.gz"
+            slmask = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/hip_masks/sub-{sbj}/{mask}.nii.gz"
         elif masktype == 'hip_subfields':
-            slmask = f"{expdir}/ashs/masks/sub-{sbj}/subfield_masks/func/sub-{sbj}_{mask}.nii.gz"
+            slmask = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/subfield_masks/sub-{sbj}/subfield_masks/func/sub-{sbj}_{mask}.nii.gz"
         elif masktype == 'b_ifg_subregions':
             #slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
             slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
         elif masktype == 'searchlight':
-            slmask = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-{sbj}/sl-{comparison}/sl-{mask}.nii.gz'
-        elif masktype == 'searchlight_contrast':
-            slmask = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-{sbj}/sl-{comparison}_con/sl-{mask}.nii.gz'
+            slmask = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_masks/sub-{sbj}/sl-{mask}.nii.gz"
 
         # Load fMRI data
         if comparison in ['ABC', 'AC']:

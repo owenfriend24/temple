@@ -22,7 +22,7 @@ for mask in b_hip b_hip_ant b_hip_body b_hip_tail b_hip_post; do
   antsApplyTransforms -d 3 \
     -i /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz \
     -o ${fmriprep_dir}/masks/hip_masks/sub-${sub}/func-${mask}.nii.gz \
-    -r ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
+    -r ${corr}/sourcedata/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
     -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
     -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt,1] \
     -n NearestNeighbor
@@ -42,7 +42,7 @@ ac_hip_age_dec ac_hip_age_inc ac_ifg_age_inc; do
   antsApplyTransforms -d 3 \
     -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/sl_masks/${mask}.nii.gz \
     -o ${fmriprep_dir}/masks/sl_masks/sub-${sub}/func-${mask}.nii.gz \
-    -r ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
+    -r ${corr}/sourcedata/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
     -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
     -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt,1] \
     -n NearestNeighbor

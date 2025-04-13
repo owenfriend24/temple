@@ -66,42 +66,42 @@ def get_args():
 if __name__ == "__main__":
     args = get_args()
 
-    ### Set up experiment info ###
-    expdir = '/corral-repl/utexas/prestonlab/temple/'
-    #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
     sbj = args.subject_id
+
+    if sbj in []:
+        expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
+    else:
+        expdir = '/corral-repl/utexas/prestonlab/temple/'
+
     comparison = args.comparison
     masktype = args.masktype
     drop_run = args.drop_run
+
+
+
+
+
     if comparison in ['BA', 'CB', 'CA', 'CBA']:
         c_fwd = comparison[::-1]
     else:
         c_fwd = comparison
 
-    if masktype == 'whole_brain':
-        masks = ['brainmask_func_dilated']
-    elif masktype == 'b_hip_subregions':
+    if masktype == 'b_hip_subregions':
         masks = ['func-b_hip', 'func-b_hip_ant', 'func-b_hip_post', 'func-b_hip_body']
     elif masktype == 'lat_hip_subregions':
         masks = ['func-b_hip', 'func-b_hip_ant', 'func-b_hip_post', 'func-b_hip_body',
                  'func-l_hip', 'func-l_hip_ant', 'func-l_hip_post', 'func-l_hip_body',
                  'func-r_hip', 'func-r_hip_ant', 'func-r_hip_post', 'func-r_hip_body']
     elif masktype == 'hip_subfields':
-        masks = ['CA1_mask_B_func', 'CA1_mask_L_func', 'CA1_mask_R_func',
-                 'CA23DG_mask_B_func', 'CA23DG_mask_L_func', 'CA23DG_mask_R_func',
-                 'posthipp_mask_B_func', 'posthipp_mask_L_func', 'posthipp_mask_R_func',
-                 'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
+        masks = ['CA1_mask_B_func', 'CA23DG_mask_B_func', 'posthipp_mask_B_func', 'subiculum_mask_B_func']
+        # masks = ['CA1_mask_B_func', 'CA1_mask_L_func', 'CA1_mask_R_func',
+        #          'CA23DG_mask_B_func', 'CA23DG_mask_L_func', 'CA23DG_mask_R_func',
+        #          'posthipp_mask_B_func', 'posthipp_mask_L_func', 'posthipp_mask_R_func',
+        #          'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
     elif masktype == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
     elif masktype == 'searchlight':
-        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/040325/{c_fwd}/cluster_masks'
-        masks = []
-        for f in os.listdir(cluster_dir):
-            if f.endswith('.nii') or f.endswith('.nii.gz'):
-                name = f.replace('.nii.gz', '').replace('.nii', '')
-                masks.append(name)
-    elif masktype == 'searchlight_contrast':
-        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/contrast_040325/{c_fwd}/cluster_masks'
+        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_masks/'
         masks = []
         for f in os.listdir(cluster_dir):
             if f.endswith('.nii') or f.endswith('.nii.gz'):
@@ -135,18 +135,15 @@ if __name__ == "__main__":
     for mask in masks:
         print(f"running in mask {mask}")
         if masktype in ['b_hip_subregions', 'lat_hip_subregions']:
-            #slmask = f'{subjdir}/transforms/{mask}.nii.gz'
-            slmask = f"{subjdir}/masks/hip_masks/{mask}.nii.gz"
+            # slmask = os.path.join(subjdir, 'transforms', f'{mask}.nii.gz')
+            slmask = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/hip_masks/sub-{sbj}/{mask}.nii.gz"
         elif masktype == 'hip_subfields':
-            slmask = f"{expdir}/ashs/masks/sub-{sbj}/subfield_masks/func/sub-{sbj}_{mask}.nii.gz"
+            slmask = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/subfield_masks/sub-{sbj}/subfield_masks/func/sub-{sbj}_{mask}.nii.gz"
         elif masktype == 'b_ifg_subregions':
-            #slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
+            # slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
             slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
         elif masktype == 'searchlight':
-            slmask = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-{sbj}/sl-{c_fwd}/sl-{mask}.nii.gz'
-        elif masktype == 'searchlight_contrast':
-            slmask = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-{sbj}/sl-{c_fwd}_con/sl-{mask}.nii.gz'
-        # load in data - need to swap order if going backward
+            slmask = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_masks/sub-{sbj}/sl-{mask}.nii.gz"
 
 
         if c_fwd == 'ABC':
