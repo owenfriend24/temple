@@ -44,8 +44,12 @@ for mask in ${sf_dir}/anat/sub-temple*; do
   output_file="${sf_dir}/func/${mask_basename}_func.nii.gz"
   antsApplyTransforms -d 3 -i $mask -n NearestNeighbor \
 -o $output_file \
--r /corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/brainmask_func_dilated.nii.gz
-#-t [$CORR/ashs/masks/sub-${sub}/subfield_masks/anat/T2_to_func_affine_Affine.txt] \
+-r /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sourcedata/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz
+
+
+
+#-r /corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/brainmask_func_dilated.nii.gz
+##-t [$CORR/ashs/masks/sub-${sub}/subfield_masks/anat/T2_to_func_affine_Affine.txt] \
 
 
 done
