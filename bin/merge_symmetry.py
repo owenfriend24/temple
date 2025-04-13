@@ -39,28 +39,23 @@ def create_subject_file(subject, master_dir, comparison, mask):
                  'func-l_hip', 'func-l_hip_ant', 'func-l_hip_post', 'func-l_hip_body',
                  'func-r_hip', 'func-r_hip_ant', 'func-r_hip_post', 'func-r_hip_body']
     elif mask == 'hip_subfields':
-        masks = ['CA1_mask_B_func', 'CA1_mask_L_func', 'CA1_mask_R_func',
-                 'CA23DG_mask_B_func', 'CA23DG_mask_L_func', 'CA23DG_mask_R_func',
-                 'posthipp_mask_B_func', 'posthipp_mask_L_func', 'posthipp_mask_R_func',
-                 'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
+        masks = ['CA1_mask_B_func', 'CA23DG_mask_B_func', 'posthipp_mask_B_func', 'subiculum_mask_B_func']
+        # masks = ['CA1_mask_B_func', 'CA1_mask_L_func', 'CA1_mask_R_func',
+        #          'CA23DG_mask_B_func', 'CA23DG_mask_L_func', 'CA23DG_mask_R_func',
+        #          'posthipp_mask_B_func', 'posthipp_mask_L_func', 'posthipp_mask_R_func',
+        #          'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
     elif mask == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
     elif mask == 'searchlight':
-        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/040325/{comparison}/cluster_masks'
+        cluster_dir = '/work/09123/ofriend/ls6/temple/backups/integration_prepost/sl_masks'
         masks = []
         for f in os.listdir(cluster_dir):
             if f.endswith('.nii') or f.endswith('.nii.gz'):
                 name = f.replace('.nii.gz', '').replace('.nii', '')
                 masks.append(name)
-    elif mask == 'searchlight_contrast':
-        cluster_dir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_clusters/contrast_040325/{comparison}/cluster_masks'
-        masks = []
-        for f in os.listdir(cluster_dir):
-            if f.endswith('.nii') or f.endswith('.nii.gz'):
-                name = f.replace('.nii.gz', '').replace('.nii', '')
-                masks.append(name)
+
     else:
-        raise ValueError('no valid mask')
+        raise ValueError('Invalid mask type')
 
     # Process both forward and backward integration within an ROI
     for comp in [comparison, bwd_comp]:
