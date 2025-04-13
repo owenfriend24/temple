@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
     sbj = args.subject_id
 
-    if sbj in []:
+    if sbj in ['temple117', 'temple121', 'temple125']:
         expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
     else:
         expdir = '/corral-repl/utexas/prestonlab/temple/'
