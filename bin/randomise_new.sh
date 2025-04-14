@@ -10,12 +10,12 @@ fi
 fmriprep_dir=$1
 comp=$2
 
-mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/continuous/
+mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/cubic/
 #
 randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
--o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/continuous/cont_tests_ \
--d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_tests.mat \
--t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_tests.con \
+-o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/cubic/cubic_test_ \
+-d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/triplet_tests/cubic_test.mat \
+-t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/triplet_tests/cubic_test.con \
 -m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
 -n 5000 -x --uncorrp
 
