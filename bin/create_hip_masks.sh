@@ -40,7 +40,7 @@ mkdir -p ${fmriprep_dir}/masks/sl_masks/sub-${sub}/
 #ac_hip_age_dec ac_hip_age_inc ac_ifg_age_inc; do
 
 for mask in bc_precuneus_age_inc ab_age_acc_int ab_hipish_age_inc ab_lpfc_age_inc ab_post_cingulate_age_inc \
-ag_hip_body_age_inc ab_hip_age_inc ab_mpfc_age_inc; do
+ab_hip_body_age_inc ab_hip_age_inc ab_mpfc_age_inc; do
 
   antsApplyTransforms -d 3 \
     -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/sl_masks/${mask}.nii.gz \
