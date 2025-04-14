@@ -11,24 +11,24 @@ fmriprep_dir=$1
 sub=$2
 corr=$3
 
-mkdir -p ${fmriprep_dir}/masks/hip_masks/sub-${sub}/
+#mkdir -p ${fmriprep_dir}/masks/hip_masks/sub-${sub}/
 
 #l_hip l_hip_ant l_hip_body l_hip_tail l_hip_post \
 #r_hip r_hip_ant r_hip_body r_hip_tail r_hip_post; do
 
-for mask in b_hip b_hip_ant b_hip_body b_hip_tail b_hip_post; do
-
-
-  antsApplyTransforms -d 3 \
-    -i /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz \
-    -o ${fmriprep_dir}/masks/hip_masks/sub-${sub}/func-${mask}.nii.gz \
-    -r ${corr}/sourcedata/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
-    -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
-    -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt,1] \
-    -n NearestNeighbor
-
-
-done
+#for mask in b_hip b_hip_ant b_hip_body b_hip_tail b_hip_post; do
+#
+#
+#  antsApplyTransforms -d 3 \
+#    -i /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz \
+#    -o ${fmriprep_dir}/masks/hip_masks/sub-${sub}/func-${mask}.nii.gz \
+#    -r ${corr}/sourcedata/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
+#    -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
+#    -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt,1] \
+#    -n NearestNeighbor
+#
+#
+#done
 
 
 mkdir -p ${fmriprep_dir}/masks/sl_masks/sub-${sub}/
@@ -36,8 +36,11 @@ mkdir -p ${fmriprep_dir}/masks/sl_masks/sub-${sub}/
 #l_hip l_hip_ant l_hip_body l_hip_tail l_hip_post \
 #r_hip r_hip_ant r_hip_body r_hip_tail r_hip_post; do
 
-for mask in abc_interaction_hip ac_dlpfc_interaction ac_dmpfc_age_inc \
-ac_hip_age_dec ac_hip_age_inc ac_ifg_age_inc; do
+#for mask in abc_interaction_hip ac_dlpfc_interaction ac_dmpfc_age_inc \
+#ac_hip_age_dec ac_hip_age_inc ac_ifg_age_inc; do
+
+for mask in bc_precuneus_age_inc ab_age_acc_int ab_hipish_age_inc ab_lpfc_age_inc ab_post_cingulate_age_inc \
+ag_hip_body_age_inc ab_hip_age_inc ab_mpfc_age_inc; do
 
   antsApplyTransforms -d 3 \
     -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/sl_masks/${mask}.nii.gz \
