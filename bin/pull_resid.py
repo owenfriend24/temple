@@ -52,7 +52,7 @@ def main(fs_dir, fm_dir, sub):
     #run_com(f'cd {fm_dir}/sub-{sub}/betaseries')
     format_matrix(fm_dir, sub)
     estimate_residuals(fs_dir, fm_dir, sub)
-    run_com(f'temple_acf.sh $FM {sub}')
+    #run_com(f'temple_acf.sh $FM {sub}')
 
           
 if __name__ == "__main__":
