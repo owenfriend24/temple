@@ -13,7 +13,7 @@ module load afni
 out_file="${fmriprep_dir}/acf/by_subject_acf.txt"
 
 if [[ "$subject" == "temple117" || "$subject" == "temple121" || "$subject" == "temple125" ]]; then
-    mask_path="/work/09123/ofriend/temple/backups/freesurfer/sub-${subject}/mri/out/brainmask_func_dilated.nii.gz"
+    mask_path="/work/09123/ofriend/ls6/temple/backups/freesurfer/sub-${subject}/mri/out/brainmask_func_dilated.nii.gz"
 else
     mask_path="/corral-repl/utexas/prestonlab/temple/freesurfer/sub-${subject}/mri/out/brainmask_func_dilated.nii.gz"
 fi
