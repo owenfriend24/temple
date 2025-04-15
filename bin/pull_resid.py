@@ -27,8 +27,11 @@ def estimate_residuals(fs_dir, fm_dir, sub):
         func = (f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/func/sub-{sub}_task-arrow_run-0{run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz')
         bold = nib.load(func).get_fdata()
 
-        mask_img = nib.load(f'{fs_dir}/sub-{sub}/mri/out/brainmask_func_dilated.nii.gz').get_fdata() > 0
-        mask_vol = nib.load(f'{fs_dir}/sub-{sub}/mri/out/brainmask_func_dilated.nii.gz')
+        mask_img = nib.load(f'{fs_dir}/sub-{sub}/mri/out/b_gray_func.nii.gz').get_fdata() > 0
+        mask_vol = nib.load(f'{fs_dir}/sub-{sub}/mri/out/b_gray_func.nii.gz')
+
+        #mask_img = nib.load(f'{fs_dir}/sub-{sub}/mri/out/brainmask_func_dilated.nii.gz').get_fdata() > 0
+        #mask_vol = nib.load(f'{fs_dir}/sub-{sub}/mri/out/brainmask_func_dilated.nii.gz')
         
         data = bold[mask_img].T
         model = lm.LinearRegression()
