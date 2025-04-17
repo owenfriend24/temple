@@ -37,14 +37,14 @@ def group_masks(fs_dir, fmriprep_dir, age_group):
 
         # Transform whole brain mask into MNI functional space
         run_com(f'antsApplyTransforms -d 3 -i {wb_mask_path} -n NearestNeighbor -o {mni_mask_path} '
-               f'-t [{fmriprep_dir}/sub-{sub}/transforms/native_to_MNI_Warp.nii.gz] '
-               f'-t [{fmriprep_dir}/sub-{sub}/transforms/native_to_MNI_Affine.txt] '
+               f'-t [/corral-repl/utexas/prestonlab/temple/sub-{sub}/transforms/native_to_MNI_Warp.nii.gz] '
+               f'-t [/corral-repl/utexas/prestonlab/temple/sub-{sub}/transforms/native_to_MNI_Affine.txt] '
                f'-r {func_mni_path}')
         
         # Transform hippocampal mask into MNI functional space
         run_com(f'antsApplyTransforms -d 3 -i {func_hip_mask_path} -n NearestNeighbor -o {mni_hip_mask_path} '
-                f'-t [{fmriprep_dir}/sub-{sub}/transforms/native_to_MNI_Warp.nii.gz] '
-                f'-t [{fmriprep_dir}/sub-{sub}/transforms/native_to_MNI_Affine.txt] '
+                f'-t [/corral-repl/utexas/prestonlab/temple/sub-{sub}/transforms/native_to_MNI_Warp.nii.gz] '
+                f'-t [/corral-repl/utexas/prestonlab/temple/sub-{sub}/transforms/native_to_MNI_Affine.txt] '
                 f'-r {func_mni_path}')
 
     # Aggregate whole brain masks
