@@ -30,8 +30,8 @@ def group_masks(fs_dir, fmriprep_dir, age_group):
         run_com(f'mkdir -p {fmriprep_dir}/sub-{sub}/masks')
         mni_mask_path = f'{fmriprep_dir}/sub-{sub}/masks/gm_mni.nii.gz'
         func_mni_path = '/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz'
-        func_hip_mask_path = f'{fmriprep_dir}/sub-{sub}/masks/func-b_hip.nii.gz'
-        mni_hip_mask_path = f'{fmriprep_dir}/sub-{sub}/masks/func-b_hip_mni.nii.gz'
+        func_hip_mask_path = f'{fmriprep_dir}/masks/hip_masks/sub-{sub}/func-b_hip.nii.gz'
+        mni_hip_mask_path = f'{fmriprep_dir}/masks/hip_masks/sub-{sub}/func-b_hip_mni.nii.gz'
         
         wb_masks.append(mni_mask_path)
         hip_masks.append(mni_hip_mask_path)
