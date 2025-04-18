@@ -27,6 +27,7 @@ def group_masks(fs_dir, fmriprep_dir, age_group):
     for sub in subs:
         # Define paths
         wb_mask_path = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sub}/mri/b_gray_func.nii.gz'
+        run_com(f'mkdir -p {fmriprep_dir}/sub-{sub}/masks')
         mni_mask_path = f'{fmriprep_dir}/sub-{sub}/masks/gm_mni.nii.gz'
         func_mni_path = '/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz'
         func_hip_mask_path = f'{fmriprep_dir}/sub-{sub}/masks/func-b_hip.nii.gz'
