@@ -15,10 +15,12 @@ export OMP_NUM_THREADS=None
 mkdir -p ${fmriprep_dir}/searchlight/clust_sim
 cd ${fmriprep_dir}/searchlight/clust_sim
 
-
-3dClustSim -mask /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix mni_gm_full_
-
-3dClustSim -mask /home1/09123/ofriend/analysis/temple/bin/templates/b_hip_func.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix mni_gm_hip_full_
+3dClustSim -mask ${fmriprep_dir}/group_masks/all_wb_avg_mask.nii.gz-acf 0.506715994 2.40899271 8.45713334 -nodec -prefix mni_gm_group_full_
+#
+3dClustSim -mask ${fmriprep_dir}/group_masks/all_hip_avg_mask.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix mni_hip_group_ull_
+#3dClustSim -mask /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix mni_gm_full_
+#
+#3dClustSim -mask /home1/09123/ofriend/analysis/temple/bin/templates/b_hip_func.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix mni_gm_hip_full_
 
 #cd ${fmriprep_dir}/searchlight/clust_sim_0812/brainmask_func_dilated
 
