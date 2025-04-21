@@ -10,13 +10,13 @@ fi
 fmriprep_dir=$1
 comp=$2
 
-mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/cubic/
+mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/
 #
 randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
--o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/cubic/cubic_test_ \
--d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/triplet_tests/cubic_test.mat \
--t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/triplet_tests/cubic_test.con \
--m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+-o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/cont_avg_gm \
+-d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_test.mat \
+-t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_test.con \
+-m /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/group_masks/all_wb_avg_mask.nii.gz \
 -n 5000 -x --uncorrp
 
 #randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
