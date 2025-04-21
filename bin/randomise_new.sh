@@ -11,6 +11,7 @@ fmriprep_dir=$1
 comp=$2
 
 mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/
+mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/avg_gm/
 #
 randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
 -o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/avg_gm/cont \
