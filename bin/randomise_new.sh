@@ -13,7 +13,7 @@ comp=$2
 mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/
 #
 randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
--o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/cont_avg_gm \
+-o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/avg_gm/cont \
 -d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_test.mat \
 -t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_test.con \
 -m /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/group_masks/all_wb_avg_mask.nii.gz \
