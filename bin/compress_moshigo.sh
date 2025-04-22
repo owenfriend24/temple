@@ -17,6 +17,12 @@ echo "$count total files"
 # to list files within a tarball: tar -tf file
 
 #cp -R /corral-repl/utexas/prestonlab/moshiGO1/${sub}/BOLD/univariate /scratch/09123/ofriend/moshi/${sub}_univariate
+
+#echo "copied file to scratch"
+
+# test compress and then delete a directory
+#tar -czf /corral-repl/utexas/prestonlab/moshiGO1/${sub}/BOLD/univariate.tar.gz /corral-repl/utexas/prestonlab/moshiGO1/${sub}/BOLD/univariate && rm -rf /corral-repl/utexas/prestonlab/moshiGO1/${sub}/BOLD/univariate
+#cp -R /corral-repl/utexas/prestonlab/moshiGO1/${sub}/BOLD/univariate /scratch/09123/ofriend/moshi/${sub}_univariate
 #
 #echo "copied file to scratch"
 #
