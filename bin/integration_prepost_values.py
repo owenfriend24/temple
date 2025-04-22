@@ -44,12 +44,7 @@ if __name__ == "__main__":
     ### Set up experiment info ###
 
     sbj = args.subject_id
-
-    if sbj in ['temple117', 'temple121', 'temple125']:
-        expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
-    else:
-        expdir = '/corral-repl/utexas/prestonlab/temple/'
-
+    expdir = '/corral-repl/utexas/prestonlab/temple/'
     comparison = args.comparison
     masktype = args.masktype
     drop_run = args.drop_run
@@ -70,7 +65,7 @@ if __name__ == "__main__":
     elif masktype == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
     elif masktype == 'searchlight':
-        cluster_dir = '/work/09123/ofriend/ls6/temple/backups/integration_prepost/sl_masks'
+        cluster_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sl/cluster_masks'
         masks = []
         for f in os.listdir(cluster_dir):
             if f.endswith('.nii') or f.endswith('.nii.gz'):
@@ -116,7 +111,7 @@ if __name__ == "__main__":
             #slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
             slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
         elif masktype == 'searchlight':
-            slmask = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sl_masks/sub-{sbj}/func-{mask}.nii.gz"
+            slmask = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/sub-{sbj}/sl_new/{mask}.nii.gz"
 
         # Load fMRI data
         if comparison in ['ABC', 'AC']:
