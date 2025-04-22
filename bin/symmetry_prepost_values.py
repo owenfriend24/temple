@@ -100,8 +100,9 @@ if __name__ == "__main__":
         masks = []
         for f in os.listdir(cluster_dir):
             if f.endswith('.nii') or f.endswith('.nii.gz'):
-                name = f.replace('.nii.gz', '').replace('.nii', '')
-                masks.append(name)
+                if c_fwd in f:
+                    name = f.replace('.nii.gz', '').replace('.nii', '')
+                    masks.append(name)
 
     ### searchlight information ###
 

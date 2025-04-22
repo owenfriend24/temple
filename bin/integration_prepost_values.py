@@ -69,8 +69,9 @@ if __name__ == "__main__":
         masks = []
         for f in os.listdir(cluster_dir):
             if f.endswith('.nii') or f.endswith('.nii.gz'):
-                name = f.replace('.nii.gz', '').replace('.nii', '')
-                masks.append(name)
+                if comparison in f:
+                    name = f.replace('.nii.gz', '').replace('.nii', '')
+                    masks.append(name)
 
     else:
         raise ValueError('Invalid mask type')
