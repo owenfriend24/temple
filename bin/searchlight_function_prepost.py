@@ -88,6 +88,7 @@ class searchlight_function_prepost(Measure):
 
         ### calculate the p-value for the center searchlight sphere voxel ###
         randstat = array(randstat)
+        return (obsstat - mean(randstat)) / std(randstat)
 
         ### for testing with whole roi ###
         # if self.output == 1:
@@ -99,4 +100,3 @@ class searchlight_function_prepost(Measure):
         #     return mean(randstat <= obsstat)
 
         # return mean(randstat>=obsstat)
-        return (obsstat - mean(randstat)) / std(randstat)
