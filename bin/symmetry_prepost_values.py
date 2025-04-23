@@ -123,7 +123,7 @@ if __name__ == "__main__":
 
     ### directories ###
     subjdir = f'{expdir}/sub-{sbj}/'
-    betadir = subjdir + '/betaseries'
+    betadir =f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-{sbj}/betaseries'
     temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
     #resultdir = expdir + f'/integration_prepost/symmetry_{comparison}/sub-{sbj}'
     resultdir = f'{temp_result_dir}/integration_prepost/symmetry_{comparison}/sub-{sbj}'
