@@ -95,9 +95,9 @@ if __name__ == "__main__":
     ### Directories ###
     subjdir = os.path.join(expdir, f'sub-{sbj}')
     betadir =f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-{sbj}/betaseries'
-    #resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
-    temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
-    resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
+    resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}')
+    #temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
+    #resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
     out_dir = os.path.join(resultdir, f'sub-{sbj}')
     os.makedirs(out_dir, exist_ok=True)
 
