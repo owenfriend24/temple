@@ -11,13 +11,13 @@ fmriprep_dir=$1
 comp=$2
 
 mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/
-mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/avg_gm/
+#mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/avg_gm/
 #
 randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
--o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/avg_gm/cont \
--d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_tests.mat \
--t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_tests.con \
--m /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/group_masks/all_wb_avg_mask.nii.gz \
+-o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/cont_acc \
+-d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_acc.mat \
+-t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_acc.con \
+-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
 -n 5000 -x --uncorrp
 
 #randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
