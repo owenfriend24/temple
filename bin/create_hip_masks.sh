@@ -44,7 +44,7 @@ for mask in AB_mpfc_mask AB_precuneus_mask AC_dlpfc_mask AC_l_hip_ant_mask AC_pa
   antsApplyTransforms -d 3 \
     -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/sl_masks/${mask}.nii.gz \
     -o ${corr}/sub-${sub}/masks/sl_masks/func-${mask}.nii.gz \
-    -r ${corr}/sourcedata/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
+    -r ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
     -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
     -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt,1] \
     -n NearestNeighbor
