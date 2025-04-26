@@ -41,7 +41,7 @@ def create_subject_file(subject, master_dir, comparison, mask):
     elif mask == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
     elif mask == 'searchlight':
-        cluster_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sl/cluster_masks'
+        cluster_dir = f'/corral-repl/utexas/prestonlab/temple/sub-{sbj}/masks/sl_masks'
         masks = []
         for f in os.listdir(cluster_dir):
             if f.endswith('.nii') or f.endswith('.nii.gz'):
