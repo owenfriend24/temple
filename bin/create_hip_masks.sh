@@ -39,7 +39,7 @@ mkdir -p ${corr}/sub-${sub}/masks/sl_masks/
 #for mask in abc_interaction_hip ac_dlpfc_interaction ac_dmpfc_age_inc \
 #ac_hip_age_dec ac_hip_age_inc ac_ifg_age_inc; do
 
-for mask in AB_mpfc_mask AB_precuneus_mask AC_dlpfc_mask AC_l_hip_ant_mask AC_parietal_mask AC_r_hip_ant_mask AC_hip_body_mask; do
+for mask in AB_mpfc_mask AB_precuneus_mask AC_dlpfc_mask AC_l_hip_ant_mask AC_parietal_mask AC_r_hip_ant_mask AC_r_hip_body_mask; do
 
   antsApplyTransforms -d 3 \
     -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/sl_masks/${mask}.nii.gz \
