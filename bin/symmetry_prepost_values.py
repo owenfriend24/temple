@@ -73,9 +73,6 @@ if __name__ == "__main__":
     drop_run = args.drop_run
 
 
-
-
-
     if comparison in ['BA', 'CB', 'CA', 'CBA']:
         c_fwd = comparison[::-1]
     else:
