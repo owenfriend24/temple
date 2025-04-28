@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import subprocess
 
-
+from bin.searchlight_AC_differentiation_droprun import searchlight_AC_differentiation_droprun
 
 subprocess.run(['/bin/bash', '-c', 'source /home1/09123/ofriend/analysis/temple/rsa/bin/activate'])
 ### import python libraries needed for the analysis ###
@@ -46,6 +46,8 @@ from searchlight_function_AC_shuffle import *
 from searchlight_AC_shuffle_droprun import *
 from searchlight_function_adjacent import *
 from searchlight_adjacent_droprun import *
+from searchlight_function_AC_differentiation import *
+from searchlight_AC_differentiation_droprun import *
 
 ### use argument parser to set up experiment/subject info and drop runs if necessary
 def get_args():
@@ -70,15 +72,12 @@ if __name__ == "__main__":
     masktype = args.masktype
     drop_run = args.drop_run
 
-    if sbj in ['temple117', 'temple121', 'temple125']:
-        expdir = '/work/09123/ofriend/ls6/temple/backups/'
-    else:
-        expdir = '/corral-repl/utexas/prestonlab/temple/'
+
+    expdir = '/corral-repl/utexas/prestonlab/temple/'
     #expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
     subjdir = os.path.join(expdir, f'sub-{sbj}')
-
-    # betadir = os.path.join(subjdir, 'betaseries')
-    betadir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-{sbj}/betaseries/'
+    betadir = os.path.join(subjdir, 'betaseries')
+    #betadir = f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-{sbj}/betaseries/'
     #resultdir = os.path.join(expdir, f'integration_prepost/prepost_{comparison}_shuffle/')
     temp_result_dir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/'
     resultdir = os.path.join(temp_result_dir, f'integration_prepost/prepost_{comparison}')
@@ -125,6 +124,8 @@ if __name__ == "__main__":
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
         elif comparison == 'AC_weak':
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_AC_items.nii.gz'), mask=slmask)
+        elif comparison == 'AC_differentiation':
+            ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
         else:
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
         ds.sa['phase'] = phase[:]
@@ -143,13 +144,16 @@ if __name__ == "__main__":
                 sl_func = searchlight_adjacent_droprun('correlation', 1, niter)
             else:
                 sl_func = searchlight_function_adjacent('correlation', 1, niter)
-
+        elif comparison == 'AC_differentiation':
+            if drop_run is not None:
+                sl_func = searchlight_AC_differentiation_droprun('correlation', 1, niter)
+            else:
+                sl_func = searchlight_function_AC_differentiation('correlation', 1, niter)
         else:
             if drop_run is not None:
                 sl_func = searchlight_function_prepost_droprun('correlation', 1, niter)
             else:
                 sl_func = searchlight_function_prepost('correlation', 1, niter)
-
 
 
         #run the searchlight
