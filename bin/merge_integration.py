@@ -70,8 +70,7 @@ def create_subject_file(subject, master_dir, comparison, mask):
             #   as both will be the same
             tri_within = within_vals[within_vals['triad_1'] == triad]
 
-            # across triplet comparisons can have either triad_1 or triad_2 as the triad of interest (coming back to this
-            #   as I refine what the baseline comparison will end up being)
+            # across triplet comparisons can have either triad_1 or triad_2 as the triad of interest
             tri_across = across_vals[(across_vals['triad_1'] == triad) | (across_vals['triad_2'] == triad)]
 
             within_sim = np.mean(tri_within['value'])
