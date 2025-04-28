@@ -20,6 +20,13 @@ randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${co
 -m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
 -n 5000 -x --uncorrp
 
+randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
+-o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/cont_age \
+-d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_tests.mat \
+-t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_tests.con \
+-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+-n 5000 -x --uncorrp
+
 #randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
 #-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/randomise_out/grouped_age_new \
 #-d ${fmriprep_dir}/integration_prepost/randomise/age_grouped.mat \
