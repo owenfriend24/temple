@@ -93,7 +93,7 @@ if __name__ == "__main__":
     elif masktype == 'whole_brain':
         masks = ['brainmask_func_dilated']
 
-    if comparison == 'AC':
+    if comparison == 'AC' or comparison == 'AC_differentiation':
         comp_file = 'ABC'
     elif comparison == 'AC_weak':
         comp_file = 'AC'
