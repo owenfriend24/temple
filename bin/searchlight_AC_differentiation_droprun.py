@@ -62,14 +62,13 @@ class searchlight_AC_differentiation_droprun(Measure):
 
                 if dataset.sa['run'][x] != dataset.sa['run'][y]:  # only do across run comparisons
 
-                    if dataset.sa['triad'][x] == dataset.sa['triad'][y]:  # within triad
+                    if dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # for weak pairs, only looking across triads
 
                         if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 2:  # a vs. c
                             dstmp = dsm_post[x, y] - dsm_pre[x, y]
                             within.append(dstmp)
 
-                    elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
-                        if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 1:  # a vs. c
+                        elif abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 1:  # a vs b, b vs c (shuffled pairs)
                             dstmp = dsm_post[x, y] - dsm_pre[x, y]
                             across.append(dstmp)
 

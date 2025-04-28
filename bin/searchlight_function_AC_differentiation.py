@@ -55,11 +55,10 @@ class searchlight_function_AC_differentiation(Measure):
             for y in range(x + 1, n):
                 dstmp = dsm_diff[x, y]
                 if dataset.sa['run'][x] != dataset.sa['run'][y]:  # only do across run comparisons
-                    if dataset.sa['triad'][x] == dataset.sa['triad'][y]:  # within triad
+                    if dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad for weak pairs
                         if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 2:  # e.g., a vs. c - (3 vs 1 or 1 vs 3)
                             within.append(dstmp)
-                    elif dataset.sa['triad'][x] != dataset.sa['triad'][y]:  # across triad
-                        if abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 1:  # a and b or b and c for shuffle
+                        elif abs(dataset.sa['item'][x] - dataset.sa['item'][y]) == 1:  # a and b or b and c for shuffle
                             across.append(dstmp)
 
         #### convert items to arrays ###
