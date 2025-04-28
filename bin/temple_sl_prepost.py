@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import subprocess
 
-from bin.searchlight_AC_differentiation_droprun import searchlight_AC_differentiation_droprun
-
 subprocess.run(['/bin/bash', '-c', 'source /home1/09123/ofriend/analysis/temple/rsa/bin/activate'])
 ### import python libraries needed for the analysis ###
 import numpy as N
