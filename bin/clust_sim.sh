@@ -21,9 +21,12 @@ cd ${fmriprep_dir}/searchlight/clust_sim
 #3dClustSim -mask /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix mni_gm_full_
 ##
 #3dClustSim -mask ${fmriprep_dir}/group_masks/all_wb_mask.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix wb_100
-3dClustSim -mask ${fmriprep_dir}/group_masks/hip_50_mask.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix hip_50
+#3dClustSim -mask ${fmriprep_dir}/group_masks/hip_50_mask.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix hip_50
 
 
+3dClustSim -mask /scratch/09123/ofriend/moshi/pca_sl/results/group_50_mask.nii.gz -acf 0.35069 4.08259 13.397 -nodec -prefix moshi_50
+
+#0.35069  4.08259  13.397
 #cd ${fmriprep_dir}/searchlight/clust_sim_0812/brainmask_func_dilated
 
 #3dClustSim -mask /scratch/09123/ofriend/temple/prepro_data/derivatives/fmriprep/group_masks/adult_wb_avg_mask.nii.gz -acf 0.645774 2.459366 7.224626 -nodec -prefix ad_wb_
