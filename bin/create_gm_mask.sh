@@ -19,7 +19,7 @@ fslmaths ${mri_dir}/aparcaseg.nii.gz -thr 9 -uthr 13 -bin ${mri_dir}/l_subco
 fslmaths ${mri_dir}/aparcaseg.nii.gz -thr 17 -uthr 17 -bin ${mri_dir}/l_hip
 fslmaths ${mri_dir}/aparcaseg.nii.gz -thr 18 -uthr 18 -add ${mri_dir}/l_subco -add ${mri_dir}/l_hip -bin ${mri_dir}/l_subco
 fslmaths ${mri_dir}/aparcaseg.nii.gz -thr 48 -uthr 54 -bin ${mri_dir}/r_subco
-fslmaths ${mri_dir}/l_subco -add ${mri_dir}/r_subco -add ${mri_dir}/l_ctx -add ${mri_dir}/r_ctx -bin ${mri_dir}/b_gray
+fslmaths ${mri_dir}/l_subco -add ${mri_dir}/r_subco -add ${mri_dir}/l_ctx -add ${mri_dir}/r_ctx -bin ${mri_dir}/b_gray_new
 
 antsApplyTransforms -d 3 \
     -i ${mri_dir}/b_gray.nii.gz \
