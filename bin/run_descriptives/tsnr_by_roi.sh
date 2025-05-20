@@ -19,10 +19,10 @@ echo "run,mask,tsnr,nvoxs" > ${output_csv}
 # Define mask paths
 if [[ "$masktype" == "b_hip_subregions" ]]; then
     masks=(
-        "${fmdir}/sub-${subject}/masks/hip_masks/warp-b_hip.nii.gz"
-        "${fmdir}/sub-${subject}/masks/hip_masks/warp-b_hip_ant.nii.gz"
-        "${fmdir}/sub-${subject}/masks/hip_masks/warp-b_hip_body.nii.gz"
-        "${fmdir}/sub-${subject}/masks/hip_masks/warp-b_hip_post.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip_ant.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip_body.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip_post.nii.gz"
     )
 elif [[ "$masktype" == "lat_hip_subregions" ]]; then
     masks=(
@@ -49,6 +49,21 @@ elif [[ "$masktype" == "hip_subfields" ]]; then
         "${fmdir}/ashs/masks/sub-${subject}/subfield_masks/func/sub-${subject}_CA23DG_mask_R_func.nii.gz"
         "${fmdir}/ashs/masks/sub-${subject}/subfield_masks/func/sub-${subject}_posthipp_mask_R_func.nii.gz"
         "${fmdir}/ashs/masks/sub-${subject}/subfield_masks/func/sub-${subject}_subiculum_mask_R_func.nii.gz"
+    )
+  elif [[ "$masktype" == "qa" ]]; then
+    masks=(
+        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip_ant.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip_body.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip_post.nii.gz"
+        "${fmdir}/sub-${subject}/masks/qa_masks/func-11m.nii.gz"
+        "${fmdir}/sub-${subject}/masks/qa_masks/func-14c.nii.gz"
+        "${fmdir}/sub-${subject}/masks/qa_masks/func-14r.nii.gz"
+        "${fmdir}/sub-${subject}/masks/qa_masks/func-25.nii.gz"
+        "${fmdir}/sub-${subject}/masks/qa_masks/func-32pl.nii.gz"
+        "${fmdir}/sub-${subject}/masks/qa_masks/func-b_erc.nii.gz"
+        "${fmdir}/sub-${subject}/masks/qa_masks/func-b_phc.nii.gz"
+        "${fmdir}/sub-${subject}/masks/qa_masks/func-b_prc.nii.gz"
     )
 
 else
