@@ -25,7 +25,7 @@ if [[ "$task" == "wr" ]]; then
   antsApplyTransforms -d 3 \
     -i /scratch/09123/ofriend/qa_masks/${mask}.nii.gz \
     -o ${corr}/sub-${sub}/masks/qa_masks/func-${mask}.nii.gz \
-    -r ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
+    -r ${corr}/sourcedata/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
     -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
     -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt,1] \
     -n NearestNeighbor
@@ -38,7 +38,7 @@ else
   antsApplyTransforms -d 3 \
     -i /scratch/09123/ofriend/qa_masks/${mask}.nii.gz \
     -o ${corr}/sub-${sub}/masks/qa_masks/func-${mask}.nii.gz \
-    -r ${corr}/sourcedata/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
+    -r ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
     -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
     -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt,1] \
     -n NearestNeighbor
