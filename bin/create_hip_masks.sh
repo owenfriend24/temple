@@ -13,7 +13,7 @@ corr=$3
 
 mkdir -p ${corr}/sub-${sub}/masks/qa_masks/
 
-for mask in 11m 14c 14r 25 32pl b_erc b_phc b_prc; do
+for mask in 11m 14c 14r 25 32pl b_erc b_phc b_prc b_hip b_hip_ant b_hip_body b_hip_post; do
 
   antsApplyTransforms -d 3 \
     -i /scratch/09123/ofriend/qa_masks/${mask}.nii.gz \

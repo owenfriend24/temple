@@ -19,10 +19,10 @@ echo "run,mask,tsnr,nvoxs" > ${output_csv}
 # Define mask paths
 if [[ "$masktype" == "qa" ]]; then
     masks=(
-        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip.nii.gz"
-        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip_ant.nii.gz"
-        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip_body.nii.gz"
-        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip_post.nii.gz"
+        "${fmdir}/sub-${subject}/masks/qa_masks/func-b_hip.nii.gz"
+        "${fmdir}/sub-${subject}/masks/qa_masks/func-b_hip_ant.nii.gz"
+        "${fmdir}/sub-${subject}/masks/qa_masks/func-b_hip_body.nii.gz"
+        "${fmdir}/sub-${subject}/masks/qa_masks/func-b_hip_post.nii.gz"
         "${fmdir}/sub-${subject}/masks/qa_masks/func-11m.nii.gz"
         "${fmdir}/sub-${subject}/masks/qa_masks/func-14c.nii.gz"
         "${fmdir}/sub-${subject}/masks/qa_masks/func-14r.nii.gz"
