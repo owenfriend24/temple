@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-### load in some modules to run the stuff ###
 import os
 #import mvpa2
 #from mvpa2 import *
@@ -41,11 +40,11 @@ runs = ['1','2', '3', '4', '5', '6']
 designdir =expdir+'/sub-%s/betaseries'%(sub)
 subdir = expdir+'/sub-%s'%(sub)
 
-bolddir = f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/func/'
-mask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sub}/mri/out/brainmask_func_dilated.nii.gz'
+#bolddir = f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/func/'
+#mask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sub}/mri/out/brainmask_func_dilated.nii.gz'
 
-# bolddir = subdir+'/func/skullstripped_T1'
-# mask = expdir + '/sourcedata/freesurfer/sub-%s/mri/out/brainmask_func_dilated.nii.gz'%(sub)
+bolddir = subdir+'/func/skullstripped_T1'
+mask = expdir + '/sourcedata/freesurfer/sub-%s/mri/out/brainmask_func_dilated.nii.gz'%(sub)
 
 confounddir = subdir + '/func/arrow_txt'
 modeldir = designdir

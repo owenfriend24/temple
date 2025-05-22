@@ -22,7 +22,7 @@ done
 source /home1/09123/ofriend/analysis/temple/profile
 
 # Run preprocessing steps
-prep_arrow.py $CORR both $sub
+prep_arrow.py $expdir both $sub
 beta_fsfs.sh $sub
 beta_files.sh $sub
 
