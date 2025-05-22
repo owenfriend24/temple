@@ -29,7 +29,7 @@ for run in 1 2 3 4; do
     track=1
     for cope in ${fmriprep_dir}/sub-${subject}/univ/"out_run${run}.feat"/native/cope*; do
     fslreorient2std ${cope}
-    antsApplyTransforms -d 3 -i "${cope}" -o ${fmriprep_dir}/sub-${subject}/univ/"out_run${run}.feat"/stats/cope${track}.nii.gz -n BSpline -r /corral-repl/utexas/prestonlab/xmaze/batch/templates/MNI152_T1_1mm_brain.nii.gz -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Affine.txt" -t "${fmriprep_dir}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+    antsApplyTransforms -d 3 -i "${cope}" -o ${fmriprep_dir}/sub-${subject}/univ/"out_run${run}.feat"/stats/cope${track}.nii.gz -n NearestNeighbor -r /corral-repl/utexas/prestonlab/xmaze/batch/templates/MNI152_T1_1mm_brain.nii.gz -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Affine.txt" -t "${fmriprep_dir}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     ((track=track+1))
     done
     
@@ -38,7 +38,7 @@ for run in 1 2 3 4; do
     track=1
     for cope in ${fmriprep_dir}/sub-${subject}/univ/"out_run${run}.feat"/native/varcope*; do
     fslreorient2std ${cope}
-    antsApplyTransforms -d 3 -i "${cope}" -o ${fmriprep_dir}/sub-${subject}/univ/"out_run${run}.feat"/stats/varcope${track}.nii.gz -n BSpline -r /corral-repl/utexas/prestonlab/xmaze/batch/templates/MNI152_T1_1mm_brain.nii.gz -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Affine.txt" -t "${fmriprep_dir}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+    antsApplyTransforms -d 3 -i "${cope}" -o ${fmriprep_dir}/sub-${subject}/univ/"out_run${run}.feat"/stats/varcope${track}.nii.gz -n NearestNeighbor -r /corral-repl/utexas/prestonlab/xmaze/batch/templates/MNI152_T1_1mm_brain.nii.gz -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Affine.txt" -t "${fmriprep_dir}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     ((track=track+1))
     done
     
