@@ -22,7 +22,9 @@ mkdir -p ${corr}/sub-${sub}/masks/qa_masks/
 if [[ "$task" == "wr" ]]; then
   for mask in 11m 14c 14r 25 32pl b_erc b_phc b_prc b_hip b_hip_ant b_hip_body b_hip_post; do
 
-  antsApplyTransforms -d 3 \
+  # d = dimensions; i = input; o = output; r = reference dimensions; t = warp image; t = affine file; n = interpolation
+  antsApplyTransforms \
+    -d 3 \
     -i /scratch/09123/ofriend/qa_masks/${mask}.nii.gz \
     -o ${corr}/sub-${sub}/masks/qa_masks/func-${mask}.nii.gz \
     -r ${corr}/sourcedata/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
