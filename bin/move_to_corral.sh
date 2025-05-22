@@ -9,8 +9,8 @@ fi
 fmriprep_dir=$1
 subject=$2
 
-#corr="/corral-repl/utexas/prestonlab/temple"
-corr="/work/09123/ofriend/ls6/temple/backups"
+corr="/corral-repl/utexas/prestonlab/temple"
+#corr="/work/09123/ofriend/ls6/temple/backups"
 mkdir ${corr}/sub-${subject}
 
 
