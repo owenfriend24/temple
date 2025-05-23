@@ -21,13 +21,16 @@ source /home1/09123/ofriend/analysis/temple/profile
 # Move to the directory containing your Python script
 cd /home1/09123/ofriend/analysis/temple/bin
 
+
+
+
+nifti_file1=$fm_dir/sub-"$subject"/func/sub-"$subject"_task-collector_run-01_space-T1w_desc-preproc_bold_ss_4mm.nii.gz
 # dimensions of functional images
 d1=$(fslinfo "$nifti_file1" | awk '$1 == "dim1" {print $2}')
 d2=$(fslinfo "$nifti_file1" | awk '$1 == "dim2" {print $2}')
 d3=$(fslinfo "$nifti_file1" | awk '$1 == "dim3" {print $2}')
 
 
-nifti_file1=$fm_dir/sub-"$subject"/func/sub-"$subject"_task-collector_run-01_space-T1w_desc-preproc_bold_ss_4mm.nii.gz
 num_vols1=$(fslinfo "$nifti_file1" | awk '$1 == "dim4" {print $2}')
 num_vox1=$((num_vols1*d1*d2*d3))
 echo $num_vox1
