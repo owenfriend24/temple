@@ -25,7 +25,11 @@ def edit_fsf_file(template, out_path, sub, run, num_vols, num_voxs):
     
         fsf_content = fsf_content.replace('NUM_VOLS', num_vols)
         fsf_content = fsf_content.replace('NUM_VOXELS', num_voxs)
-        fsf_content = fsf_content.replace('OUT_RUN', f'out_run{run}')
+
+        if 'inverse' in template:
+            fsf_content = fsf_content.replace('OUT_RUN', f'inverse_out_run{run}')
+        else:
+            fsf_content = fsf_content.replace('OUT_RUN', f'out_run{run}')
         
         out_file = f'{out_path}/sub-{sub}-uni_first_run-0{run}.fsf'
         
