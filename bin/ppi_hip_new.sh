@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ $# -lt 4 ]]; then
+if [[ $# -lt 3 ]]; then
     echo "Usage: ppi_hpc_mean.sh fmriprep_dir subject task corral_dir"
     exit 1
 fi
