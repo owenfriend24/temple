@@ -109,7 +109,7 @@ set fmri(st_file) ""
 set fmri(bet_yn) 0
 
 # Spatial smoothing FWHM (mm)
-set fmri(smooth) 4
+set fmri(smooth) 0
 
 # Intensity normalization
 set fmri(norm_yn) 0
@@ -172,7 +172,7 @@ set fmri(constcol) 0
 set fmri(poststats_yn) 0
 
 # Pre-threshold masking?
-set fmri(threshmask) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sourcedata/freesurfer/sub-temple024/mri/out/brainmask_func_dilated.nii.gz"
+set fmri(threshmask) "/corral-repl/utexas/prestonlab/temple/freesurfer/sub-temple024/mri/out/brainmask_func_dilated.nii.gz"
 
 # Thresholding
 # 0 : None
@@ -266,20 +266,20 @@ set fmri(regstandard_nonlinear_warpres) 10
 set fmri(paradigm_hp) 128
 
 # Total voxels
-set fmri(totalVoxels) 103216344
+set fmri(totalVoxels) NUM_VOXELS
 
 
 # Number of lower-level copes feeding into higher-level analysis
 set fmri(ncopeinputs) 0
 
 # 4D AVW data or FEAT directory (1)
-set feat_files(1) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/func/skullstripped_T1/sub-temple024_task-collector_run-01_space-T1w_desc-preproc_bold_ss_4mm.nii.gz"
+set feat_files(1) "/corral-repl/utexas/prestonlab/temple/sub-temple024/func/sub-temple024_task-collector_run-01_space-T1w_desc-preproc_bold_ss_4mm.nii.gz"
 
 # Add confound EVs text file
 set fmri(confoundevs) 1
 
 # Confound EVs text file for analysis 1
-set confoundev_files(1) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/sub-temple024_task-collector_run-01_formatted_confounds.txt"
+set confoundev_files(1) "/corral-repl/utexas/prestonlab/temple/sub-temple024/univ/sub-temple024_task-collector_run-01_formatted_confounds.txt"
 
 # EV 1 title
 set fmri(evtitle1) "third"
@@ -314,7 +314,7 @@ set fmri(tempfilt_yn1) 1
 set fmri(deriv_yn1) 0
 
 # Custom EV file (EV 1)
-set fmri(custom1) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/sub-temple024_task-collector_run-1_third_items.txt"
+set fmri(custom1) "/corral-repl/utexas/prestonlab/temple/sub-temple024/univ/sub-temple024_task-collector_run-1_third_items.txt"
 
 # Orthogonalise EV 1 wrt EV 0
 set fmri(ortho1.0) 0
@@ -361,7 +361,7 @@ set fmri(tempfilt_yn2) 1
 set fmri(deriv_yn2) 0
 
 # Custom EV file (EV 2)
-set fmri(custom2) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/sub-temple024_task-collector_run-1_first_items.txt"
+set fmri(custom2) "/corral-repl/utexas/prestonlab/temple/sub-temple024/univ/sub-temple024_task-collector_run-1_first_items.txt"
 
 # Orthogonalise EV 2 wrt EV 0
 set fmri(ortho2.0) 0
@@ -408,7 +408,7 @@ set fmri(tempfilt_yn3) 1
 set fmri(deriv_yn3) 0
 
 # Custom EV file (EV 3)
-set fmri(custom3) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/sub-temple024_task-collector_run-1_others.txt"
+set fmri(custom3) "/corral-repl/utexas/prestonlab/temple/sub-temple024/univ/sub-temple024_task-collector_run-1_others.txt"
 
 # Orthogonalise EV 3 wrt EV 0
 set fmri(ortho3.0) 0

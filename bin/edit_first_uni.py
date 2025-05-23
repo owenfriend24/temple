@@ -7,17 +7,15 @@ import os
 import argparse
 
 
-def edit_fsf_file(template, out_path, sub, run, num_vols):
+def edit_fsf_file(template, out_path, sub, run, num_vols, num_voxs):
     # Read the content of the original .fsf file
     with open(template, 'r') as f:
         fsf_content = f.read()
 
-        
     # Replace 'sub-temple024' with whatever subject we're modeling
     fsf_content = fsf_content.replace('sub-temple024', f'sub-{sub}')
 
-    
-    
+
     if num_vols == '222':
         out_file = f'{out_path}/sub-{sub}-uni_second_level.fsf'
     else:
@@ -26,7 +24,7 @@ def edit_fsf_file(template, out_path, sub, run, num_vols):
         fsf_content = fsf_content.replace('run-1', f'run-{run}')
     
         fsf_content = fsf_content.replace('NUM_VOLS', num_vols)
-    
+        fsf_content = fsf_content.replace('NUM_VOXELS', num_voxs)
         fsf_content = fsf_content.replace('OUT_RUN', f'out_run{run}')
         
         out_file = f'{out_path}/sub-{sub}-uni_first_run-0{run}.fsf'
@@ -36,8 +34,8 @@ def edit_fsf_file(template, out_path, sub, run, num_vols):
         f.write(fsf_content)
 
         
-def main(template, out_path, sub, run_num, num_vols):
-    edit_fsf_file(template, out_path, sub, run_num, num_vols)
+def main(template, out_path, sub, run_num, num_vols, num_voxs):
+    edit_fsf_file(template, out_path, sub, run_num, num_vols, num_voxs)
     
     
 if __name__ == "__main__":
@@ -47,5 +45,6 @@ if __name__ == "__main__":
     parser.add_argument("sub", help="subject number e.g. temple001")
     parser.add_argument("run_num", help="run to generate .fsf file for")
     parser.add_argument("num_vols", help="number of functional volumes")
+    parser.add_argument("num_voxs", help="number of voxels")
     args = parser.parse_args()
-    main(args.template, args.out_path, args.sub, args.run_num, args.num_vols)
+    main(args.template, args.out_path, args.sub, args.run_num, args.num_vols, args.num_voxs)
