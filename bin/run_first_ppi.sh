@@ -3,17 +3,17 @@
 # use feat to run first level analyses
 
 if [[ $# -lt 2 ]]; then
-    echo "Usage: run_first_ppi.sh fmriprep_dir subject"
+    echo "Usage: run_first_ppi.sh fmriprep_dir subject corral"
     exit 1
 fi
 
 fmriprep_dir=$1
 subject=$2
-
+corral=$3
 
 for run in 1 2 3 4; do
     echo "running first level analysis for sub ${subject}..."
-    feat "${fmriprep_dir}/sub-${subject}/univ/ppi/sub-${subject}-ppi_first_run-0${run}.fsf"
+    feat "${corral}/sub-${subject}/univ/ppi/sub-${subject}-ppi_first_run-0${run}.fsf"
     
     echo "saving first level output to native directory"
     mkdir "${fmriprep_dir}/sub-${subject}/univ/ppi/out_run${run}.feat/native"
@@ -31,9 +31,9 @@ for run in 1 2 3 4; do
     -o ${fmriprep_dir}/sub-${subject}/univ/ppi/"out_run${run}.feat"/stats/cope${track}.nii.gz \
     -n NearestNeighbor \
     -r /corral-repl/utexas/prestonlab/xmaze/batch/templates/MNI152_T1_func_brain.nii.gz \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
+    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     track++
     done
     
@@ -45,13 +45,13 @@ for run in 1 2 3 4; do
     antsApplyTransforms -d 3 -i "${cope}" \
     -o ${fmriprep_dir}/sub-${subject}/univ/ppi/"out_run${run}.feat"/stats/varcope${track}.nii.gz \
     -n NearestNeighbor -r /corral-repl/utexas/prestonlab/xmaze/batch/templates/MNI152_T1_func_brain.nii.gz \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
+    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     track++
     done
     
-    
+
     # func data
     echo "transforming func data"
     
@@ -60,18 +60,18 @@ for run in 1 2 3 4; do
     -o "${fmriprep_dir}/sub-${subject}/univ/ppi/out_run${run}.feat/example_func.nii.gz" \
     -n BSpline \
     -r /corral-repl/utexas/prestonlab/xmaze/batch/templatesMNI152_T1_func_brain.nii.gz \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
+    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     
     fslreorient2std "${fmriprep_dir}/sub-${subject}/univ/ppi/out_run${run}.feat/native/mean_func.nii.gz"
     antsApplyTransforms -d 3 -i "${fmriprep_dir}/sub-${subject}/univ/ppi/out_run${run}.feat/native/mean_func.nii.gz" \
     -o "${fmriprep_dir}/sub-${subject}/univ/ppi/out_run${run}.feat/mean_func.nii.gz" \
     -n BSpline \
     -r /corral-repl/utexas/prestonlab/xmaze/batch/templates/MNI152_T1_func_brain.nii.gz \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
+    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
 
 
     # mask
@@ -81,16 +81,16 @@ for run in 1 2 3 4; do
     -o "${fmriprep_dir}/sub-${subject}/univ/ppi/out_run${run}.feat/mask.nii.gz" \
     -n NearestNeighbor \
     -r /corral-repl/utexas/prestonlab/xmaze/batch/templates/MNI152_T1_func_brain.nii.gz \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
-    -t "${fmriprep_dir}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
+    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     
     echo "formatting reg folder"
     # set up reg folder
     mkdir "${fmriprep_dir}/sub-${subject}/univ/ppi/out_run${run}.feat/reg"
     cp /corral-repl/utexas/prestonlab/xmaze/batch/templates/MNI152_T1_func_brain.nii.gz "${fmriprep_dir}/sub-${subject}/univ/ppi/out_run${run}.feat/reg/standard.nii.gz"
 
-    cp "${fmriprep_dir}/sub-${subject}/anat/sub-${subject}_MNI_ss.nii.gz" "${fmriprep_dir}/sub-${subject}/univ/ppi/out_run${run}.feat/reg/highres.nii.gz"
+    cp "${corral}/sub-${subject}/anat/sub-${subject}_MNI_ss.nii.gz" "${fmriprep_dir}/sub-${subject}/univ/ppi/out_run${run}.feat/reg/highres.nii.gz"
 
     cp "/home1/09123/ofriend/analysis/temple/univ/identity.mat" "${fmriprep_dir}/sub-${subject}/univ/ppi/out_run${run}.feat/reg/example_func2standard.mat"
 
