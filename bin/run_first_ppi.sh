@@ -11,6 +11,8 @@ fmriprep_dir=$1
 subject=$2
 corral=$3
 
+mkdir -p "${fmriprep_dir}/sub-${subject}/univ/ppi/"
+
 for run in 1 2 3 4; do
     echo "running first level analysis for sub ${subject}..."
     feat "${corral}/sub-${subject}/univ/ppi/sub-${subject}-ppi_first_run-0${run}.fsf"
