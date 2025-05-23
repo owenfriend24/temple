@@ -4,7 +4,7 @@
 
 
 if [[ $# -lt 2 ]]; then
-    echo "Usage: run_first_levels.sh fmriprep_dir subject"
+    echo "Usage: run_first_levels.sh fmriprep_dir subject corral"
     exit 1
 fi
 
@@ -92,7 +92,7 @@ for run in 1 2 3 4; do
     cp /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     "${fmriprep_dir}/sub-${subject}/univ/out_run${run}.feat/reg/standard.nii.gz"
 
-    cp "${fmriprep_dir}/sub-${subject}/anat/sub-${subject}_MNI_ss.nii.gz" \
+    cp "${corral}/sub-${subject}/anat/sub-${subject}_MNI_ss.nii.gz" \
     "${fmriprep_dir}/sub-${subject}/univ/out_run${run}.feat/reg/highres.nii.gz"
 
     cp "/home1/09123/ofriend/analysis/temple/univ/identity.mat" \
