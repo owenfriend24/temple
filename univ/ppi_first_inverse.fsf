@@ -172,7 +172,7 @@ set fmri(constcol) 0
 set fmri(poststats_yn) 1
 
 # Pre-threshold masking?
-set fmri(threshmask) "/corral-repl/utexas/prestonlab/temple/freesurfer/sub-temple024/mri/out/brainmask_func_dilated.nii.gz"
+set fmri(threshmask) "/corral-repl/utexas/prestonlab/temple/freesurfer/sub-temple024/mri/b_gray_func.nii.gz"
 
 # Thresholding
 # 0 : None

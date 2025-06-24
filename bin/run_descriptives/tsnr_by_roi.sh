@@ -77,7 +77,7 @@ for run in 1 2 3 4 5 6; do
 
     for mask in "${masks[@]}"; do
         tsnr_value=$(fslstats ${tsnr_file} -k ${mask} -M)
-        nvoxs=$(fslstats ${mask} -V | awk '{print $1}')  # Extracts voxel count
+        nvoxs=$(fslstats ${mask} -V | awk '{print $1}')  # voxel count
         echo "${run},${mask},${tsnr_value},${nvoxs}" >> ${output_csv}
     done
 done

@@ -12,7 +12,7 @@ def main(data_dir, file_type, sub, out_dir):
     
     
     func_dir = data_dir + f'/sub-{sub}/func/'
-    
+    os.makedirs(out_dir, exist_ok=True)
     if file_type == 'motion' or file_type == 'both':
         conf1 = pd.read_table(func_dir + f'sub-{sub}_task-collector_run-01_desc-confounds_timeseries.tsv')
         conf2 = pd.read_table(func_dir + f'sub-{sub}_task-collector_run-02_desc-confounds_timeseries.tsv')
@@ -69,7 +69,7 @@ def main(data_dir, file_type, sub, out_dir):
             out = out_dir + f'sub-{sub}_task-collector_run-0{run}_ppi_inverse_contrast.txt'
             contrast_inv.to_csv(out, sep='\t', header=False, index=False)
             
-            # task file - 1.0 for times we're interested in, 0.0 for times we're not
+            # task file - 1.0 for timepoints we're interested in, 0.0 for times we're not (basically just excluding B items)
             task = pd.DataFrame(columns = ['onset', 'duration', 'contrast'])
             for index, row in col_run.iterrows():
                 if row['position'] == 2:

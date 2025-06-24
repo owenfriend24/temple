@@ -15,7 +15,7 @@ mkdir -p "${fmriprep_dir}/sub-${subject}/univ/ppi/"
 
 for run in 1 2 3 4; do
     echo "running first level analysis for sub ${subject}..."
-    feat "${corral}/sub-${subject}/univ/ppi/sub-${subject}-ppi_first_run-0${run}.fsf"
+    feat "${fmriprep_dir}/sub-${subject}/univ/ppi/sub-${subject}-ppi_first_run-0${run}.fsf"
     
     echo "saving first level output to native directory"
     mkdir "${fmriprep_dir}/sub-${subject}/univ/ppi/out_run${run}.feat/native"
@@ -36,7 +36,7 @@ for run in 1 2 3 4; do
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
     -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
-    track++
+    ((track=track+1))
     done
     
     # cope images
@@ -51,7 +51,7 @@ for run in 1 2 3 4; do
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
     -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
-    track++
+    ((track=track+1))
     done
     
 
