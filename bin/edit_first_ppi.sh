@@ -11,20 +11,10 @@ subject=$3
 fm_dir=$4
 
 
-
-# Load any necessary modules
-module load python3/3.9.7
-
-# Activate your virtual environment if you're using one
-source /home1/09123/ofriend/analysis/temple/profile
-
-# Move to the directory containing your Python script
-cd /home1/09123/ofriend/analysis/temple/bin
-
-mkdir -p /corral-repl/utexas/prestonlab/temple/sub-$subject/univ/ppi/
+mkdir -p $out_path
 
 nifti_file1=$fm_dir/sub-"$subject"/func/sub-"$subject"_task-collector_run-01_space-T1w_desc-preproc_bold_ss_4mm.nii.gz
-# dimensions of functional images
+# dimensions of functional images; num voxels doesn't actually affect Feat output for this analysis but editing just in case
 d1=$(fslinfo "$nifti_file1" | awk '$1 == "dim1" {print $2}')
 d2=$(fslinfo "$nifti_file1" | awk '$1 == "dim2" {print $2}')
 d3=$(fslinfo "$nifti_file1" | awk '$1 == "dim3" {print $2}')

@@ -3,7 +3,7 @@ import subprocess
 
 subprocess.run(['/bin/bash', '-c', 'source /home1/09123/ofriend/analysis/temple/rsa/bin/activate'])
 ### import python libraries needed for the analysis ###
-import numpy as N
+import numpy as np
 import nibabel
 import scipy.stats
 from scipy.stats.mstats import zscore
