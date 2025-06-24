@@ -4,7 +4,7 @@
 * need to create the hippocampal masks first (create_hip_masks.sh)
 ```
 ppi_hip_new.sh data_dir subject task
-ppi_hip_new.sh $FM temple016 collector $CORR
+ppi_hip_new.sh $CORR temple016 collector
 ```
 2. create event and confound .txt files   
 ```
