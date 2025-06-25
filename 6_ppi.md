@@ -15,7 +15,7 @@ ppi_txt_behav.py $CORR both temple016 $FM/temple016/univ/ppi/
    * need path to corral for transformation files
 ``` 
 edit_first_ppi.sh ppi_first_template.fsf out_path subject data_dir
-edit_first_ppi.sh /home1/09123/ofriend/analysis/temple/univ/ppi_first_template.fsf (or ppi_first_inverse) $FM/sub-temple016/univ/ppi/ temple016 $FM
+edit_first_ppi.sh /home1/09123/ofriend/analysis/temple/univ/ppi_first_template.fsf (or ppi_first_inverse) $FM/ppi/sub-temple016/ppi/ temple016 $CORR
 run_first_ppi.sh data_dir subject corral
 run_first_ppi_inverse.sh $FM/ temple016 $CORR
 ```
