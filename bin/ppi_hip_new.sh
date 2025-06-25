@@ -9,7 +9,7 @@ output_dir=$1
 subject=$2
 task=$3
 
-mkdir -p ${output_dir}/sub-${subject}/univ/ppi
+mkdir -p ${output_dir}/sub-${subject}/ppi
 
 # mask functional data for HPC roi
 for run in 1 2 3 4; do
