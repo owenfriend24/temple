@@ -3,8 +3,8 @@
 1. use custom MNI hippocampus mask reverse-normalized into participant space, extract eigenvalue (first principle component) and save out
 * need to create the hippocampal masks first (create_hip_masks.sh)
 ```
-ppi_hip_new.sh data_dir subject task
-ppi_hip_new.sh $CORR temple016 collector
+ppi_hip_new.sh output_dir subject task
+ppi_hip_new.sh $FM/ppi/ temple016 collector
 ```
 2. create event and confound .txt files   
 ```
