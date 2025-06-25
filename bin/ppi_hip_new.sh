@@ -5,15 +5,15 @@ if [[ $# -lt 3 ]]; then
     exit 1
 fi
 
-corr=$1
+output_dir=$1
 subject=$2
 task=$3
 
-mkdir -p ${corr}/sub-${subject}/univ/ppi
+mkdir -p ${output_dir}/sub-${subject}/univ/ppi
 
 # mask functional data for HPC roi
 for run in 1 2 3 4; do
     
-    fslmeants -i ${corr}/sub-${subject}/func/sub-${subject}_task-${task}_run-0${run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz \
-    -m ${corr}/sub-${subject}/masks/hip_masks/func-b_hip.nii.gz --eig -o ${corr}/sub-${subject}/univ/ppi/run-${run}_eigen_hip.txt
+    fslmeants -i /corral-repl/utexas/prestonlab/temple/sub-${subject}/func/sub-${subject}_task-${task}_run-0${run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz \
+    -m /corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/hip_masks/func-b_hip.nii.gz --eig -o ${output_dir}/sub-${subject}/ppi/run-${run}_eigen_hip.txt
 done
