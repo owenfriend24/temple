@@ -1,16 +1,14 @@
 #!/bin/bash
 
-if [[ $# -lt 4 ]]; then
-    echo "Usage: edit_first_fsf.sh template out_path subject fmriprep_dir"
+if [[ $# -lt 3 ]]; then
+    echo "Usage: edit_first_fsf.sh template out_path subject"
     exit 1
 fi
 
 template=$1
 out_path=$2
 subject=$3
-fm_dir=$4
-
-
+analysis_type=$4
 
 # Load any necessary modules
 module load python3/3.9.7
@@ -22,6 +20,11 @@ source /home1/09123/ofriend/analysis/temple/profile
 cd /home1/09123/ofriend/analysis/temple/bin
 
 # Run your Python script
-python edit_first_ppi.py $template $out_path $subject 5 222
+python edit_first_ppi.py $template $out_path $subject 5 222 222 $analysis_type
+
+# clean this up later:
+# 5 = run (not used)
+# 222 vols = flags that it's second level analysis
+# 222 voxels (not used)
 
 

@@ -7,7 +7,7 @@ import os
 import argparse
 
 
-def edit_fsf_file(template, out_path, sub, run, num_vols, num_voxs):
+def edit_fsf_file(template, out_path, sub, run, num_vols, num_voxs, analysis_type):
     # Read the content of the original .fsf file
     with open(template, 'r') as f:
         fsf_content = f.read()
@@ -19,7 +19,12 @@ def edit_fsf_file(template, out_path, sub, run, num_vols, num_voxs):
     
     
     if num_vols == '222':
-        out_file = f'{out_path}/sub-{sub}-ppi_second_level.fsf'
+        if analysis_type == 'inverse':
+            out_file = f'{out_path}/sub-{sub}-ppi_inverse_second_level.fsf'
+            fsf_content = fsf_content.replace('/ppi/out_run', f'/ppi_inverse/out_run')
+        else:
+            out_file = f'{out_path}/sub-{sub}-ppi_second_level.fsf'
+
     else:
         # Replace 'run-01' with whatever run we're modeling
         fsf_content = fsf_content.replace('run-01', f'run-0{run}')
@@ -41,8 +46,8 @@ def edit_fsf_file(template, out_path, sub, run, num_vols, num_voxs):
         f.write(fsf_content)
 
         
-def main(template, out_path, sub, run_num, num_vols, num_voxs):
-    edit_fsf_file(template, out_path, sub, run_num, num_vols, num_voxs)
+def main(template, out_path, sub, run_num, num_vols, num_voxs, analysis_type):
+    edit_fsf_file(template, out_path, sub, run_num, num_vols, num_voxs, analysis_type)
     
     
 if __name__ == "__main__":
@@ -53,5 +58,7 @@ if __name__ == "__main__":
     parser.add_argument("run_num", help="run to generate .fsf file for")
     parser.add_argument("num_vols", help="number of functional volumes")
     parser.add_argument("num_voxs", help="number of voxels")
+    parser.add_argument("analysis_type", type=str, choices=["ppi", "inverse"], default="ppi",
+                        help="ppi or inverse")
     args = parser.parse_args()
-    main(args.template, args.out_path, args.sub, args.run_num, args.num_vols, args.num_voxs)
+    main(args.template, args.out_path, args.sub, args.run_num, args.num_vols, args.num_voxs, args.analysis_type)

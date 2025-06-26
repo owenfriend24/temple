@@ -21,7 +21,7 @@ set fmri(analysis) 2
 set fmri(relative_yn) 0
 
 # Balloon help
-set fmri(help_yn) 1
+set fmri(help_yn) 0
 
 # Run Featwatcher
 set fmri(featwatcher_yn) 0
@@ -30,7 +30,7 @@ set fmri(featwatcher_yn) 0
 set fmri(sscleanup_yn) 0
 
 # Output directory
-set fmri(outputdir) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/ppi/2ndlevelppi_HIP"
+set fmri(outputdir) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/ppi/sub-temple024/ppi/2ndlevelppi_HIP"
 
 # TR(s)
 set fmri(tr) 3
@@ -109,7 +109,7 @@ set fmri(st_file) ""
 set fmri(bet_yn) 0
 
 # Spatial smoothing FWHM (mm)
-set fmri(smooth) 4
+set fmri(smooth) 0
 
 # Intensity normalization
 set fmri(norm_yn) 0
@@ -272,16 +272,16 @@ set fmri(ncopeinputs) 1
 set fmri(copeinput.1) 1
 
 # 4D AVW data or FEAT directory (1)
-set feat_files(1) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/ppi/out_run1.feat"
+set feat_files(1) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/ppi/sub-temple024/ppi/out_run1.feat"
 
 # 4D AVW data or FEAT directory (2)
-set feat_files(2) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/ppi/out_run2.feat"
+set feat_files(2) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/ppi/sub-temple024/ppi/out_run2.feat"
 
 # 4D AVW data or FEAT directory (3)
-set feat_files(3) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/ppi/out_run3.feat"
+set feat_files(3) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/ppi/sub-temple024/ppi/out_run3.feat"
 
 # 4D AVW data or FEAT directory (4)
-set feat_files(4) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/ppi/out_run4.feat"
+set feat_files(4) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/ppi/sub-temple024/ppi/out_run4.feat"
 
 # Add confound EVs text file
 set fmri(confoundevs) 0
