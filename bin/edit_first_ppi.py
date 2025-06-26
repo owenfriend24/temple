@@ -22,6 +22,7 @@ def edit_fsf_file(template, out_path, sub, run, num_vols, num_voxs, analysis_typ
         if analysis_type == 'inverse':
             out_file = f'{out_path}/sub-{sub}-ppi_inverse_second_level.fsf'
             fsf_content = fsf_content.replace('/ppi/out_run', f'/ppi_inverse/inverse_out_run')
+            fsf_content = fsf_content.replace('/ppi/2ndlevelppi_HIP', f'/ppi_inverse/2ndlevelppi_inverse_HIP')
         else:
             out_file = f'{out_path}/sub-{sub}-ppi_second_level.fsf'
 
