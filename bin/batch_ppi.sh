@@ -37,7 +37,7 @@ run_second_ppis.sh ${fmriprep_dir}/ppi/ ${sub} ppi
 # create .fsf files for DECREASED connectivity at triplet boundaries
 edit_first_ppi.sh /home1/09123/ofriend/analysis/temple/univ/ppi_first_inverse.fsf ${sub_dir}/ppi_inverse/ ${sub} ${corr}
 run_first_ppi_inverse.sh ${fmriprep_dir} ${sub} ${corr}
-edit_second_ppi.sh /home1/09123/ofriend/analysis/temple/univ/2nd_level_ppi_inverse.fsf ${sub_dir}/ppi_inverse/ ${sub} inverse
+edit_second_ppi.sh /home1/09123/ofriend/analysis/temple/univ/2nd_level_ppi_template.fsf ${sub_dir}/ppi_inverse/ ${sub} inverse
 run_second_ppis.sh ${fmriprep_dir}/ppi/ ${sub} inverse
 
 
