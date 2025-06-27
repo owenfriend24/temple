@@ -35,11 +35,11 @@ if [[ "$task" == "wr" ]]; then
 done
 
 else
-  for mask in 11m 14c 14r 25 32pl b_erc b_phc b_prc b_hip b_hip_ant b_hip_body b_hip_post; do
+  for mask in b_hip b_hip_ant b_hip_body b_hip_post; do
 
   antsApplyTransforms -d 3 \
-    -i /scratch/09123/ofriend/qa_masks/${mask}.nii.gz \
-    -o ${corr}/sub-${sub}/masks/qa_masks/func-${mask}.nii.gz \
+    -i /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz \
+    -o ${corr}/new_masks/hip_masks/sub-${sub}/func-${mask}.nii.gz \
     -r ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
     -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
     -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt,1] \
