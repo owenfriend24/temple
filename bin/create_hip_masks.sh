@@ -12,7 +12,7 @@ sub=$2
 corr=$3
 task=$4
 
-mkdir -p ${corr}/sub-${sub}/masks/qa_masks/
+mkdir -p ${corr}/new_masks/hip_masks/sub-${sub}
 
 
 
