@@ -18,11 +18,12 @@ if [[ "$task" == "collector" ]]; then
     num_runs=4
 elif [[ "$task" == "arrow" ]]; then
     num_runs=6
+elif [[ "$task" == "movie" ]]; then
+  num_runs=2
 else
     echo "Error: Unknown task '$task'. Must be 'collector' or 'arrow'."
     exit 1
 fi
-
 
 for run in $(seq 1 $num_runs); do
     echo "Smoothing run ${run}..."
