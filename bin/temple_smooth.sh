@@ -16,10 +16,13 @@ task=$4
 
 if [[ "$task" == "collector" ]]; then
     num_runs=4
+    tag=""
 elif [[ "$task" == "arrow" ]]; then
     num_runs=6
+    tag=""
 elif [[ "$task" == "movie" ]]; then
   num_runs=2
+  tag="_movie"
 else
     echo "Error: Unknown task '$task'. Must be 'collector' or 'arrow'."
     exit 1
@@ -31,7 +34,7 @@ for run in $(seq 1 $num_runs); do
 
     smooth_susan \
         "${fmriprep_dir}/sub-${subject}/func/skullstripped_T1/sub-${subject}_task-${task}_run-0${run}_space-T1w_desc-preproc_bold_ss.nii.gz" \
-        "${fs_dir}/sub-${subject}/mri/out/brainmask_func_dilated.nii.gz" \
+        "${fs_dir}/sub-${subject}/mri/out/brainmask_func${tag}_dilated.nii.gz" \
         4 \
         "${fmriprep_dir}/sub-${subject}/func/skullstripped_T1/sub-${subject}_task-${task}_run-0${run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz"
     
