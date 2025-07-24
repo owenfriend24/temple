@@ -14,8 +14,8 @@ corral=$3
 
 for run in 1 2 3 4; do
     echo "running first level analysis for sub ${subject}..."
-#    feat "${corral}/sub-${subject}/univ/sub-${subject}-uni_first_run-0${run}.fsf"
-#    chmod 775 -R "${corral}/sub-${subject}/transforms"
+    feat "${corral}/sub-${subject}/univ/sub-${subject}-uni_first_run-0${run}.fsf"
+    chmod 775 -R "${corral}/sub-${subject}/transforms"
     
     echo "saving first level output to native directory"
     mkdir "${fmriprep_dir}/sub-${subject}/univ/out_run${run}.feat/native"
