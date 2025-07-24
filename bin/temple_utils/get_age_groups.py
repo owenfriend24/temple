@@ -7,7 +7,7 @@ def get_children():
 def get_adolescents():
     adolescents = [29, 30, 32, 33, 35, 36, 38, 42, 45, 51,
             60, 63, 79, 82, 83, 85, 90, 91, 93, 96, 103, 109,
-            110, 111, 112, 117, 121]
+            110, 111, 112, 117, 121, 126]
     return [f"temple{str(sub).zfill(3)}" for sub in adolescents]
 
 def get_adults():
