@@ -17,8 +17,8 @@ mkdir -p "${out_dir}"
 
 for run in 1 2 3 4; do
     echo "running first level analysis for sub ${subject}..."
-    feat "${out_dir}/sub-${subject}-ppi_first_run-0${run}.fsf"
-    
+#    feat "${out_dir}/sub-${subject}-ppi_first_run-0${run}.fsf"
+#
     echo "saving first level output to native directory"
     mkdir "${out_dir}/out_run${run}.feat/native"
     cp -r "${out_dir}/out_run${run}.feat/stats/"* "${out_dir}/out_run${run}.feat/native"
