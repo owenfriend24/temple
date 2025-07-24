@@ -22,6 +22,6 @@ source /home1/09123/ofriend/analysis/temple/profile
 cd /home1/09123/ofriend/analysis/temple/bin
 
 # Run your Python script
-python edit_first_uni.py $template $out_path $subject 5 222
+python edit_first_uni.py $template $out_path $subject 5 222 222
 
 
