@@ -33,8 +33,8 @@ for run in 1 2 3 4; do
     -o ${fmriprep_dir}/sub-${subject}/univ/"out_run${run}.feat"/stats/cope${track}.nii.gz \
     -n NearestNeighbor -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
-    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
-    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt"  # \
+#    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     ((track=track+1))
     done
     
@@ -47,8 +47,8 @@ for run in 1 2 3 4; do
     -o ${fmriprep_dir}/sub-${subject}/univ/"out_run${run}.feat"/stats/varcope${track}.nii.gz \
     -n NearestNeighbor -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
-    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
-    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt"   # \
+#    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     ((track=track+1))
     done
     
@@ -62,8 +62,8 @@ for run in 1 2 3 4; do
     -n BSpline \
     -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
-    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
-    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" #\
+#    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     
     fslreorient2std "${fmriprep_dir}/sub-${subject}/univ/out_run${run}.feat/native/mean_func.nii.gz"
     antsApplyTransforms -d 3 -i "${fmriprep_dir}/sub-${subject}/univ/out_run${run}.feat/native/mean_func.nii.gz" \
@@ -71,8 +71,8 @@ for run in 1 2 3 4; do
     -n BSpline \
     -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
-    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
-    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+    -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" #\
+#    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
 
 
     # mask
@@ -83,8 +83,8 @@ for run in 1 2 3 4; do
      -n NearestNeighbor \
      -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
      -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
-     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" \
-     -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" #\
+#     -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     
     echo "formatting reg folder"
     # set up reg folder
