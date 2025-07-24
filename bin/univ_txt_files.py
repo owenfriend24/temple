@@ -9,8 +9,7 @@ import argparse
 
 
 def main(data_dir, file_type, sub, out_dir):
-    
-    
+
     func_dir = data_dir + f'/sub-{sub}/func/'
     
     if file_type == 'motion' or file_type == 'both':
@@ -30,10 +29,7 @@ def main(data_dir, file_type, sub, out_dir):
             out = (out_dir + f'/sub-{sub}_task-collector_run-0{run}_formatted_confounds.txt')
             u_conf.to_csv(out, sep='\t', header=False, index=False)
             run += 1
-            
-            
-        
-    
+
     if file_type == 'collector' or file_type == 'both':
         c1 = pd.read_table(func_dir + f'sub-{sub}_task-collector_run-01_events_fixed.tsv')
         c2 = pd.read_table(func_dir + f'sub-{sub}_task-collector_run-02_events_fixed.tsv')
