@@ -35,6 +35,7 @@ for run in 1 2 3 4; do
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt"  # \
 #    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
+
     ((track=track+1))
     done
     
