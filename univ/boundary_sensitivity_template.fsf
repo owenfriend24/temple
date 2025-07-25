@@ -82,7 +82,7 @@ set fmri(regunwarp_yn) 0
 set fmri(gdc) ""
 
 # EPI dwell time (ms)
-set fmri(dwell) 0.70
+set fmri(dwell) 0.35
 
 # EPI TE (ms)
 set fmri(te) 33
