@@ -32,7 +32,7 @@ for run in $(seq 1 $num_runs); do
     echo "Smoothing run ${run}..."
 
     smooth_susan \
-        "${fmriprep_dir}/sub-${subject}/func/skullstripped_T1/sub-${subject}_task-${task}_run-0${run}_space-T1w_desc-preproc_bold_ss.nii.gz" \
+        "${fmriprep_dir}/sub-${subject}/func/skullstripped_T1/sub-${subject}_task-${task}_run-0${run}_space-T1w_desc-preproc_bold_ss${tag}.nii.gz" \
         "${fs_dir}/sub-${subject}/mri/out/brainmask_func${tag}_dilated.nii.gz" \
         4 \
         "${fmriprep_dir}/sub-${subject}/func/skullstripped_T1/sub-${subject}_task-${task}_run-0${run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz"
