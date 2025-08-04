@@ -127,7 +127,6 @@ def extract_func(fs_dir, fmriprep_dir, sub, task, num_runs):
         run(f'fslmaths {func_dir}/sub-{sub}_task-{task}_run-0{func_run}_space-T1w_desc-preproc_bold.nii.gz -mas {mask_func}_dilated.nii.gz {func_dir}/skullstripped_T1/sub-{sub}_task-{task}_run-0{func_run}_space-T1w_desc-preproc_bold_ss.nii.gz')
         print(f'skullstripped run {func_run}')
 
-
 def main(fs_dir, fmriprep_dir, sub):
     run('source /home1/09123/ofriend/analysis/temple/profile')
     extract_fs(fs_dir, sub)
