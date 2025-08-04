@@ -24,8 +24,8 @@ for mask in ${fmriprep_dir}/sl/cluster_masks/*.nii.gz; do
       -i ${mask} \
       -o ${mask_dir}/sl-${maskname}.nii.gz \
       -r ${corr}/freesurfer/sub-${sub}/mri/out/brainmask_func_dilated.nii.gz \
-      -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
       -t [${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt,1] \
+      -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
       -n NearestNeighbor
 
 done

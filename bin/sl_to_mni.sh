@@ -20,7 +20,6 @@ mkdir -p ${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}
 #echo  "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Warp.nii.gz"
 #echo "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Affine.txt"
 #
-
 #
 antsApplyTransforms -d 3 \
 -i "${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/${sub}_${measure}_${comp}_${roi}_z.nii.gz" \
