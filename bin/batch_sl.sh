@@ -1,6 +1,7 @@
 #!/bin/bash
 
 comp=$1
+masktype=$2
 
 source /home1/09123/ofriend/analysis/temple/rsa/bin/activate
 
@@ -14,5 +15,6 @@ temple091 temple092 temple093 temple094 temple095 temple096 temple097 temple098 
 temple099 temple103 temple105 temple106 temple107 temple108 temple109 temple110 \
 temple111 temple112 temple113 temple114 temple119 temple120 temple123 temple124; do
 
-  sl_symmetry.py $sub $comp whole_brain
+  temple_sl_prepost.py $sub $comp $masktype
+  sl_to_mni.sh $sub /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep $comp $masktype prepost
 done

@@ -26,15 +26,15 @@ ash_dir=${base_dir}/sub-${sub}/
 antsApplyTransforms -d 3 -i ${ash_dir}/multiatlas/fusion/lfseg_corr_nogray_left.nii.gz \
 -o ${ash_dir}/final/sub-${sub}_left_lfseg_corr_nogray.nii.gz \
 -r ${ash_dir}/mprage.nii.gz \
--t ${ash_dir}/T1_to_T2_manual_InverseWarp.nii.gz \
 -t [${ash_dir}/T1_to_T2_manual_Affine.txt,1] \
+-t ${ash_dir}/T1_to_T2_manual_InverseWarp.nii.gz \
 -n NearestNeighbor
 
 antsApplyTransforms -d 3 -i ${ash_dir}/multiatlas/fusion/lfseg_corr_nogray_right.nii.gz \
 -o ${ash_dir}/final/sub-${sub}_right_lfseg_corr_nogray.nii.gz \
 -r ${ash_dir}/mprage.nii.gz \
--t ${ash_dir}/T1_to_T2_manual_InverseWarp.nii.gz \
 -t [${ash_dir}/T1_to_T2_manual_Affine.txt,1] \
+-t ${ash_dir}/T1_to_T2_manual_InverseWarp.nii.gz \
 -n NearestNeighbor
 
 
