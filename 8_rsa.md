@@ -1,5 +1,4 @@
 ## Whole brain searchlight for pre-post representational similarity change
-
 ### 1. activate rsa profile
 ```
 source $HOME/analysis/temple/rsa/bin/activate
@@ -32,7 +31,7 @@ temple_sl_prepost.py temple002 AC_differentiation hip --drop_run=6
 batch_sl.sh AC_weak gm
 ```
 
-### 3. extract RS values from specific clusters or ROI's
+### 3. extract RS values from specific clusters or a priori ROI's
 1. extracts RS values for each comparison from each subject within ROI
 2. merge/format RS values in subject-level CSV
 3. aggregate across subjects for master CSV file
