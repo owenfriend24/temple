@@ -50,7 +50,9 @@ batch_sl.sh AC_weak gm
     * True = write the aggregated file out to master_dir, default = False (just run for each subject)
   
 
-
+### 4. to-do: integrate jupyter notebooks/R code
+* analysis/**integration_prepost**/clean_data.ipynb
+* 
 ### old: MDS within extracted SL ROI masks - didn't really pan out with first try but can come back to later; these functions pull out run-level similarity/distances between the 12 items, jupyter notebook does the actual multidimensional scaling 
 * need to make sure to transform to fisher's Z before averaging
 sl_masks_to_func.sh temple016 $FM AC adult_IFG_AC_mask
