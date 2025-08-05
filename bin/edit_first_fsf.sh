@@ -12,13 +12,13 @@ roi=$3
 
 if [ "$type" == "boundary" ]; then
     template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/boundary_sensitivity_template.fsf
-    out_path=/corral-repl/utexas/prestonlab/univ/
+    out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
 elif [ "$type" == "ppi" ]; then
     template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/ppi_first_template.fsf
-    out_path=/corral-repl/utexas/prestonlab/univ/ppi
+    out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/ppi
 elif [ "$type" == "ppi_inverse" ]; then
     template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/ppi_first_inverse.fsf
-    out_path=/corral-repl/utexas/prestonlab/univ/ppi_inverse
+    out_path=/corral-repl/utexas/prestonlabtemple/sub-${subject}/univ/ppi_inverse
 fi
 
 mkdir -p $out_path
