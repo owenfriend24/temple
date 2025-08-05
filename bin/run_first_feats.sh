@@ -26,6 +26,7 @@ elif [ "$type" == "ppi_inverse" ]; then
     roi_tag="_${roi}"
 fi
 
+mkdir -p ${base}
 fsf_file=${base}/sub-${subject}-univ-${type}${roi_tag}_first_run-0${run}.fsf
 
 for run in 1 2 3 4; do
