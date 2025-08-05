@@ -17,12 +17,15 @@ roi=$5
 
 if [ "$type" == "boundary" ]; then
     base=${fmriprep_dir}/sub-${subject}/univ/
+    fsf_base=${corral}/sub-${subject}/univ/
     roi_tag=""
 elif [ "$type" == "ppi" ]; then
     base=${fmriprep_dir}/sub-${subject}/univ/ppi/
+    fsf_base=${corral}/sub-${subject}/univ/ppi/
     roi_tag="_${roi}"
 elif [ "$type" == "ppi_inverse" ]; then
     base=${fmriprep_dir}/sub-${subject}/univ/ppi_inverse/
+    fsf_base=${corral}/sub-${subject}/univ/ppi/ppi_inverse/
     roi_tag="_${roi}"
 fi
 
@@ -30,7 +33,7 @@ mkdir -p ${base}
 
 for run in 1 2 3 4; do
     echo "running first level analysis for sub ${subject}..."
-    fsf_file=${base}/sub-${subject}-univ-${type}${roi_tag}_first_run-0${run}.fsf
+    fsf_file=${fsf_base}/sub-${subject}-univ-${type}${roi_tag}_first_run-0${run}.fsf
     feat "$fsf_file"
     chmod 775 -R "${corral}/sub-${subject}/transforms"
     
