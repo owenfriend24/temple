@@ -23,10 +23,13 @@ fi
 
 if [ "$type" == "boundary" ]; then
     template="/home1/09123/ofriend/analysis/temple/univ/level2_templates/2ndlevel_boundary${excl_tag}.fsf"
+    out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
 elif [ "$type" == "ppi" ]; then
     template="/home1/09123/ofriend/analysis/temple/univ/level2_templates/2ndlevel_ppi${excl_tag}_${roi}.fsf"
+    out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/ppi/
 elif [ "$type" == "ppi_inverse" ]; then
     template="/home1/09123/ofriend/analysis/temple/univ/level2_templates/2ndlevel_ppi_inverse${excl_tag}_${roi}.fsf"
+    out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/ppi_inverse
 fi
 
-python /home1/09123/ofriend/analysis/temple/bin/edit_first_fsf.py $template /corral-repl/utexas/prestonlab/temple/${subject}/univ/ $subject 5 222 222 $type $roi
+python /home1/09123/ofriend/analysis/temple/bin/edit_first_fsf.py $template $out_path $subject 5 222 222 $type $roi
