@@ -12,9 +12,7 @@ sub=$2
 corr=$3
 task=$4
 
-mkdir -p ${corr}/new_masks/hip_masks/sub-${sub}
-
-
+mkdir -p ${corr}/sub-${sub}/masks/hip_masks/sub-${sub}
 
 
 if [[ "$task" == "wr" ]]; then
