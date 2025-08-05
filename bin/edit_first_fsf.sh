@@ -18,7 +18,7 @@ elif [ "$type" == "ppi" ]; then
     out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/ppi
 elif [ "$type" == "ppi_inverse" ]; then
     template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/ppi_first_inverse.fsf
-    out_path=/corral-repl/utexas/prestonlabtemple/sub-${subject}/univ/ppi_inverse
+    out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/ppi_inverse
 fi
 
 mkdir -p $out_path
