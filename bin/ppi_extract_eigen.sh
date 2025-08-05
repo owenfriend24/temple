@@ -5,13 +5,12 @@ if [[ $# -lt 3 ]]; then
     exit 1
 fi
 
-output_dir=$1
-subject=$2
-task=$3
-roi=$4
 
-mkdir -p "${output_dir}/sub-${subject}/ppi"
-mkdir -p "${output_dir}/sub-${subject}/ppi_inverse"
+subject=$1
+roi=$2
+
+output_dir="/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/ppi/"
+mkdir -p "${output_dir}"
 
 if [ "$roi" == "b_hip" ]; then
     mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/hip_masks/func-${roi}.nii.gz"
@@ -24,6 +23,6 @@ fi
 
 # mask functional data for HPC roi
 for run in 1 2 3 4; do
-    fslmeants -i "/corral-repl/utexas/prestonlab/temple/sub-${subject}/func/sub-${subject}_task-${task}_run-0${run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz" \
-    -m "$mask" --eig -o "${output_dir}/sub-${subject}/ppi/run-${run}_eigen_hip.txt"
+    fslmeants -i "/corral-repl/utexas/prestonlab/temple/sub-${subject}/func/sub-${subject}_task-collector_run-0${run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz" \
+    -m "$mask" --eig -o "${output_dir}/run-${run}_eigen_${roi}.txt"
 done

@@ -8,16 +8,22 @@ import os
 import argparse
 
 
-def main(data_dir, file_type, sub, out_dir):
+def main(sub, file_type):
     
-    
-    func_dir = data_dir + f'/sub-{sub}/func/'
-    os.makedirs(out_dir, exist_ok=True)
+    # make sure to run ppi_extract_eigen in relevant roi first
+
+    func_dir = f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/func/'
+    ppi_dir = f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/univ/ppi/'
+    inverse_dir = f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/univ/ppi_inverse/'
+
+    for directory in [ppi_dir, inverse_dir]:
+        os.makedirs(directory, exist_ok=True)
+
     if file_type == 'motion' or file_type == 'both':
-        conf1 = pd.read_table(func_dir + f'sub-{sub}_task-collector_run-01_desc-confounds_timeseries.tsv')
-        conf2 = pd.read_table(func_dir + f'sub-{sub}_task-collector_run-02_desc-confounds_timeseries.tsv')
-        conf3 = pd.read_table(func_dir + f'sub-{sub}_task-collector_run-03_desc-confounds_timeseries.tsv')
-        conf4 = pd.read_table(func_dir + f'sub-{sub}_task-collector_run-04_desc-confounds_timeseries.tsv')
+        conf1 = pd.read_table(f'{func_dir}/sub-{sub}_task-collector_run-01_desc-confounds_timeseries.tsv')
+        conf2 = pd.read_table(f'{func_dir}/sub-{sub}_task-collector_run-02_desc-confounds_timeseries.tsv')
+        conf3 = pd.read_table(f'{func_dir}/sub-{sub}_task-collector_run-03_desc-confounds_timeseries.tsv')
+        conf4 = pd.read_table(f'{func_dir}/sub-{sub}_task-collector_run-04_desc-confounds_timeseries.tsv')
         
         col_names = ['csf', 'white_matter', 'trans_x', 'trans_y', 'trans_z', 'rot_x', 'rot_y', 'rot_z', 'framewise_displacement', 'dvars']
         for c in range(8):
@@ -27,20 +33,20 @@ def main(data_dir, file_type, sub, out_dir):
         for conf in [conf1, conf2, conf3, conf4]:
             u_conf = conf[col_names]
             u_conf = u_conf.fillna(0)
-            out = (out_dir + f'sub-{sub}_task-collector_run-0{run}_formatted_confounds.txt')
+            out = f'{ppi_dir}/sub-{sub}_task-collector_run-0{run}_formatted_confounds.txt'
             u_conf.to_csv(out, sep='\t', header=False, index=False)
             run += 1
     
     
     if file_type == 'collector' or file_type == 'both':
-        c1 = pd.read_table(func_dir + f'sub-{sub}_task-collector_run-01_events_fixed.tsv')
-        c2 = pd.read_table(func_dir + f'sub-{sub}_task-collector_run-02_events_fixed.tsv')
-        c3 = pd.read_table(func_dir + f'sub-{sub}_task-collector_run-03_events_fixed.tsv')
-        c4 = pd.read_table(func_dir + f'sub-{sub}_task-collector_run-04_events_fixed.tsv')
+        c1 = pd.read_table(f'{func_dir}/sub-{sub}_task-collector_run-01_events_fixed.tsv')
+        c2 = pd.read_table(f'{func_dir}/sub-{sub}_task-collector_run-02_events_fixed.tsv')
+        c3 = pd.read_table(f'{func_dir}/sub-{sub}_task-collector_run-03_events_fixed.tsv')
+        c4 = pd.read_table(f'{func_dir}/sub-{sub}_task-collector_run-04_events_fixed.tsv')
 
         run = 1
         for col_run in [c1, c2, c3, c4]:
-            # boundary contrast - where is hippocampus more connected to after boundary
+            # boundary contrast - where is ROI demonstrating increased connectivity after boundary
             contrast = pd.DataFrame(columns = ['onset', 'duration', 'contrast'])
             for index, row in col_run.iterrows():
                 if row['position'] == 1:
@@ -51,12 +57,10 @@ def main(data_dir, file_type, sub, out_dir):
                     con = 0
                 contrast.loc[len(contrast)] = [row['onset'], row['duration'], con]
             behav_trs = contrast.onset.values.astype('int')
-            out = out_dir + f'sub-{sub}_task-collector_run-0{run}_ppi_contrast.txt'
+            out = f'{ppi_dir}/sub-{sub}_task-collector_run-0{run}_ppi_contrast.txt'
             contrast.to_csv(out, sep='\t', header=False, index=False)
-            
-            
-            
-            # inverse - where is hippocampus less connected to after boundary
+
+            # inverse - where is ROI showing diminished connectivity following boundary
             contrast_inv = pd.DataFrame(columns = ['onset', 'duration', 'contrast'])
             for index, row in col_run.iterrows():
                 if row['position'] == 1:
@@ -66,7 +70,7 @@ def main(data_dir, file_type, sub, out_dir):
                 else:
                     con = 0
                 contrast_inv.loc[len(contrast_inv)] = [row['onset'], row['duration'], con]
-            out = out_dir + f'sub-{sub}_task-collector_run-0{run}_ppi_inverse_contrast.txt'
+            out = f'{inverse_dir}/sub-{sub}_task-collector_run-0{run}_ppi_inverse_contrast.txt'
             contrast_inv.to_csv(out, sep='\t', header=False, index=False)
             
             # task file - 1.0 for timepoints we're interested in, 0.0 for times we're not (basically just excluding B items)
@@ -77,7 +81,7 @@ def main(data_dir, file_type, sub, out_dir):
                 else:
                     con = 1
                 task.loc[len(task)] = [row['onset'], row['duration'], con]
-            out = out_dir + f'sub-{sub}_task-collector_run-0{run}_task.txt'
+            out = f'{ppi_dir}/sub-{sub}_task-collector_run-0{run}_task.txt'
             task.to_csv(out, sep='\t', header=False, index=False)
             
             run+=1
@@ -85,9 +89,7 @@ def main(data_dir, file_type, sub, out_dir):
             
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("data_dir", help="main directory where subjects are located (e.g., derivatives/fmriprep/)")
-    parser.add_argument("file_type", help="motion, collector, or both")
     parser.add_argument("sub", help="subject number e.g. temple001")
-    parser.add_argument("out_dir", help="where to write .txt files to")
+    parser.add_argument("file_type", help="motion, collector, or both")
     args = parser.parse_args()
-    main(args.data_dir, args.file_type, args.sub, args.out_dir)
+    main(args.sub, args.file_type)
