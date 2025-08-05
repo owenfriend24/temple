@@ -13,12 +13,12 @@ def edit_fsf_file(template, out_path, sub, run, num_vols, num_voxs, type, roi):
 
     # Replace example subject with whatever subject we're modeling
     fsf_content = fsf_content.replace('sub-temple024', f'sub-{sub}')
-    if len(roi) > 0:
+    if roi:
         fsf_content = fsf_content.replace('ROI_NAME', roi)
 
     # denotes 2nd level analysis
     if num_vols == '222':
-        if len(roi) > 0:
+        if roi:
             out_file = f'{out_path}/sub-{sub}-univ-{type}_{roi}_second_level.fsf'
         else:
             out_file = f'{out_path}/sub-{sub}-univ-{type}_second_level.fsf'
@@ -31,7 +31,7 @@ def edit_fsf_file(template, out_path, sub, run, num_vols, num_voxs, type, roi):
         fsf_content = fsf_content.replace('NUM_VOXELS', num_voxs)
         fsf_content = fsf_content.replace('OUT_RUN', f'out_run{run}')
 
-        if len(roi) > 0:
+        if roi:
             out_file = f'{out_path}/sub-{sub}-univ-{type}_{roi}_first_run-0{run}.fsf'
         else:
             out_file = f'{out_path}/sub-{sub}-univ-{type}_first_run-0{run}.fsf'
