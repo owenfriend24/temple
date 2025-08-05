@@ -31,4 +31,4 @@ fi
 
 
 #
-python edit_first_fsf.py $template /corral-repl/utexas/prestonlab/temple/${subject}/univ/ $subject 5 222 222 $roi
+python /home1/09123/ofriend/analysis/temple/bin/edit_first_fsf.py $template /corral-repl/utexas/prestonlab/temple/${subject}/univ/ $subject 5 222 222 $roi

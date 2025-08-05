@@ -46,9 +46,9 @@ nifti_file4=${func_dir}/sub-"$subject"_task-collector_run-04_space-T1w_desc-prep
 num_vols4=$(fslinfo "$nifti_file4" | awk '$1 == "dim4" {print $2}')
 num_vox4=$((num_vols4*d1*d2*d3))
 
-python edit_first_fsf.py $template $out_path $subject 1 $num_vols1 $num_vox1 $type $roi
-python edit_first_fsf.py $template $out_path $subject 2 $num_vols2 $num_vox2 $type $roi
-python edit_first_fsf.py $template $out_path $subject 3 $num_vols3 $num_vox3 $type $roi
-python edit_first_fsf.py $template $out_path $subject 4 $num_vols4 $num_vox4 $type $roi
+python /home1/09123/ofriend/analysis/temple/bin/edit_first_fsf.py $template $out_path $subject 1 $num_vols1 $num_vox1 $type $roi
+python /home1/09123/ofriend/analysis/temple/bin/edit_first_fsf.py $template $out_path $subject 2 $num_vols2 $num_vox2 $type $roi
+python /home1/09123/ofriend/analysis/temple/bin/edit_first_fsf.py $template $out_path $subject 3 $num_vols3 $num_vox3 $type $roi
+python /home1/09123/ofriend/analysis/temple/bin/edit_first_fsf.py $template $out_path $subject 4 $num_vols4 $num_vox4 $type $roi
 
 
