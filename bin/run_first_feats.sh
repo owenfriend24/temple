@@ -27,10 +27,10 @@ elif [ "$type" == "ppi_inverse" ]; then
 fi
 
 mkdir -p ${base}
-fsf_file=${base}/sub-${subject}-univ-${type}${roi_tag}_first_run-0${run}.fsf
 
 for run in 1 2 3 4; do
     echo "running first level analysis for sub ${subject}..."
+    fsf_file=${base}/sub-${subject}-univ-${type}${roi_tag}_first_run-0${run}.fsf
     feat "$fsf_file"
     chmod 775 -R "${corral}/sub-${subject}/transforms"
     
