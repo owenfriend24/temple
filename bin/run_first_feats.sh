@@ -26,7 +26,7 @@ elif [ "$type" == "ppi_inverse" ]; then
     roi_tag="_${roi}"
 fi
 
-fsf_file=${base}/sub-${subject}-univ-${type}_first_run-0${run}.fsf
+fsf_file=${base}/sub-${subject}-univ-${type}${roi_tag}_first_run-0${run}.fsf
 
 for run in 1 2 3 4; do
     echo "running first level analysis for sub ${subject}..."
