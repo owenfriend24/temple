@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ $# -lt 3 ]]; then
-    echo "Usage: ppi_hpc_mean.sh fmriprep_dir subject task corral_dir"
+    echo "Usage: ppi_extract_eigen.sh subject roi"
     exit 1
 fi
 
