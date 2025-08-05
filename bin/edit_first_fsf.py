@@ -48,12 +48,16 @@ def main(template, out_path, sub, run_num, num_vols, num_voxs, type, roi):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("template", help="path to template .fsf file")
-    parser.add_argument("out_path", help="output dir (e.g. .../sub-temple001/univ")
+    parser.add_argument("out_path", help="output dir (e.g. sub-temple001/univ)")
     parser.add_argument("sub", help="subject number e.g. temple001")
     parser.add_argument("run_num", help="run to generate .fsf file for")
     parser.add_argument("num_vols", help="number of functional volumes")
     parser.add_argument("num_voxs", help="number of voxels")
-    parser.add_argument("type", help="boundary, ppi, ppi_inverse")
-    parser.add_argument("roi", help="roi for ppi", default = "")
+    parser.add_argument("type", help="boundary, ppi, or ppi_inverse")
+    parser.add_argument("roi", nargs='?', default=None, help="roi for ppi (required for ppi and ppi_inverse)")
+
     args = parser.parse_args()
+
+    if args.type in ("ppi", "ppi_inverse") and not args.roi:
+        print("Error: 'roi' must be specified when type is 'ppi' or 'ppi_inverse'.")
     main(args.template, args.out_path, args.sub, args.run_num, args.num_vols, args.num_voxs, args.type, args.roi)
