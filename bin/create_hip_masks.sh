@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Run randomise to test z-statistic images.
+# create hippocampus masks from custom MNI
 
 if [[ $# -lt 3 ]]; then
     echo "create_hip_masks.sh fmriprep_dir sub corall_dir"
@@ -12,8 +12,7 @@ sub=$2
 corr=$3
 task=$4
 
-mkdir -p ${corr}/sub-${sub}/masks/hip_masks/sub-${sub}
-
+mkdir -p ${corr}/sub-${sub}/masks/hip_masks/
 
 if [[ "$task" == "wr" ]]; then
   for mask in 11m 14c 14r 25 32pl b_erc b_phc b_prc b_hip b_hip_ant b_hip_body b_hip_post; do
