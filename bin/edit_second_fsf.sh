@@ -33,3 +33,4 @@ elif [ "$type" == "ppi_inverse" ]; then
 fi
 
 python /home1/09123/ofriend/analysis/temple/bin/edit_first_fsf.py $template $out_path $subject 5 222 222 $type $roi
+

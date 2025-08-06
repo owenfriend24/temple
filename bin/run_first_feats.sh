@@ -22,11 +22,11 @@ if [ "$type" == "boundary" ]; then
 elif [ "$type" == "ppi" ]; then
     base=${fmriprep_dir}/sub-${subject}/univ/ppi/
     fsf_base=${corral}/sub-${subject}/univ/ppi/
-    roi_tag="_${roi}"
+    roi_tag="${roi}_"
 elif [ "$type" == "ppi_inverse" ]; then
     base=${fmriprep_dir}/sub-${subject}/univ/ppi_inverse/
     fsf_base=${corral}/sub-${subject}/univ/ppi_inverse/
-    roi_tag="_${roi}"
+    roi_tag="${roi}_"
 fi
 
 mkdir -p ${base}
@@ -34,23 +34,23 @@ mkdir -p ${base}
 for run in 1 2 3 4; do
     echo "running first level analysis for sub ${subject}..."
     fsf_file=${fsf_base}/sub-${subject}-univ-${type}${roi_tag}_first_run-0${run}.fsf
-    feat "$fsf_file"
+#    feat "$fsf_file"
     chmod 775 -R "${corral}/sub-${subject}/transforms"
     
     echo "saving first level output to native directory"
-    mkdir "${base}/out_run${run}${roi_tag}.feat/native"
-    cp -r "${base}/out_run${run}${roi_tag}.feat/stats/"* "${base}/out_run${run}${roi_tag}.feat/native"
-    cp "${base}/out_run${run}${roi_tag}.feat/example_func.nii.gz" "${base}/out_run${run}${roi_tag}.feat/native/example_func.nii.gz"
-    cp "${base}/out_run${run}${roi_tag}.feat/mean_func.nii.gz" "${base}/out_run${run}${roi_tag}.feat/native/mean_func.nii.gz"
-    cp "${base}/out_run${run}${roi_tag}.feat/mask.nii.gz" "${base}/out_run${run}${roi_tag}.feat/native/mask.nii.gz"
+    mkdir "${base}/${roi_tag}out_run${run}.feat/native"
+    cp -r "${base}/${roi_tag}out_run${run}.feat/stats/"* "${base}/${roi_tag}out_run${run}.feat/native"
+    cp "${base}/${roi_tag}out_run${run}.feat/example_func.nii.gz" "${base}/${roi_tag}out_run${run}.feat/native/example_func.nii.gz"
+    cp "${base}/${roi_tag}out_run${run}.feat/mean_func.nii.gz" "${base}/${roi_tag}out_run${run}.feat/native/mean_func.nii.gz"
+    cp "${base}/${roi_tag}out_run${run}.feat/mask.nii.gz" "${base}/${roi_tag}out_run${run}.feat/native/mask.nii.gz"
     
     # cope images
     echo "transforming cope images"
     track=1
-    for cope in ${base}/"out_run${run}${roi_tag}.feat"/native/cope*; do
+    for cope in ${base}/"${roi_tag}out_run${run}.feat"/native/cope*; do
     fslreorient2std ${cope}
     antsApplyTransforms -d 3 -i "${cope}" \
-    -o ${base}/"out_run${run}${roi_tag}.feat"/stats/cope${track}.nii.gz \
+    -o ${base}/"${roi_tag}out_run${run}.feat"/stats/cope${track}.nii.gz \
     -n NearestNeighbor -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt"  # \
@@ -62,10 +62,10 @@ for run in 1 2 3 4; do
     # cope images
     echo "transforming varcope images"
     track=1
-    for cope in ${base}/"out_run${run}${roi_tag}.feat"/native/varcope*; do
+    for cope in ${base}/"${roi_tag}out_run${run}.feat"/native/varcope*; do
     fslreorient2std ${cope}
     antsApplyTransforms -d 3 -i "${cope}" \
-    -o ${base}/"out_run${run}${roi_tag}.feat"/stats/varcope${track}.nii.gz \
+    -o ${base}/"${roi_tag}out_run${run}.feat"/stats/varcope${track}.nii.gz \
     -n NearestNeighbor -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt"   # \
@@ -77,18 +77,18 @@ for run in 1 2 3 4; do
     # func data
     echo "transforming func data"
     
-    fslreorient2std "${base}/out_run${run}${roi_tag}.feat/native/example_func.nii.gz" 
-    antsApplyTransforms -d 3 -i "${base}/out_run${run}${roi_tag}.feat/native/example_func.nii.gz" \
-    -o "${base}/out_run${run}${roi_tag}.feat/example_func.nii.gz" \
+    fslreorient2std "${base}/${roi_tag}out_run${run}.feat/native/example_func.nii.gz" 
+    antsApplyTransforms -d 3 -i "${base}/${roi_tag}out_run${run}.feat/native/example_func.nii.gz" \
+    -o "${base}/${roi_tag}out_run${run}.feat/example_func.nii.gz" \
     -n BSpline \
     -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" #\
 #    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     
-    fslreorient2std "${base}/out_run${run}${roi_tag}.feat/native/mean_func.nii.gz"
-    antsApplyTransforms -d 3 -i "${base}/out_run${run}${roi_tag}.feat/native/mean_func.nii.gz" \
-    -o "${base}/out_run${run}${roi_tag}.feat/mean_func.nii.gz" \
+    fslreorient2std "${base}/${roi_tag}out_run${run}.feat/native/mean_func.nii.gz"
+    antsApplyTransforms -d 3 -i "${base}/${roi_tag}out_run${run}.feat/native/mean_func.nii.gz" \
+    -o "${base}/${roi_tag}out_run${run}.feat/mean_func.nii.gz" \
     -n BSpline \
     -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
@@ -98,9 +98,9 @@ for run in 1 2 3 4; do
 
     # mask
     echo "transforming mask"
-    fslreorient2std "${base}/out_run${run}${roi_tag}.feat/mask.nii.gz"
-    antsApplyTransforms -d 3 -i "${base}/out_run${run}${roi_tag}.feat/native/mask.nii.gz"\
-     -o "${base}/out_run${run}${roi_tag}.feat/mask.nii.gz" \
+    fslreorient2std "${base}/${roi_tag}out_run${run}.feat/mask.nii.gz"
+    antsApplyTransforms -d 3 -i "${base}/${roi_tag}out_run${run}.feat/native/mask.nii.gz"\
+     -o "${base}/${roi_tag}out_run${run}.feat/mask.nii.gz" \
      -n NearestNeighbor \
      -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
      -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
@@ -109,15 +109,15 @@ for run in 1 2 3 4; do
     
     echo "formatting reg folder"
     # set up reg folder
-    mkdir "${base}/out_run${run}${roi_tag}.feat/reg"
+    mkdir "${base}/${roi_tag}out_run${run}.feat/reg"
     cp /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
-    "${base}/out_run${run}${roi_tag}.feat/reg/standard.nii.gz"
+    "${base}/${roi_tag}out_run${run}.feat/reg/standard.nii.gz"
 
     cp "${corral}/sub-${subject}/anat/sub-${subject}_MNI_ss.nii.gz" \
-    "${base}/out_run${run}${roi_tag}.feat/reg/highres.nii.gz"
+    "${base}/${roi_tag}out_run${run}.feat/reg/highres.nii.gz"
 
     cp "/home1/09123/ofriend/analysis/temple/univ/identity.mat" \
-    "${base}/out_run${run}${roi_tag}.feat/reg/example_func2standard.mat"
+    "${base}/${roi_tag}out_run${run}.feat/reg/example_func2standard.mat"
 
-    updatefeatreg "${base}/out_run${run}${roi_tag}.feat" -pngs
+    updatefeatreg "${base}/${roi_tag}out_run${run}.feat" -pngs
 done
