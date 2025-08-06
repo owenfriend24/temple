@@ -117,3 +117,4 @@ extract_cope.py temple001 $WORK/wr/mni_rois/b_hip.nii.gz b_hip_boundary boundary
 ```
 extract_cope.py temple001 $FM/mni_clusters/mpfc_ppi.nii.gz b_hip_ppi ppi b_hip_ant
 ```
+* will save out a master csv file with 4 rows per subject (or however many included runs of stat. learning task that subject has)
