@@ -66,7 +66,7 @@ def main(sub, roi_path, roi_name, analysis_type, ppi_roi):
 
         out_mask_dir = f'{run_dir}/masked_rois'
         os.makedirs(out_mask_dir, exist_ok=True)
-        masked_pe = f'{out_mask_dir}/{roi_name}.nii.gz'
+        masked_pe = f'{out_mask_dir}/{roi_name}_run{run}.nii.gz'
 
         run_com([
             "fslmaths",
