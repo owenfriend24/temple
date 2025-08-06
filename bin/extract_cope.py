@@ -27,7 +27,7 @@ def back_project(sub, roi_path, roi_name):
     os.makedirs(out_dir, exist_ok=True)
     out_path = f'{out_dir}/{roi_name}.nii.gz'
 
-    ref_path = f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/transforms/brainmask_func_dilated'
+    ref_path = f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/transforms/brainmask_func_dilated.nii.gz'
     affine_path = f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/transforms/native_to_MNI_Affine.txt'
     warp_path = f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/transforms/native_to_MNI_InverseWarp.nii.gz'
 
