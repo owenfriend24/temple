@@ -9,7 +9,6 @@ import numpy as np
 from temple_utils import get_age_groups
 
 
-
 def run(command):
     subprocess.run(command, shell=True)
 
@@ -107,4 +106,4 @@ if __name__ == "__main__":
                         default=False, help="write aggregate file - boolean")
 
     args = parser.parse_args()
-    main(args.measure, args.master_dir, args.comparison, args.mask, args.agg_file,)
+    main(args.measure, args.master_dir, args.comparison, args.mask, args.agg_file)
