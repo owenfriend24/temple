@@ -1,5 +1,10 @@
 # Time series analyses
   * funcitons assume neural and behavioral data are post-processed (see markdown's 2-4)
+  * to batch create all relevant behavioral files for a subject:
+```
+generate_timeseries_files.sh temple001 b_hip
+```
+ * ROI is an optional parameter but required for PPI analyses (will just run for boundary sensitivity if no ROI specified)
 ## Univariate - sensitivity to triplet boundaries
 1. create formatted .txt files for statistical learning runs
   * parameters:
