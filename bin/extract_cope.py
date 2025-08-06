@@ -2,7 +2,6 @@
 
 import os
 import subprocess
-from pathlib import Path
 import argparse
 import pandas as pd
 
@@ -59,7 +58,7 @@ def main(sub, roi_path, roi_name, analysis_type, ppi_roi):
         runs = [1, 2, 3, 4]
 
     for run in runs:
-        base = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub={sub}/univ"
+        base = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-{sub}/univ"
         if analysis_type in ['ppi', 'ppi_inverse']:
             run_dir = f'{base}/{analysis_type}/{ppi_roi}_out_run{run}.feat'
         else:
