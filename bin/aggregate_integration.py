@@ -30,8 +30,6 @@ def aggregate_csv_files(comparison, csv_files, master_dir, mask, out_flag):
         master_output_path = f"{master_dir}/aggregated_{comparison}_{mask}_{out_flag}.csv"
         master_df.to_csv(master_output_path, index=False)
         print(f"Aggregated file saved at: {master_output_path}")
-        return master_df
-
     else:
         print("No CSV files were found for aggregation.")
 
@@ -94,14 +92,10 @@ def main(measure, master_dir, comparison, mask, agg_file):
 
     if agg_file:
         if measure in ["prepost", "both"]:
-            agg = aggregate_csv_files(comparison, integration_csv_files, master_dir, mask,"prepost")
-
+            aggregate_csv_files(comparison, integration_csv_files, master_dir, mask,"prepost")
 
         if measure in ["symmetry", "both"]:
-            agg = aggregate_csv_files(comparison, symmetry_csv_files, master_dir, mask, "symmetry")
-
-
-
+            aggregate_csv_files(comparison, symmetry_csv_files, master_dir, mask, "symmetry")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -111,5 +105,6 @@ if __name__ == "__main__":
     parser.add_argument("mask", help="mask name e.g., b_hip_subregions, ifg_subregions, b_hip_subfields, etc.")
     parser.add_argument("--agg_file", action=argparse.BooleanOptionalAction,
                         default=False, help="write aggregate file - boolean")
+
     args = parser.parse_args()
-    main(args.measure, args.master_dir, args.comparison, args.mask, args.agg_file)
+    main(args.measure, args.master_dir, args.comparison, args.mask, args.agg_file,)

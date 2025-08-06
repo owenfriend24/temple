@@ -32,9 +32,9 @@ fi
 mkdir -p ${base}
 
 for run in 1 2 3 4; do
-    echo "running first level analysis for sub ${subject}..."
+    echo "running first level analysis for sub ${subject} run ${run}..."
     fsf_file=${fsf_base}/sub-${subject}-univ-${type}${roi_tag}_first_run-0${run}.fsf
-#    feat "$fsf_file"
+    feat "$fsf_file"
     chmod 775 -R "${corral}/sub-${subject}/transforms"
     
     echo "saving first level output to native directory"
