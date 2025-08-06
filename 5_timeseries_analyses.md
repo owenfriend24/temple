@@ -1,6 +1,6 @@
 # Time series analyses
   * funcitons assume neural and behavioral data are post-processed (see markdown's 2-4)
-### Univariate - sensitivity to triplet boundaries
+## Univariate - sensitivity to triplet boundaries
 1. create formatted .txt files for statistical learning runs
   * parameters:
     * subject (e.g. temple001)
@@ -41,7 +41,7 @@ slaunch -J run_2nd "feat $CORR/sub-{}/univ/sub-{}-univ-boundary_second_level.fsf
    
 
 
-### Psychophysiological interaction (PPI) - enhanced or decreased connectivity at triplet boundaries
+## Psychophysiological interaction (PPI) - enhanced or decreased connectivity at triplet boundaries
 1. extract .txt timeseries of eigenvalue (first principal component) from selected region of interest
   * assumes subject's mask for selected ROI has already been created in native functional space
   * .txt file will be saved in sub/univ/ppi and is formatted for use in either enhanced (ppi) or decreased (ppi_inverse) connectivity analyses
@@ -94,3 +94,26 @@ slaunch -J run_2nd "feat $CORR/sub-{}/univ/sub-{}-univ-ppi_b_hip_second_level.fs
 ```
 7. run third level analysis using feat
 
+
+## Extracting parameter estimates from GLM's
+* one goal of univariate and PPI analyses is to pull a subject's contrast-of-parameter-estimate (COPE) value to index individual subject-level slopes from timeseries models
+* this will be done in a specific ROI, either a significant cluster from a timeseries analyses or an a prior anatomical ROI
+* boundary sensitivity:
+ * averaged COPE reflects each subject's neural sensitivity to triplet boundaries in given ROI
+* PPI:
+ * averaged COPE reflects each subject's functional connectivity within given ROI to whatever ROI was inputted in first-level PPI analyses
+
+ 1. select region of interest in MNI space (significant cluster or anatomical ROI)
+ 2. back-project to subject's native space and extract average COPE for that ROI
+ * parameters
+  * subject (e.g., temple001)
+  * roi_path - full path to MNI ROI (e.g., $WORK/wr/mni_rois/b_hip.nii.gz)
+  * roi_name - a short, descriptive name for back-projected clusters (e.g., b_hip_boundary, sl_ant_hip_ppi, sl_precuneus_inverse, etc.)
+  * analysis_type - boundary, ppi, ppi_inverse
+  * ppi_roi (optional) - roi name from initial ppi analysis if analysis_type is a ppi
+```
+extract_cope.py temple001 $WORK/wr/mni_rois/b_hip.nii.gz b_hip_boundary boundary
+```
+```
+extract_cope.py temple001 $FM/mni_clusters/mpfc_ppi.nii.gz b_hip_ppi ppi b_hip_ant
+```
