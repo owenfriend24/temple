@@ -30,7 +30,7 @@ if [[ "$task" == "wr" ]]; then
 done
 
 else
-  for mask in b_hip b_hip_ant b_hip_body b_hip_post; do
+  for mask in b_hip b_hip_ant b_hip_body b_hip_post l_hip l_hip_ant l_hip_body l_hip_post r_hip r_hip_ant r_hip_body r_hip_post; do
 
   antsApplyTransforms -d 3 \
     -i /work/09123/ofriend/ls6/wr/mni_rois/${mask}.nii.gz \
