@@ -25,7 +25,7 @@ elif [ "$type" == "ppi" ]; then
     roi_tag="_${roi}"
 elif [ "$type" == "ppi_inverse" ]; then
     base=${fmriprep_dir}/sub-${subject}/univ/ppi_inverse/
-    fsf_base=${corral}/sub-${subject}/univ/ppi/ppi_inverse/
+    fsf_base=${corral}/sub-${subject}/univ/ppi_inverse/
     roi_tag="_${roi}"
 fi
 
