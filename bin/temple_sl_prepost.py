@@ -90,6 +90,8 @@ if __name__ == "__main__":
         masks = ['b_gray_func']
     elif masktype == 'whole_brain':
         masks = ['brainmask_func_dilated']
+    elif masktype == 'hippocampus':
+        masks = ['b_hip', 'l_hip', 'r_hip']
 
     if comparison == 'AC' or comparison == 'AC_differentiation':
         comp_file = 'ABC'
@@ -117,6 +119,8 @@ if __name__ == "__main__":
             slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/b_gray_func.nii.gz'
         elif masktype == 'whole_brain':
             slmask = f'{expdir}/freesurfer/sub-{sbj}/mri/out/brainmask_func_dilated.nii.gz'
+        elif masktype == 'hippocampus':
+            slmask = f'{expdir}/sub-{sbj}/masks/hip_masks/func-{mask}.nii.gz'
 
         #load in data
         if comparison == 'ABC' or comparison == 'AC':
