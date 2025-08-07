@@ -23,8 +23,8 @@ mkdir -p ${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}
 #
 #
 antsApplyTransforms -d 3 \
--i "${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/${sub}_${measure}_${comp}_${roi}_z.nii.gz" \
--o "${fmriprep_dir}/integration_prepost/mni_${comp}/${measure}/${sub}_${comp}_${roi}_mni.nii.gz" \
+-i "${fmriprep_dir}/integration_prepost/${measure}_${comp}/${sub}_${measure}_${comp}_${roi}_z.nii.gz" \
+-o "${fmriprep_dir}/integration_prepost/mni_${comp}/${sub}_${comp}_${roi}_mni.nii.gz" \
 -r "/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz" \
 -t "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Warp.nii.gz" \
 -t "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Affine.txt"
