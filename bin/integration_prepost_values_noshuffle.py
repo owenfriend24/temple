@@ -89,9 +89,9 @@ if __name__ == "__main__":
 
     for mask in masks:
         print(f"running in mask {mask}")
-        if masktype in ['b_hip_subregions', 'lat_hip_subregions', 'testing']:
-            #slmask = os.path.join(subjdir, 'transforms', f'{mask}.nii.gz')
-            slmask = f"{subjdir}/masks/hip_masks/{mask}.nii.gz"
+        if masktype in ['b_hip_subregions', 'lat_hip_subregions']:
+            slmask = f'{subjdir}/masks/hip_masks/{mask}.nii.gz'
+            # slmask = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/hip_masks/sub-{sbj}/{mask}.nii.gz"
         elif masktype == 'hip_subfields':
             slmask = f"{expdir}/ashs/masks/sub-{sbj}/subfield_masks/func/sub-{sbj}_{mask}.nii.gz"
         elif masktype == 'b_ifg_subregions':
