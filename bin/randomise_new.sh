@@ -10,28 +10,31 @@ fi
 fmriprep_dir=$1
 comp=$2
 
-mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/
+mkdir -p /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/
 #mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/avg_gm/
 #
 
 
-randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
--o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/cont_acc \
--d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_acc.mat \
--t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_acc.con \
--m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/group_z.nii.gz \
+-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/cont_acc \
+-d /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/acc_cont.mat \
+-t /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/acc_cont.con \
+-m /work/09123/ofriend/ls6/wr/mni_rois/b_hip_func.nii.gz \
 -n 5000 -x --uncorrp
 
 
-
-randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
--o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/cont_age \
--d /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_tests.mat \
--t /work/09123/ofriend/ls6/temple/backups/integration_prepost/randomise/continuous/cont_tests.con \
--m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
+randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/group_z.nii.gz \
+-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/cont_acc \
+-d /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/age_cont.mat \
+-t /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/age_cont.con \
+-m /work/09123/ofriend/ls6/wr/mni_rois/b_hip_func.nii.gz \
 -n 5000 -x --uncorrp
 
-
+randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/group_z.nii.gz \
+-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/group_mean \
+-m /work/09123/ofriend/ls6/wr/mni_rois/b_hip_func.nii.gz \
+-1 \
+-n 5000 -x  --uncorrp
 
 #randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
 #-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/randomise_out/grouped_age_new \
