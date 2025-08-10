@@ -24,7 +24,7 @@ randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integ
 
 
 randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/b_hip/group_z.nii.gz \
--o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/cont_acc \
+-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/cont_age \
 -d /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/age_cont.mat \
 -t /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/age_cont.con \
 -m /work/09123/ofriend/ls6/wr/mni_rois/b_hip_func.nii.gz \
