@@ -7,19 +7,22 @@ if [[ $# -lt 2 ]]; then
     exit 1
 fi
 
-fmriprep_dir=$1
+roi=$1
 comp=$2
 
+if [[ $roi == 'b_hip' ]]; then
+  grp_mask_path=/corral-repl/utexas/prestonlab/group_masks/hip_func/b_hip_func.nii.gz
+elif [[ $roi == 'gm' ]]; then
+  grp_mask_path=/corral-repl/utexas/prestonlab/group_masks/gm/group_gm_mask.nii.gz
+fi
+
 mkdir -p /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/
-#mkdir -p /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/avg_gm/
-#
 
-
-randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/b_hip/group_z.nii.gz \
--o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/cont_acc \
+randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
+-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/${roi}_cont_acc \
 -d /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/acc_cont.mat \
 -t /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/acc_cont.con \
--m /work/09123/ofriend/ls6/wr/mni_rois/b_hip_func.nii.gz \
+-m $grp_mask_path \
 -n 5000 -x --uncorrp
 
 
@@ -27,81 +30,11 @@ randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integ
 -o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/cont_age \
 -d /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/age_cont.mat \
 -t /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/age_cont.con \
--m /work/09123/ofriend/ls6/wr/mni_rois/b_hip_func.nii.gz \
+-m $grp_mask_path \
 -n 5000 -x --uncorrp
 
 randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/b_hip/group_z.nii.gz \
 -o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/group_mean \
--m /work/09123/ofriend/ls6/wr/mni_rois/b_hip_func.nii.gz \
+-m $grp_mask_path \
 -1 \
 -n 5000 -x  --uncorrp
-
-#randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
-#-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/randomise_out/grouped_age_new \
-#-d ${fmriprep_dir}/integration_prepost/randomise/age_grouped.mat \
-#-t /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/age_grouped_chi_new.con \
-#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
-#-n 5000 -x --uncorrp
-#
-##-o ${fmriprep_dir}/integration_prepost/mni_${comp}/prepost/randomise_out/grouped_age_new \
-#
-#
-#randomise -i /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/group_z_image.nii.gz \
-#-o /work/09123/ofriend/ls6/temple/backups/integration_prepost/mni_${comp}/randomise_out/full_group_80 \
-#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
-#-1 \
-#-n 5000 -x  --uncorrp
-
-
-
-
-#
-##
-##
-#randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/adult_group_z.nii.gz \
-#-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/randomise_out/adult_sample_mean \
-#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
-#-1 \
-#-n 5000 -x  --uncorrp
-#
-#
-#randomise -i /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/prepost/child_group_z.nii.gz \
-#-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/full_child_mean \
-#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
-#-1 \
-#-n 5000 -x  --uncorrp
-#
-#
-#
-#randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/child_group_z.nii.gz \
-#-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/randomise_out/full_child_mean \
-#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
-#-1 \
-#-n 5000 -x  --uncorrp
-
-
-
-
-#randomise -i /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/prepost/group_z_image.nii.gz \
-#-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/full_sample_mean \
-#-d ${fmriprep_dir}/randomise/full_sample_mean.mat \
-#-t ${fmriprep_dir}/randomise/full_sample_mean.con \
-#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
-#-n 5000 -x  --uncorrp
-#
-#
-#
-#randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/group_z_image.nii.gz \
-#-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_ABC/prepost/randomise_out/full_sample_mean \
-#-d ${fmriprep_dir}/randomise/full_sample_mean.mat \
-#-t ${fmriprep_dir}/randomise/full_sample_mean.con \
-#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
-#-n 5000 -x  --uncorrp
-
-##
-##
-#randomise -i ${fmriprep_dir}/integration_prepost/mni_${comp}/prepost/child_group_z.nii.gz \
-#-o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/prepost/randomise_out/child_full_z_ \
-#-m /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz \
-#-1 \
-#-n 5000 -x  --uncorrp
