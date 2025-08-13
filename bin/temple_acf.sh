@@ -15,7 +15,7 @@ module load afni
 out_file="${corral}/clust_sim/acf/by_subject_run_${roi}_acf.txt"
 
 if [[ $roi == 'gm' ]]; then
-        mask_path="${corral}/freesurfer/sub-${subject}/mri/out/b_gray_func.nii.gz"
+        mask_path="${corral}/freesurfer/sub-${subject}/mri/b_gray_func.nii.gz"
 elif [[ $roi == 'b_hip' ]]; then
         mask_path="${corral}/sub-${subject}/masks/hip_masks/b_hip_func.nii.gz"
 fi
