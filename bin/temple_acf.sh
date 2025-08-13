@@ -18,6 +18,8 @@ if [[ $roi == 'gm' ]]; then
         mask_path="${corral}/freesurfer/sub-${subject}/mri/b_gray_func.nii.gz"
 elif [[ $roi == 'b_hip' ]]; then
         mask_path="${corral}/sub-${subject}/masks/hip_masks/func-b_hip.nii.gz"
+elif [[ $roi == 'b_hip_ant' ]]; then
+        mask_path="${corral}/sub-${subject}/masks/hip_masks/func-b_hip_ant.nii.gz"
 fi
 
 # Runs to drop per subject

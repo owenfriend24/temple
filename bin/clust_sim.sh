@@ -24,7 +24,10 @@ cd ${fmriprep_dir}/searchlight/clust_sim
 #3dClustSim -mask ${fmriprep_dir}/group_masks/hip_50_mask.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix hip_50
 
 
-3dClustSim -mask /scratch/09123/ofriend/moshi/pca_sl/results/group_50_mask.nii.gz -acf 0.35069 4.08259 13.397 -nodec -prefix moshi_50
+3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/gm/gm_binary.nii.gz -acf 0.35069 4.08259 13.397 -nodec -prefix gm_50
+3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/hip_func/b_hip_func.nii.gz -acf 0.35069 4.08259 13.397 -nodec -prefix gm_50
+3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/gm/gm_binary -acf 0.35069 4.08259 13.397 -nodec -prefix gm_50
+
 
 #0.35069  4.08259  13.397
 #cd ${fmriprep_dir}/searchlight/clust_sim_0812/brainmask_func_dilated
