@@ -13,17 +13,19 @@ comp=$3
 roi=$4
 measure=$5
 
-mkdir -p ${fmriprep_dir}/integration_prepost/mni_${comp}/
+#mkdir -p ${fmriprep_dir}/integration_prepost/mni_${comp}/
 
-mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/*_b_gray_func_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/gm
-mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/*_b_hip_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/b_hip
-mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/*_l_hip_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/l_hip
-mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/*_r_hip_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/r_hip
+mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/*_${roi}_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/${roi}
+mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/*_${roi}_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/${roi}
+mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/*_${roi}_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/${roi}
+mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/*_${roi}_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/${roi}
 rmdir ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/
+
+
 
 antsApplyTransforms -d 3 \
 -i "${fmriprep_dir}/integration_prepost/${measure}_${comp}/${roi}/${sub}_${measure}_${comp}_${roi}_z.nii.gz" \
--o "${fmriprep_dir}/integration_prepost/mni_${comp}/${sub}_${measure}_${comp}_${roi}_mni.nii.gz" \
+-o "/corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/${roi}/${sub}_${measure}_${comp}_${roi}_mni.nii.gz" \
 -r "/home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz" \
 -t "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Warp.nii.gz" \
 -t "/corral-repl/utexas/prestonlab/temple/sub-${sub}/transforms/native_to_MNI_Affine.txt"
