@@ -29,6 +29,8 @@ antsApplyTransforms -d 3 \
     -r ${mri_dir}/out/brainmask_func_dilated.nii.gz \
     -n NearestNeighbor
 
+cp ${mri_dir}/b_gray_func.nii.gz \
+    /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sourcedata/freesurfer/sub-${sub}/mri/b_gray_func.nii.gz
 
 antsApplyTransforms -d 3 \
     -i ${mri_dir}/b_gray_func.nii.gz \
