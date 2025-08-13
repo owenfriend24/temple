@@ -24,9 +24,9 @@ cd ${fmriprep_dir}/searchlight/clust_sim
 #3dClustSim -mask ${fmriprep_dir}/group_masks/hip_50_mask.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix hip_50
 
 
-3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/gm/gm_binary.nii.gz -acf 0.35069 4.08259 13.397 -nodec -prefix gm_50
-3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/hip_func/b_hip_func.nii.gz -acf 0.35069 4.08259 13.397 -nodec -prefix gm_50
-3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/gm/gm_binary -acf 0.35069 4.08259 13.397 -nodec -prefix gm_50
+3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/gm/gm_binary.nii.gz -acf 0.505 2.274 8.43 -nodec -prefix gm_50
+3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/hip_func/b_hip_func.nii.gz -acf 0.886 2.483 1.577 -nodec -prefix hip_full
+3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/hip_func/b_hip_ant_func.nii.gz -acf 0.977 2.29 0.913 -nodec -prefix hip_ant
 
 
 #0.35069  4.08259  13.397
