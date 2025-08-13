@@ -9,11 +9,16 @@ fi
 corral="$1"
 subject="$2"
 fmriprep_dir="$3"
+roi="$4"
 
 module load afni
-out_file="${corral}/clust_sim/acf/by_subject_run_acf.txt"
+out_file="${corral}/clust_sim/acf/by_subject_run_${roi}_acf.txt"
 
-mask_path="${corral}/freesurfer/sub-${subject}/mri/out/b_gray_func.nii.gz"
+if [[ $roi == 'gm' ]]; then
+        mask_path="${corral}/freesurfer/sub-${subject}/mri/out/b_gray_func.nii.gz"
+elif [[ $roi == 'b_hip' ]]; then
+        mask_path="${corral}/sub-${subject}/masks/hip_masks/b_hip_func.nii.gz"
+fi
 
 # Runs to drop per subject
 declare -A DROP_RUNS=(
