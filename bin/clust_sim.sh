@@ -12,30 +12,12 @@ fmriprep_dir=$1
 module load afni
 export OMP_NUM_THREADS=None
 
-cd /corral-repl/utexas/prestonlab/temple/clust_sim
+cd /corral-repl/utexas/prestonlab/temple/clust_sim/gm
+3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/gm/gm_binary/prob_mask.nii.gz -acf 0.505 2.274 8.43 -nodec -prefix gm_50
 
-#3dClustSim -mask ${fmriprep_dir}/group_masks/all_wb_avg_mask.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix mni_gm_group_full_
+#cd /corral-repl/utexas/prestonlab/temple/clust_sim/b_hip
+#3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/hip_func/b_hip_func.nii.gz -acf 0.886 2.483 1.577 -nodec -prefix hip_full
 #
-#3dClustSim -mask ${fmriprep_dir}/group_masks/all_hip_avg_mask.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix mni_hip_group_full_
-#3dClustSim -mask /home1/09123/ofriend/analysis/temple/bin/templates/gm_mni/gray_17_masked.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix mni_gm_full_
-##
-#3dClustSim -mask ${fmriprep_dir}/group_masks/all_wb_mask.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix wb_100
-#3dClustSim -mask ${fmriprep_dir}/group_masks/hip_50_mask.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix hip_50
-
-
-3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/gm/gm_binary.nii.gz -acf 0.505 2.274 8.43 -nodec -prefix gm_50
-3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/hip_func/b_hip_func.nii.gz -acf 0.886 2.483 1.577 -nodec -prefix hip_full
-3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/hip_func/b_hip_ant_func.nii.gz -acf 0.977 2.29 0.913 -nodec -prefix hip_ant
-
-
-#0.35069  4.08259  13.397
-#cd ${fmriprep_dir}/searchlight/clust_sim_0812/brainmask_func_dilated
-
-#3dClustSim -mask /scratch/09123/ofriend/temple/prepro_data/derivatives/fmriprep/group_masks/adult_wb_avg_mask.nii.gz -acf 0.645774 2.459366 7.224626 -nodec -prefix ad_wb_
-
-#3dClustSim -mask /scratch/09123/ofriend/temple/prepro_data/derivatives/fmriprep/group_masks/child_wb_avg_mask.nii.gz -acf 0.591844 2.46300 7.721965 -nodec -prefix child_wb_
-
-
-
-#cd ${fmriprep_dir}/searchlight/clust_sim_0812/b_hip
+#cd /corral-repl/utexas/prestonlab/temple/clust_sim/b_hip_ant
+#3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/hip_func/b_hip_ant_func.nii.gz -acf 0.977 2.29 0.913 -nodec -prefix hip_ant
 
