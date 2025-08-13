@@ -32,12 +32,17 @@ def create_subject_file(subject, master_dir, comparison, mask):
         masks = ['func-b_hip', 'func-b_hip_ant', 'func-b_hip_post', 'func-b_hip_body',
                  'func-l_hip', 'func-l_hip_ant', 'func-l_hip_post', 'func-l_hip_body',
                  'func-r_hip', 'func-r_hip_ant', 'func-r_hip_post', 'func-r_hip_body']
-    elif mask == 'hip_subfields':
+    elif mask == 'b_hip_subfields':
         masks = ['CA1_mask_B_func', 'CA23DG_mask_B_func', 'posthipp_mask_B_func', 'subiculum_mask_B_func']
         # masks = ['CA1_mask_B_func', 'CA1_mask_L_func', 'CA1_mask_R_func',
         #          'CA23DG_mask_B_func', 'CA23DG_mask_L_func', 'CA23DG_mask_R_func',
         #          'posthipp_mask_B_func', 'posthipp_mask_L_func', 'posthipp_mask_R_func',
         #          'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
+    elif mask == 'lat_hip_subfields':
+        masks = ['CA1_mask_B_func', 'CA1_mask_L_func', 'CA1_mask_R_func',
+                 'CA23DG_mask_B_func', 'CA23DG_mask_L_func', 'CA23DG_mask_R_func',
+                 'posthipp_mask_B_func', 'posthipp_mask_L_func', 'posthipp_mask_R_func',
+                 'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
     elif mask == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
     elif mask == 'searchlight':
