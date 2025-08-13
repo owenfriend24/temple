@@ -2,13 +2,12 @@
 #
 # Run randomise to test z-statistic images.
 
-if [[ $# -lt 2 ]]; then
-    echo "create_gm_mask.sh freesurfer_dir sub"
+if [[ $# -lt 1 ]]; then
+    echo "create_gm_mask.sh sub"
     exit 1
 fi
 
-fs_dir=$1
-sub=$2
+sub=$1
 
 corr=/corral-repl/utexas/prestonlab/temple/
 mri_dir=${corr}/sub-${sub}/mri/
