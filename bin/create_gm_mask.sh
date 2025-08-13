@@ -10,7 +10,8 @@ fi
 sub=$1
 
 corr=/corral-repl/utexas/prestonlab/temple/
-mri_dir=${corr}/sub-${sub}/mri/
+
+mri_dir=${corr}/freesurfer/sub-${sub}/mri/
 
 
 mri_convert ${mri_dir}/aparc+aseg.mgz ${mri_dir}/aparcaseg.nii.gz
