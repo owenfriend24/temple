@@ -12,8 +12,7 @@ fmriprep_dir=$1
 module load afni
 export OMP_NUM_THREADS=None
 
-mkdir -p ${fmriprep_dir}/searchlight/clust_sim
-cd ${fmriprep_dir}/searchlight/clust_sim
+cd /corral-repl/utexas/prestonlab/temple/clust_sim
 
 #3dClustSim -mask ${fmriprep_dir}/group_masks/all_wb_avg_mask.nii.gz -acf 0.506715994 2.40899271 8.45713334 -nodec -prefix mni_gm_group_full_
 #
