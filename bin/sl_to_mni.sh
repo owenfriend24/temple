@@ -15,6 +15,12 @@ measure=$5
 
 mkdir -p ${fmriprep_dir}/integration_prepost/mni_${comp}/
 
+mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/*_b_gray_func_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/gm
+mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/*_b_hip_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/b_hip
+mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/*_l_hip_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/l_hip
+mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/*_r_hip_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/r_hip
+rmdir ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/
+
 antsApplyTransforms -d 3 \
 -i "${fmriprep_dir}/integration_prepost/${measure}_${comp}/${roi}/${sub}_${measure}_${comp}_${roi}_z.nii.gz" \
 -o "${fmriprep_dir}/integration_prepost/mni_${comp}/${sub}_${measure}_${comp}_${roi}_mni.nii.gz" \
