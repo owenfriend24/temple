@@ -10,7 +10,9 @@ fi
 fs_dir=$1
 sub=$2
 
-mri_dir=${fs_dir}/sub-${sub}/mri/
+corr=/corral-repl/utexas/prestonlab/temple/
+mri_dir=${corr}/sub-${sub}/mri/
+
 
 mri_convert ${mri_dir}/aparc+aseg.mgz ${mri_dir}/aparcaseg.nii.gz
 fslmaths ${mri_dir}/aparcaseg.nii.gz -thr 1000 -uthr 1035 -bin ${mri_dir}/l_ctx
@@ -26,3 +28,13 @@ antsApplyTransforms -d 3 \
     -o ${mri_dir}/b_gray_func.nii.gz \
     -r ${mri_dir}/out/brainmask_func_dilated.nii.gz \
     -n NearestNeighbor
+
+
+antsApplyTransforms -d 3 \
+    -i ${mri_dir}/b_gray_func.nii.gz \
+    -o ${corr}/group_masks/gm/gm_mni/sub-${sub}_gm_mni.nii.gz \
+    -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
+    -t "${corr}/sub-${sub}/transforms/native_to_MNI_Warp.nii.gz" \
+    -t "${corr}/sub-${sub}/transforms/native_to_MNI_Affine.txt"
+
+fslmaths ${corr}/group_masks/gm/gm_mni/sub-${sub}_gm_mni.nii.gz -abs -bin ${corr}/group_masks/gm/gm_binary/sub-${sub}_gm_mni.nii.gz
