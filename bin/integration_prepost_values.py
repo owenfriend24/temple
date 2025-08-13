@@ -111,7 +111,7 @@ if __name__ == "__main__":
         if masktype in ['b_hip_subregions', 'lat_hip_subregions']:
             slmask = f'{subjdir}/masks/hip_masks/{mask}.nii.gz'
             #slmask = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/masks/hip_masks/sub-{sbj}/{mask}.nii.gz"
-        elif masktype == 'hip_subfields':
+        elif masktype in ['lat_hip_subfields', 'b_hip_subfields']:
             slmask = f"{expdir}/ashs/masks/sub-{sbj}/subfield_masks/func/sub-{sbj}_{mask}.nii.gz"
         elif masktype == 'b_ifg_subregions':
             #slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
