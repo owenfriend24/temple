@@ -1,25 +1,36 @@
 #!/bin/bash
 #
 
-
 if [[ $# -lt 2 ]]; then
-    echo "Usage: temple_acf.sh fmriprep_dir subject"
+    echo "Usage: temple_acf.sh corral subject fmriprep_dir"
     exit 1
 fi
 
-fmriprep_dir="$1"
+corral="$1"
 subject="$2"
-module load afni
-out_file="${fmriprep_dir}/acf/by_subject_acf.txt"
+fmriprep_dir="$3"
 
-if [[ "$subject" == "temple117" || "$subject" == "temple121" || "$subject" == "temple125" ]]; then
-    mask_path="/work/09123/ofriend/ls6/temple/backups/freesurfer/sub-${subject}/mri/out/brainmask_func_dilated.nii.gz"
-else
-    mask_path="/corral-repl/utexas/prestonlab/temple/freesurfer/sub-${subject}/mri/out/brainmask_func_dilated.nii.gz"
-fi
+module load afni
+out_file="${corral}/clust_sim/acf/by_subject_run_acf.txt"
+
+mask_path="${corral}/freesurfer/sub-${subject}/mri/out/b_gray_func.nii.gz"
+
+# Runs to drop per subject
+declare -A DROP_RUNS=(
+    [temple023]=6
+    [temple030]=6
+    [temple070]=3
+    [temple116]=5
+)
+
+drop_run="${DROP_RUNS[$subject]:-}"
 
 for run in {1..6}; do
-    output=$(3dFWHMx -mask ${mask_path} -ACF NULL -input "${fmriprep_dir}/sub-${subject}/betaseries/sub-${subject}_run-${run}_resid.nii.gz" -arith)
+    if [[ -n "${drop_run}" && "${run}" -eq "${drop_run}" ]]; then
+        echo "Skipping subject ${subject} run ${run}"
+        continue
+    fi
+    output=$(3dFWHMx -mask ${mask_path} -ACF NULL -input "${fmriprep_dir}/residuals/sub-${subject}/sub-${subject}_run-${run}_resid.nii.gz" -arith)
     acf_coefs=$(echo "$output" | tail -n 1 | awk '{print $(NF-3), $(NF-2), $(NF-1), $NF}')
     echo "$subject $run $acf_coefs" >> "$out_file"
 done
