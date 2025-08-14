@@ -28,18 +28,21 @@ def process_subject(subject, master_dir):
 
     # for each row, aggregate presented items into a single array
     for index, row in rem.iterrows():
-        triad_1 = [int(row['item1']), int(row['item2']), int(row['item3'])]
-        triad_2 = [int(row['item4']), int(row['item5']), int(row['item6'])]
+        tri_num = None  # reset every row
 
-        if np.array_equal(triad_1, np.array([1, 2, 3])) or np.array_equal(triad_2, np.array([1, 2, 3])):
+        triad_1 = sorted([int(row['item1']), int(row['item2']), int(row['item3'])])
+        triad_2 = sorted([int(row['item4']), int(row['item5']), int(row['item6'])])
+
+        if triad_1 == [1, 2, 3] or triad_2 == [1, 2, 3]:
             tri_num = 1
-        elif np.array_equal(triad_1, np.array([4, 5, 6])) or np.array_equal(triad_2, np.array([4, 5, 6])):
+        elif triad_1 == [4, 5, 6] or triad_2 == [4, 5, 6]:
             tri_num = 2
-        elif np.array_equal(triad_1, np.array([7, 8, 9])) or np.array_equal(triad_2, np.array([7, 8, 9])):
+        elif triad_1 == [7, 8, 9] or triad_2 == [7, 8, 9]:
             tri_num = 3
-        elif np.array_equal(triad_1, np.array([10, 11, 12])) or np.array_equal(triad_2, np.array([10, 11, 12])):
+        elif triad_1 == [10, 11, 12] or triad_2 == [10, 11, 12]:
             tri_num = 4
-
+        else:
+            print("weeeeeeeoooooooo missing triad!")
 
         clean.loc[len(clean)] = [subject, row['trial'], triad_1, triad_2, tri_num, row['order_resp'],
                                  row['side'], row['side_resp'], row['acc'], row['response_time'], row['reps']]
