@@ -52,7 +52,7 @@ for run in {1..4}; do
     if [[ $type == 'boundary' ]]; then
         res_img="/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${subject}/univ/out_run${run}.feat/stats/res4d.nii.gz"
     else
-        res_img="/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${subject}/univ/${ppi_roi}_out_run${run}.feat/stats/res4d.nii.gz"
+        res_img="/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${subject}/univ/${type}/${ppi_roi}_out_run${run}.feat/stats/res4d.nii.gz"
     fi
 
     output=$(3dFWHMx -mask ${mask_path} -ACF NULL -input "${res_img}" -arith)
