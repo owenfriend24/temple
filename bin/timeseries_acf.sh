@@ -1,8 +1,8 @@
 #!/bin/bash
 #
 
-if [[ $# -lt 2 ]]; then
-    echo "Usage: temple_acf.sh corral subject fmriprep_dir"
+if [[ $# -lt 5 ]]; then
+    echo "Usage: timeseries_acf.sh corral subject fmriprep_dir roi type(boundary, ppi, ppi_inverse) ppi_roi(optional)"
     exit 1
 fi
 
@@ -11,6 +11,7 @@ subject="$2"
 fmriprep_dir="$3"
 roi="$4"
 type="$5"
+ppi_roi="$6"
 
 module load afni
 out_file="${corral}/clust_sim/acf/by_subject_run_${roi}_${type}_acf.txt"
@@ -51,7 +52,7 @@ for run in {1..4}; do
     if [[ $type == 'boundary' ]]; then
         res_img="/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${subject}/univ/out_run${run}.feat/stats/res4d.nii.gz"
     else
-        res_img="/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${subject}/univ/${roi}_out_run${run}.feat/stats/res4d.nii.gz"
+        res_img="/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${subject}/univ/${ppi_roi}_out_run${run}.feat/stats/res4d.nii.gz"
     fi
 
     output=$(3dFWHMx -mask ${mask_path} -ACF NULL -input "${res_img}" -arith)
