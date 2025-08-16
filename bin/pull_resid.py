@@ -44,7 +44,8 @@ def estimate_residuals(fs_dir, fm_dir, sub):
         out_data = np.zeros([*mask_img.shape, resid.shape[0]])
         out_data[mask_img, :] = resid.T
         new_img = nib.Nifti1Image(out_data, mask_vol.affine, mask_vol.header)
-        nib.save(new_img, f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-{sub}/betaseries/sub-{sub}_run-{run}_resid.nii.gz')
+        os.makedirs(f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/residuals/sub-{sub}', exist_ok = True)
+        nib.save(new_img, f'/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/residuals/sub-{sub}/sub-{sub}_run-{run}_resid.nii.gz')
         
         
 def main(fs_dir, fm_dir, sub):
