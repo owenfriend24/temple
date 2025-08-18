@@ -24,7 +24,8 @@ import sys
 from copy import copy
 
 ### directory for experiment and design matrices ###
-expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
+#expdir = '/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
+expdir = '/corral-repl/utexas/prestonlab/temple/'
 
 ### subjects to analyze as the input ###
 sub = sys.argv[1]
@@ -43,8 +44,10 @@ subdir = expdir+'/sub-%s'%(sub)
 #bolddir = f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/func/'
 #mask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sub}/mri/out/brainmask_func_dilated.nii.gz'
 
-bolddir = subdir+'/func/skullstripped_T1'
-mask = expdir + '/sourcedata/freesurfer/sub-%s/mri/out/brainmask_func_dilated.nii.gz'%(sub)
+#bolddir = subdir+'/func/skullstripped_T1'
+bolddir = subdir+'/func/'
+#mask = expdir + '/sourcedata/freesurfer/sub-%s/mri/out/brainmask_func_dilated.nii.gz'%(sub)
+mask = expdir + '/freesurfer/sub-%s/mri/out/brainmask_func_dilated.nii.gz'%(sub)
 
 confounddir = subdir + '/func/arrow_txt'
 modeldir = designdir
