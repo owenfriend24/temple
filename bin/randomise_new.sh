@@ -20,20 +20,20 @@ mkdir -p /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/r
 
 randomise -i /corral-repl/utexas/prestonlab/temple//integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
 -o /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/randomise_out/${roi}_cont_acc \
--d /corral-repl/utexas/prestonlab/temple/acc_cont.mat \
--t /corral-repl/utexas/prestonlab/temple/acc_cont.con \
+-d /corral-repl/utexas/prestonlab/temple/randomise_files/acc_cont.mat \
+-t /corral-repl/utexas/prestonlab/temple/randomise_files/acc_cont.con \
 -m $grp_mask_path \
 -n 5000 -x --uncorrp
 
 
 randomise -i //corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
 -o /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/randomise_out/cont_age \
--d /corral-repl/utexas/prestonlab/temple/age_cont.mat \
--t /corral-repl/utexas/prestonlab/temple/age_cont.con \
+-d /corral-repl/utexas/prestonlab/temple/randomise_files/age_cont.mat \
+-t /corral-repl/utexas/prestonlab/temple/randomise_files/age_cont.con \
 -m $grp_mask_path \
 -n 5000 -x --uncorrp
 
-randomise -i /corral-repl/utexas/prestonlab/temple//integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
+randomise -i /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
 -o /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/randomise_out/group_mean \
 -m $grp_mask_path \
 -1 \
