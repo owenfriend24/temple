@@ -12,7 +12,7 @@ comp=$2
 
 if [[ $roi == 'b_hip' ]]; then
   grp_mask_path=/corral-repl/utexas/prestonlab/temple/group_masks/hip_func/b_hip_func.nii.gz
-elif [[ $roi == 'gm' ]]; then
+elif [[ $roi == 'b_gray_func' ]]; then
   grp_mask_path=/corral-repl/utexas/prestonlab/temple/group_masks/gm/group_gm_mask.nii.gz
 fi
 
