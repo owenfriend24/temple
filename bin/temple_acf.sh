@@ -24,11 +24,10 @@ fi
 
 # Runs to drop per subject
 declare -A DROP_RUNS=(
-#    [temple023]=6
+    [temple023]=6
 #    [temple030]=6
 #    [temple070]=3
 #    [temple116]=5
-    [temple999]=5
 )
 
 drop_run="${DROP_RUNS[$subject]:-}"
