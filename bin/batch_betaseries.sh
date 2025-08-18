@@ -7,8 +7,7 @@ if [[ $# -lt 1 ]]; then
 fi
 
 ### Set up experiment info ###
-#expdir='/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
-expdir='/corral-repl/utexas/prestonlab/temple/'
+expdir='/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
 sub=$1
 drop_run=""
 

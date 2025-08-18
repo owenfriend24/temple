@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ### set up experiment info ###
-#expdir='/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
-expdir='/corral-repl/utexas/prestonlab/temple/'
+expdir='/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep'
+#expdir='/corral-repl/utexas/prestonlab/temple/'
 sub=$1
 
 

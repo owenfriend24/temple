@@ -11,14 +11,14 @@ roi=$3
 
 excl_tag=""
 
-if [ "$subject" == "temple114" ]; then
+if [ "$subject" == "temple999" ]; then
     excl_tag="_drop1"
-elif [ "$subject" == "temple107" ] | [ "$subject" == "temple060" ]; then
-    excl_tag="_drop2"
-elif [ "$subject" == "temple064" ]; then
-    excl_tag="_drop3"
-elif [ "$subject" == "temple130" ]; then
-    excl_tag="_drop1and4"
+#elif [ "$subject" == "temple107" ] | [ "$subject" == "temple060" ]; then
+#    excl_tag="_drop2"
+#elif [ "$subject" == "temple064" ]; then
+#    excl_tag="_drop3"
+#elif [ "$subject" == "temple130" ]; then
+#    excl_tag="_drop1and4"
 else
     excl_tag="_allruns"
 fi

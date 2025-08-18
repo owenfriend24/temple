@@ -49,11 +49,11 @@ def main(measure, master_dir, comparison, mask, agg_file):
     excludes = []
 
     drop_runs = {
-        "temple023": 6,
-        "temple030": 6,
-        "temple070": 3,
-        # "temple115": 3,
-        "temple116": 5,
+        "temple023": 6
+        # "temple030": 6,
+        # "temple070": 3,
+        # # "temple115": 3,
+        # "temple116": 5,
     }
     integration_csv_files = []
     symmetry_csv_files = []

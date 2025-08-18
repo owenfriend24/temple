@@ -11,9 +11,7 @@ subjects=(
 # iterate through the subjects list
 for subject in "${subjects[@]}"; do
   # subject_output_directory is set based on the subject directory
-  #subject_output_directory="/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${subject}/betaseries"
-  subject_output_directory="/corral-repl/utexas/prestonlab/temple/sub-${subject}/betaseries"
-
+  subject_output_directory="/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${subject}/betaseries"
 
   if [[ ! -d "$subject_output_directory" ]]; then
     # create a directory if it doesn't exist
@@ -21,9 +19,9 @@ for subject in "${subjects[@]}"; do
   fi
 
   for run in 1 2 3 4 5 6; do
-    fmri_file_path="/corral-repl/utexas/prestonlab/temple/sub-${subject}/func/sub-${subject}_task-arrow_run-0${run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz"
+    #fmri_file_path="/corral-repl/utexas/prestonlab/temple/sub-${subject}/func/sub-${subject}_task-arrow_run-0${run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz"
     # Define the path to the subject's fMRI file
-    #fmri_file_path="/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${subject}/func/skullstripped_T1/sub-${subject}_task-arrow_run-0${run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz"
+    fmri_file_path="/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${subject}/func/skullstripped_T1/sub-${subject}_task-arrow_run-0${run}_space-T1w_desc-preproc_bold_ss_4mm.nii.gz"
 
     # Use fslnvols to get the number of TRs in the fMRI file
     num_trs=$(fslnvols "$fmri_file_path")

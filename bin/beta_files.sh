@@ -3,7 +3,6 @@
 SUBNUM=$1
 runNUM="1 2 3 4 5 6"
 
-
 for sbj in $SUBNUM
 
 do
@@ -14,48 +13,18 @@ do
     do
 
 
-    feat_model /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run} #fsf file
+    feat_model /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run} #fsf file
 
-    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}_cov.png
-    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}_cov.ppm
-    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.con
-    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.frf
-    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.min
-    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.png
-    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.ppm
-    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.trg
+    rm /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}_cov.png
+    rm /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}_cov.ppm
+    rm /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.con
+    rm /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.frf
+    rm /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.min
+    rm /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.png
+    rm /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.ppm
+    rm /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.trg
 
     done
 
 
 done
-
-
-
-
-
-#for sbj in $SUBNUM
-#
-#do
-#
-#
-#    for run in $runNUM
-#
-#    do
-#
-#
-#    feat_model /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run} #fsf file
-#
-#    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}_cov.png
-#    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}_cov.ppm
-#    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.con
-#    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.frf
-#    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.min
-#    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.png
-#    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.ppm
-#    rm /corral-repl/utexas/prestonlab/temple/sub-${sbj}/betaseries/sub-${sbj}_betaL1_run-${run}.trg
-#
-#    done
-#
-#
-#done
