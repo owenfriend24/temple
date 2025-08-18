@@ -11,9 +11,9 @@ roi=$1
 comp=$2
 
 if [[ $roi == 'b_hip' ]]; then
-  grp_mask_path=/corral-repl/utexas/prestonlab/group_masks/hip_func/b_hip_func.nii.gz
+  grp_mask_path=/corral-repl/utexas/prestonlab/temple/group_masks/hip_func/b_hip_func.nii.gz
 elif [[ $roi == 'gm' ]]; then
-  grp_mask_path=/corral-repl/utexas/prestonlab/group_masks/gm/group_gm_mask.nii.gz
+  grp_mask_path=/corral-repl/utexas/prestonlab/temple/roup_masks/gm/group_gm_mask.nii.gz
 fi
 
 mkdir -p /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/randomise_out/
