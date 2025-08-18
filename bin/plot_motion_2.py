@@ -14,9 +14,8 @@ import subprocess
 
 
 FD_THR = 0.5
-ZDVARS_THR = 1.5
-EXCLUDE_FRACTION = 1/3  # > 1/3 of TRs flagged after padding
-PADDING = (-1, 0, 1, 2)  # prev 1, self, next 2
+ZDVARS_THR = 1.5          # standardized DVARS threshold
+EXCLUDE_FRACTION = 1/3    # > 1/3 of TRs with BOTH metrics over threshold
 
 
 def run_com(command):
@@ -25,35 +24,41 @@ def run_com(command):
 
 def format_motion_data(sub, base_dir, out_path):
     df = pd.DataFrame(columns=['sub', 'task', 'run', 'tr', 'dvars', 'fd'])
-    for run in range(1, 7, 1):
+
+    # arrow: runs 1..6
+    for run in range(1, 7):
         task = 'arrow'
         file_path = (base_dir + f'sub-{sub}_task-{task}_run-0{run}_desc-confounds_timeseries.tsv')
         if os.path.exists(file_path):
             data = pd.read_table(file_path)
             for index, row in data.iterrows():
                 tr = index + 1
-                fd = data['framewise_displacement'][index]
-                dvars = data['std_dvars'][index]
+                fd = pd.to_numeric(data.get('framewise_displacement', pd.Series([np.nan]*len(data))).iloc[index], errors='coerce')
+                dvars = pd.to_numeric(data.get('std_dvars', pd.Series([np.nan]*len(data))).iloc[index], errors='coerce')
                 df.loc[len(df)] = [sub, task, run, tr, dvars, fd]
-    for run in range(1, 5, 1):
+
+    # collector: runs 1..4
+    for run in range(1, 5):
         task = 'collector'
         file_path = (base_dir + f'sub-{sub}_task-{task}_run-0{run}_desc-confounds_timeseries.tsv')
         if os.path.exists(file_path):
             data = pd.read_table(file_path)
             for index, row in data.iterrows():
                 tr = index + 1
-                fd = data['framewise_displacement'][index]
-                dvars = data['std_dvars'][index]
+                fd = pd.to_numeric(data.get('framewise_displacement', pd.Series([np.nan]*len(data))).iloc[index], errors='coerce')
+                dvars = pd.to_numeric(data.get('std_dvars', pd.Series([np.nan]*len(data))).iloc[index], errors='coerce')
                 df.loc[len(df)] = [sub, task, run, tr, dvars, fd]
-    for run in range(1, 3, 1):
+
+    # movie: runs 1..2
+    for run in range(1, 3):
         task = 'movie'
         file_path = (base_dir + f'sub-{sub}_task-{task}_run-0{run}_desc-confounds_timeseries.tsv')
         if os.path.exists(file_path):
             data = pd.read_table(file_path)
             for index, row in data.iterrows():
                 tr = index + 1
-                fd = data['framewise_displacement'][index]
-                dvars = data['std_dvars'][index]
+                fd = pd.to_numeric(data.get('framewise_displacement', pd.Series([np.nan]*len(data))).iloc[index], errors='coerce')
+                dvars = pd.to_numeric(data.get('std_dvars', pd.Series([np.nan]*len(data))).iloc[index], errors='coerce')
                 df.loc[len(df)] = [sub, task, run, tr, dvars, fd]
 
     df.to_csv(out_path + 'all_motion.csv', index=False)
@@ -63,21 +68,21 @@ def _silent_plot_one_task(df, task, sub, out_path, xlim, tag):
     a_data = df[df['task'] == task]
     if a_data.empty:
         return
-    run_data = {r: a_data[a_data['run'] == r] for r in sorted(a_data['run'].unique())}
 
+    run_data = {r: a_data[a_data['run'] == r] for r in sorted(a_data['run'].unique())}
     sns.set_palette("viridis")
 
     for measure in ['fd', 'dvars']:
         plt.figure(figsize=(15, 8))
         for run_number, run in run_data.items():
-            mn = round(np.mean(run[measure]), 3)
-            sd = round(np.std(run[measure]), 3)
+            mn = round(np.nanmean(run[measure]), 3)
+            sd = round(np.nanstd(run[measure]), 3)
 
             if measure == 'fd':
-                num_t = (run[measure] > FD_THR).sum()
+                num_t = int((run[measure] > FD_THR).sum())
                 label = f'run{run_number}: m={mn}, sd={sd}, >{FD_THR}={num_t} TRs'
             else:
-                num_t = (run[measure] > ZDVARS_THR).sum()
+                num_t = int((run[measure] > ZDVARS_THR).sum())
                 label = f'run{run_number}: m={mn}, sd={sd}, >{ZDVARS_THR}={num_t} TRs'
 
             plt.plot(run['tr'].to_numpy(), run[measure].to_numpy(), linestyle='-', linewidth=2, label=label)
@@ -117,31 +122,21 @@ def plot_movie(sub, out_path):
     _silent_plot_one_task(df, 'movie', sub, out_path, xlim=200, tag='Movie')
 
 
-def fraction_flagged_with_padding(run_df):
+def fraction_both_only(run_df):
     """
-    Apply: (FD > 0.5 AND zDVARS > 1.5) then pad prev 1 and next 2 TRs.
-    Return fraction of TRs flagged after padding.
+    Return the fraction of TRs where BOTH conditions are true:
+       (FD > FD_THR) AND (zDVARS > ZDVARS_THR).
+    NOTE: Neighbor padding (-1, +1, +2) does NOT count toward this fraction.
     """
     n = len(run_df)
     if n == 0:
         return 0.0
 
-    fd_bad = (run_df['fd'].to_numpy() > FD_THR)
-    dv_bad = (run_df['dvars'].to_numpy() > ZDVARS_THR)
-    both = fd_bad & dv_bad
+    fd = pd.to_numeric(run_df['fd'], errors='coerce').fillna(0).to_numpy()
+    dv = pd.to_numeric(run_df['dvars'], errors='coerce').fillna(0).to_numpy()
 
-    flagged = np.zeros(n, dtype=bool)
-    bad_idx = np.where(both)[0]
-    if bad_idx.size == 0:
-        return 0.0
-
-    for idx in bad_idx:
-        for offset in PADDING:
-            j = idx + offset
-            if 0 <= j < n:
-                flagged[j] = True
-
-    return flagged.mean()
+    both = (fd > FD_THR) & (dv > ZDVARS_THR)
+    return both.mean()
 
 
 def evaluate_and_report(sub, out_path):
@@ -149,10 +144,11 @@ def evaluate_and_report(sub, out_path):
     Prints ONE line per subject:
       - "all good"
       - or "EXCLUDE RUNS task-run labels for sub {sub}"
+    Based on: fraction of TRs with BOTH metrics over threshold > 1/3.
     """
     df = pd.read_csv(out_path + 'all_motion.csv')
     if df.empty:
-        print(f"all good")  # nothing to evaluate
+        print("all good")
         return
 
     exclusions = []
@@ -162,7 +158,7 @@ def evaluate_and_report(sub, out_path):
             continue
         for run_id in sorted(task_df['run'].unique()):
             run_df = task_df[task_df['run'] == run_id].sort_values('tr')
-            frac = fraction_flagged_with_padding(run_df)
+            frac = fraction_both_only(run_df)
             if frac > EXCLUDE_FRACTION:
                 exclusions.append(f"{task}-{run_id:02d}")
 
@@ -181,7 +177,7 @@ def main(data_dir, sub):
 
     format_motion_data(sub, base_dir, out_path)
 
-    # Optional: keep plots but no noisy prints
+    # Optional plots (quiet)
     plot_arrow(sub, out_path)
     plot_collector(sub, out_path)
     plot_movie(sub, out_path)
