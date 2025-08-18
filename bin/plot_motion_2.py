@@ -139,6 +139,56 @@ def fraction_both_only(run_df):
     return both.mean()
 
 
+# ---------- NEW: Combined spike bar figure per run ----------
+def plot_spike_bars(sub, out_path):
+    """
+    For each task/run, create a compact bar plot where:
+      - height = 1.0 if (FD > FD_THR and zDVARS > ZDVARS_THR)  [spike]
+      - height = 0.15 otherwise                                 [good]
+    Saves: sub-{sub}_{task}-run{run:02d}_spikes.png
+    """
+    df = pd.read_csv(out_path + 'all_motion.csv')
+    if df.empty:
+        return
+
+    for task in ['arrow', 'collector', 'movie']:
+        task_df = df[df['task'] == task]
+        if task_df.empty:
+            continue
+
+        for run_id in sorted(task_df['run'].unique()):
+            run_df = task_df[task_df['run'] == run_id].sort_values('tr')
+            if run_df.empty:
+                continue
+
+            fd = pd.to_numeric(run_df['fd'], errors='coerce').fillna(0).to_numpy()
+            dv = pd.to_numeric(run_df['dvars'], errors='coerce').fillna(0).to_numpy()
+            tr = run_df['tr'].to_numpy()
+
+            both = (fd > FD_THR) & (dv > ZDVARS_THR)
+            heights = np.where(both, 1.0, 0.15)
+
+            plt.figure(figsize=(16, 3.5))
+            plt.bar(tr, heights, width=1.0, align='center', edgecolor='none')
+
+            # Cosmetics
+            plt.ylim(0, 1.15)
+            plt.xlim(tr.min() - 1, tr.max() + 1)
+            plt.xlabel('TR', fontsize=12)
+            plt.ylabel('Spike', fontsize=12)
+            plt.title(f'Sub {sub} · {task} run {run_id:02d} · spikes where FD>{FD_THR} & zDVARS>{ZDVARS_THR}', fontsize=14)
+
+            # y-ticks: show meaning
+            plt.yticks([0.15, 1.0], ['good', 'spike'])
+            plt.grid(axis='x', linestyle=':', alpha=0.4)
+            plt.tight_layout()
+
+            out_file = os.path.join(out_path, f"sub-{sub}_{task}-run{run_id:02d}_spikes.png")
+            plt.savefig(out_file, dpi=150)
+            plt.close()
+# ---------- END NEW ----------
+
+
 def evaluate_and_report(sub, out_path):
     """
     Prints ONE line per subject:
@@ -177,13 +227,17 @@ def main(data_dir, sub):
 
     format_motion_data(sub, base_dir, out_path)
 
-    # Optional plots (quiet)
+    # Original plots (quiet)
     plot_arrow(sub, out_path)
     plot_collector(sub, out_path)
     plot_movie(sub, out_path)
 
+    # NEW: combined spike plots
+    plot_spike_bars(sub, out_path)
+
     # ONE summary line per subject:
     evaluate_and_report(sub, out_path)
+
 
 
 if __name__ == "__main__":
