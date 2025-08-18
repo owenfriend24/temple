@@ -16,25 +16,25 @@ elif [[ $roi == 'gm' ]]; then
   grp_mask_path=/corral-repl/utexas/prestonlab/group_masks/gm/group_gm_mask.nii.gz
 fi
 
-mkdir -p /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/
+mkdir -p /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/randomise_out/
 
-randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
--o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/${roi}_cont_acc \
--d /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/acc_cont.mat \
--t /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/acc_cont.con \
+randomise -i /corral-repl/utexas/prestonlab/temple//integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
+-o /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/randomise_out/${roi}_cont_acc \
+-d /corral-repl/utexas/prestonlab/temple/acc_cont.mat \
+-t /corral-repl/utexas/prestonlab/temple/acc_cont.con \
 -m $grp_mask_path \
 -n 5000 -x --uncorrp
 
 
-randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
--o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/cont_age \
--d /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/age_cont.mat \
--t /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/age_cont.con \
+randomise -i //corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
+-o /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/randomise_out/cont_age \
+-d /corral-repl/utexas/prestonlab/temple/age_cont.mat \
+-t /corral-repl/utexas/prestonlab/temple/age_cont.con \
 -m $grp_mask_path \
 -n 5000 -x --uncorrp
 
-randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
--o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/group_mean \
+randomise -i /corral-repl/utexas/prestonlab/temple//integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
+-o /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/randomise_out/group_mean \
 -m $grp_mask_path \
 -1 \
 -n 5000 -x  --uncorrp
