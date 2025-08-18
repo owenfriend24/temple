@@ -139,110 +139,152 @@ def fraction_both_only(run_df):
     return both.mean()
 
 
-def plot_spike_bars(sub, out_path):
+def plot_spike_grid(sub, out_path):
     """
-    For each task/run, create a compact bar plot with alternating base colors:
-      - base bars (all TRs): height = 0.15, alternating colors per TR
-      - spike bars (FD>FD_THR & zDVARS>ZDVARS_THR): height = 1.0, solid highlight color
-    Adds text with the number and percent of spike TRs.
-    Saves: sub-{sub}_{task}-run{run:02d}_spikes.png
+    For each task, create a grid figure (one row per run) showing:
+      - Alternating colors per TR for all bars
+      - Tall bars at TRs with spikes (FD>FD_THR & zDVARS>ZDVARS_THR)
+      - Hatch overlay on spike bars to distinguish them while preserving alternation
+      - Text per row with spike count and percent
+    Saves: sub-{sub}_{task}_spikes_grid.png
     """
     df = pd.read_csv(out_path + 'all_motion.csv')
     if df.empty:
         return
 
-    # Colors (hex, per your preference)
     base_color_even = '#d9d9d9'  # light gray
     base_color_odd  = '#b3b3b3'  # darker gray
-    spike_color     = '#d62728'  # red-ish highlight
+    hatch_color     = 'black'    # hatch overlay color for spikes
 
     for task in ['arrow', 'collector', 'movie']:
         task_df = df[df['task'] == task]
         if task_df.empty:
             continue
 
-        for run_id in sorted(task_df['run'].unique()):
+        run_ids = sorted(task_df['run'].unique())
+        n_runs = len(run_ids)
+        if n_runs == 0:
+            continue
+
+        fig, axes = plt.subplots(
+            nrows=n_runs, ncols=1,
+            figsize=(16, 1.6 * n_runs + 1),
+            sharex=False, sharey=True,
+            constrained_layout=True
+        )
+
+        if n_runs == 1:
+            axes = [axes]  # unify indexing
+
+        for i, run_id in enumerate(run_ids):
+            ax = axes[i]
             run_df = task_df[task_df['run'] == run_id].sort_values('tr')
             if run_df.empty:
                 continue
 
+            tr = run_df['tr'].to_numpy()
             fd = pd.to_numeric(run_df['fd'], errors='coerce').fillna(0).to_numpy()
             dv = pd.to_numeric(run_df['dvars'], errors='coerce').fillna(0).to_numpy()
-            tr = run_df['tr'].to_numpy()
 
             both = (fd > FD_THR) & (dv > ZDVARS_THR)
             n_tr = len(tr)
             n_spikes = int(both.sum())
             pct_spikes = 100.0 * n_spikes / n_tr if n_tr else 0.0
 
-            # Base bars (all TRs): small height, alternating colors
-            base_heights = np.full(n_tr, 0.15, dtype=float)
-            base_colors = np.where((tr % 2) == 0, base_color_even, base_color_odd)
+            # Heights: tall for spikes, short otherwise
+            heights = np.where(both, 1.0, 0.15)
 
-            plt.figure(figsize=(16, 3.8))
-            plt.bar(tr, base_heights, width=1.0, align='center',
-                    color=base_colors, edgecolor='none', zorder=1)
+            # Alternating colors by TR parity (preserved even when spikes)
+            bar_colors = np.where((tr % 2) == 0, base_color_even, base_color_odd)
 
-            # Spike bars (only where both True): tall height, single color overlay
+            # Base bars (alternating colors)
+            ax.bar(tr, heights, width=1.0, align='center',
+                   color=bar_colors, edgecolor='none', zorder=1)
+
+            # Overlay hatch on spike bars so they pop but keep alternation visible
+            spike_trs = tr[both]
             if n_spikes > 0:
-                plt.bar(tr[both], np.full(n_spikes, 1.0), width=1.0, align='center',
-                        color=spike_color, edgecolor='none', zorder=2)
+                # Draw transparent bars with hatch only at spike TRs
+                ax.bar(spike_trs, np.full(n_spikes, 1.0), width=1.0, align='center',
+                       facecolor='none', edgecolor=hatch_color, hatch='////',
+                       linewidth=0.0, zorder=2)
 
-            # Cosmetics
-            plt.ylim(0, 1.15)
-            plt.xlim(tr.min() - 1, tr.max() + 1)
-            plt.xlabel('TR', fontsize=12)
-            plt.ylabel('Spike', fontsize=12)
-            plt.yticks([0.15, 1.0], ['good', 'spike'])
-            plt.grid(axis='x', linestyle=':', alpha=0.4)
+            # Cosmetics for each row
+            ax.set_ylim(0, 1.15)
+            ax.set_xlim(tr.min() - 1, tr.max() + 1)
+            ax.set_yticks([0.15, 1.0], ['good', 'spike'])
+            ax.grid(axis='x', linestyle=':', alpha=0.35)
+            ax.set_ylabel(f'run {run_id:02d}', rotation=0, labelpad=30, va='center', fontsize=11)
 
-            title = (f"Sub {sub} · {task} run {run_id:02d} · spikes where "
-                     f"FD>{FD_THR} & zDVARS>{ZDVARS_THR}")
-            plt.title(title, fontsize=14)
+            # Annotate spike count & percent on each row (top-right)
+            ax.text(0.995, 0.93,
+                    f"spikes: {n_spikes}/{n_tr} ({pct_spikes:.1f}%)",
+                    ha='right', va='top', transform=ax.transAxes,
+                    fontsize=11, bbox=dict(boxstyle='round,pad=0.25',
+                                           facecolor='white', alpha=0.85,
+                                           edgecolor='none'))
 
-            # Text annotation with # and % spikes (top-right inside axes)
-            plt.text(0.995, 0.97,
-                     f"spikes: {n_spikes}/{n_tr} ({pct_spikes:.1f}%)",
-                     ha='right', va='top', transform=plt.gca().transAxes,
-                     fontsize=12, bbox=dict(boxstyle='round,pad=0.25',
-                                            facecolor='white', alpha=0.8,
-                                            edgecolor='none'))
+            # X label on last row only
+            if i == n_runs - 1:
+                ax.set_xlabel('TR', fontsize=12)
+            else:
+                ax.set_xticklabels([])
 
-            plt.tight_layout()
-            out_file = os.path.join(out_path, f"sub-{sub}_{task}-run{run_id:02d}_spikes.png")
-            plt.savefig(out_file, dpi=150)
-            plt.close()
+        fig.suptitle(
+            f"Sub {sub} · {task} · spikes where FD>{FD_THR} & zDVARS>{ZDVARS_THR}",
+            fontsize=15, y=1.02
+        )
+        out_file = os.path.join(out_path, f"sub-{sub}_{task}_spikes_grid.png")
+        fig.savefig(out_file, dpi=150, bbox_inches='tight')
+        plt.close(fig)
+
 
 
 
 def evaluate_and_report(sub, out_path):
     """
-    Prints ONE line per subject:
-      - "all good"
-      - or "EXCLUDE RUNS task-run labels for sub {sub}"
-    Based on: fraction of TRs with BOTH metrics over threshold > 1/3.
+    Prints ONE line per subject that includes:
+      - Either "EXCLUDE RUNS ..." or "ALL RUNS OK"
+      - Per-run spike stats: task-run: n (pct%)
+    Run exclusion rule: fraction of TRs with BOTH FD>FD_THR and zDVARS>ZDVARS_THR > EXCLUDE_FRACTION.
     """
     df = pd.read_csv(out_path + 'all_motion.csv')
     if df.empty:
-        print("all good")
+        print(f"ALL RUNS OK | (no motion file rows found) for sub {sub}")
         return
 
     exclusions = []
+    run_stats = []  # collect "task-rr: n (p%)" entries
+
     for task in ['arrow', 'collector', 'movie']:
         task_df = df[df['task'] == task]
         if task_df.empty:
             continue
         for run_id in sorted(task_df['run'].unique()):
             run_df = task_df[task_df['run'] == run_id].sort_values('tr')
-            frac = fraction_both_only(run_df)
+
+            # compute spikes and fraction
+            fd = pd.to_numeric(run_df['fd'], errors='coerce').fillna(0).to_numpy()
+            dv = pd.to_numeric(run_df['dvars'], errors='coerce').fillna(0).to_numpy()
+            both = (fd > FD_THR) & (dv > ZDVARS_THR)
+
+            n_tr = len(run_df)
+            n_spikes = int(both.sum())
+            pct_spikes = 100.0 * n_spikes / n_tr if n_tr else 0.0
+            frac = n_spikes / n_tr if n_tr else 0.0
+
             if frac > EXCLUDE_FRACTION:
                 exclusions.append(f"{task}-{run_id:02d}")
 
+            run_stats.append(f"{task}-{run_id:02d}: {n_spikes} ({pct_spikes:.1f}%)")
+
+    stats_str = "; ".join(run_stats) if run_stats else "no runs found"
+
     if len(exclusions) == 0:
-        print("all good")
+        print(f"ALL RUNS OK for sub {sub} | {stats_str}")
     else:
         joined = ", ".join(exclusions)
-        print(f"EXCLUDE RUNS {joined} for sub {sub}")
+        print(f"EXCLUDE RUNS {joined} for sub {sub} | {stats_str}")
 
 
 def main(data_dir, sub):
@@ -253,16 +295,17 @@ def main(data_dir, sub):
 
     format_motion_data(sub, base_dir, out_path)
 
-    # Original plots (quiet)
+    # (Optional) Keep original FD/DVARS time series figures if you like:
     plot_arrow(sub, out_path)
     plot_collector(sub, out_path)
     plot_movie(sub, out_path)
 
-    # NEW: combined spike plots
-    plot_spike_bars(sub, out_path)
+    # NEW: grid spikes per task
+    plot_spike_grid(sub, out_path)
 
-    # ONE summary line per subject:
+    # ONE summary line per subject with per-run spike stats
     evaluate_and_report(sub, out_path)
+
 
 
 
