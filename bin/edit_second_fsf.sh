@@ -11,7 +11,7 @@ roi=$3
 
 excl_tag=""
 
-if [ "$subject" == "temple999" ]; then
+if [ "$subject" == "temple999" ]; then #114
     excl_tag="_drop1"
 #elif [ "$subject" == "temple107" ] | [ "$subject" == "temple060" ]; then
 #    excl_tag="_drop2"

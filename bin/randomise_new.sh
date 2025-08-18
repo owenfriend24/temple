@@ -26,14 +26,14 @@ randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integ
 -n 5000 -x --uncorrp
 
 
-randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/b_hip/group_z.nii.gz \
+randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
 -o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/cont_age \
 -d /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/age_cont.mat \
 -t /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/age_cont.con \
 -m $grp_mask_path \
 -n 5000 -x --uncorrp
 
-randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/b_hip/group_z.nii.gz \
+randomise -i /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
 -o /scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/integration_prepost/mni_${comp}/randomise_out/group_mean \
 -m $grp_mask_path \
 -1 \
