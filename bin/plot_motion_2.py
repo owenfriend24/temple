@@ -139,17 +139,22 @@ def fraction_both_only(run_df):
     return both.mean()
 
 
-# ---------- NEW: Combined spike bar figure per run ----------
 def plot_spike_bars(sub, out_path):
     """
-    For each task/run, create a compact bar plot where:
-      - height = 1.0 if (FD > FD_THR and zDVARS > ZDVARS_THR)  [spike]
-      - height = 0.15 otherwise                                 [good]
+    For each task/run, create a compact bar plot with alternating base colors:
+      - base bars (all TRs): height = 0.15, alternating colors per TR
+      - spike bars (FD>FD_THR & zDVARS>ZDVARS_THR): height = 1.0, solid highlight color
+    Adds text with the number and percent of spike TRs.
     Saves: sub-{sub}_{task}-run{run:02d}_spikes.png
     """
     df = pd.read_csv(out_path + 'all_motion.csv')
     if df.empty:
         return
+
+    # Colors (hex, per your preference)
+    base_color_even = '#d9d9d9'  # light gray
+    base_color_odd  = '#b3b3b3'  # darker gray
+    spike_color     = '#d62728'  # red-ish highlight
 
     for task in ['arrow', 'collector', 'movie']:
         task_df = df[df['task'] == task]
@@ -166,27 +171,48 @@ def plot_spike_bars(sub, out_path):
             tr = run_df['tr'].to_numpy()
 
             both = (fd > FD_THR) & (dv > ZDVARS_THR)
-            heights = np.where(both, 1.0, 0.15)
+            n_tr = len(tr)
+            n_spikes = int(both.sum())
+            pct_spikes = 100.0 * n_spikes / n_tr if n_tr else 0.0
 
-            plt.figure(figsize=(16, 3.5))
-            plt.bar(tr, heights, width=1.0, align='center', edgecolor='none')
+            # Base bars (all TRs): small height, alternating colors
+            base_heights = np.full(n_tr, 0.15, dtype=float)
+            base_colors = np.where((tr % 2) == 0, base_color_even, base_color_odd)
+
+            plt.figure(figsize=(16, 3.8))
+            plt.bar(tr, base_heights, width=1.0, align='center',
+                    color=base_colors, edgecolor='none', zorder=1)
+
+            # Spike bars (only where both True): tall height, single color overlay
+            if n_spikes > 0:
+                plt.bar(tr[both], np.full(n_spikes, 1.0), width=1.0, align='center',
+                        color=spike_color, edgecolor='none', zorder=2)
 
             # Cosmetics
             plt.ylim(0, 1.15)
             plt.xlim(tr.min() - 1, tr.max() + 1)
             plt.xlabel('TR', fontsize=12)
             plt.ylabel('Spike', fontsize=12)
-            plt.title(f'Sub {sub} · {task} run {run_id:02d} · spikes where FD>{FD_THR} & zDVARS>{ZDVARS_THR}', fontsize=14)
-
-            # y-ticks: show meaning
             plt.yticks([0.15, 1.0], ['good', 'spike'])
             plt.grid(axis='x', linestyle=':', alpha=0.4)
-            plt.tight_layout()
 
+            title = (f"Sub {sub} · {task} run {run_id:02d} · spikes where "
+                     f"FD>{FD_THR} & zDVARS>{ZDVARS_THR}")
+            plt.title(title, fontsize=14)
+
+            # Text annotation with # and % spikes (top-right inside axes)
+            plt.text(0.995, 0.97,
+                     f"spikes: {n_spikes}/{n_tr} ({pct_spikes:.1f}%)",
+                     ha='right', va='top', transform=plt.gca().transAxes,
+                     fontsize=12, bbox=dict(boxstyle='round,pad=0.25',
+                                            facecolor='white', alpha=0.8,
+                                            edgecolor='none'))
+
+            plt.tight_layout()
             out_file = os.path.join(out_path, f"sub-{sub}_{task}-run{run_id:02d}_spikes.png")
             plt.savefig(out_file, dpi=150)
             plt.close()
-# ---------- END NEW ----------
+
 
 
 def evaluate_and_report(sub, out_path):
