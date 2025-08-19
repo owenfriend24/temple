@@ -11,7 +11,7 @@ sub=$1
 fmriprep_dir=$2
 corr=$3
 
-mask_dir=${corr}/sub-${sub}/sl_masks/
+mask_dir=${corr}/sub-${sub}/masks/sl_masks/
 
 mkdir -p ${mask_dir}
 
