@@ -9,11 +9,9 @@ fi
 
 sub=$1
 fmriprep_dir=$2
-comp=$3
-corr=$4
+corr=$3
 
-comp=AC
-mask_dir=${fmriprep_dir}/masks/sub-${sub}/sl_new/
+mask_dir=${corr}/sub-${sub}/sl_masks/
 
 mkdir -p ${mask_dir}
 
