@@ -98,7 +98,7 @@ if __name__ == "__main__":
     elif masktype == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
     elif masktype == 'searchlight':
-        cluster_dir = f'/corral-repl/utexas/prestonlab/temple/sub-{sbj}/group_masks/sl_clusters'
+        cluster_dir = f"/corral-repl/utexas/prestonlab/temple/sub-{sbj}/masks/sl_masks/"
         masks = []
         for f in os.listdir(cluster_dir):
             if f.endswith('.nii') or f.endswith('.nii.gz'):
@@ -141,7 +141,7 @@ if __name__ == "__main__":
             # slmask = f'/corral-repl/utexas/prestonlab/temple/freesurfer/sub-{sbj}/mri/ifg_masks/{mask}.nii.gz'
             slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
         elif masktype == 'searchlight':
-            slmask = f"/corral-repl/utexas/prestonlab/temple/sub-{sbj}/group_masks/sl_clusters/{mask}.nii.gz"
+            slmask = f"/corral-repl/utexas/prestonlab/temple/sub-{sbj}/masks/sl_masks/{mask}.nii.gz"
 
 
         if c_fwd == 'ABC':
