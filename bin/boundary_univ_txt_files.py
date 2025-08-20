@@ -64,7 +64,7 @@ def main(sub, file_type):
             out = f'{out_dir}/sub-{sub}_task-collector_run-{run}_others.txt'
             others.to_csv(out, sep='\t', header=False, index=False)
             run += 1
-        
+
             
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

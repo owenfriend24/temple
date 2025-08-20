@@ -19,6 +19,10 @@ if [ "$type" == "boundary" ]; then
     base=${fmriprep_dir}/sub-${subject}/univ/
     fsf_base=${corral}/sub-${subject}/univ/
     roi_tag=""
+elif [ "$type" == "boundary_inverse" ]; then
+    base=${fmriprep_dir}/sub-${subject}/univ/
+    fsf_base=${corral}/sub-${subject}/univ/
+    roi_tag=""
 elif [ "$type" == "ppi" ]; then
     base=${fmriprep_dir}/sub-${subject}/univ/ppi/
     fsf_base=${corral}/sub-${subject}/univ/ppi/

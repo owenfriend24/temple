@@ -53,7 +53,7 @@ if __name__ == "__main__":
     parser.add_argument("run_num", help="run to generate .fsf file for")
     parser.add_argument("num_vols", help="number of functional volumes")
     parser.add_argument("num_voxs", help="number of voxels")
-    parser.add_argument("type", help="boundary, ppi, or ppi_inverse")
+    parser.add_argument("type", help="boundary, boundary_inverse, ppi, or ppi_inverse")
     parser.add_argument("roi", nargs='?', default=None, help="roi for ppi (required for ppi and ppi_inverse)")
 
     args = parser.parse_args()
