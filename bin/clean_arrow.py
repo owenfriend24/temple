@@ -9,9 +9,6 @@ import argparse
 import subprocess
 
 
-
-
-
 def make_dir(dir):
     subprocess.run(f'mkdir -p {dir}', shell=True)
 
