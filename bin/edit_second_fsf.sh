@@ -27,7 +27,7 @@ if [ "$type" == "boundary" ]; then
     template="/home1/09123/ofriend/analysis/temple/univ/level2_templates/2ndlevel_boundary${excl_tag}.fsf"
     out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
 elif [ "$type" == "boundary_inverse" ]; then
-    template="/home1/09123/ofriend/analysis/temple/univ/level2_templates/2ndlevel_inverse_boundary${excl_tag}.fsf"
+    template="/home1/09123/ofriend/analysis/temple/univ/level2_templates/2ndlevel_boundary_inverse${excl_tag}.fsf"
     out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
 elif [ "$type" == "ppi" ]; then
     template="/home1/09123/ofriend/analysis/temple/univ/level2_templates/2ndlevel_ppi${excl_tag}.fsf"
