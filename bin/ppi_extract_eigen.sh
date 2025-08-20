@@ -14,7 +14,9 @@ mkdir -p "${output_dir}"
 
 if [ "$roi" == "b_hip" ]; then
     mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/hip_masks/func-${roi}.nii.gz"
-elif [ "$roi" == "sl" ]; then
+elif [ "$roi" == "univ_post_hip" ]; then
+    mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/sl_masks/func-${roi}.nii.gz"
+elif [ "$roi" == "AC_age_hip" ]; then
     mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/sl_masks/func-${roi}.nii.gz"
 else
     echo "Error: Unknown ROI '$roi'"
