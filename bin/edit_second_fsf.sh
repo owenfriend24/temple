@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ $# -lt 2 ]]; then
-    echo "Usage: edit_second_fsf.sh subject type (boundary, ppi, ppi_inverse)"
+    echo "Usage: edit_second_fsf.sh subject type (boundary, boundary_inverse, ppi, ppi_inverse)"
     exit 1
 fi
 
@@ -25,6 +25,9 @@ fi
 
 if [ "$type" == "boundary" ]; then
     template="/home1/09123/ofriend/analysis/temple/univ/level2_templates/2ndlevel_boundary${excl_tag}.fsf"
+    out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
+elif [ "$type" == "boundary_inverse" ]; then
+    template="/home1/09123/ofriend/analysis/temple/univ/level2_templates/2ndlevel_inverse_boundary${excl_tag}.fsf"
     out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
 elif [ "$type" == "ppi" ]; then
     template="/home1/09123/ofriend/analysis/temple/univ/level2_templates/2ndlevel_ppi${excl_tag}.fsf"
