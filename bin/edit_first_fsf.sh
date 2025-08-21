@@ -24,6 +24,7 @@ elif [ "$type" == "ppi_inverse" ]; then
     out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/ppi_inverse
 fi
 
+
 mkdir -p $out_path
 
 func_dir=/corral-repl/utexas/prestonlab/temple/sub-"${subject}"/func/
