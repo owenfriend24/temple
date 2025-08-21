@@ -30,7 +30,7 @@ set fmri(featwatcher_yn) 0
 set fmri(sscleanup_yn) 0
 
 # Output directory
-set fmri(outputdir) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/2ndlevel_inverse_boundary"
+set fmri(outputdir) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/univ_inverse/2ndlevel_inverse_boundary"
 
 # TR(s)
 set fmri(tr) 3
@@ -278,16 +278,16 @@ set fmri(copeinput.2) 0
 set fmri(copeinput.3) 0
 
 # 4D AVW data or FEAT directory (1)
-set feat_files(1) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/inverseout_run1.feat"
+set feat_files(1) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/univ_inverse/inverseout_run1.feat"
 
 # 4D AVW data or FEAT directory (2)
-set feat_files(2) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/inverseout_run2.feat"
+set feat_files(2) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/univ_inverse/inverseout_run2.feat"
 
 # 4D AVW data or FEAT directory (3)
-set feat_files(3) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/inverseout_run3.feat"
+set feat_files(3) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/univ_inverse/inverseout_run3.feat"
 
 # 4D AVW data or FEAT directory (4)
-set feat_files(4) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/inverseout_run4.feat"
+set feat_files(4) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/univ_inverse/inverseout_run4.feat"
 
 # Add confound EVs text file
 set fmri(confoundevs) 0
