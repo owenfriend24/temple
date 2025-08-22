@@ -435,13 +435,13 @@ set fmri(conpic_real.1) 1
 set fmri(conname_real.1) "boundary"
 
 # Real contrast_real vector 1 element 1
-set fmri(con_real1.1) -1.0
+set fmri(con_real1.1) -0.5
 
 # Real contrast_real vector 1 element 2
 set fmri(con_real1.2) 1.0
 
 # Real contrast_real vector 1 element 3
-set fmri(con_real1.3) -1.0
+set fmri(con_real1.3) -0.5
 
 # Display images for contrast_real 2
 set fmri(conpic_real.2) 1
@@ -480,13 +480,13 @@ set fmri(conpic_orig.1) 1
 set fmri(conname_orig.1) "boundary"
 
 # Real contrast_orig vector 1 element 1
-set fmri(con_orig1.1) -1.0
+set fmri(con_orig1.1) -0.5
 
 # Real contrast_orig vector 1 element 2
 set fmri(con_orig1.2) 1.0
 
 # Real contrast_orig vector 1 element 3
-set fmri(con_orig1.3) -1.0
+set fmri(con_orig1.3) -0.5
 
 # Display images for contrast_orig 2
 set fmri(conpic_orig.2) 1
