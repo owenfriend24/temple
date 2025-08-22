@@ -26,5 +26,8 @@ for mask in ${fmriprep_dir}/sl/cluster_masks/*.nii.gz; do
       -t ${corr}/sub-${sub}/transforms/native_to_MNI_InverseWarp.nii.gz \
       -n NearestNeighbor
 
+
+  ${mask_dir}/sl-${maskname}.nii.gz -dilM ${mask_dir}/sl-${maskname}_dilated.nii.gz
 done
+
 
