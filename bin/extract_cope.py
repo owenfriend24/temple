@@ -48,12 +48,8 @@ def main(sub, roi_path, roi_name, analysis_type, ppi_roi):
 
     mask = f'/corral-repl/utexas/prestonlab/temple/sub-{sub}/masks/univariate_rois/{roi_name}.nii.gz'
 
-    if sub in ["temple107"]:
+    if sub in ["temple999"]:
         runs = [1, 3, 4]
-    elif sub in ["temple064"]:
-        runs = [1, 2, 4]
-    elif sub in ["temple114"]:
-        runs = [2, 3, 4]
     else:
         runs = [1, 2, 3, 4]
 
