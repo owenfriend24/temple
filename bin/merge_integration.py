@@ -45,7 +45,7 @@ def create_subject_file(subject, master_dir, comparison, mask):
                  'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
     elif mask == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
-    elif mask == 'searchlight':
+    elif mask in ['searchlight', 'searchlight_dilated']:
         cluster_dir = f"/corral-repl/utexas/prestonlab/temple/sub-{subject}/masks/sl_masks/"
         masks = []
         for f in os.listdir(cluster_dir):

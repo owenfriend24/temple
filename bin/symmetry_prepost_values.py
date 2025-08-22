@@ -97,7 +97,7 @@ if __name__ == "__main__":
                  'subiculum_mask_B_func', 'subiculum_mask_L_func', 'subiculum_mask_R_func']
     elif masktype == 'b_ifg_subregions':
         masks = ['b_ifg_full_func', 'b_pars_opercularis_func', 'b_pars_orbitalis_func', 'b_pars_triangularis_func']
-    elif masktype == 'searchlight':
+    elif masktype in ['searchlight', 'searchlight_dilated']:
         cluster_dir = f"/corral-repl/utexas/prestonlab/temple/sub-{sbj}/masks/sl_masks/"
         masks = []
         for f in os.listdir(cluster_dir):
@@ -142,7 +142,8 @@ if __name__ == "__main__":
             slmask = f"{subjdir}/masks/ifg_masks/{mask}.nii.gz"
         elif masktype == 'searchlight':
             slmask = f"/corral-repl/utexas/prestonlab/temple/sub-{sbj}/masks/sl_masks/{mask}.nii.gz"
-
+        elif masktype == 'searchlight_dilated':
+            slmask = f"/corral-repl/utexas/prestonlab/temple/sub-{sbj}/masks/sl_masks/{mask}_dilated.nii.gz"
 
         if c_fwd == 'ABC':
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
