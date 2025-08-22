@@ -41,6 +41,7 @@ mkdir -p ${base}
 for run in 1 2 3 4; do
   # to try out new boundary ...
     rm -R "${base}/${roi_tag}out_run${run}.feat"
+    rm -R "${base}/${roi_tag}2ndlevel_boundary+.gfeat"
 
     echo "running first level analysis for sub ${subject} run ${run}..."
     fsf_file=${fsf_base}/sub-${subject}-univ-${type}_${roi_tag}first_run-0${run}.fsf
