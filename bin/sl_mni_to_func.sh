@@ -27,7 +27,7 @@ for mask in ${fmriprep_dir}/sl/cluster_masks/*.nii.gz; do
       -n NearestNeighbor
 
 
-  ${mask_dir}/sl-${maskname}.nii.gz -dilM ${mask_dir}/sl-${maskname}_dilated.nii.gz
+  fslmaths ${mask_dir}/sl-${maskname}.nii.gz -dilM ${mask_dir}/sl-${maskname}_dilated.nii.gz
 done
 
 
