@@ -244,6 +244,7 @@ def main():
 
 if __name__ == "__main__":
     # sanity: required AFNI tools present?
+    subprocess.run("module load afni", shell = True)
     for tool in ("3dTstat","3dAutomask","3dvolreg","3dinfo","3dcalc","3dmaskave"):
         if not shutil.which(tool):
             p(f"ERROR: required AFNI tool not found in PATH: {tool}")
