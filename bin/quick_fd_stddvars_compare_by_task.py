@@ -122,7 +122,7 @@ def process_run(bold_path: Path, fd_thr: float, z_thr: float, bet_frac: float) -
     dv = np.loadtxt(dvars_txt) if Path(dvars_txt).exists() and os.path.getsize(dvars_txt) > 0 else np.array([])
     fd = pad_to_ntr(fd, ntr)
     dv = pad_to_ntr(dv, ntr)
-    z = zscore(dv)
+    z = robust_z(dv)
 
     mean_fd = series_mean(fd)
 
@@ -165,11 +165,12 @@ def process_task(bids_func_dir: Path, sub: str, task: str, max_run: int,
         task_C += res["hits_C"]; task_D += res["hits_D"]; task_E += res["hits_E"]
         print(
             f"  [{task}] run {run}: N_TR={res['ntr']} | meanFD={res['mean_fd']:.3f} mm | "
-            f"A(FD>{fd_thr:.2f} & z<{z_thr:.1f})={res['hits_A']}/{res['ntr']} ({res['pct_A']}%) | "
+            # f"A(FD>{fd_thr:.2f} & z<{z_thr:.1f})={res['hits_A']}/{res['ntr']} ({res['pct_A']}%) | "
             f"B(FD>{fd_thr:.2f} & z>{z_thr:.1f})={res['hits_B']}/{res['ntr']} ({res['pct_B']}%) | "
-            f"C(FD>{fd_thr:.2f})={res['hits_C']}/{res['ntr']} ({res['pct_C']}%) | "
-            f"D(z>{z_thr:.1f})={res['hits_D']}/{res['ntr']} ({res['pct_D']}%) | "
-            f"E(OR)={res['hits_E']}/{res['ntr']} ({res['pct_E']}%)"
+            f" likely within {res['hits_B'] - 2} AND {res['hits_B'] + 2} / {(res['hits_B'] - 2)/res['n_tr']} - {(res['hits_B'] + 2) /res['n_tr']}"
+            # f"C(FD>{fd_thr:.2f})={res['hits_C']}/{res['ntr']} ({res['pct_C']}%) | "
+            # f"D(z>{z_thr:.1f})={res['hits_D']}/{res['ntr']} ({res['pct_D']}%) | "
+            # f"E(OR)={res['hits_E']}/{res['ntr']} ({res['pct_E']}%)"
         )
         if writer:
             writer.writerow([
