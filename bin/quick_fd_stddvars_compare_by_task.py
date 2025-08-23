@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 from __future__ import annotations
 import argparse, csv, json, os, sys
@@ -68,6 +69,16 @@ def robust_z(x: np.ndarray) -> np.ndarray:
 def series_mean(x: np.ndarray) -> float:
     return float(np.mean(x)) if x.size else float("nan")
 
+def zscore(x: np.ndarray) -> np.ndarray:
+    """Classic z-score (mean/std) standardization."""
+    if x.size == 0:
+        return np.array([])
+    m = np.mean(x)
+    s = np.std(x)
+    if s <= 0:
+        s = 1.0
+    return (x - m) / s
+
 # ------------------------- per-run processing ------------------------- #
 def process_run(bold_path: Path, fd_thr: float, z_thr: float, bet_frac: float) -> dict:
     base = bold_path.with_suffix("").as_posix()
@@ -112,7 +123,7 @@ def process_run(bold_path: Path, fd_thr: float, z_thr: float, bet_frac: float) -
     dv = np.loadtxt(dvars_txt) if Path(dvars_txt).exists() and os.path.getsize(dvars_txt) > 0 else np.array([])
     fd = pad_to_ntr(fd, ntr)
     dv = pad_to_ntr(dv, ntr)
-    z = robust_z(dv)
+    z = zscore(dv)
 
     mean_fd = series_mean(fd)
 
