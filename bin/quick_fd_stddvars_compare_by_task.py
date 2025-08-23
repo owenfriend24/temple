@@ -79,11 +79,6 @@ def process_run(bold_path: Path, fd_thr: float, z_thr: float, bet_frac: float) -
         return dict(ntr=ntr, mean_fd=np.nan, hits_A=0, hits_B=0, hits_C=0, hits_D=0, hits_E=0,
                     pct_A=0.0, pct_B=0.0, pct_C=0.0, pct_D=0.0, pct_E=0.0)
 
-    # Ensure TR is known; pass -t to fsl_motion_outliers if header lacks it
-    tr = get_tr_seconds(bold_path)
-    fmo_tr_arg = []
-    if tr is not None and tr > 0:
-        fmo_tr_arg = ["-t", f"{tr}"]
 
     # Quick mask
     run_com(["fslmaths", str(bold_path), "-Tmean", f"{base}_mean"])
@@ -93,20 +88,18 @@ def process_run(bold_path: Path, fd_thr: float, z_thr: float, bet_frac: float) -
     fd_txt = f"{base}_fd.txt"
     dvars_txt = f"{base}_dvars.txt"
 
-    # FD (Power)
+    # 2) FD call: remove *fmo_tr_arg
     run_com([
         "fsl_motion_outliers", "-i", str(bold_path),
-        *fmo_tr_arg,
         "-o", f"{base}_fd_confounds.tsv",
         "--fd", f"--thresh={fd_thr}",
         "-s", fd_txt,
         "-p", f"{base}_fd.png",
     ])
 
-    # DVARS
+    # 3) DVARS call: remove *fmo_tr_arg
     run_com([
         "fsl_motion_outliers", "-i", str(bold_path),
-        *fmo_tr_arg,
         "-o", f"{base}_dvars_confounds.tsv",
         "--dvars", "--thresh=9999",
         "-s", dvars_txt,
