@@ -98,7 +98,7 @@ def process_run(bold_path: Path, fd_thr: float, z_thr: float, bet_frac: float) -
         "fsl_motion_outliers", "-i", str(bold_path),
         *fmo_tr_arg,
         "-o", f"{base}_fd_confounds.tsv",
-        "--fd", "--thresh", str(fd_thr),
+        "--fd", f"--thresh={fd_thr}",
         "-s", fd_txt,
         "-p", f"{base}_fd.png",
     ])
@@ -108,7 +108,7 @@ def process_run(bold_path: Path, fd_thr: float, z_thr: float, bet_frac: float) -
         "fsl_motion_outliers", "-i", str(bold_path),
         *fmo_tr_arg,
         "-o", f"{base}_dvars_confounds.tsv",
-        "--dvars", "--thresh", "9999",
+        "--dvars", "--thresh=9999",
         "-s", dvars_txt,
         "-p", f"{base}_dvars.png",
         "-m", mask_path,
