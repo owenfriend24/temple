@@ -7,7 +7,7 @@ Per run:
   2) 3dAutomask on mean -> mask
   3) 3dvolreg -1Dfile -> motion.1D (rot deg, trans mm)
   4) DVARS (portable):
-       a) temporal diff with 3dcalc (a[1..$]-b[0..$-1])
+       a) temporal diff with 3dcalc using explicit numeric selectors (no $-1)
        b) square diffs with 3dcalc
        c) spatial mean per TR with 3dmaskave
        d) sqrt in Python => DVARS
@@ -80,6 +80,14 @@ def compute_fd_power_from_motion_1d(motion: np.ndarray, head_radius_mm: float) -
     fd = np.sum(np.abs(dtrans_mm), axis=1) + head_radius_mm * np.sum(np.abs(drot_rad), axis=1)
     return fd
 
+def safe_unlink(*paths: str) -> None:
+    for pth in paths:
+        try:
+            if pth and os.path.exists(pth):
+                os.remove(pth)
+        except Exception:
+            pass
+
 # ------------------------- per-run processing ------------------------- #
 def process_run(bold: Path, fd_thr: float, z_thr: float, head_radius: float, tmp_suffix: str) -> dict:
     base_noext = bold.with_suffix("").as_posix()  # strip .nii.gz
@@ -96,14 +104,22 @@ def process_run(bold: Path, fd_thr: float, z_thr: float, head_radius: float, tmp
                     hits_A=0, hits_B=0, hits_C=0, hits_D=0, hits_E=0,
                     pct_A=0.0, pct_B=0.0, pct_C=0.0, pct_D=0.0, pct_E=0.0)
 
+    # Pre-clean left-overs to avoid "conflicts with existing file"
+    safe_unlink(mean_nii, mask_nii, motion_1d, diff_nii, diffsq_nii)
+
     # 1) mean
     run(["3dTstat", "-mean", "-prefix", mean_nii, str(bold)])
     # 2) automask on mean
     run(["3dAutomask", "-prefix", mask_nii, mean_nii])
     # 3) motion params (no output dataset)
     run(["3dvolreg", "-prefix", "NULL", "-base", "0", "-1Dfile", motion_1d, str(bold)])
+
     # 4) DVARS (portable): temporal diff -> square -> spatial mean -> sqrt
-    run(["3dcalc", "-a", str(bold) + "[1..$]", "-b", str(bold) + "[0..$-1]",
+    # Explicit numeric selectors instead of $-1 (older AFNI compatibility)
+    last = ntr - 1                      # last sub-brick index
+    a_sel = f"[1..{last}]"
+    b_sel = f"[0..{last-1}]"
+    run(["3dcalc", "-a", str(bold) + a_sel, "-b", str(bold) + b_sel,
          "-expr", "a-b", "-prefix", diff_nii])
     run(["3dcalc", "-a", diff_nii, "-expr", "a*a", "-prefix", diffsq_nii])
     dvars_means = subprocess.check_output(
@@ -133,9 +149,7 @@ def process_run(bold: Path, fd_thr: float, z_thr: float, head_radius: float, tmp
     pct = lambda k, n: round(100.0 * k / max(n, 1), 1)
 
     # clean temp files (comment out if you want to inspect)
-    for pth in (mean_nii, mask_nii, motion_1d, diff_nii, diffsq_nii):
-        try: os.remove(pth)
-        except Exception: pass
+    safe_unlink(mean_nii, mask_nii, motion_1d, diff_nii, diffsq_nii)
 
     return dict(
         ntr=ntr, mean_fd=mean_fd,
@@ -208,11 +222,13 @@ def main():
     p(f"FD_THR={args.fd_thr} mm | Z_THR={args.z_thr} | Radius={args.radius} mm")
 
     ALL_TR=ALL_A=ALL_B=ALL_C=ALL_D=ALL_E=0
+    # Make tmp suffix unique per run group to avoid collisions even across reruns
+    base_tag = f"{args.tmp_tag}_{int(time.time())}"
     for task, max_run in (("arrow",6), ("collector",4)):
         t_tr, t_A, t_B, t_C, t_D, t_E = process_task(
             func_dir, args.subject, task, max_run,
             fd_thr=args.fd_thr, z_thr=args.z_thr,
-            head_radius=args.radius, tmp_suffix=args.tmp_tag
+            head_radius=args.radius, tmp_suffix=base_tag
         )
         ALL_TR+=t_tr; ALL_A+=t_A; ALL_B+=t_B; ALL_C+=t_C; ALL_D+=t_D; ALL_E+=t_E
 
