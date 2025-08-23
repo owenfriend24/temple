@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 """
-Fast FD (Power) + stdDVARS using AFNI for tasks: arrow(1..6) and collector(1..4)
+Fast FD (Power) + stdDVARS via AFNI for tasks: arrow(1..6) and collector(1..4)
 
-What it runs per run:
-  1) 3dTstat -mean -> mean image (fast)
+Per run:
+  1) 3dTstat -mean -> mean image
   2) 3dAutomask on mean -> mask
-  3) 3dvolreg -1Dfile -> motion.1D (no output dataset)
-  4) 3dTto1D -dvar -> raw DVARS (masked)
+  3) 3dvolreg -1Dfile -> motion.1D (rot deg, trans mm)
+  4) DVARS (portable):
+       a) temporal diff with 3dcalc (a[1..$]-b[0..$-1])
+       b) square diffs with 3dcalc
+       c) spatial mean per TR with 3dmaskave
+       d) sqrt in Python => DVARS
 Then:
-  - FD (Power): sum(|Δtrans|) + R * sum(|Δrot_rad|), R=head radius (default 50 mm)
+  - FD (Power): sum(|Δtrans|) + R * sum(|Δrot(rad)|), R=50 mm default
   - stdDVARS: robust z = (DVARS - median) / (MAD*1.4826)
-  - Pad leading 0 so length == N_TR
+  - Pad leading 0 so length == N_TR (like fMRIPrep first-volume 0)
 
 Printed metrics per run, task, and overall:
   A) FD>fd_thr & stdDVARS<z_thr
@@ -21,33 +25,27 @@ Printed metrics per run, task, and overall:
 """
 
 from __future__ import annotations
-import argparse, os, sys, time
+import argparse, os, sys, time, shutil, subprocess
 from pathlib import Path
-import subprocess
 import numpy as np
 
-# ---- make prints unbuffered so SLURM .out fills during run ----
+# -------- unbuffered printing so SLURM .out updates during run --------
 try:
     sys.stdout.reconfigure(line_buffering=True)
     sys.stderr.reconfigure(line_buffering=True)
 except Exception:
     pass
-print_flush = lambda *a, **k: print(*a, flush=True, **k)
+def p(*a, **k): print(*a, flush=True, **k)
 
 # ------------------------- subprocess helper ------------------------- #
 def run(cmd: list[str]) -> None:
-    """Run a command; stream output to stdout/stderr (so SLURM captures it)."""
+    """Run a command and stream output to stdout/stderr (SLURM captures it)."""
     subprocess.run(cmd, check=True)
-
-def afni_exists() -> None:
-    for tool in ("3dTstat", "3dAutomask", "3dvolreg", "3dTto1D"):
-        if not shutil.which(tool):
-            raise RuntimeError(f"Required AFNI tool not found in PATH: {tool}")
 
 # ------------------------- core helpers ------------------------- #
 def pad_to_ntr(x: np.ndarray, ntr: int) -> np.ndarray:
     x = np.array(x).ravel() if x is not None else np.array([])
-    x = np.insert(x, 0, 0.0)
+    x = np.insert(x, 0, 0.0)  # pad first sample to 0
     if x.size >= ntr:
         return x[:ntr]
     return np.pad(x, (0, ntr - x.size), mode="constant")
@@ -65,8 +63,8 @@ def load_1d(path: Path) -> np.ndarray:
 
 def compute_fd_power_from_motion_1d(motion: np.ndarray, head_radius_mm: float) -> np.ndarray:
     """
-    motion shape: (T,6) from AFNI 3dvolreg: [roll pitch yaw dS dL dP]
-      rotations are in DEGREES; translations (mm).
+    AFNI 3dvolreg motion.1D columns: [roll pitch yaw dS dL dP]
+      rotations in DEGREES, translations in mm.
     FD_power[t] = sum(|Δtrans|) + R * sum(|Δrot(rad)|)
     """
     if motion.size == 0:
@@ -74,33 +72,25 @@ def compute_fd_power_from_motion_1d(motion: np.ndarray, head_radius_mm: float) -
     motion = np.atleast_2d(motion)
     if motion.shape[1] < 6:
         raise ValueError("motion.1D does not have 6 columns")
-    # columns: roll pitch yaw (deg) then 3 translations (mm)
     rot_deg = motion[:, 0:3]
     trans_mm = motion[:, 3:6]
-    # diffs (t - t-1), pad with zeros at start later
     drot_deg = np.diff(rot_deg, axis=0)
     dtrans_mm = np.diff(trans_mm, axis=0)
-    # convert degrees -> radians
     drot_rad = np.deg2rad(drot_deg)
-    # Power FD: L1 norm of diffs
     fd = np.sum(np.abs(dtrans_mm), axis=1) + head_radius_mm * np.sum(np.abs(drot_rad), axis=1)
     return fd
 
 # ------------------------- per-run processing ------------------------- #
 def process_run(bold: Path, fd_thr: float, z_thr: float, head_radius: float, tmp_suffix: str) -> dict:
-    """
-    Returns: dict with ntr, mean_fd, hits/pcts for A..E
-    """
-    base = bold.with_suffix("").as_posix()  # strip .nii.gz -> path without suffix
-    mean_nii = f"{base}_mean{tmp_suffix}.nii.gz"
-    mask_nii = f"{base}_mask{tmp_suffix}.nii.gz"
-    motion_1d = f"{base}_motion{tmp_suffix}.1D"
-    dvars_1d = f"{base}_dvars{tmp_suffix}.1D"
+    base_noext = bold.with_suffix("").as_posix()  # strip .nii.gz
+    mean_nii   = f"{base_noext}_mean{tmp_suffix}.nii.gz"
+    mask_nii   = f"{base_noext}_mask{tmp_suffix}.nii.gz"
+    motion_1d  = f"{base_noext}_motion{tmp_suffix}.1D"
+    diff_nii   = f"{base_noext}_diff{tmp_suffix}.nii.gz"
+    diffsq_nii = f"{base_noext}_diffsq{tmp_suffix}.nii.gz"
 
-    # nTR
-    # Use fslnumb or nibabel? Keep it simple via AFNI: 3dinfo -nt
+    # N_TR via AFNI
     ntr = int(subprocess.check_output(["3dinfo", "-nt", str(bold)], text=True).strip())
-
     if ntr <= 1:
         return dict(ntr=ntr, mean_fd=np.nan,
                     hits_A=0, hits_B=0, hits_C=0, hits_D=0, hits_E=0,
@@ -112,34 +102,39 @@ def process_run(bold: Path, fd_thr: float, z_thr: float, head_radius: float, tmp
     run(["3dAutomask", "-prefix", mask_nii, mean_nii])
     # 3) motion params (no output dataset)
     run(["3dvolreg", "-prefix", "NULL", "-base", "0", "-1Dfile", motion_1d, str(bold)])
-    # 4) DVARS (masked)
-    run(["3dTto1D", "-dvar", dvars_1d, "-mask", mask_nii, str(bold)])
+    # 4) DVARS (portable): temporal diff -> square -> spatial mean -> sqrt
+    run(["3dcalc", "-a", str(bold) + "[1..$]", "-b", str(bold) + "[0..$-1]",
+         "-expr", "a-b", "-prefix", diff_nii])
+    run(["3dcalc", "-a", diff_nii, "-expr", "a*a", "-prefix", diffsq_nii])
+    dvars_means = subprocess.check_output(
+        ["3dmaskave", "-quiet", "-mask", mask_nii, diffsq_nii], text=True
+    ).strip().splitlines()
+    dvars = np.sqrt(np.array([float(x) for x in dvars_means], dtype=float))
 
-    # Load series
-    motion = load_1d(Path(motion_1d))       # (T x 6)
+    # Load motion, compute FD Power
+    motion = load_1d(Path(motion_1d))
     fd = compute_fd_power_from_motion_1d(motion, head_radius)
-    dvars = load_1d(Path(dvars_1d))
 
-    fd = pad_to_ntr(fd, ntr)
+    # pad to N_TR and standardize DVARS
+    fd    = pad_to_ntr(fd, ntr)
     dvars = pad_to_ntr(dvars, ntr)
-    z = robust_z(dvars)
-
+    z     = robust_z(dvars)
     mean_fd = float(np.mean(fd)) if fd.size else float("nan")
 
+    # conditions
     cond_A = (fd > fd_thr) & (z < z_thr)
     cond_B = (fd > fd_thr) & (z > z_thr)
     cond_C = (fd > fd_thr)
     cond_D = (z > z_thr)
     cond_E = cond_C | cond_D
 
-    def pct(k, n): return round(100.0 * k / max(n, 1), 1)
-
     hits_A = int(cond_A.sum()); hits_B = int(cond_B.sum())
     hits_C = int(cond_C.sum()); hits_D = int(cond_D.sum()); hits_E = int(cond_E.sum())
+    pct = lambda k, n: round(100.0 * k / max(n, 1), 1)
 
-    # clean temp files (comment out if you’d like to inspect)
-    for p in (mean_nii, mask_nii, motion_1d, dvars_1d):
-        try: os.remove(p)
+    # clean temp files (comment out if you want to inspect)
+    for pth in (mean_nii, mask_nii, motion_1d, diff_nii, diffsq_nii):
+        try: os.remove(pth)
         except Exception: pass
 
     return dict(
@@ -163,12 +158,12 @@ def process_task(func_dir: Path, sub: str, task: str, max_run: int,
     for r in range(1, max_run+1):
         bold = find_bold(func_dir, sub, task, r)
         if bold is None:
-            print_flush(f"  [{task}] run {r}: MISSING (skipped)")
+            p(f"  [{task}] run {r}: MISSING (skipped)")
             continue
         t0 = time.time()
-        print_flush(f"  [{task}] run {r}: starting  -> {bold.name}")
+        p(f"  [{task}] run {r}: starting  -> {bold.name}")
         res = process_run(bold, fd_thr, z_thr, head_radius, tmp_suffix)
-        print_flush(
+        p(
             f"  [{task}] run {r}: N_TR={res['ntr']} | meanFD={res['mean_fd']:.3f} mm | "
             f"A(FD>{fd_thr:.2f} & z<{z_thr:.1f})={res['hits_A']}/{res['ntr']} ({res['pct_A']}%) | "
             f"B(FD>{fd_thr:.2f} & z>{z_thr:.1f})={res['hits_B']}/{res['ntr']} ({res['pct_B']}%) | "
@@ -181,7 +176,7 @@ def process_task(func_dir: Path, sub: str, task: str, max_run: int,
         task_C+=res["hits_C"]; task_D+=res["hits_D"]; task_E+=res["hits_E"]
 
     pct = lambda k,n: round(100.0*k/max(n,1),1)
-    print_flush(
+    p(
         f"Task {task} summary: "
         f"A={task_A}/{task_tr} ({pct(task_A,task_tr)}%) | "
         f"B={task_B}/{task_tr} ({pct(task_B,task_tr)}%) | "
@@ -206,11 +201,11 @@ def main():
     args = parse_args()
     func_dir = args.bids_root / args.subject / "func"
     if not func_dir.is_dir():
-        print_flush(f"ERROR: func dir not found: {func_dir}")
+        p(f"ERROR: func dir not found: {func_dir}")
         sys.exit(1)
 
-    print_flush(f"Subject {args.subject}")
-    print_flush(f"FD_THR={args.fd_thr} mm | Z_THR={args.z_thr} | Radius={args.radius} mm")
+    p(f"Subject {args.subject}")
+    p(f"FD_THR={args.fd_thr} mm | Z_THR={args.z_thr} | Radius={args.radius} mm")
 
     ALL_TR=ALL_A=ALL_B=ALL_C=ALL_D=ALL_E=0
     for task, max_run in (("arrow",6), ("collector",4)):
@@ -222,7 +217,7 @@ def main():
         ALL_TR+=t_tr; ALL_A+=t_A; ALL_B+=t_B; ALL_C+=t_C; ALL_D+=t_D; ALL_E+=t_E
 
     pct = lambda k,n: round(100.0*k/max(n,1),1)
-    print_flush(
+    p(
         f"Overall summary: "
         f"A={ALL_A}/{ALL_TR} ({pct(ALL_A,ALL_TR)}%) | "
         f"B={ALL_B}/{ALL_TR} ({pct(ALL_B,ALL_TR)}%) | "
@@ -232,10 +227,9 @@ def main():
     )
 
 if __name__ == "__main__":
-    import shutil
-    # quick sanity: AFNI tools present?
-    for tool in ("3dTstat","3dAutomask","3dvolreg","3dTto1D","3dinfo"):
+    # sanity: required AFNI tools present?
+    for tool in ("3dTstat","3dAutomask","3dvolreg","3dinfo","3dcalc","3dmaskave"):
         if not shutil.which(tool):
-            print_flush(f"ERROR: required AFNI tool not found in PATH: {tool}")
+            p(f"ERROR: required AFNI tool not found in PATH: {tool}")
             sys.exit(2)
     main()
