@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 from __future__ import annotations
 import argparse, csv, json, os, sys
@@ -235,12 +234,13 @@ def main():
 
     def pct(k, n): return round(100.0 * k / max(n, 1), 1)
     print(
-        f"Overall summary: "
-        f"A={ALL_A}/{ALL_TR} ({pct(ALL_A, ALL_TR)}%) | "
+        f"RUN SUMMARY: "
+        # f"A={ALL_A}/{ALL_TR} ({pct(ALL_A, ALL_TR)}%) | "
         f"B={ALL_B}/{ALL_TR} ({pct(ALL_B, ALL_TR)}%) | "
-        f"C={ALL_C}/{ALL_TR} ({pct(ALL_C, ALL_TR)}%) | "
-        f"D={ALL_D}/{ALL_TR} ({pct(ALL_D, ALL_TR)}%) | "
-        f"E={ALL_E}/{ALL_TR} ({pct(ALL_E, ALL_TR)}%)"
+        f" likely within {ALL_B - 2} AND {ALL_B + 2} / {pct(ALL_B -2, ALL_TR)} - {pct(ALL_B + 2, ALL_TR)}"
+        # f"C={ALL_C}/{ALL_TR} ({pct(ALL_C, ALL_TR)}%) | "
+        # f"D={ALL_D}/{ALL_TR} ({pct(ALL_D, ALL_TR)}%) | "
+        # f"E={ALL_E}/{ALL_TR} ({pct(ALL_E, ALL_TR)}%)"
     )
 
 if __name__ == "__main__":
