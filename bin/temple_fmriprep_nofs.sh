@@ -44,7 +44,9 @@ SINGULARITY_CMD="apptainer run \
     -B ${WORKDIR}:/workdir \
     /work/09123/ofriend/ls6/fmriprep_23.1.3.sif"
 
-# Compose the command line
+
+
+# Fast, volume-only (no surfaces; skips FreeSurfer)
 cmd="${SINGULARITY_CMD} \
     ${BIDS_DIR} \
     ${BIDS_DIR}/${DERIVS_DIR} \
@@ -53,7 +55,7 @@ cmd="${SINGULARITY_CMD} \
     -w /workdir/ \
     --fd-spike-threshold 0.5 \
     --dvars-spike-threshold 1.5 \
-    --output-spaces MNI152NLin2009cAsym:res-2 T1w \
+    --output-spaces T1w \
     --fs-no-reconall \
     -v \
     --omp-nthreads 12 \
