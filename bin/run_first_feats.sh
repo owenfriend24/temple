@@ -37,6 +37,7 @@ fi
 
 mkdir -p ${base}
 
+mv ${fmriprep_dir}/sub-${subject}/univ/inverse* ${base}
 
 for run in 1 2 3 4; do
   # to try out new boundary ...
@@ -50,7 +51,7 @@ for run in 1 2 3 4; do
     #feat "$fsf_file"
     chmod 775 -R "${corral}/sub-${subject}/transforms"
 
-    mv ${fmriprep_dir}/sub-${subject}/univ/inverse* ${base}
+
     
     echo "saving first level output to native directory"
     mkdir "${base}/${roi_tag}out_run${run}.feat/native"
