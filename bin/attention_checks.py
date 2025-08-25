@@ -9,7 +9,7 @@ import argparse
 
 
 def main(corr, sub):
-    out_file = Path(corr) / "beh" / "attention_checks_by_run.csv"
+    out_file = Path(corr) / "beh" / "attention_checks_by_run_new.csv"
     out_file.parent.mkdir(parents=True, exist_ok=True)
 
     if out_file.exists():
@@ -28,7 +28,7 @@ def main(corr, sub):
     for coll_run in range(1, 5):
         data = pd.read_table(func_dir / f'sub-{sub}_task-collector_run-0{coll_run}_events.tsv')
         # 2 where no attention check, 1 where there is
-        resp_data = data[data['response'] == 1]
+        resp_data = data[data['odd'] == 1]
         acc = np.mean(resp_data['acc'])
         rt = np.mean(resp_data['response_time'])
         master.loc[len(master)] = [sub, 'collector', coll_run, acc, rt]
