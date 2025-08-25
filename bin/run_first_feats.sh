@@ -41,7 +41,7 @@ mkdir -p ${base}
 for run in 1 2 3 4; do
   # to try out new boundary ...
     rm -R "${base}/${roi_tag}out_run${run}.feat"
-    rm -R "${base}/2ndlevel_inverse_boundary.gfeat"
+    #rm -R "${base}/2ndlevel_inverse_boundary.gfeat"
 
     echo "running first level analysis for sub ${subject} run ${run}..."
 
