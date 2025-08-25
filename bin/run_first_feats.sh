@@ -40,15 +40,17 @@ mkdir -p ${base}
 
 for run in 1 2 3 4; do
   # to try out new boundary ...
-    rm -R "${base}/${roi_tag}out_run${run}.feat"
+    #rm -R "${base}/${roi_tag}out_run${run}.feat"
     #rm -R "${base}/2ndlevel_inverse_boundary.gfeat"
 
     echo "running first level analysis for sub ${subject} run ${run}..."
 
     #fsf_file=${fsf_base}/sub-${subject}-univ-${type}_${roi_tag}first_run-0${run}.fsf
     fsf_file=${fsf_base}/sub-${subject}-univ-${type}_first_run-0${run}.fsf
-    feat "$fsf_file"
+    #feat "$fsf_file"
     chmod 775 -R "${corral}/sub-${subject}/transforms"
+
+    mv ${fmriprep_dir}/sub-${subject}/univ/inverse* ${base}
     
     echo "saving first level output to native directory"
     mkdir "${base}/${roi_tag}out_run${run}.feat/native"
