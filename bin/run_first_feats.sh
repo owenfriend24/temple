@@ -37,8 +37,12 @@ fi
 
 mkdir -p ${base}
 
+rm -R "${base}/2ndlevel_ppi_sl-univ_hip.gfeat"
+
+
 for run in 1 2 3 4; do
   # to try out new boundary ...
+    rm -R "${base}/sl-univ_hip_out_run${run}.feat"
     #rm -R "${base}/${roi_tag}out_run${run}.feat"
     #rm -R "${base}/2ndlevel_inverse_boundary.gfeat"
 
@@ -135,3 +139,5 @@ for run in 1 2 3 4; do
 
     updatefeatreg "${base}/${roi_tag}out_run${run}.feat" -pngs
 done
+
+feat "${corral}/sub-${subject}/univ/ppi/sub-${subject}-univ-ppi_sl-univ_hip_second_level.fsf"
