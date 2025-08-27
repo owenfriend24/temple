@@ -140,4 +140,4 @@ for run in 1 2 3 4; do
     updatefeatreg "${base}/${roi_tag}out_run${run}.feat" -pngs
 done
 
-feat "${corral}/sub-${subject}/univ/ppi/sub-${subject}-univ-ppi_sl-posthip_univ-second_level.fsf"
+feat "${corral}/sub-${subject}/univ/ppi/sub-${subject}-univ-ppi_sl-posthip_univ_second_level.fsf"
