@@ -51,8 +51,8 @@ def main(sub, file_type):
             for index, row in col_run.iterrows():
                 if row['position'] == 1:
                     con = 1
-                elif row['position'] == 3:
-                    con = -1
+                elif row['position'] in [2,3]:
+                    con = -0.5
                 else:
                     con = 0
                 contrast.loc[len(contrast)] = [row['onset'], row['duration'], con]
@@ -65,8 +65,8 @@ def main(sub, file_type):
             for index, row in col_run.iterrows():
                 if row['position'] == 1:
                     con = -1
-                elif row['position'] == 3:
-                    con = 1
+                elif row['position'] in [2, 3]:
+                    con = 0.5
                 else:
                     con = 0
                 contrast_inv.loc[len(contrast_inv)] = [row['onset'], row['duration'], con]
@@ -76,10 +76,10 @@ def main(sub, file_type):
             # task file - 1.0 for timepoints we're interested in, 0.0 for times we're not (basically just excluding B items)
             task = pd.DataFrame(columns = ['onset', 'duration', 'contrast'])
             for index, row in col_run.iterrows():
-                if row['position'] == 2:
-                    con = 0
-                else:
+                if row['position'] in [1, 2, 3]:
                     con = 1
+                else:
+                    con = 0
                 task.loc[len(task)] = [row['onset'], row['duration'], con]
             out = f'{ppi_dir}/sub-{sub}_task-collector_run-0{run}_task.txt'
             task.to_csv(out, sep='\t', header=False, index=False)
