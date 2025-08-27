@@ -37,8 +37,6 @@ fi
 
 mkdir -p ${base}
 
-mv ${fmriprep_dir}/sub-${subject}/univ/inverse* ${base}
-
 for run in 1 2 3 4; do
   # to try out new boundary ...
     #rm -R "${base}/${roi_tag}out_run${run}.feat"

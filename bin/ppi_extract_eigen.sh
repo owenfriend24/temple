@@ -18,6 +18,8 @@ elif [ "$roi" == "univ_post_hip" ]; then
     mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/sl_masks/func-${roi}.nii.gz"
 elif [ "$roi" == "sl-AC_ant" ]; then
     mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/sl_masks/sl-AC_ant.nii.gz"
+elif [ "$roi" == "sl-univ_hip" ]; then
+    mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/sl_masks/sl-univ_hip.nii.gz"
 else
     echo "Error: Unknown ROI '$roi'"
     exit 1
