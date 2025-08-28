@@ -51,8 +51,8 @@ def main(sub, file_type):
             for index, row in col_run.iterrows():
                 if row['position'] == 1:
                     con = 1
-                elif row['position']  == 3: #in [2,3]:
-                    con = -1
+                elif row['position'] in [2,3]:
+                    con = -0.5
                 else:
                     con = 0
                 contrast.loc[len(contrast)] = [row['onset'], row['duration'], con]
@@ -76,7 +76,7 @@ def main(sub, file_type):
             # task file - 1.0 for timepoints we're interested in, 0.0 for times we're not (basically just excluding B items)
             task = pd.DataFrame(columns = ['onset', 'duration', 'contrast'])
             for index, row in col_run.iterrows():
-                if row['position'] in [1, 3]:
+                if row['position'] in [1, 2, 3]:
                     con = 1
                 else:
                     con = 0
