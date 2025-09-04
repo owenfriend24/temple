@@ -7,24 +7,12 @@ computes per-subject alignment-to-adult plus plots.
 
 Assumptions:
 - Root directory (hard-coded below) contains:
-    ROOT/sub-temple###/mds/_post_RSM_z.npy
-  where _post_RSM_z.npy is a 12x12 Fisher-z correlation matrix saved by your subject script.
-- temple_utils provides:
-    get_children(), get_adolescents(), get_adults()  (subject IDs)
-    get_age_years(sub_id) -> float                   (chronological age in years)
-  If your age function lives elsewhere, adjust the import below.
-
-Outputs (written to ROOT):
-- group-ADULT_RSM.csv, group-ADULT_RDM.csv, group-ADULT_mds_coords.csv
-- group-child_RSM.csv, group-child_RDM.csv, group-child_mds_coords.csv
-- group-adolescent_RSM.csv, group-adolescent_RDM.csv, group-adolescent_mds_coords.csv
-- group-adult_RSM.csv, group-adult_RDM.csv, group-adult_mds_coords.csv
-- group-ADULT_mds_plot.png                          (12-item scatter with labels)
-- alignment_vs_age.png                               (distance-to-adult vs age scatter)
-- subject_alignment_to_adult.csv                     (subject, group, age_years, alignment, distance)
+    ROOT/sub-temple###/mds/_post_RSM_z_{mask_type}.npy
+  where that .npy is a 12x12 Fisher-z correlation matrix saved by your subject script.
 """
 
 from pathlib import Path
+import argparse
 import numpy as np
 import pandas as pd
 from sklearn.manifold import MDS
@@ -44,11 +32,9 @@ ROOT = Path("/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/")
 def inv_fisher_z(z: np.ndarray) -> np.ndarray:
     return np.tanh(z)
 
-
-def load_rsm_z(root_dir: Path, subject: str) -> np.ndarray:
+def load_rsm_z(root_dir: Path, subject: str, mask_type: str) -> np.ndarray:
     subj_dir = f"/{root_dir}/sub-{subject}/mds"
-    arr = np.load(f"{subj_dir}/_post_RSM_z.npy")
-
+    arr = np.load(f"{subj_dir}/_post_RSM_z_{mask_type}.npy")
     if arr.shape != (12, 12):
         raise ValueError(f"Bad shape for {subject}: {arr.shape} (expected 12x12)")
     return arr
@@ -67,9 +53,9 @@ def spearman_r(x: np.ndarray, y: np.ndarray) -> float:
     yr = pd.Series(y).rank(method="average").to_numpy()
     return pearson_r(xr, yr)
 
-def average_group_rsm(root_dir: Path, subjects) -> tuple[np.ndarray, np.ndarray]:
+def average_group_rsm(root_dir: Path, subjects, mask_type: str) -> tuple[np.ndarray, np.ndarray]:
     """Average in z-space; return (group_RSM, group_RDM)."""
-    z_mats = [load_rsm_z(root_dir, s) for s in subjects]
+    z_mats = [load_rsm_z(root_dir, s, mask_type) for s in subjects]
     mean_z = np.mean(np.stack(z_mats, axis=0), axis=0)
     group_rsm = inv_fisher_z(mean_z)
     np.fill_diagonal(group_rsm, 1.0)
@@ -87,7 +73,7 @@ def save_group_outputs(root_dir: Path, name: str, rsm: np.ndarray, rdm: np.ndarr
     dfc["stimulus"] = np.arange(1, 13)
     dfc.to_csv(root_dir / f"group-{name}_mds_coords.csv", index=False)
 
-def plot_adult_mds(root_dir: Path, coords: np.ndarray):
+def plot_adult_mds(root_dir: Path, coords: np.ndarray, mask_type):
     """Scatter the 12 adult items with labels 1..12."""
     plt.figure(figsize=(6, 6), dpi=150)
     plt.scatter(coords[:, 0], coords[:, 1])
@@ -98,10 +84,11 @@ def plot_adult_mds(root_dir: Path, coords: np.ndarray):
     plt.ylabel("MDS2")
     plt.gca().set_aspect("equal", adjustable="datalim")
     plt.tight_layout()
-    plt.savefig(root_dir / "group-ADULT_mds_plot.png")
+    plt.savefig(root_dir / f"group_mds/group-ADULT_mds_plot_{mask_type}.png")
     plt.close()
 
-def main():
+def main(args):
+    mask_type = args.mask_type
 
     children = get_children()
     adolescents = get_adolescents()
@@ -119,10 +106,10 @@ def main():
     }
 
     # Adult reference RSM/RDM + MDS (always saved)
-    adult_rsm, adult_rdm = average_group_rsm(ROOT, adults)
+    adult_rsm, adult_rdm = average_group_rsm(ROOT, adults, mask_type)
     adult_coords = run_mds_precomputed(adult_rdm, random_state=0)
     save_group_outputs(ROOT, "ADULT", adult_rsm, adult_rdm, adult_coords)
-    plot_adult_mds(ROOT, adult_coords)
+    plot_adult_mds(ROOT, adult_coords, mask_type)
 
     # Vectorized adult off-diagonals (in r-space) for alignment
     tri_idx = tri_offdiag_indices(12)
@@ -133,7 +120,7 @@ def main():
         if not subjects:
             print(f"[WARN] No subjects found for group '{gname}'")
             continue
-        grp_rsm, grp_rdm = average_group_rsm(ROOT, subjects)
+        grp_rsm, grp_rdm = average_group_rsm(ROOT, subjects, mask_type)
         grp_coords = run_mds_precomputed(grp_rdm, random_state=0)
         save_group_outputs(ROOT, gname, grp_rsm, grp_rdm, grp_coords)
 
@@ -141,7 +128,7 @@ def main():
     rows = []
     for gname, subjects in groups.items():
         for sub in subjects:
-            sub_rsm = inv_fisher_z(load_rsm_z(ROOT, sub))
+            sub_rsm = inv_fisher_z(load_rsm_z(ROOT, sub, mask_type))
             np.fill_diagonal(sub_rsm, 1.0)
             sub_vec = sub_rsm[tri_idx].astype(float)
             align = pearson_r(sub_vec, adult_vec)   # default = Pearson
@@ -155,7 +142,7 @@ def main():
                 "distance_to_adult": dist,
             })
 
-    out_csv = ROOT / "group_mds/subject_alignment_to_adult.csv"
+    out_csv = ROOT / f"group_mds/subject_alignment_to_adult_{masktype}.csv"
     df = pd.DataFrame(rows)
     df.to_csv(out_csv, index=False)
     print(f"[OK] Wrote group RSM/RDMs, MDS coords, plots, and per-subject alignment scores to {ROOT}")
@@ -171,4 +158,7 @@ def main():
     plt.close()
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Aggregate RSMs by group and compute alignment-to-adult.")
+    parser.add_argument("--mask_type", required=True, help="e.g., b_hip, b_hip_ant, b_hip_post")
+    args = parser.parse_args()
+    main(args)

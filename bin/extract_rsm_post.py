@@ -70,8 +70,8 @@ def main(subject, data_dir, mask_type):
     np.fill_diagonal(mean_rsm, 1.0)
 
     # Save Fisher-z RSM (preferred for later aggregation)
-    out_npy = f"{out_dir}/_post_RSM_z.npy"
-    out_csv = f"{out_dir}/_post_RSM_z.csv"
+    out_npy = f"{out_dir}/_post_RSM_{mask_type}_z.npy"
+    out_csv = f"{out_dir}/_post_RSM_{mask_type}_z.csv"
     np.save(out_npy, mean_z)
     pd.DataFrame(mean_z).to_csv(out_csv, index=False, header=False)
 
