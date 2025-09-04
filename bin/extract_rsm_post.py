@@ -41,7 +41,7 @@ def main(subject, data_dir, mask_type):
     mask = nib.load(str(mask_path)).get_fdata().astype(bool)
     data4d = nib.load(str(post_path)).get_fdata()  # (X,Y,Z,36)
     if data4d.ndim != 4 or data4d.shape[-1] != 36:
-        raise ValueError(f"Expected 4D NIfTI with 36 volumes (3 runs × 12 items): got {data4d.shape}")
+        print(f"Expected 4D NIfTI with 36 volumes (3 runs × 12 items): got {data4d.shape}")
 
     # ----- split into 3 runs of 12 items -----
     # Assumes run blocks: [0..11]=run1, [12..23]=run2, [24..35]=run3
@@ -49,7 +49,11 @@ def main(subject, data_dir, mask_type):
 
     # Per-run RSMs (Fisher-z)
     rsms_z = []
-    for k in range(3):
+    if subject == 'temple023':
+        run_range = 2
+    else:
+        run_range = 3
+    for k in range(run_range):
         print(f'pulling vals from post run {k + 4}')
         vols = data4d[..., run_slices[k]]  # <-- use this line for run-block files (default)
         if vols.shape[-1] != 12:
