@@ -1,3 +1,4 @@
+import pandas as pd
 
 def get_children():
     children =  [34, 41, 53, 64, 65, 66, 68, 69, 70, 78,
@@ -19,3 +20,12 @@ def get_adults():
 
 def get_all_subjects():
     return get_children() + get_adolescents() + get_adults()
+
+def get_age_years(subject):
+    ref = pd.read_csv('/home1/09123/ofriend/analysis/temple/bin/templates/randomise_measures.csv')
+    sub_lab = f"temple{subject:03d}"
+    sub_ref = ref[ref['subject'] == sub_lab]
+    age = sub_ref.age.values[0]
+    return age
+
+
