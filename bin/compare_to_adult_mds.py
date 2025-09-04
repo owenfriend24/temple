@@ -45,7 +45,7 @@ def inv_fisher_z(z: np.ndarray) -> np.ndarray:
     return np.tanh(z)
 
 def normalize_subject_id(s):
-    return f"sub-temple{s:03d}"
+    return f"sub-temple{int(s):03d}"
 
 def load_rsm_z(root_dir: Path, subject: str) -> np.ndarray:
     subj_dir = f"/root_dir/{normalize_subject_id(subject)}/mds"
