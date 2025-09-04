@@ -102,10 +102,15 @@ def plot_adult_mds(root_dir: Path, coords: np.ndarray):
     plt.close()
 
 def main():
-    # Build groups from temple_utils
+
     children = get_children()
     adolescents = get_adolescents()
     adults = get_adults()
+
+    # Keep only subject numbers >= 56
+    children = [s for s in children if int(re.search(r'(\d+)', str(s)).group()) >= 56]
+    adolescents = [s for s in adolescents if int(re.search(r'(\d+)', str(s)).group()) >= 56]
+    adults = [s for s in adults if int(re.search(r'(\d+)', str(s)).group()) >= 56]
 
     groups = {
         "child": children,
