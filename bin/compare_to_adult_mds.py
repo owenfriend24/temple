@@ -159,6 +159,6 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Aggregate RSMs by group and compute alignment-to-adult.")
-    parser.add_argument("--mask_type", required=True, help="e.g., b_hip, b_hip_ant, b_hip_post")
+    parser.add_argument("mask_type",  help="e.g., b_hip, b_hip_ant, b_hip_post")
     args = parser.parse_args()
     main(args)
