@@ -34,7 +34,7 @@ def inv_fisher_z(z: np.ndarray) -> np.ndarray:
 
 def load_rsm_z(root_dir: Path, subject: str, mask_type: str) -> np.ndarray:
     subj_dir = f"/{root_dir}/sub-{subject}/mds"
-    arr = np.load(f"{subj_dir}/_post_RSM_z_{mask_type}.npy")
+    arr = np.load(f"{subj_dir}/_post_RSM_{mask_type}_z.npy")
     if arr.shape != (12, 12):
         raise ValueError(f"Bad shape for {subject}: {arr.shape} (expected 12x12)")
     return arr
