@@ -66,12 +66,12 @@ def run_mds_precomputed(rdm: np.ndarray, random_state: int = 0) -> np.ndarray:
     mds = MDS(n_components=2, dissimilarity="precomputed", random_state=random_state)
     return mds.fit_transform(rdm)  # (12, 2)
 
-def save_group_outputs(root_dir: Path, name: str, rsm: np.ndarray, rdm: np.ndarray, coords: np.ndarray):
-    pd.DataFrame(rsm).to_csv(root_dir / f"group-{name}_RSM.csv", index=False, header=False)
-    pd.DataFrame(rdm).to_csv(root_dir / f"group-{name}_RDM.csv", index=False, header=False)
+def save_group_outputs(root_dir: Path, name: str, rsm: np.ndarray, rdm: np.ndarray, coords: np.ndarray, mask_type):
+    pd.DataFrame(rsm).to_csv(root_dir / f"group_mds/group-{name}_RSM_{mask_type}.csv", index=False, header=False)
+    pd.DataFrame(rdm).to_csv(root_dir / f"group_mds/group-{name}_RDM_{mask_type}.csv", index=False, header=False)
     dfc = pd.DataFrame(coords, columns=["MDS1", "MDS2"])
     dfc["stimulus"] = np.arange(1, 13)
-    dfc.to_csv(root_dir / f"group-{name}_mds_coords.csv", index=False)
+    dfc.to_csv(root_dir / f"group_mds/group-{name}_mds_coords_{mask_type}.csv", index=False)
 
 def plot_adult_mds(root_dir: Path, coords: np.ndarray, mask_type):
     """Scatter the 12 adult items with labels 1..12."""
@@ -108,7 +108,7 @@ def main(args):
     # Adult reference RSM/RDM + MDS (always saved)
     adult_rsm, adult_rdm = average_group_rsm(ROOT, adults, mask_type)
     adult_coords = run_mds_precomputed(adult_rdm, random_state=0)
-    save_group_outputs(ROOT, "ADULT", adult_rsm, adult_rdm, adult_coords)
+    save_group_outputs(ROOT, "ADULT", adult_rsm, adult_rdm, adult_coords, mask_type)
     plot_adult_mds(ROOT, adult_coords, mask_type)
 
     # Vectorized adult off-diagonals (in r-space) for alignment
@@ -122,7 +122,7 @@ def main(args):
             continue
         grp_rsm, grp_rdm = average_group_rsm(ROOT, subjects, mask_type)
         grp_coords = run_mds_precomputed(grp_rdm, random_state=0)
-        save_group_outputs(ROOT, gname, grp_rsm, grp_rdm, grp_coords)
+        save_group_outputs(ROOT, gname, grp_rsm, grp_rdm, grp_coords, mask_type)
 
     # Per-subject alignment to adults (Pearson; distance = 1 - r)
     rows = []
@@ -154,7 +154,7 @@ def main(args):
     plt.ylabel("Distance to Adult Group (1 − Pearson r)")
     plt.title("Distance to Adult Representational Geometry vs. Age")
     plt.tight_layout()
-    plt.savefig(ROOT / "group_mds/alignment_vs_age.png")
+    plt.savefig(ROOT / f"group_mds/alignment_vs_age_{mask_type}.png")
     plt.close()
 
 if __name__ == "__main__":
