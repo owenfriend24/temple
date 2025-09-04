@@ -23,8 +23,7 @@ def get_all_subjects():
 
 def get_age_years(subject):
     ref = pd.read_csv('/home1/09123/ofriend/analysis/temple/bin/templates/randomise_measures.csv')
-    sub_lab = f"temple{subject:03d}"
-    sub_ref = ref[ref['subject'] == sub_lab]
+    sub_ref = ref[ref['subject'] == subject]
     age = sub_ref.age.values[0]
     return age
 

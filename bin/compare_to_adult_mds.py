@@ -44,11 +44,9 @@ ROOT = Path("/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/")
 def inv_fisher_z(z: np.ndarray) -> np.ndarray:
     return np.tanh(z)
 
-def normalize_subject_id(s):
-    return f"sub-temple{int(s):03d}"
 
 def load_rsm_z(root_dir: Path, subject: str) -> np.ndarray:
-    subj_dir = f"/root_dir/{normalize_subject_id(subject)}/mds"
+    subj_dir = f"/root_dir/sub-{subject}/mds"
     arr = np.load(f"{subj_dir}/_post_RSM_z.npy")
 
     if arr.shape != (12, 12):
@@ -105,9 +103,9 @@ def plot_adult_mds(root_dir: Path, coords: np.ndarray):
 
 def main():
     # Build groups from temple_utils
-    children = [normalize_subject_id(s) for s in get_children()]
-    adolescents = [normalize_subject_id(s) for s in get_adolescents()]
-    adults = [normalize_subject_id(s) for s in get_adults()]
+    children = get_children()
+    adolescents = get_adolescents()
+    adults = get_adults()
 
     groups = {
         "child": children,
@@ -143,9 +141,9 @@ def main():
             sub_vec = sub_rsm[tri_idx].astype(float)
             align = pearson_r(sub_vec, adult_vec)   # default = Pearson
             dist = 1.0 - align
-            age = float(get_age_years(normalize_subject_id(sub)))
+            age = float(get_age_years((sub)))
             rows.append({
-                "subject": normalize_subject_id(sub),
+                "subject": (sub),
                 "group": gname,
                 "age_years": age,
                 "alignment_to_adult": align,
