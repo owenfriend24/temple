@@ -142,7 +142,7 @@ def main(args):
                 "distance_to_adult": dist,
             })
 
-    out_csv = ROOT / f"group_mds/subject_alignment_to_adult_{masktype}.csv"
+    out_csv = ROOT / f"group_mds/subject_alignment_to_adult_{mask_type}.csv"
     df = pd.DataFrame(rows)
     df.to_csv(out_csv, index=False)
     print(f"[OK] Wrote group RSM/RDMs, MDS coords, plots, and per-subject alignment scores to {ROOT}")
