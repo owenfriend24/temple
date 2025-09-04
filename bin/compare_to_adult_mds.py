@@ -7,7 +7,7 @@ computes per-subject alignment-to-adult plus plots.
 
 Assumptions:
 - Root directory (hard-coded below) contains:
-    ROOT/sub-temple###/mds/_post_RSM_z_{mask_type}.npy
+    ROOT/sub-temple###/mds/_post_RSM_{mask_type}_z.npy
   where that .npy is a 12x12 Fisher-z correlation matrix saved by your subject script.
 """
 
@@ -67,6 +67,7 @@ def run_mds_precomputed(rdm: np.ndarray, random_state: int = 0) -> np.ndarray:
     return mds.fit_transform(rdm)  # (12, 2)
 
 def save_group_outputs(root_dir: Path, name: str, rsm: np.ndarray, rdm: np.ndarray, coords: np.ndarray, mask_type):
+    (root_dir / "group_mds").mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rsm).to_csv(root_dir / f"group_mds/group-{name}_RSM_{mask_type}.csv", index=False, header=False)
     pd.DataFrame(rdm).to_csv(root_dir / f"group_mds/group-{name}_RDM_{mask_type}.csv", index=False, header=False)
     dfc = pd.DataFrame(coords, columns=["MDS1", "MDS2"])
@@ -75,6 +76,7 @@ def save_group_outputs(root_dir: Path, name: str, rsm: np.ndarray, rdm: np.ndarr
 
 def plot_adult_mds(root_dir: Path, coords: np.ndarray, mask_type):
     """Scatter the 12 adult items with labels 1..12."""
+    (root_dir / "group_mds").mkdir(parents=True, exist_ok=True)
     plt.figure(figsize=(6, 6), dpi=150)
     plt.scatter(coords[:, 0], coords[:, 1])
     for i, (x, y) in enumerate(coords, start=1):
@@ -105,15 +107,22 @@ def main(args):
         "adult": adults,
     }
 
-    # Adult reference RSM/RDM + MDS (always saved)
-    adult_rsm, adult_rdm = average_group_rsm(ROOT, adults, mask_type)
+    # ----- Adult reference via z-stack (enables LOAO) -----
+    adult_z_list = [load_rsm_z(ROOT, s, mask_type) for s in adults]
+    adult_z_stack = np.stack(adult_z_list, axis=0) if len(adult_z_list) else np.empty((0,12,12))
+    adult_mean_z  = adult_z_stack.mean(axis=0) if adult_z_stack.size else np.zeros((12,12))
+    adult_rsm     = inv_fisher_z(adult_mean_z)
+    np.fill_diagonal(adult_rsm, 1.0)
+    adult_rdm     = 1.0 - adult_rsm
+
+    # Adult MDS & outputs
     adult_coords = run_mds_precomputed(adult_rdm, random_state=0)
     save_group_outputs(ROOT, "ADULT", adult_rsm, adult_rdm, adult_coords, mask_type)
     plot_adult_mds(ROOT, adult_coords, mask_type)
 
-    # Vectorized adult off-diagonals (in r-space) for alignment
+    # Vectorized adult off-diagonals (in r-space) for default reference
     tri_idx = tri_offdiag_indices(12)
-    adult_vec = adult_rsm[tri_idx].astype(float)
+    adult_vec_default = adult_rsm[tri_idx].astype(float)
 
     # Compute & save each group’s outputs (RSM/RDM/MDS)
     for gname, subjects in groups.items():
@@ -124,21 +133,33 @@ def main(args):
         grp_coords = run_mds_precomputed(grp_rdm, random_state=0)
         save_group_outputs(ROOT, gname, grp_rsm, grp_rdm, grp_coords, mask_type)
 
-    # Per-subject alignment to adults (Pearson; distance = 1 - r)
+    # Per-subject alignment to adults (Pearson; distance = 1 - r), LOAO for adults
     rows = []
     for gname, subjects in groups.items():
         for sub in subjects:
             sub_rsm = inv_fisher_z(load_rsm_z(ROOT, sub, mask_type))
             np.fill_diagonal(sub_rsm, 1.0)
             sub_vec = sub_rsm[tri_idx].astype(float)
-            align = pearson_r(sub_vec, adult_vec)   # default = Pearson
+
+            # Reference vector: LOAO if subject is adult and >1 adult available
+            if (sub in adults) and (adult_z_stack.shape[0] > 1):
+                idx = adults.index(sub)
+                loo_mean_z = (adult_z_stack.sum(axis=0) - adult_z_stack[idx]) / (adult_z_stack.shape[0] - 1)
+                ref_rsm = inv_fisher_z(loo_mean_z); np.fill_diagonal(ref_rsm, 1.0)
+                ref_vec = ref_rsm[tri_idx].astype(float)
+            else:
+                ref_vec = adult_vec_default
+
+            align = pearson_r(sub_vec, ref_vec)   # r
+            align_z = np.arctanh(np.clip(align, -0.999999, 0.999999))
             dist = 1.0 - align
-            age = float(get_age_years((sub)))
+            age = float(get_age_years(sub))
             rows.append({
-                "subject": (sub),
+                "subject": sub,
                 "group": gname,
                 "age_years": age,
                 "alignment_to_adult": align,
+                "alignment_to_adult_z": align_z,
                 "distance_to_adult": dist,
             })
 
@@ -146,6 +167,14 @@ def main(args):
     df = pd.DataFrame(rows)
     df.to_csv(out_csv, index=False)
     print(f"[OK] Wrote group RSM/RDMs, MDS coords, plots, and per-subject alignment scores to {ROOT}")
+
+    # Long-format CSV for mixed model (RDM rows; later append ISC)
+    long_df = df[["subject", "group", "age_years", "alignment_to_adult_z"]].copy()
+    long_df["mask_type"] = mask_type
+    long_df["measure"] = "RDM"
+    long_df = long_df.rename(columns={"alignment_to_adult_z": "z_value"})
+    long_out = ROOT / f"group_mds/representational_alignment_long_{mask_type}.csv"
+    long_df.to_csv(long_out, index=False)
 
     # Plot distance vs. age
     plt.figure(figsize=(7, 5), dpi=150)
