@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 import re
 
 from temple_utils.get_age_groups import get_children, get_adolescents, get_adults
-from temple_utils.get_age_groups import get_age_years  # adjust if your age function is elsewhere
+from temple_utils.get_age_groups import get_age_years
 
 # ---------- Config ----------
 ROOT = Path("/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/")
