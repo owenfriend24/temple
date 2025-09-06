@@ -36,7 +36,19 @@ if [[ $subj_id == "temple_037" ]] || [[ $subj_id == "temple_042" ]]; then
         -o "$bids_dir" \
         --minmeta \
         --files "$subj_raw_dir"/*/*/* \
-        --overwrite 
+        --overwrite
+
+elif [[ $subj_id == "temple_131" ]] ; then
+    singularity run "$image" \
+        -s "$subject" \
+        -f "$heuristic" \
+        -b \
+        -o "$bids_dir" \
+        --minmeta \
+        --files /work/09123/ofriend/ls6/temple/sourcedata2/temple_131/*/*/* \
+          /work/09123/ofriend/ls6/temple/sourcedata2/temple_13111*/*/* \
+        --overwrite
+
 else
     singularity run "$image" \
         -s "$subject" \
