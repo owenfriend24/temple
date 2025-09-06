@@ -37,13 +37,12 @@ fi
 
 mkdir -p ${base}
 
-rm -R "${base}/2ndlevel_ppi_sl-posthip_univ.gfeat"
+
 
 
 for run in 1 2 3 4; do
   # to try out new boundary ...
-    rm -R "${base}/sl-posthip_univ_out_run${run}.feat"
-    rm -R "${base}/sl-AC_ant_out_run${run}.feat"
+
     #rm -R "${base}/${roi_tag}out_run${run}.feat"
     #rm -R "${base}/2ndlevel_inverse_boundary.gfeat"
 

@@ -30,7 +30,7 @@ set fmri(featwatcher_yn) 0
 set fmri(sscleanup_yn) 0
 
 # Output directory
-set fmri(outputdir) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/beeeeeeebooooop"
+set fmri(outputdir) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/2ndlevel_boundary"
 
 # TR(s)
 set fmri(tr) 3
@@ -82,13 +82,13 @@ set fmri(regunwarp_yn) 0
 set fmri(gdc) ""
 
 # EPI dwell time (ms)
-set fmri(dwell) 0.0
+set fmri(dwell) 70.0
 
 # EPI TE (ms)
-set fmri(te) 0.0
+set fmri(te) 33.0
 
 # % Signal loss threshold
-set fmri(signallossthresh) 10
+set fmri(signallossthresh) 0.1
 
 # Unwarp direction
 set fmri(unwarp_dir) y-
@@ -106,10 +106,10 @@ set fmri(st) 0
 set fmri(st_file) ""
 
 # BET brain extraction
-set fmri(bet_yn) 1
+set fmri(bet_yn) 0
 
 # Spatial smoothing FWHM (mm)
-set fmri(smooth) 5
+set fmri(smooth) 0
 
 # Intensity normalization
 set fmri(norm_yn) 0
@@ -118,7 +118,7 @@ set fmri(norm_yn) 0
 set fmri(perfsub_yn) 0
 
 # Highpass temporal filtering
-set fmri(temphp_yn) 1
+set fmri(temphp_yn) 0
 
 # Lowpass temporal filtering
 set fmri(templp_yn) 0
@@ -239,7 +239,7 @@ set fmri(reghighres_search) 90
 set fmri(reghighres_dof) BBR
 
 # Registration to standard image?
-set fmri(regstandard_yn) 1
+set fmri(regstandard_yn) 0
 
 # Use alternate reference images?
 set fmri(alternateReference_yn) 0
@@ -263,7 +263,7 @@ set fmri(regstandard_nonlinear_yn) 0
 set fmri(regstandard_nonlinear_warpres) 10
 
 # High pass filter cutoff
-set fmri(paradigm_hp) 60
+set fmri(paradigm_hp) 128
 
 # Number of lower-level copes feeding into higher-level analysis
 set fmri(ncopeinputs) 1
@@ -272,16 +272,16 @@ set fmri(ncopeinputs) 1
 set fmri(copeinput.1) 1
 
 # 4D AVW data or FEAT directory (1)
-set feat_files(1) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/ppi/sl-AC_ant_out_run1.feat"
+set feat_files(1) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/out_run1.feat"
 
 # 4D AVW data or FEAT directory (2)
-set feat_files(2) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/ppi/sl-AC_ant_out_run2.feat"
+set feat_files(2) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/out_run2.feat"
 
 # 4D AVW data or FEAT directory (3)
-set feat_files(3) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/ppi/sl-AC_ant_out_run3.feat"
+set feat_files(3) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/out_run3.feat"
 
 # 4D AVW data or FEAT directory (4)
-set feat_files(4) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/ppi/sl-AC_ant_out_run4.feat"
+set feat_files(4) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/out_run4.feat"
 
 # Add confound EVs text file
 set fmri(confoundevs) 0
