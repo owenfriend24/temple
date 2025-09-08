@@ -3,7 +3,7 @@
 # Run randomise to test z-statistic images.
 
 if [[ $# -lt 2 ]]; then
-    echo "randomise_new.sh fmriprep_dir comp"
+    echo "randomise_new.sh roi comp"
     exit 1
 fi
 

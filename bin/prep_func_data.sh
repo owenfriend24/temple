@@ -21,3 +21,14 @@ python /home1/09123/ofriend/analysis/temple/bin/prep_func_data.py "${fsdir}" "${
 mni_transforms.sh $fmdir $subject
 temple_smooth.sh $fmdir $fsdir $subject "collector"
 temple_smooth.sh $fmdir $fsdir $subject "arrow"
+
+
+# do some extra post-processing/analysis steps that get done for all subjects identically
+last3="${subject: -3}"
+
+events_bids.py "/work/09123/ofriend/ls6/temple/sourcebehav" $fmdir $last3
+clean_collector.py $fmdir $subject
+clean_arrow.py $fmdir $subject
+batch_betaseries.sh $subject
+move_to_corral.sh $fmdir $subject
+prep_coronal.sh $subject
