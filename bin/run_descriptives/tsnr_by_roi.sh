@@ -24,6 +24,11 @@ if [[ "$masktype" == "b_hip_subregions" ]]; then
         "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip_body.nii.gz"
         "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip_post.nii.gz"
     )
+elif [[ "$masktype" == "b_gray_func" ]]; then
+    masks=(
+        "${fmdir}/freesurfer/sub-${subject}/mri/b_gray_func.nii.gz"
+    )
+
 elif [[ "$masktype" == "lat_hip_subregions" ]]; then
     masks=(
         "${fmdir}/sub-${subject}/masks/hip_masks/func-l_hip.nii.gz"
