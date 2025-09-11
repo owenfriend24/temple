@@ -28,6 +28,13 @@ elif [[ "$masktype" == "b_gray_func" ]]; then
     masks=(
         "${fmdir}/freesurfer/sub-${subject}/mri/b_gray_func.nii.gz"
     )
+elif [[ "$masktype" == "temple" ]]; then
+    masks=(
+        "${fmdir}/freesurfer/sub-${subject}/mri/b_gray_func.nii.gz"
+        "${fmdir}/sub-${subject}/masks/hip_masks/func-b_hip.nii.gz"
+        "${fmdir}/freesurfer/sub-${subject}/mri/out/brainmask_func_dilated.nii.gz"
+    )
+
 
 elif [[ "$masktype" == "lat_hip_subregions" ]]; then
     masks=(
