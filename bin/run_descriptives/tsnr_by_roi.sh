@@ -83,8 +83,14 @@ else
     exit 1
 fi
 
-# Loop over runs and masks
-for run in 1 2 3 4 5 6; do
+# subject missing one run of arrow
+if [ "$sub" = "temple023" ]; then
+    runs="1 2 3 4 5"
+else
+    runs="1 2 3 4 5 6"
+fi
+
+for run in $runs; do
     tsnr_file="${tsnr_dir}/arrow_run_${run}_tsnr_map.nii.gz"
 
     for mask in "${masks[@]}"; do
