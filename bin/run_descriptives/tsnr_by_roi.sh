@@ -84,7 +84,7 @@ else
 fi
 
 # subject missing one run of arrow
-if [ "$sub" = "temple023" ]; then
+if [ "$subject" = "temple023" ]; then
     runs="1 2 3 4 5"
 else
     runs="1 2 3 4 5 6"
