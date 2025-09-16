@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# generate .txt files without headers for motion confounds or for collector behavioral data
+# generate .txt files without headers for motion confounds or for arrow behavioral data
 
 from pathlib import Path
 import pandas as pd
