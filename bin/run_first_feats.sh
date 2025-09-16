@@ -141,4 +141,4 @@ for run in 1 2 3 4; do
 done
 
 #feat "${corral}/sub-${subject}/univ/ppi/sub-${subject}-univ-ppi_sl-AC_ant_second_level.fsf"
-feat "${fsf_base}/sub-${subject}-univ-${type}_${roi_tag}_second_level.fsf"
+feat "${fsf_base}/sub-${subject}-univ-${type}_${roi_tag}second_level.fsf"
