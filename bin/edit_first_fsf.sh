@@ -9,21 +9,34 @@ subject=$1
 type=$2
 # only needed for ppi analyses
 roi=$3
+omit_second=$4 # only for boundary if necessary
 
-if [ "$type" == "boundary" ]; then
-    template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/boundary_sensitivity_template.fsf
-    out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
-elif [ "$type" == "boundary_inverse" ]; then
-    template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/boundary_decrease_template.fsf
-    out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
-elif [ "$type" == "ppi" ]; then
+if [[ "$type" == "boundary" ]]; then
+    if [[ "$omit_second" == "--omit_second" ]]; then
+        template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/boundary_sensitivity_omit_second_template.fsf
+        out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
+    else
+        template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/boundary_sensitivity_template.fsf
+        out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
+    fi
+
+elif [[ "$type" == "boundary_inverse" ]]; then
+    if [[ "$omit_second" == "--omit_second" ]]; then
+        template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/boundary_decrease_omit_second_template.fsf
+        out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
+    else
+        template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/boundary_decrease_template.fsf
+        out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
+    fi
+
+elif [[ "$type" == "ppi" ]]; then
     template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/ppi_first_template.fsf
     out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/ppi
-elif [ "$type" == "ppi_inverse" ]; then
+
+elif [[ "$type" == "ppi_inverse" ]]; then
     template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/ppi_first_inverse.fsf
     out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/ppi_inverse
 fi
-
 
 mkdir -p $out_path
 

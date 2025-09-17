@@ -8,7 +8,7 @@ import os
 import argparse
 
 
-def main(sub, file_type):
+def main(sub, file_type, omit_second):
     
     # make sure to run ppi_extract_eigen in relevant roi first
 
@@ -48,11 +48,18 @@ def main(sub, file_type):
         for col_run in [c1, c2, c3, c4]:
             # boundary contrast - where is ROI demonstrating increased connectivity after boundary
             contrast = pd.DataFrame(columns = ['onset', 'duration', 'contrast'])
+            if omit_second:
+                base_comp = [3]
+                con_val = -1
+            else:
+                base_comp = [2, 3]
+                con_val = -0.5
+
             for index, row in col_run.iterrows():
                 if row['position'] == 1:
                     con = 1
-                elif row['position'] in [2,3]:
-                    con = -0.5
+                elif row['position'] in base_comp:
+                    con = con_val
                 else:
                     con = 0
                 contrast.loc[len(contrast)] = [row['onset'], row['duration'], con]
@@ -62,11 +69,18 @@ def main(sub, file_type):
 
             # inverse - where is ROI showing diminished connectivity following boundary
             contrast_inv = pd.DataFrame(columns = ['onset', 'duration', 'contrast'])
+            if omit_second:
+                base_comp = [3]
+                con_val = 1
+            else:
+                base_comp = [2, 3]
+                con_val = 0.5
+
             for index, row in col_run.iterrows():
                 if row['position'] == 1:
                     con = -1
-                elif row['position'] in [2, 3]:
-                    con = 0.5
+                elif row['position'] in base_comp:
+                    con = con_val
                 else:
                     con = 0
                 contrast_inv.loc[len(contrast_inv)] = [row['onset'], row['duration'], con]
@@ -75,8 +89,14 @@ def main(sub, file_type):
             
             # task file - 1.0 for timepoints we're interested in, 0.0 for times we're not (basically just excluding B items)
             task = pd.DataFrame(columns = ['onset', 'duration', 'contrast'])
+
+            if omit_second:
+                valid_positions = [1, 3]
+            else:
+                valid_positions = [1, 2, 3]
+
             for index, row in col_run.iterrows():
-                if row['position'] in [1, 2, 3]:
+                if row['position'] in valid_positions:
                     con = 1
                 else:
                     con = 0
@@ -85,11 +105,15 @@ def main(sub, file_type):
             task.to_csv(out, sep='\t', header=False, index=False)
             
             run+=1
-                
-            
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("sub", help="subject number e.g. temple001")
     parser.add_argument("file_type", help="motion, collector, or both")
+    parser.add_argument(
+        "--omit_second",
+        action="store_true",    # becomes True if flag is present
+        help="omit second item or not"
+    )
     args = parser.parse_args()
-    main(args.sub, args.file_type)
+    main(args.sub, args.file_type, args.omit_second)
