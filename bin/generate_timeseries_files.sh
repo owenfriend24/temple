@@ -26,7 +26,7 @@ fi
 
 # univariate
 boundary_univ_txt_files.py "${subject}" both ${acc_flag}
-edit_first_fsf.sh "${subject}" boundary ${omit_flag}
+edit_first_fsf.sh "${subject}" boundary ${roi} ${omit_flag}
 edit_second_fsf.sh "${subject}" boundary
 
 # ppi
