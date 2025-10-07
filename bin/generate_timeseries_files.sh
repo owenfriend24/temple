@@ -7,22 +7,21 @@ fi
 
 subject=$1
 roi=$2
-omit_second=$3
-weight_by_acc=$4
 
-cd /home1/09123/ofriend/analysis/temple/bin/
+omit_flag=""
+acc_flag=""
 
-if [[ "$omit_second" == "omit_second" ]]; then
-    omit_flag="--omit_second"
-else
-    omit_flag=""
-fi
-
-if [[ "$weight_by_acc" == "weight_by_acc" ]]; then
-    acc_flag="--weight_by_accuracy"
-else
-    acc_flag=""
-fi
+# Look through all args for either spelling, anywhere on the command line
+for arg in "$@"; do
+  case "$arg" in
+    --omit_second|omit_second)
+      omit_flag="--omit_second"
+      ;;
+    --weight_by_accuracy|weight_by_acc|weight_byaccuracy|weight_by)
+      acc_flag="--weight_by_accuracy"
+      ;;
+  esac
+done
 
 # univariate
 boundary_univ_txt_files.py "${subject}" both ${acc_flag}
