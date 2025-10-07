@@ -38,13 +38,12 @@ fi
 mkdir -p ${base}
 
 
-
+# delete existing files if they're already there (for now while testing code, should remove from later versions)
 rm -R "${base}/2ndlevel_${type}_${roi_tag}out_run${run}.gfeat"
 for run in 1 2 3 4; do
-  # to try out new boundary ...
 
+    # delete existing files if they're already there (for now while testing code, should remove from later versions)
     rm -R "${base}/${roi_tag}out_run${run}.feat"
-    #rm -R "${base}/2ndlevel_inverse_boundary.gfeat"
 
     echo "running first level analysis for sub ${subject} run ${run}..."
 
