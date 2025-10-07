@@ -12,6 +12,7 @@ roi=$3
 omit_second=$4 # only for boundary if necessary
 
 if [[ "$type" == "boundary" ]]; then
+  roi=""
     if [[ "$omit_second" == "--omit_second" ]]; then
         template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/boundary_sensitivity_omit_second_template.fsf
         out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
@@ -21,6 +22,7 @@ if [[ "$type" == "boundary" ]]; then
     fi
 
 elif [[ "$type" == "boundary_inverse" ]]; then
+  roi=""
     if [[ "$omit_second" == "--omit_second" ]]; then
         template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/boundary_decrease_omit_second_template.fsf
         out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
