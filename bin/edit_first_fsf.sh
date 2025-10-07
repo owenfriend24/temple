@@ -11,6 +11,8 @@ type=$2
 roi=$3
 omit_second=$4 # only for boundary if necessary
 
+echo $omit_second
+
 if [[ "$type" == "boundary" ]]; then
   roi=""
     if [[ "$omit_second" == "--omit_second" ]]; then
