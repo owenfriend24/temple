@@ -14,6 +14,7 @@ omit_second=$4 # only for boundary if necessary
 if [[ "$type" == "boundary" ]]; then
   roi=""
     if [[ "$omit_second" == "--omit_second" ]]; then
+      echo "omitting second item"
         template=/home1/09123/ofriend/analysis/temple/univ/level1_templates/boundary_sensitivity_omit_second_template.fsf
         out_path=/corral-repl/utexas/prestonlab/temple/sub-${subject}/univ/
     else
