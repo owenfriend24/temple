@@ -36,7 +36,7 @@ def main(sub, file_type, weight_by_accuracy):
         trip_master = pd.read_csv('/corral-repl/utexas/prestonlab/temple/beh/remember_by_triad.csv')
         trip_ref = trip_master[trip_master['subject'] == sub]
 
-    print('trip_ref'):
+    print('trip_ref:')
     print(trip_ref)
 
     if file_type == 'collector' or file_type == 'both':
