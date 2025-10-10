@@ -36,6 +36,9 @@ def main(sub, file_type, weight_by_accuracy):
         trip_master = pd.read_csv('/corral-repl/utexas/prestonlab/temple/beh/remember_by_triad.csv')
         trip_ref = trip_master[trip_master['subject'] == sub]
 
+    print('trip_ref'):
+    print(trip_ref)
+
     if file_type == 'collector' or file_type == 'both':
         c1 = pd.read_table(f'{func_dir}/sub-{sub}_task-collector_run-01_events_fixed.tsv')
         c2 = pd.read_table(f'{func_dir}/sub-{sub}_task-collector_run-02_events_fixed.tsv')
@@ -47,6 +50,9 @@ def main(sub, file_type, weight_by_accuracy):
             # third items in triad
             third_items = pd.DataFrame(columns = ['onset', 'duration', 'weight'])
             ref = col_run[col_run['position'] == 3]
+
+            print('pos3 ref:')
+            print(ref)
 
             for index, row in ref.iterrows():
                 if weight_by_accuracy:
@@ -62,6 +68,10 @@ def main(sub, file_type, weight_by_accuracy):
             # first items in triad
             first_items = pd.DataFrame(columns = ['onset', 'duration', 'weight'])
             ref = col_run[col_run['position'] == 1]
+
+            print('pos1 ref:')
+            print(ref)
+
             for index, row in ref.iterrows():
                 if weight_by_accuracy:
                     trip_id = row['triad']
@@ -75,6 +85,10 @@ def main(sub, file_type, weight_by_accuracy):
             
             others = pd.DataFrame(columns = ['onset', 'duration', 'weight'])
             ref = col_run[(col_run['position'] != 1) & (col_run['position'] != 3)]
+
+            print('pos2 ref:')
+            print(ref)
+
             for index, row in ref.iterrows():
                 if weight_by_accuracy:
                     trip_id = row['triad']
