@@ -11,6 +11,7 @@ export PATH=/home1/09123/ofriend/analysis/temple/bin:$PATH
 source /home1/09123/ofriend/analysis/temple/profile
 subject=$1
 
+cp -R $WORK/temple/sourcedata2/temple_135 $WORK/temple/sourcedata2/temple_1355
 
 temple_heudiconv.sh ${subject} $WORK/temple/sourcedata2 $HOME/analysis/temple/bin/temple_heuristic.py $SCRATCH/temple/new_prepro
 
