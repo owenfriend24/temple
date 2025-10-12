@@ -122,7 +122,7 @@ if __name__ == "__main__":
             slmask = f"/corral-repl/utexas/prestonlab/temple/sub-{sbj}/masks/sl_masks/{mask}_dilated.nii.gz"
 
         # Load fMRI data
-        if comparison in ['ABC', 'AC']:
+        if comparison in ['ABC', 'AC', 'AC_differentiation']:
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
         else:
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
