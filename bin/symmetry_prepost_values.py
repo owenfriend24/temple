@@ -145,7 +145,7 @@ if __name__ == "__main__":
         elif masktype == 'searchlight_dilated':
             slmask = f"/corral-repl/utexas/prestonlab/temple/sub-{sbj}/masks/sl_masks/{mask}_dilated.nii.gz"
 
-        if c_fwd in ['ABC', 'AC_differentiation']:
+        if c_fwd  == 'ABC':
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
         else:
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_{c_fwd}_items.nii.gz'), mask=slmask)

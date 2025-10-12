@@ -82,7 +82,7 @@ if __name__ == "__main__":
         raise ValueError('Invalid mask type')
 
     comp_file = comparison
-    if comparison == 'AC':
+    if comparison in ['AC', 'AC_differentiation']:
         comp_file = 'ABC'
 
     if drop_run is not None:
