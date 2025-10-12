@@ -16,6 +16,8 @@ if [ "$roi" == "b_hip" ]; then
     mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/hip_masks/func-${roi}.nii.gz"
 elif [ "$roi" == "b_hip_ant" ]; then
     mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/hip_masks/func-${roi}.nii.gz"
+elif [ "$roi" == "l_hip" ]; then
+    mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/hip_masks/func-${roi}.nii.gz"
 elif [ "$roi" == "univ_post_hip" ]; then
     mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/sl_masks/func-${roi}.nii.gz"
 elif [ "$roi" == "sl-AC_ant" ]; then
