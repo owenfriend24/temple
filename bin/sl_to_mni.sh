@@ -15,7 +15,7 @@ measure=$5
 
 #mkdir -p ${fmriprep_dir}/integration_prepost/mni_${comp}/
 
-mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/${sub}_${measure}_${comp}_${roi}_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/${roi}/${sub}_${measure}_${comp}_${roi}_z.nii.gz
+#mv ${fmriprep_dir}/integration_prepost/${measure}_${comp}/sub-${sub}/${sub}_${measure}_${comp}_${roi}_z.nii.gz ${fmriprep_dir}/integration_prepost/${measure}_${comp}/${roi}/${sub}_${measure}_${comp}_${roi}_z.nii.gz
 
 
 
