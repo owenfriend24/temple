@@ -2,20 +2,19 @@
 #
 # take MNI clusters from SL analyses and back project to subject functional space
 
-if [[ $# -lt 1 ]]; then
-    echo "Usage:  sl_masks_to_func.sh temple016 $FM AC $CORR"
+if [[ $# -lt 2 ]]; then
+    echo "Usage:  sl_masks_to_func.sh sub corr"
     exit 1
 fi
 
 sub=$1
-fmriprep_dir=$2
-corr=$3
+corr=$2
 
 mask_dir=${corr}/sub-${sub}/masks/sl_masks/
 
 mkdir -p ${mask_dir}
 
-for mask in ${fmriprep_dir}/sl/cluster_masks/*.nii.gz; do
+for mask in ${corr}/sl_clusters/clusters/*.nii.gz; do
   filename=$(basename "$mask")                     # e.g., "cluster1.nii.gz"
   maskname="${filename%%.*}"
   antsApplyTransforms -d 3 \
