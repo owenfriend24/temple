@@ -84,6 +84,8 @@ if __name__ == "__main__":
     comp_file = comparison
     if comparison in ['AC', 'AC_differentiation']:
         comp_file = 'ABC'
+    elif comparison == 'AC_weak':
+        comp_file = 'AC'
 
     if drop_run is not None:
         phase, run, triad, item = np.loadtxt(
@@ -124,6 +126,8 @@ if __name__ == "__main__":
         # Load fMRI data
         if comparison in ['ABC', 'AC', 'AC_differentiation']:
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_items.nii.gz'), mask=slmask)
+        elif comparison == 'AC_weak':
+            ds = fmri_dataset(os.path.join(betadir, f'pre_post_AC_items.nii.gz'), mask=slmask)
         else:
             ds = fmri_dataset(os.path.join(betadir, f'pre_post_{comparison}_items.nii.gz'), mask=slmask)
         ds.sa['phase'] = phase[:]
