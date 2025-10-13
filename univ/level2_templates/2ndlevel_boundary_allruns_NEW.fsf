@@ -564,7 +564,7 @@ set fmri(conname_real.1) "group mean"
 # Real contrast_real vector 1 element 1
 set fmri(con_real1.1) 1
 
-# Real contrast_real vector 1 element 2
+# Real contrast_real vector 1 element 2cd $CORR
 set fmri(con_real1.2) 1.0
 
 # Real contrast_real vector 1 element 3
