@@ -70,7 +70,7 @@ set fmri(noisear) 0.34
 # Motion correction
 # 0 : None
 # 1 : MCFLIRT
-set fmri(mc) 1
+set fmri(mc) 0
 
 # Spin-history (currently obsolete)
 set fmri(sh_yn) 0
@@ -159,7 +159,7 @@ set fmri(evs_vox) 0
 
 # Number of contrasts
 set fmri(ncon_orig) 1
-set fmri(ncon_real) 4
+set fmri(ncon_real) 5
 
 # Number of F-tests
 set fmri(nftests_orig) 0
@@ -266,10 +266,16 @@ set fmri(regstandard_nonlinear_warpres) 10
 set fmri(paradigm_hp) 128
 
 # Number of lower-level copes feeding into higher-level analysis
-set fmri(ncopeinputs) 1
+set fmri(ncopeinputs) 3
 
 # Use lower-level cope 1 for higher-level analysis
 set fmri(copeinput.1) 1
+
+# Use lower-level cope 2 for higher-level analysis
+set fmri(copeinput.2) 0
+
+# Use lower-level cope 3 for higher-level analysis
+set fmri(copeinput.3) 0
 
 # 4D AVW data or FEAT directory (1)
 set feat_files(1) "/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-temple024/univ/ppi/ROI_NAME_out_run1.feat"
@@ -564,7 +570,7 @@ set fmri(conname_real.1) "group mean"
 # Real contrast_real vector 1 element 1
 set fmri(con_real1.1) 1
 
-# Real contrast_real vector 1 element 2cd $CORR
+# Real contrast_real vector 1 element 2
 set fmri(con_real1.2) 1.0
 
 # Real contrast_real vector 1 element 3
@@ -627,6 +633,24 @@ set fmri(con_real4.3) -1.0
 # Real contrast_real vector 4 element 4
 set fmri(con_real4.4) -1.0
 
+# Display images for contrast_real 5
+set fmri(conpic_real.5) 1
+
+# Title for contrast_real 5
+set fmri(conname_real.5) "late_over"
+
+# Real contrast_real vector 5 element 1
+set fmri(con_real5.1) -1.0
+
+# Real contrast_real vector 5 element 2
+set fmri(con_real5.2) -1.0
+
+# Real contrast_real vector 5 element 3
+set fmri(con_real5.3) 1.0
+
+# Real contrast_real vector 5 element 4
+set fmri(con_real5.4) 1.0
+
 # Contrast masking - use >0 instead of thresholding?
 set fmri(conmask_zerothresh_yn) 0
 
@@ -639,6 +663,9 @@ set fmri(conmask1_3) 0
 # Mask real contrast/F-test 1 with real contrast/F-test 4?
 set fmri(conmask1_4) 0
 
+# Mask real contrast/F-test 1 with real contrast/F-test 5?
+set fmri(conmask1_5) 0
+
 # Mask real contrast/F-test 2 with real contrast/F-test 1?
 set fmri(conmask2_1) 0
 
@@ -647,6 +674,9 @@ set fmri(conmask2_3) 0
 
 # Mask real contrast/F-test 2 with real contrast/F-test 4?
 set fmri(conmask2_4) 0
+
+# Mask real contrast/F-test 2 with real contrast/F-test 5?
+set fmri(conmask2_5) 0
 
 # Mask real contrast/F-test 3 with real contrast/F-test 1?
 set fmri(conmask3_1) 0
@@ -657,6 +687,9 @@ set fmri(conmask3_2) 0
 # Mask real contrast/F-test 3 with real contrast/F-test 4?
 set fmri(conmask3_4) 0
 
+# Mask real contrast/F-test 3 with real contrast/F-test 5?
+set fmri(conmask3_5) 0
+
 # Mask real contrast/F-test 4 with real contrast/F-test 1?
 set fmri(conmask4_1) 0
 
@@ -665,6 +698,21 @@ set fmri(conmask4_2) 0
 
 # Mask real contrast/F-test 4 with real contrast/F-test 3?
 set fmri(conmask4_3) 0
+
+# Mask real contrast/F-test 4 with real contrast/F-test 5?
+set fmri(conmask4_5) 0
+
+# Mask real contrast/F-test 5 with real contrast/F-test 1?
+set fmri(conmask5_1) 0
+
+# Mask real contrast/F-test 5 with real contrast/F-test 2?
+set fmri(conmask5_2) 0
+
+# Mask real contrast/F-test 5 with real contrast/F-test 3?
+set fmri(conmask5_3) 0
+
+# Mask real contrast/F-test 5 with real contrast/F-test 4?
+set fmri(conmask5_4) 0
 
 # Do contrast masking at all?
 set fmri(conmask1_1) 0
