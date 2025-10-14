@@ -18,8 +18,8 @@ elif [ "$roi" == "b_hip_ant" ]; then
     mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/hip_masks/func-${roi}.nii.gz"
 elif [ "$roi" == "l_hip" ]; then
     mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/hip_masks/func-${roi}.nii.gz"
-elif [ "$roi" == "univ_post_hip" ]; then
-    mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/sl_masks/func-${roi}.nii.gz"
+elif [ "$roi" == "sl-AC_age_anthip" ]; then
+    mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/sl_masks/sl-AC_age_anthip.nii.gz"
 elif [ "$roi" == "sl-AB_hip" ]; then
     mask="/corral-repl/utexas/prestonlab/temple/sub-${subject}/masks/sl_masks/sl-AB_group_hip.nii.gz"
 elif [ "$roi" == "sl-univ_hip" ]; then
