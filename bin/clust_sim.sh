@@ -28,3 +28,10 @@ cd /corral-repl/utexas/prestonlab/temple/clust_sim/gm
 
 cd /corral-repl/utexas/prestonlab/temple/clust_sim/b_hip
 3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/hip_func/b_hip_func.nii.gz -acf 0.859 2.546 2.125 -nodec -prefix hip_full_univ_boundary
+
+# PPI
+cd /corral-repl/utexas/prestonlab/temple/clust_sim/gm
+3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/gm/gm_binary/prob_mask.nii.gz -acf 0.520 2.400 8.310 -nodec -prefix gm_50_PPI
+
+cd /corral-repl/utexas/prestonlab/temple/clust_sim/b_hip
+3dClustSim -mask /corral-repl/utexas/prestonlab/temple/group_masks/hip_func/b_hip_func.nii.gz -acf 0.8777 2.511 1.871 -nodec -prefix hip_full_PPI
