@@ -32,12 +32,12 @@ edit_second_fsf.sh "${subject}" boundary
 #
 
 # ignore ppi for now while testing weighted univariate
-
-if [[ -n "$roi" ]]; then
-    ppi_txt_behav.py "${subject}" both ${omit_flag}
-    ppi_extract_eigen.sh "${subject}" "${roi}"
-    edit_first_fsf.sh "${subject}" ppi "${roi}"
-    edit_first_fsf.sh "${subject}" ppi_inverse "${roi}"
-    edit_second_fsf.sh "${subject}" ppi "${roi}"
-    edit_second_fsf.sh "${subject}" ppi_inverse "${roi}"
-fi
+#
+#if [[ -n "$roi" ]]; then
+#    ppi_txt_behav.py "${subject}" both ${omit_flag}
+#    ppi_extract_eigen.sh "${subject}" "${roi}"
+#    edit_first_fsf.sh "${subject}" ppi "${roi}"
+#    edit_first_fsf.sh "${subject}" ppi_inverse "${roi}"
+#    edit_second_fsf.sh "${subject}" ppi "${roi}"
+#    edit_second_fsf.sh "${subject}" ppi_inverse "${roi}"
+#fi
