@@ -48,7 +48,6 @@ def main(sub, file_type, weight_by_accuracy):
             third_items = pd.DataFrame(columns = ['onset', 'duration', 'weight'])
             ref = col_run[col_run['position'] == 3]
 
-            print(ref)
 
             for index, row in ref.iterrows():
                 if weight_by_accuracy:
