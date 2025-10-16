@@ -21,7 +21,7 @@ if [ "$type" == "boundary" ]; then
     roi_tag=""
 elif [ "$type" == "boundary_inverse" ]; then
     base=${fmriprep_dir}/sub-${subject}/univ/univ_inverse/
-    fsf_base=${corral}/sub-${subject}/univ/univ_inverse/
+    fsf_base=${corral}/sub-${subject}/univ/
     roi_tag=""
 elif [ "$type" == "ppi" ]; then
     base=${fmriprep_dir}/sub-${subject}/univ/ppi/
