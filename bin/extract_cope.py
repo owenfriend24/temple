@@ -57,6 +57,11 @@ def main(sub, roi_path, roi_name, analysis_type, ppi_roi):
         base = f"/scratch/09123/ofriend/temple/new_prepro/derivatives/fmriprep/sub-{sub}/univ"
         if analysis_type in ['ppi', 'ppi_inverse']:
             run_dir = f'{base}/{analysis_type}/{ppi_roi}_out_run{run}.feat'
+
+
+            # for debugging - inverse and non-inverse ppi resulted in same mpfc roi's which can't be right...
+            print(run_dir)
+
         else:
             run_dir = f'{base}/out_run{run}.feat'
 
@@ -64,10 +69,16 @@ def main(sub, roi_path, roi_name, analysis_type, ppi_roi):
         os.makedirs(out_mask_dir, exist_ok=True)
         masked_pe = f'{out_mask_dir}/{roi_name}_run{run}.nii.gz'
 
+        # CHANGE FOR HIP
+        if roi_name == 'hip_bound_cope4_clust':
+            cope = 'cope4'
+        else:
+            cope = 'cope1'
+
         run_com([
             "fslmaths",
             # make sure to use cope images in native space since clusters are back-projected
-            f"{run_dir}/native/cope1.nii.gz",
+            f"{run_dir}/native/{cope}.nii.gz",
             "-mas",
             mask,
             masked_pe

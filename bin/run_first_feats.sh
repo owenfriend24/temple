@@ -49,9 +49,9 @@ for run in 1 2 3 4; do
 
    # fsf_file=${fsf_base}/sub-${subject}-univ-${type}_${roi_tag}first_run-0${run}.fsf
     fsf_file=${fsf_base}/sub-${subject}-univ-${type}_first_run-0${run}.fsf
-    if [ "$subject" == "temple016" ]; then
-      feat "$fsf_file"
-    fi
+    #if [ "$subject" == "temple016" ]; then
+    feat "$fsf_file"
+
     chmod 775 -R "${corral}/sub-${subject}/transforms"
 
     
