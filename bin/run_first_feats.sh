@@ -22,7 +22,7 @@ if [ "$type" == "boundary" ]; then
 elif [ "$type" == "boundary_inverse" ]; then
     base=${fmriprep_dir}/sub-${subject}/univ/univ_inverse/
     fsf_base=${corral}/sub-${subject}/univ/
-    roi_tag=""
+    roi_tag="inverse"
 elif [ "$type" == "ppi" ]; then
     base=${fmriprep_dir}/sub-${subject}/univ/ppi/
     fsf_base=${corral}/sub-${subject}/univ/ppi/
@@ -39,17 +39,18 @@ mkdir -p ${base}
 
 
 # delete existing files if they're already there (for now while testing code, should remove from later versions)
-rm -R "${base}/2ndlevel_${type}_${roi_tag}out_run${run}.gfeat"
+#rm -R "${base}/2ndlevel_${type}_${roi_tag}out_run${run}.gfeat"
 for run in 1 2 3 4; do
 
     # delete existing files if they're already there (for now while testing code, should remove from later versions)
-    rm -R "${base}/${roi_tag}out_run${run}.feat"
+   # rm -R "${base}/${roi_tag}out_run${run}.feat"
 
     echo "running first level analysis for sub ${subject} run ${run}..."
 
-    fsf_file=${fsf_base}/sub-${subject}-univ-${type}_${roi_tag}first_run-0${run}.fsf
+   # fsf_file=${fsf_base}/sub-${subject}-univ-${type}_${roi_tag}first_run-0${run}.fsf
     #fsf_file=${fsf_base}/sub-${subject}-univ-${type}_first_run-0${run}.fsf
-    feat "$fsf_file"
+
+    #feat "$fsf_file"
     chmod 775 -R "${corral}/sub-${subject}/transforms"
 
 
@@ -140,4 +141,4 @@ for run in 1 2 3 4; do
 done
 
 #feat "${corral}/sub-${subject}/univ/ppi/sub-${subject}-univ-ppi_sl-AC_ant_second_level.fsf"
-feat "${fsf_base}/sub-${subject}-univ-${type}_${roi_tag}second_level.fsf"
+feat "${fsf_base}/sub-${subject}-univ-${type}_${roi_tag}_second_level.fsf"
