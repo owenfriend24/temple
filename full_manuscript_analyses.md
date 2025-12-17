@@ -73,6 +73,11 @@ CODE?
 3.7. Identify continuous clusters from voxelwise permutation test and compare to null threshold derived above
 *
 
+3.8. Follow-up analyses of integration within searchlight-defined regions of interest
+```
+aggregate_integration.py ...
+```
+[manuscript_integration_analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/2_integration.md)
 
 
 ---
