@@ -6,19 +6,19 @@ Analyses are reported below in the same order that they appear in the main manus
 
 1.1. Convert raw [DICOM](https://github.com/owenfriend24/temple/blob/main/1_process_raw_data/2_extra_preprocessing_info.md) data to BIDS
 ```
-slaunch -J heudiconv "temple_heudiconv.sh {} $WORK/temple/sourcedata2 $HOME/analysis/temple/bin/temple_heuristic.py $SCRATCH/temple/new_prepro" $SUBIDS -N 1 -n 1 -r 00:30:00 -p development
+temple_heudiconv.sh $subject $raw_data_dir $heuristic_file $fmriprep_dir
 ```
 1.2. Update metadata to assign fieldmaps to corresponding functional scans
 ```
-temple_bids_post.py $SCRATCH/temple/prisma_prepro
+temple_bids_post.py $bids_dir
 ```
 1.3. Run fMRIPrep
 ```
-slaunch -J fmriprep “temple_fmriprep.sh $SCRATCH/temple/prepro_data {}" $BIDIDS -N 1 -n 1 -r 08:00:00 -p normal
+temple_fmriprep.sh $bids_dir $subject
 ```
 1.4. Post-process functional data to skullstrip, generate transformaitons to template space, smooth
 ```
-prep_func_data.sh freesurfer_dir fmriprep_dir subject
+prep_func_data.sh $freesurfer_dir $fmriprep_dir $subject
 ```
 1.5. Generate custom gray-matter mask in native space for each subject from freesurfer output
 ```
