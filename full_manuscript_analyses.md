@@ -28,7 +28,7 @@ CODE?
 CODE?
 ```
 
-## ---------------------------------------------------------------------------------------------------------
+---
 
 ## 2. Assess behavioral differences in statistical learning
 2.1. Aggregate performance on recognition task, download to local machine
