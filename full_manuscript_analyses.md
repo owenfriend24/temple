@@ -38,7 +38,9 @@ clean_remember ...
 2.2. Add subject-level info (age, sex) [jupyter_notebook]()
 2.3. Analyze developmental differences in behavioral perfomance [R notebook]()
 
-## ---------------------------------------------------------------------------------------------------------
+
+---
+
 
 ## 3. Implement searchlight analyses to identify regions in which sequence representations are integrated
 3.1. Estimate item-level activity patterns (neural representations) for each stimulus, concatenate by experimental phase [analysis logic]()
@@ -67,8 +69,13 @@ CODE?
 3.6. Permutation test to ...(more logic here)
 ```
 ```
-3.7. Identify continuous clusters from permutation test and compare to null for TCFE(?) test of significance
+3.7. Identify continuous clusters from voxelwise permutation test and compare to null threshold derived above
 *
+
+
+
+---
+
 
 ## 4. Quantify representational symmetry in anatomical regions of interest
 
