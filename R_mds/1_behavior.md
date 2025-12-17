@@ -3,7 +3,7 @@
 2025-12-17
 
 ``` r
-master <- read.csv('clean_behavior_by_triad.csv')
+master <- read.csv('data/clean_behavior_by_triad.csv')
 ```
 
 # Behavioral analyses:
