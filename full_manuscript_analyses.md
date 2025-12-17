@@ -79,6 +79,17 @@ CODE?
 
 
 ## 4. Quantify representational symmetry in anatomical regions of interest
+4.1. Extract and aggregate symmetry values across subjects by comparison, region(s)
+```
+aggregate_integration.py ???
+```
+4.2. Download master CSV to local; clean for analysis
+{jupyter nb}
+4.3. Analyze and plot developmental differences in representationl symmetry
+
+
+---
+
 
 ## 5. Time-series analyses to capture neural sensitivity to temporal structure
 
