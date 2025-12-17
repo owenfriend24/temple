@@ -2,7 +2,7 @@
 Analyses are reported below in the same order that they appear in the main manuscript (see Results, STAR Methods, Supplement for extended descriptions analysis logic and details). Pre-processing and many initial analysis stages are written to be implemented in high-performance computing environments, while final inferential statistics primarily carried out in linked Jupyter and R Notebooks. Analyses are described in greater detail within linked folders, all of which include step-by-step markdowns
 
 
-## 1. Pre- and post-process raw fMRI and behavioral data [protocol](https://github.com/owenfriend24/temple/tree/main/1_process_raw_data)
+## 1. Pre- and post-process raw fMRI and behavioral data - [protocol](https://github.com/owenfriend24/temple/tree/main/1_process_raw_data)
 1.1. Convert raw [DICOM](https://github.com/owenfriend24/temple/blob/main/1_process_raw_data/2_extra_preprocessing_info.md) data to BIDS
 ```
 slaunch -J heudiconv "temple_heudiconv.sh {} $WORK/temple/sourcedata2 $HOME/analysis/temple/bin/temple_heuristic.py $SCRATCH/temple/new_prepro" $SUBIDS -N 1 -n 1 -r 00:30:00 -p development
