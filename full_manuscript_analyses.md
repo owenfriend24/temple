@@ -77,7 +77,7 @@ CODE?
 ```
 aggregate_integration.py ...
 ```
-3.9. [manuscript_integration_analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/2_integration.md)
+*3.9. [manuscript_integration_analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/2_integration.md)*
 
 
 ---
