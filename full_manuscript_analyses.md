@@ -1,5 +1,5 @@
 # Hippocampal representations of temporal regularities increase in scale and symmetry across development
-Analyses are reported below in the same order that they appear in the main manuscript (see Results, STAR Methods, Supplement for extended descriptions analysis logic and details). Pre-processing and many initial analysis stages are written to be implemented in high-performance computing environments, while final inferential statistics primarily carried out in linked Jupyter and R Notebooks. Analyses are described in greater detail within linked folders, all of which include step-by-step markdowns
+Analyses are reported below in the same order that they appear in the main manuscript (see Results, STAR Methods, Supplement for extended descriptions analysis logic and details). Pre-processing and many initial analysis stages are written to be implemented in high-performance computing environments, while final inferential statistics and subsequent figure generation are primarily carried out in linked Jupyter and R Notebooks. Analyses are described in greater detail within linked folders, all of which include step-by-step markdowns
 
 
 ## 1. Pre- and post-process raw fMRI and behavioral data ([extended protocol](https://github.com/owenfriend24/temple/tree/main/1_process_raw_data))
