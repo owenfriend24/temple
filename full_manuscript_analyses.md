@@ -3,8 +3,8 @@ Analyses are reported below in the same order that they appear in the main manus
 
 
 ## 1. Pre- and post-process raw fMRI and behavioral data
-### [extended protocol](https://github.com/owenfriend24/temple/tree/main/1_process_raw_data)
----
+([extended protocol](https://github.com/owenfriend24/temple/tree/main/1_process_raw_data))
+
 1.1. Convert raw [DICOM](https://github.com/owenfriend24/temple/blob/main/1_process_raw_data/2_extra_preprocessing_info.md) data to BIDS
 ```
 slaunch -J heudiconv "temple_heudiconv.sh {} $WORK/temple/sourcedata2 $HOME/analysis/temple/bin/temple_heuristic.py $SCRATCH/temple/new_prepro" $SUBIDS -N 1 -n 1 -r 00:30:00 -p development
