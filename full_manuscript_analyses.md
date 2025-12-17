@@ -83,7 +83,7 @@ CODE?
 ```
 aggregate_integration.py ???
 ```
-4.2. Download master CSV to local; clean for analysis
+4.2. Download master CSV to local; clean and inspect for analysis
 {jupyter nb}
 4.3. Analyze and plot developmental differences in representationl symmetry
 
