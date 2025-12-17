@@ -8,7 +8,7 @@ Analyses are reported below in the same order that they appear in the main manus
 ```
 slaunch -J heudiconv "temple_heudiconv.sh {} $WORK/temple/sourcedata2 $HOME/analysis/temple/bin/temple_heuristic.py $SCRATCH/temple/new_prepro" $SUBIDS -N 1 -n 1 -r 00:30:00 -p development
 ```
-1.2. Update metadata to map fieldmaps to functional scans
+1.2. Update metadata to assign fieldmaps to corresponding functional scans
 ```
 temple_bids_post.py $SCRATCH/temple/prisma_prepro
 ```
