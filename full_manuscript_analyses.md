@@ -6,7 +6,9 @@ Pre-processing and many initial analysis stages are written to be implemented in
 Some analyses are described in greater detail within linked folders, all of which include their own step-by-step markdowns. Example calls to functions also provided, including example launch commands for SLURM jobs and recommended parameters for parallel (multi-subject) or more computationally intensive processing when necessary.
 
 
-## 1. Pre- and post-process raw fMRI and behavioral data using fMRIprep ([extended protocol](https://github.com/owenfriend24/temple/tree/main/1_process_raw_data))
+## 1. Pre- and post-process raw fMRI and behavioral data using fMRIprep 
+([extended protocol](https://github.com/owenfriend24/temple/tree/main/1_process_raw_data))
+
 1.1. Source project profile to set paths
 ```
 source /home1/09123/ofriend/analysis/temple/profile
@@ -76,7 +78,7 @@ batch_betaseries.sh $subject
 
 3.2. Activate RSA virtual environment (this environment is kept separate from primary analysis environment to maintain functionality for lab-native adapted PyMVPA2 packages)
 
-3.3. Run searchlight analyses by comparison and region of interest, transform to template space for group comparison [analysis_logic](https://github.com/owenfriend24/temple/blob/main/3_integration_analyses/2_rsa.md)
+3.3. Run searchlight analyses by comparison and region of interest, transform to template space for group comparison ([extended protocol](https://github.com/owenfriend24/temple/blob/main/3_integration_analyses/2_rsa.md))
 * comparison: **AB** (adjacent) or **AC** (extended)
 * rois: **hippocampus** (subject-specific hippocampal masks back-projected into nativve space; includes bilateral, left, and right) or **gm** (subject-specific gray matter mask in native space)
 * --drop_run - optional flag for subjects with any missing or excluded runs
@@ -103,7 +105,7 @@ temple_acf.sh $bids_dir $subject $fmriprep_dir $roi
 clust_sim.sh $bids_dir
 ```
 
-3.6. Implement nonparametric permutation-testing with repeated label shuffling to assess voxelwise statistical significance [analysis_logic](https://github.com/owenfriend24/temple/blob/main/3_integration_analyses/3_permutation_test.md)
+3.6. Implement nonparametric permutation-testing with repeated label shuffling to assess voxelwise statistical significance ([extended_protocol](https://github.com/owenfriend24/temple/blob/main/3_integration_analyses/3_permutation_test.md))
 * first, create .mat and .con files using FSL gui with age (de-meaned) as parametric modulator
 * next, concatenate z-maps in template space from above step into single 4D group image (in SAME ORDER as parametric modulator matrix)
 ```
