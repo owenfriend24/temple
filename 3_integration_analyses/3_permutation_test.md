@@ -1,0 +1,25 @@
+### identifying group-level clusters using FSL's randomise
+* When age is included as a parametric modulator in randomise, it is entered as a continuous regressor in the design matrix rather than as a group label. Randomise then repeatedly permutes the data relative to this design to build a null distribution for the age-related regression coefficient at each voxel. The resulting statistics test whether there is a systematic voxelwise change with age beyond what would be expected by chance, with family-wise error control across the brain.
+
+1. concatenate subject z-maps in MNI space
+* adds each subject image as a 'timepoint' (i.e., 4th dimension)
+```
+fslmerge -t group_z.nii.gz sub-temple*
+```
+
+2. create design matrices using Feat's GLM tool
+* to identify developmental differences, perform permutation testing with age as parametric modulator
+ * parametric modulators must be demeaned so that 0 reflects baseline age/performance
+* contrasts can be weighted as +1 (integration increasing w/ age) or with -1 (integration decreasing w/age)
+
+3. run randomise using parametric regressors; additionally run one-sample test to look for shared (i.e., age-invariant) representation
+* roi argument will do permutation testing within group level gray matter mask, or in bilateral hippocampus mask (in template space)
+```
+randomise.sh b_hip AB
+randomise.sh b_gray_func AC
+```
+
+4. extract cluster maps and info
+```
+cluster -i GROUP_IMAGE -t 0.99 --minextent=THRESHOLD --oindex=OUT_NAME
+```

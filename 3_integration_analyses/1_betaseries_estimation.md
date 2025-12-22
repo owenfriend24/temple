@@ -1,5 +1,5 @@
 ## Estimating betaseries images for each object during each run
-based on Jeannette Mumford's work, essentially runs a GLM for each (voxel ~ stimulus) and extracts the beta weight for the stimulus's effect on that voxel's activity
+Based on Jeannette Mumford's work, essentially runs a GLM for each (voxel ~ stimulus) and extracts the beta weight for the stimulus's effect on that voxel's activity, resulting in unique whole-brain maps for each stimulus.
 
 ### creating first level models with FSL and using design matrix to create beta images (GLM matrix for stimulus and confound measures)
 
@@ -45,8 +45,8 @@ merge_betas_drop1.sh temple0023 6
 
 
 
-
-## Alternate approach - betaseries-bids command in mindstorm (Neal's package) ###
+---
+### Alternate approach - betaseries-bids command in mindstorm (python package) 
 counfound list for fmriprep: csf:csf_derivative1:white_matter:white_matter_derivative1:trans_x:trans_x_derivative1:trans_y:trans_y_derivative1:trans_z:trans_z_derivative1:rot_x:rot_x_derivative1:rot_y:rot_y_derivative1:rot_z:rot_z_derivative1
 
 ### 1. make sure BIDS data is pre-processed, skullstripped, and smoothed
