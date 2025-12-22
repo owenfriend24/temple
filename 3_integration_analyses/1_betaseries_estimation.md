@@ -45,8 +45,8 @@ merge_betas_drop1.sh temple0023 6
 
 
 
-
-## Alternate approach - betaseries-bids command in mindstorm (Neal's package) ###
+---
+### Alternate approach - betaseries-bids command in mindstorm (python package) 
 counfound list for fmriprep: csf:csf_derivative1:white_matter:white_matter_derivative1:trans_x:trans_x_derivative1:trans_y:trans_y_derivative1:trans_z:trans_z_derivative1:rot_x:rot_x_derivative1:rot_y:rot_y_derivative1:rot_z:rot_z_derivative1
 
 ### 1. make sure BIDS data is pre-processed, skullstripped, and smoothed
