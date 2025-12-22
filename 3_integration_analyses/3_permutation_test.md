@@ -1,4 +1,5 @@
 ### identifying group-level clusters using FSL's randomise
+* When age is included as a parametric modulator in randomise, it is entered as a continuous regressor in the design matrix rather than as a group label. Randomise then repeatedly permutes the data relative to this design to build a null distribution for the age-related regression coefficient at each voxel. The resulting statistics test whether there is a systematic voxelwise change with age beyond what would be expected by chance, with family-wise error control across the brain.
 
 1. concatenate subject z-maps in MNI space
 * adds each subject image as a 'timepoint' (i.e., 4th dimension)
