@@ -46,8 +46,8 @@ slaunch -J run_2nd "feat $CORR/sub-{}/univ/sub-{}-univ-boundary_second_level.fsf
    
 
 
-## Psychophysiological interaction (PPI) - enhanced or decreased connectivity at triplet boundaries
-1. extract .txt timeseries of eigenvalue (first principal component) from selected region of interest
+## Psychophysiological interaction (PPI) - functional connectivity at triplet boundaries
+1. extract .txt timeseries of eigenvalue from selected region of interest
   * assumes subject's mask for selected ROI has already been created in native functional space
   * .txt file will be saved in sub/univ/ppi and is formatted for use in either enhanced (ppi) or decreased (ppi_inverse) connectivity analyses
   * parameters:
