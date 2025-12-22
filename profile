@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#script directory
+# source base bash profile
 source /home1/09123/ofriend/.bashrc
 
 module load freesurfer
