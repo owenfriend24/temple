@@ -34,15 +34,18 @@ prep_func_data.sh $freesurfer_dir $fmriprep_dir $subject
 ```
 slaunch -J prep "prep_func_data.sh $freesurfer_dir $fmriprep_dir {}" $subject(s) -N 1 -n $num_subjects -r 02:00:00 -p development
 ```
+
+1.5.1 Copy data from scratch to permanent directory - this will depend on cluster setup, but I pre- and post-process all fMRI data in scratch (temporary storage) to save space, and copy all relevant files to permanent storage afterwards
+
 1.6. Generate custom gray-matter mask in native space for each subject from freesurfer output
 ```
-CODE?
+create_gm_mask.sh $subject
 ```
 1.7. Generate custom hippocampal masks in native space for each subject by reverse-normalizing custom template
 ```
-CODE?
+create_hip_masks.sh $subject $bids_dir $task
 ```
-
+* task = temple, I use the same function and hippocampal masks for multiple studies which is why the task argument is built in
 ---
 
 ## 2. Assess behavioral differences in statistical learning
