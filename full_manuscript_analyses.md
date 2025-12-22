@@ -128,7 +128,7 @@ fslmaths integration_map.nii.gz -thr $cluster_index -uthr $cluster_index -bin cl
 aggregate_integration.py $measure $integration_data_dir $comparison $mask_type
 aggregate_integration.py prepost $bids_dir/integration_prepost AB searchlight
 ```
-**3.9. Confirm age differences in representational scale identified via nonparametric permutation testing above, assess consequent effect on behavior: [manuscript_integration_analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/2_integration.md)**
+3.9. Confirm age differences in representational scale identified via nonparametric permutation testing above, assess consequent effect on behavior: **[manuscript_integration_analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/2_integration.md)**
 
 ---
 
