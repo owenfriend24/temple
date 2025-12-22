@@ -1,5 +1,5 @@
 ## Estimating betaseries images for each object during each run
-based on Jeannette Mumford's work, essentially runs a GLM for each (voxel ~ stimulus) and extracts the beta weight for the stimulus's effect on that voxel's activity
+Based on Jeannette Mumford's work, essentially runs a GLM for each (voxel ~ stimulus) and extracts the beta weight for the stimulus's effect on that voxel's activity, resulting in unique whole-brain maps for each stimulus.
 
 ### creating first level models with FSL and using design matrix to create beta images (GLM matrix for stimulus and confound measures)
 
