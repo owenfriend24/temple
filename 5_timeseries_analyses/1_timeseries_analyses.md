@@ -104,18 +104,18 @@ slaunch -J run_2nd "feat $CORR/sub-{}/univ/sub-{}-univ-ppi_b_hip_second_level.fs
 * one goal of univariate and PPI analyses is to pull a subject's contrast-of-parameter-estimate (COPE) value to index individual subject-level slopes from timeseries models
 * this will be done in a specific ROI, either a significant cluster from a timeseries analyses or an a prior anatomical ROI
 * boundary sensitivity:
- * averaged COPE reflects each subject's neural sensitivity to triplet boundaries in given ROI
+` * averaged COPE reflects each subject's neural sensitivity to triplet boundaries in given ROI
 * PPI:
- * averaged COPE reflects each subject's functional connectivity within given ROI to whatever ROI was inputted in first-level PPI analyses
+` * averaged COPE reflects each subject's functional connectivity within given ROI to whatever ROI was inputted in first-level PPI analyses
 
  1. select region of interest in MNI space (significant cluster or anatomical ROI)
  2. back-project to subject's native space and extract average COPE for that ROI
  * parameters
-  * subject (e.g., temple001)
-  * roi_path - full path to MNI ROI (e.g., $WORK/wr/mni_rois/b_hip.nii.gz)
-  * roi_name - a short, descriptive name for back-projected clusters (e.g., b_hip_boundary, sl_ant_hip_ppi, sl_precuneus_inverse, etc.)
-  * analysis_type - boundary, ppi, ppi_inverse
-  * ppi_roi (optional) - roi name from initial ppi analysis if analysis_type is a ppi
+   * subject (e.g., temple001)
+   * roi_path - full path to MNI ROI (e.g., $WORK/wr/mni_rois/b_hip.nii.gz)
+   * roi_name - a short, descriptive name for back-projected clusters (e.g., b_hip_boundary, sl_ant_hip_ppi, sl_precuneus_inverse, etc.)
+   * analysis_type - boundary, ppi, ppi_inverse
+   * ppi_roi (optional) - roi name from initial ppi analysis if analysis_type is a ppi
 ```
 extract_cope.py temple001 $WORK/wr/mni_rois/b_hip.nii.gz b_hip_boundary boundary
 ```
