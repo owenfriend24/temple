@@ -66,7 +66,7 @@ clean_remember.py --by_subject AGGREGATE $bids_dir
 
 2.1.2 Add subject-level age (years and months) and sex from master participant demographics (omitted here for anonymity)
 
-2.2. Analyze developmental differences in behavioral perfomance **[manuscript behavioral analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/1_behavior.md)**
+2.2. Analyze developmental differences in behavioral perfomance: **[manuscript behavioral analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/1_behavior.md)**
 
 ---
 
@@ -128,20 +128,23 @@ fslmaths integration_map.nii.gz -thr $cluster_index -uthr $cluster_index -bin cl
 aggregate_integration.py $measure $integration_data_dir $comparison $mask_type
 aggregate_integration.py prepost $bids_dir/integration_prepost AB searchlight
 ```
-**3.9. Confirm age differences in representational scale identified via nonparametric permutation testing above, assess consequent effect on behavior [manuscript_integration_analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/2_integration.md)**
+**3.9. Confirm age differences in representational scale identified via nonparametric permutation testing above, assess consequent effect on behavior: [manuscript_integration_analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/2_integration.md)**
 
 ---
 
 
 ## 4. Quantify representational symmetry in anatomical regions of interest
 4.1. Extract and aggregate symmetry values across subjects by comparison, region(s)
+* this is the same function we use above to quantify pre-post integration, but with a differently specified comparison
+* because symmetry is a subtraction (see Schapiro et al., 2012), we cannot use a searchlight approach, and instead have to use a more conservative approach in which values are averaged across full anatomical ROIs
 ```
-aggregate_integration.py ???
+aggregate_integration.py **symmetry**  $bids_dir/integration_prepost AB lat_hip_subregions
 ```
-4.2. Download master CSV to local; clean and inspect for analysis
-{jupyter nb}
-4.3. Analyze and plot developmental differences in representationl symmetry
+4.2. Download master CSV to local; clean and inspect for analysis: [jupyter notebook](https://github.com/owenfriend24/temple/blob/main/jupyter/clean_roi_data.ipynb)
 
+4.3. Analyze and plot developmental differences in representationl symmetry: **[manuscript_symmetry_analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/3_symmetry.md)**
+
+4.4 Based on adult literature, we can also compute symmetry in hippocampal subfields, identified in subject-specific masks derived from semi-automated hippocampal segmentation with custom developmental atlas; see manuscript supplement ([extended logic](https://github.com/owenfriend24/temple/blob/main/4_anatomical_roi_analyses/3_subfield_segmentation.md))
 
 ---
 
