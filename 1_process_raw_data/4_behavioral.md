@@ -29,7 +29,6 @@ fix_arrow.py fmriprep_dir subject
 ```
 ### 4. Clean and save out memory test data
 * optional flags to pull aggregated data by subject (i.e., one accuracy score per subject) or by triad (i.e., four values per subject)
-* for some reason temple090 and temple091 not getting processed when running 'ALL' but fine individually, remember to clean_remember for them before aggregating
 ```
 clean_remember.py --by_subject --by_triad AGGREGATE $CORR
 clean_remember.py temple016 $CORR
