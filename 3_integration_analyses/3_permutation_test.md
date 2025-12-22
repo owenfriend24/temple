@@ -12,6 +12,7 @@ fslmerge -t group_z.nii.gz sub-temple*
 * contrasts can be weighted as +1 (integration increasing w/ age) or with -1 (integration decreasing w/age)
 
 3. run randomise using parametric regressors; additionally run one-sample test to look for shared (i.e., age-invariant) representation
+* roi argument will do permutation testing within group level gray matter mask, or in bilateral hippocampus mask (in template space)
 ```
 randomise.sh b_hip AB
 randomise.sh b_gray_func AC
