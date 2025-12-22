@@ -138,7 +138,7 @@ aggregate_integration.py prepost $bids_dir/integration_prepost AB searchlight
 * this is the same function we use above to quantify pre-post integration, but with a differently specified comparison
 * because symmetry is a subtraction (see Schapiro et al., 2012), we cannot use a searchlight approach, and instead have to use a more conservative approach in which values are averaged across full anatomical ROIs
 ```
-aggregate_integration.py **symmetry**  $bids_dir/integration_prepost AB lat_hip_subregions
+aggregate_integration.py symmetry  $bids_dir/integration_prepost AB lat_hip_subregions
 ```
 4.2. Download master CSV to local; clean and inspect for analysis: [jupyter notebook](https://github.com/owenfriend24/temple/blob/main/jupyter/clean_roi_data.ipynb)
 
@@ -148,9 +148,42 @@ aggregate_integration.py **symmetry**  $bids_dir/integration_prepost AB lat_hip_
 
 ---
 
-
 ## 5. Time-series analyses to capture neural sensitivity to temporal structure
+5.1. create templates in Feat to map behavioral data to functional data, convolve with canonical double-gamma hemodynamic response function, output statistical images
+* see [template directory](https://github.com/owenfriend24/temple/tree/main/univ) 
 
+5.2. create structured timeseries files to indicate stimulus identity, onset, offset, and duration during learning scans ([extended_logic](https://github.com/owenfriend24/temple/blob/main/5_timeseries_analyses/1_timeseries_analyses.md))
+* boundary sensitivity:
+```
+generate_timeseries_files.sh $subject
+```
+* connectivity/psychophysiological interaction (PPI)
+```
+generate_timeseries_files.sh $subject $seed_roi
+```
+
+5.3. run first- (within-subject, within-run) and second- (within-subject, across-run) analyses for each subject
+* includes transformation to template space for comparison across runs (and later across subjects)
+```
+run_first_feats.sh $output_dir $subject $bids_dir $type (boundary, ppi, ppi_inverse) $seed_roi
+```
+
+* parallelize for efficiency
+```
+slaunch -J feats "run_first_feats.sh $output_dir {} $bids_dir $type $seed_roi" $subject(s) -N 1 -n $num_subject -r 02:00:00 -p development
+```
+
+5.4. run third-level (across-subject) mixed-effects analysis in Feat (see [third_level_template](NEED LINK HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+
+5.5. identify cluster significance thresholds via identical approach to integration analyses and extract clusters (*see 3.5 above*)
+
+
+5.6. back-project clusters to native space and extract parameter estimates for comparison to behavior
+```
+extract_cope.py $subject $roi_path $roi_name $type
+```
+
+5.7. relate sensitivity/connectivity to behavior: **[manuscript_timeseries_analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/4_timeseries.md)**
 
 
 
