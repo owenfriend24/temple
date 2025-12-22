@@ -7,10 +7,9 @@ if [[ $# -lt 3 ]]; then
     exit 1
 fi
 
-fmriprep_dir=$1
-sub=$2
-corr=$3
-task=$4
+sub=$1
+corr=$2
+task=$3
 
 mkdir -p ${corr}/sub-${sub}/masks/hip_masks/
 
