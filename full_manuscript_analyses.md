@@ -36,6 +36,7 @@ slaunch -J prep "prep_func_data.sh $freesurfer_dir $fmriprep_dir {}" $subject(s)
 ```
 
 1.5.1 Copy data from scratch to permanent directory - this will depend on cluster setup, but I pre- and post-process all fMRI data in scratch (temporary storage) to save space, and copy all relevant files to permanent storage afterwards
+* procedural note: this means that bids_dir above this point refers to BIDS-formatted temporary storage where preliminary processing is hpapning, while bids_dir below this point refers to BIDS-formatted permanent storage where all subsequent analyses happen
 
 1.6. Generate custom gray-matter mask in native space for each subject from freesurfer output
 ```
@@ -49,9 +50,9 @@ create_hip_masks.sh $subject $bids_dir $task
 ---
 
 ## 2. Assess behavioral differences in statistical learning
-2.1. Aggregate performance on recognition task, download to local machine
+2.1. Aggregate performance on memory task, download to local machine (I use CyberDuck)
 ```
-clean_remember ...
+clean_remember.py --by_subject AGGREGATE $bids_dir
 ```
 2.2. Add subject-level info (age, sex) [jupyter_notebook]()
 2.3. Analyze developmental differences in behavioral perfomance [R notebook]()
