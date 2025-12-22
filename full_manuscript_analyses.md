@@ -173,7 +173,7 @@ run_first_feats.sh $output_dir $subject $bids_dir $type (boundary, ppi, ppi_inve
 slaunch -J feats "run_first_feats.sh $output_dir {} $bids_dir $type $seed_roi" $subject(s) -N 1 -n $num_subject -r 02:00:00 -p development
 ```
 
-5.4. run third-level (across-subject) mixed-effects analysis in Feat (see [third_level_template](NEED LINK HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+5.4. run third-level (across-subject) mixed-effects analysis in Feat (see [third level templates](https://github.com/owenfriend24/temple/tree/main/univ))
 
 5.5. identify cluster significance thresholds via identical approach to integration analyses and extract clusters (*see 3.5 above*)
 
