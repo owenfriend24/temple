@@ -50,18 +50,18 @@ create_hip_masks.sh $subject $bids_dir $task
 ---
 
 ## 2. Assess behavioral differences in statistical learning
-2.1. Aggregate performance on memory task, download to local machine (I use CyberDuck)
+2.1.1 Aggregate performance on memory task, download to local machine (I use CyberDuck)
 ```
 clean_remember.py --by_subject AGGREGATE $bids_dir
 ```
-2.2. Add subject-level info (age, sex) [jupyter_notebook]()
-2.3. Analyze developmental differences in behavioral perfomance [R notebook]()
+2.1.2 Add subject-level age (years and months) and sex from master participant demographics (omitted here for anonymity)
 
+2.2. Analyze developmental differences in behavioral perfomance **[manuscript behavioral analyses]**(https://github.com/owenfriend24/temple/blob/main/R_mds/1_behavior.md)
 
 ---
 
 
-## 3. Implement searchlight analyses to identify regions in which sequence representations are integrated
+## 3. Implement searchlight analyses to identify regions in which sequence representations are integrated at different temporal scales
 3.1. Estimate item-level activity patterns (neural representations) for each stimulus, concatenate by experimental phase [analysis logic]()
 ```
 batch_betaseries.sh $subject
