@@ -1,5 +1,9 @@
 # Hippocampal representations of temporal regularities increase in scale and symmetry across development
-Analyses are reported below in the same order that they appear in the main manuscript (see Results, STAR Methods, Supplement for extended descriptions analysis logic and details). Pre-processing and many initial analysis stages are written to be implemented in high-performance computing environments, while final inferential statistics and subsequent figure generation are primarily carried out in linked Jupyter and R Notebooks. Analyses are described in greater detail within linked folders, all of which include their own step-by-step markdowns. Example calls to functions also provided, including example launch commands for SLURM jobs and recommended parameters for parallel (multi-subject) or more computationally intensive processing when necessary.
+Analyses are reported below in the same order that they appear in the main manuscript (see Results, STAR Methods, Supplement for extended descriptions analysis logic and details). 
+
+Pre-processing and many initial analysis stages are written to be implemented in high-performance computing environments, while final inferential statistics and subsequent figure generation are primarily carried out in linked Jupyter and R Notebooks. 
+
+Some analyses are described in greater detail within linked folders, all of which include their own step-by-step markdowns. Example calls to functions also provided, including example launch commands for SLURM jobs and recommended parameters for parallel (multi-subject) or more computationally intensive processing when necessary.
 
 
 ## 1. Pre- and post-process raw fMRI and behavioral data using fMRIprep ([extended protocol](https://github.com/owenfriend24/temple/tree/main/1_process_raw_data))
@@ -15,10 +19,12 @@ temple_heudiconv.sh $subject $raw_data_dir $heuristic_file $fmriprep_dir
 ```
 slaunch -J heudiconv "temple_heudiconv {} $raw_data_dir $heuristic_file $fmriprep_dir" $subject(s) -N 1 -n $num_subjects -r 00:20:00 -p development
 ```
+
 1.3. Update metadata to assign fieldmaps to corresponding functional scans
 ```
 temple_bids_post.py $bids_dir
 ```
+
 1.4. Run fMRIPrep
 ```
 temple_fmriprep.sh $bids_dir $subject
@@ -42,6 +48,7 @@ slaunch -J prep "prep_func_data.sh $freesurfer_dir $fmriprep_dir {}" $subject(s)
 ```
 create_gm_mask.sh $subject
 ```
+
 1.7. Generate custom hippocampal masks in native space for each subject by reverse-normalizing custom template
 ```
 create_hip_masks.sh $subject $bids_dir $task
@@ -54,49 +61,72 @@ create_hip_masks.sh $subject $bids_dir $task
 ```
 clean_remember.py --by_subject AGGREGATE $bids_dir
 ```
+
 2.1.2 Add subject-level age (years and months) and sex from master participant demographics (omitted here for anonymity)
 
-2.2. Analyze developmental differences in behavioral perfomance **[manuscript behavioral analyses]**(https://github.com/owenfriend24/temple/blob/main/R_mds/1_behavior.md)
+2.2. Analyze developmental differences in behavioral perfomance **[manuscript behavioral analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/1_behavior.md)**
 
 ---
 
-
 ## 3. Implement searchlight analyses to identify regions in which sequence representations are integrated at different temporal scales
-3.1. Estimate item-level activity patterns (neural representations) for each stimulus, concatenate by experimental phase [analysis logic]()
+3.1. Estimate item-level activity patterns (neural representations) for each stimulus, concatenate by experimental phase [analysis logic](https://github.com/owenfriend24/temple/blob/main/3_integration_analyses/1_betaseries_estimation.md)
 ```
 batch_betaseries.sh $subject
 ```
-3.2. Activate RSA virtual environment (separate from primary analysis environment to maintain functionality for adapted PyMVPA2 package)
+
+3.2. Activate RSA virtual environment (this environment is kept separate from primary analysis environment to maintain functionality for lab-native adapted PyMVPA2 packages)
+
+3.3. Run searchlight analyses by comparison and region of interest, transform to template space for group comparison [analysis_logic](https://github.com/owenfriend24/temple/blob/main/3_integration_analyses/2_rsa.md)
+* comparison: **AB** (adjacent) or **AC** (extended)
+* rois: **hippocampus** (subject-specific hippocampal masks back-projected into nativve space; includes bilateral, left, and right) or **gm** (subject-specific gray matter mask in native space)
+* --drop_run - optional flag for subjects with any missing or excluded runs
+* the adapted packages we use for searchlight analyses do not always save out properly when parallelizing subjects; I recommend running one subject at a time and comparison code is vectorized to make this as efficient as possible (~2 minutes per subject)
 ```
-rsa
+temple_sl_prepost.py AB hippocampus
+sl_to_mni.sh $bids_dir AB b_hip
 ```
-3.3. Run searchlight analyses by comparison and region of interest, transform to template space for group comparison
-```
-temple_sl_prepost.py ???
-sl_to_mni.sh
-```
+
 3.4. Generate probablistic (> 50% of subjects w/ active voxels) group-level anatomical mask for cluster simulation
+* warps all native masks to template space, binarizes, and averages
+* can be done for all subs (age_group='all') or separately for 'child' or 'adult'
 ```
-CODE?
+group_masks.py $freesurfer_dir $bids_dir all
 ```
 
 3.5. Simulate null by calculating smoothness (autocorrelation) of GLM residuals within group-level anatomical mask and cluster size expected by chance
+* this step is set up to pull residuals and assess autocorrelation in same temporary storage where pre-processing is implemented (fmriprep_dir)
+* ACF coefficients outputted from temple_acf.sh should be averaged and added to clust_sim.sh for each ROI
+* clust_sim.sh will output matrices for different pairs of voxelwise/cluster thresholds. we use 2D 2nd nearest neighbor clustering with voxelwise threshold p < .01 and cluster threshold p < .05
+```
+pull_resid.py $freesurfer_dir $bids_dir $sub
+temple_acf.sh $bids_dir $subject $fmriprep_dir $roi
+clust_sim.sh $bids_dir
 ```
 
+3.6. Implement nonparametric permutation-testing with repeated label shuffling to assess voxelwise statistical significance [analysis_logic](https://github.com/owenfriend24/temple/blob/main/3_integration_analyses/3_permutation_test.md)
+* first, create .mat and .con files using FSL gui with age (de-meaned) as parametric modulator
+* next, concatenate z-maps in template space from above step into single 4D group image (in SAME ORDER as parametric modulator matrix)
+```
+randomise.sh $roi $comparison
+randomise.sh b_hip AB
 ```
 
-3.6. Permutation test to ...(more logic here)
+3.7. Identify continuous clusters from voxelwise permutation test and compare to null threshold derived above 
+* randomise outputs (1-p) maps, so threshold of 0.99 corresponds to voxelwise significance < .01
 ```
+cluster -i randomise_output.nii.gz -t 0.99 --minextent=$threshold --oindex=$integration_map.nii.gz
 ```
-3.7. Identify continuous clusters from voxelwise permutation test and compare to null threshold derived above
-*
+* save out significant clusters as binary masks
+```
+fslmaths integration_map.nii.gz -thr $cluster_index -uthr $cluster_index -bin cluster.nii.gz
+```
 
 3.8. Extract integration values (representational similarity change) within searchlight-defined regions of interest
 ```
-aggregate_integration.py ...
+aggregate_integration.py $measure $integration_data_dir $comparison $mask_type
+aggregate_integration.py prepost $bids_dir/integration_prepost AB searchlight
 ```
-**3.9. [manuscript_integration_analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/2_integration.md)**
-
+**3.9. Confirm age differences in representational scale identified via nonparametric permutation testing above, assess consequent effect on behavior [manuscript_integration_analyses](https://github.com/owenfriend24/temple/blob/main/R_mds/2_integration.md)**
 
 ---
 
