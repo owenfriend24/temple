@@ -15,6 +15,9 @@ Participants viewed implicitly structured sequences while undergoing fMRI and we
 
 ---
 
-**add image here**
+<img width="2297" height="1712" alt="Fig3_symmetry" src="https://github.com/user-attachments/assets/741ec09a-9144-4773-8957-f74fb4c31df5" />
+
+
+---
 
 Feel free to reach out to corresponding author Owen Friend at ofriend@utexas.edu with any questions!
