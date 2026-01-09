@@ -3,7 +3,7 @@ Analyses are reported below in the same order that they appear in the main manus
 
 Pre-processing and many initial analysis stages are written to be implemented in high-performance computing environments, while final inferential statistics and subsequent figure generation are primarily carried out in linked Jupyter and R Notebooks. 
 
-Some analyses are described in greater detail within linked folders, all of which include their own step-by-step markdowns. Example calls to functions also provided, including example launch commands for SLURM jobs and recommended parameters for parallel (multi-subject) or more computationally intensive processing when necessary.
+Some analyses are described in greater detail within linked folders which include their own step-by-step markdowns. Example calls to functions also provided, including example launch commands for SLURM jobs and recommended parameters for parallel (multi-subject) or more computationally intensive processing when necessary.
 
 
 ## 1. Pre- and post-process raw fMRI and behavioral data using fMRIprep 
