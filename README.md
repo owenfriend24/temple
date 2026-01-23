@@ -19,6 +19,9 @@
 ---
 
 <img width="2237" height="1387" alt="Fig2_hippocampal_rsa_NEW" src="https://github.com/user-attachments/assets/dddd4282-a71a-4023-95f1-0a2d2219be3f" />
+
+---
+
 <img width="2310" height="1718" alt="Fig3_symmetry" src="https://github.com/user-attachments/assets/630b4b85-0464-4692-a97b-217cd0184d21" />
 
 ---
