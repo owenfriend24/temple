@@ -18,7 +18,8 @@
 * HPC-compatible, fully reproducible workflows
 ---
 
-<img width="2237" height="1387" alt="Fig2_hippocampal_rsa_NEW" src="https://github.com/user-attachments/assets/dddd4282-a71a-4023-95f1-0a2d2219be3f" />
+<img width="2237" height="1387" alt="Fig2_hippocampal_rsa_NEW" src="https://github.com/user-attachments/assets/5dbde31e-3e2a-4cce-8c66-f02693545e15" />
+
 
 ---
 
