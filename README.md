@@ -23,7 +23,8 @@
 
 ---
 
-<img width="2310" height="1718" alt="Fig3_symmetry" src="https://github.com/user-attachments/assets/630b4b85-0464-4692-a97b-217cd0184d21" />
+<img width="2284" height="1560" alt="Fig3_symmetry_NEW" src="https://github.com/user-attachments/assets/6e55b7d1-fc0d-4609-8ce4-e943ee83343e" />
+
 
 ---
 
