@@ -37,19 +37,11 @@ fi
 
 mkdir -p ${base}
 
-
-# delete existing files if they're already there (for now while testing code, should remove from later versions)
-#rm -R "${base}/2ndlevel_${type}_${roi_tag}out_run${run}.gfeat"
 for run in 1 2 3 4; do
-
-    # delete existing files if they're already there (for now while testing code, should remove from later versions)
-   # rm -R "${base}/${roi_tag}out_run${run}.feat"
 
     echo "running first level analysis for sub ${subject} run ${run}..."
 
     fsf_file=${fsf_base}/sub-${subject}-univ-${type}_${roi_tag}first_run-0${run}.fsf
-    #fsf_file=${fsf_base}/sub-${subject}-univ-${type}_first_run-0${run}.fsf
-    #if [ "$subject" == "temple016" ]; then
     feat "$fsf_file"
 
     chmod 775 -R "${corral}/sub-${subject}/transforms"
@@ -72,7 +64,6 @@ for run in 1 2 3 4; do
     -n NearestNeighbor -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt"  # \
-#    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
 
     ((track=track+1))
     done
@@ -87,7 +78,6 @@ for run in 1 2 3 4; do
     -n NearestNeighbor -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt"   # \
-#    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     ((track=track+1))
     done
     
@@ -102,7 +92,6 @@ for run in 1 2 3 4; do
     -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" #\
-#    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
     
     fslreorient2std "${base}/${roi_tag}out_run${run}.feat/native/mean_func.nii.gz"
     antsApplyTransforms -d 3 -i "${base}/${roi_tag}out_run${run}.feat/native/mean_func.nii.gz" \
@@ -111,8 +100,6 @@ for run in 1 2 3 4; do
     -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
     -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" #\
-#    -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
-
 
     # mask
     echo "transforming mask"
@@ -123,8 +110,7 @@ for run in 1 2 3 4; do
      -r /home1/09123/ofriend/analysis/temple/bin/templates/MNI152_T1_func_brain.nii.gz \
      -t "${corral}/sub-${subject}/transforms/native_to_MNI_Warp.nii.gz" \
      -t "${corral}/sub-${subject}/transforms/native_to_MNI_Affine.txt" #\
-#     -t "${corral}/sub-${subject}/transforms/mask_to_func_ref_Affine.txt"
-    
+
     echo "formatting reg folder"
     # set up reg folder
     mkdir "${base}/${roi_tag}out_run${run}.feat/reg"
@@ -140,5 +126,4 @@ for run in 1 2 3 4; do
     updatefeatreg "${base}/${roi_tag}out_run${run}.feat" -pngs
 done
 
-#feat "${corral}/sub-${subject}/univ/ppi/sub-${subject}-univ-ppi_sl-AC_ant_second_level.fsf"
 feat "${fsf_base}/sub-${subject}-univ-${type}_${roi_tag}_second_level.fsf"

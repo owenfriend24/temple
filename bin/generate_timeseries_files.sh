@@ -10,8 +10,7 @@ roi=$2
 
 omit_flag=""
 acc_flag=""
-
-# Look through all args for either spelling, anywhere on the command line
+ß
 for arg in "$@"; do
   case "$arg" in
     --omit_second|omit_second)
@@ -29,10 +28,7 @@ edit_first_fsf.sh "${subject}" boundary_inverse ${roi} ${omit_flag}
 edit_second_fsf.sh "${subject}" boundary_inverse
 
 # ppi
-#
 
-# ignore ppi for now while testing weighted univariate
-#
 if [[ -n "$roi" ]]; then
     ppi_txt_behav.py "${subject}" both ${omit_flag}
     ppi_extract_eigen.sh "${subject}" "${roi}"

@@ -5,7 +5,6 @@ if [[ $# -lt 2 ]]; then
     exit 1
 fi
 
-
 subject=$1
 roi=$2
 

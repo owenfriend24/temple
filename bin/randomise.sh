@@ -17,14 +17,6 @@ elif [[ $roi == 'b_gray_func' ]]; then
 fi
 
 mkdir -p /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/randomise_out/
-#
-#randomise -i /corral-repl/utexas/prestonlab/temple//integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
-#-o /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/randomise_out/${roi}_cont_acc \
-#-d /corral-repl/utexas/prestonlab/temple/randomise_files/acc_cont.mat \
-#-t /corral-repl/utexas/prestonlab/temple/randomise_files/acc_cont.con \
-#-m $grp_mask_path \
-#-n 5000 -x --uncorrp
-
 
 randomise -i //corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/${roi}/group_z.nii.gz \
 -o /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${comp}/randomise_out/${roi}_cont_age \
@@ -38,3 +30,21 @@ randomise -i /corral-repl/utexas/prestonlab/temple/integration_prepost/mni_${com
 -m $grp_mask_path \
 -1 \
 -n 5000 -x  --uncorrp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
