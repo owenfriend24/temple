@@ -23,7 +23,7 @@ module load ants
 
 ## Skullstripping T1 image
 ```
-fslmaths {T1w anatomical image path} -mas {gray matter mask} {outpath}
+fslmaths {T1w anatomical image path} -mas {brain mask} {outpath}
 ```
 * -mas flag defines next input as mask
   
@@ -57,18 +57,14 @@ ANTS 3 -m PR[ /corral-repl/utexas/prestonlab/xmaze/batch/templates/MNI152_T1_1mm
 ```
 
 ## Use warp images and affine files to move between anatomical, functional, and MNI space
-```
-WarpImageMultiTransform 3 {image to be moved} {outpath for new image} -R {MNI 1mm image} {warp image} {space to move image to (e.g. MNI 1mm brain)} --use-BSpline
-```
-### Anatomical to MNI
-example:
-```
-WarpImageMultiTransform 3 ./anat/sub-temple058_desc-preproc_T1w_ss.nii.gz ./anat/sub-temple058_desc-preproc_T1w_MNI.nii.gz -R /corral-repl/utexas/prestonlab/xmaze/batch/templates/MNI152_T1_1mm_brain.nii.gz ./affines/brain2MNI_Warp.nii.gz ./affines/brain2MNI_Affine.txt --use-BSpline
-```
+* order matters! reverse the affine/warp when reverse-normalizing from reference space back to moving space
 
-## Functional space (i.e. BOLD data, z stat map) to MNI
+Moving to Reference:
 ```
-WarpImageMultiTransform 3 ./func/sub-temple058_task-collector_run-01_space-T1w_boldref.nii.gz ./func/sub-temple058_task-collector_run-01_space-T1w_boldref_toMNI.nii.gz -R /corral-repl/utexas/prestonlab/xmaze/batch/templates/MNI152_T1_1mm_brain.nii.gz ./affines/brain2MNI_Warp.nii.gz ./affines/brain2MNI_Affine.txt --use-BSpline
+antsApplyTransforms -d 3 -i input_image -o output_image -r reference_image -t native_to_MNI_Warp.nii.gz -t native_to_MNI_Affine.txt -n NearestNeighbor
 ```
-
+Reference to Moving:
+```
+antsApplyTransforms -d 3 -i input_image -o output_image -r reference_image -t [native_to_MNI_Affine.txt,1]  -t native_to_MNI_InverseWarp.nii.gz -n NearestNeighbor
+```
 

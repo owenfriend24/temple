@@ -2,19 +2,50 @@
 * aka temple (TEMPoral LEarning experiment)
   
 ---
+### Highlights:
+* Quantified how neural representations of temporal structure evolve across development using multivariate similarity measures
+* Operationalized statistical learning as changes in representational structure before vs. after experiencing predictable continuous sequences
+* Modeled learning-related neural dynamics using univariate time-series analyses and interaction-based connectivity models (PPI)
+* Linked multivariate representational structure to changes in human behavior across development
+* End-to-end, reproducible analysis pipeline from fMRI preprocessing through inferential statistics and figure generation
+
+### Methods at a glance:
+* Representational similarity analysis (RSA) on multivariate fMRI time series
+* Pre/post learning comparisons of neural representations
+* Model-based quantification of temporal scale, symmetry, and transition sensitivity
+* Data-driven and ROI-based feature extraction
+* Mixed-effects modeling and permutation-/simulation-based inference
+* HPC-compatible, fully reproducible workflows
+---
+
+<img width="2237" height="1387" alt="Fig2_hippocampal_rsa_NEW" src="https://github.com/user-attachments/assets/5dbde31e-3e2a-4cce-8c66-f02693545e15" />
+
+
+---
+
+<img width="2284" height="1560" alt="Fig3_symmetry_NEW" src="https://github.com/user-attachments/assets/6e55b7d1-fc0d-4609-8ce4-e943ee83343e" />
+
+
+---
+
 
 ### Repo description: 
-This repository includes code and documentation for all steps of analysis, from fMRI preprocessing to inferential statistics and figure generation. Anonymized data derived from pre-processed fMRI data is also provided to replicate all reported analyses and figures from the manuscript. For step-by-step analyses as they appear in the manuscript, see [full_manuscript_analyses.md](https://github.com/owenfriend24/temple/blob/main/full_manuscript_analyses.md) which includes embedded links to additional markdown files and Jupyter/R notebooks as well as example calls to all functions within high-performance computing environments (see [bin](https://github.com/owenfriend24/temple/tree/main/bin)). Additional markdown files include extended analysis description and logic, but see [main manuscript]() for conceptual descriptions and justificaiton of all hypotheses and analyses.
+This repository includes end-to-end code and documentation for all analyses, from fMRI preprocessing through inferential statistics and figure generation. Anonymized, subject-level datasets derived from preprocessed fMRI data are provided, enabling full replication of all reported analyses and figures.
+
+For step-by-step, manuscript-aligned analyses, see **[full_manuscript_analyses.md](https://github.com/owenfriend24/temple/blob/main/full_manuscript_analyses.md)** which includes embedded links to modular markdown files and Jupyter/R notebooks, as well as example function calls optimized for high-performance computing environments. 
+
+Additional markdown files include extended analysis description and logic, but see **[main manuscript]()** for conceptual descriptions and justification of all hypotheses and analyses.
 
 ---
 
 ### Project description:
-Statistical learning - the extraction of regularities from experience - is a fundamental function of the episodic memory system that supports prediction and memory-guided behavior. In adults, hippocampus supports statistical learning by linking (integrating) experiences which regularly co-occur in time, representing them with more similar activity patterns. Although neuroimaging work suggests that the hippocampus is also engaged during statistical learning in infants, behavioral evidence indicates that the ability to learn temporal regularities improves significantly across childhood and adolescence. Critically, little is known about how neural representations of statistical structure change across development, or how such representational differences relate to memory behavior. This study examined developmental differences in the neural representation of temporal regularities in children (7–9 years), early adolescents (10–12 years), and adults during a statistical learning task. 
+Statistical learning - the extraction of regularities from experience - is a fundamental function of the episodic memory system that supports prediction and memory-guided behavior. In adults, hippocampus supports statistical learning by integrating experiences that reliably co-occur in time, resulting in more similar neural representations for temporally linked items. Although neuroimaging work suggests that the hippocampus is also engaged during statistical learning in infants, behavioral evidence shows that the ability to learn temporal regularities improves significantly across childhood and adolescence. How the underlying neural representations which give rise to these behavioral differences change across development, however, remains untested. This study quantifies developmental differences in the neural representation of temporal regularities in children (7–9 years), early adolescents (10–12 years), and adults during a statistical learning task. 
 
-Participants viewed implicitly structured sequences while undergoing fMRI and were later tested on memory for statistical regularities. Representational similarity during item presentations before and after learning provided direct measures of learning-related representational change. We identified three primary mechanisms underlying developmental gains in statistical learning: 1) representational scale, reflecting integration across broader temporal windows, 2) representational symmetry, reflecting bidirectional linking of sequences in forward and backward time, and 3) transition sensitivity, reflecting neural tracking of transitional probabilities and associated hippocampal–cortical interactions. We demonstrate that children show more local, forward-only representations consistent with earlier-maturing posterior hippocampal function, whereas adolescents and adults exhibit broader, bidirectional representations supported by anterior hippocampus and hippocampal–prefrontal coupling. By jointly characterizing representational scale, symmetry, and transition sensitivity across age groups, this study provides a mechanistic account of how neural representations of temporal structure develop and how these changes support continued improvements in statistical learning into adulthood.
+Participants viewed implicitly structured sequences while undergoing fMRI and were later tested on memory for statistical regularities. Representational similarity during item presentations before and after learning provided direct measures of learning-related representational change. We identified three primary mechanisms underlying developmental gains in statistical learning: 1) representational scale, reflecting integration across broader temporal windows, 2) representational symmetry, reflecting bidirectional linking of sequences in forward and backward time, and 3) transition sensitivity, reflecting neural tracking of transitional probabilities and associated hippocampal–cortical interactions. We demonstrate that children show more local, forward-only representations consistent with earlier-maturing posterior hippocampal function, whereas adolescents and adults exhibit broader, bidirectional representations supported by anterior hippocampus and hippocampal–prefrontal coupling. 
+
+By formalizing the development statistical learning as a problem of representational structure and flexibility, this study provides a mechanistic account of how neural representations of temporal structure develop and how these changes support continued improvements in  learning and memory into adulthood.
 
 ---
 
-**add image here**
 
 Feel free to reach out to corresponding author Owen Friend at ofriend@utexas.edu with any questions!

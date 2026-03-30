@@ -10,244 +10,93 @@ data <- read.csv('data/timeseries_data.csv')
 
 # Timeseries analyses
 
-## boundary sensitivity ~ behavior
+## behavior ~ boundary sensitivity/functional connectivity
 
 ``` r
-m <- lm(accuracy ~ age + dlpfc_univ, data = data)
+# include all ROI's in one master model in case of covariance between multiple ROI's
+m <- lm(accuracy ~ age + hip_bound_cope4_clust + dlpfc_univ + b_ifg_univ + precuneus_univ + ang_gyrus_univ + insula_univ + lat_par_univ + parietal_univ + post_cing_univ + ppi_ifg + ppi_dlpfc, data = data)
 summary(m)
 ```
 
     ## 
     ## Call:
-    ## lm(formula = accuracy ~ age + dlpfc_univ, data = data)
+    ## lm(formula = accuracy ~ age + hip_bound_cope4_clust + dlpfc_univ + 
+    ##     b_ifg_univ + precuneus_univ + ang_gyrus_univ + insula_univ + 
+    ##     lat_par_univ + parietal_univ + post_cing_univ + ppi_ifg + 
+    ##     ppi_dlpfc, data = data)
     ## 
     ## Residuals:
     ##      Min       1Q   Median       3Q      Max 
-    ## -0.38178 -0.15162 -0.00047  0.13382  0.34534 
+    ## -0.34136 -0.09681  0.00084  0.11784  0.37174 
     ## 
     ## Coefficients:
-    ##              Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept) 0.6369064  0.0502371  12.678  < 2e-16 ***
-    ## age         0.0087763  0.0032464   2.703  0.00825 ** 
-    ## dlpfc_univ  0.0010929  0.0003213   3.402  0.00101 ** 
+    ##                         Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)            6.775e-01  5.461e-02  12.408   <2e-16 ***
+    ## age                    5.000e-03  3.576e-03   1.398   0.1661    
+    ## hip_bound_cope4_clust -1.157e-04  2.011e-04  -0.575   0.5668    
+    ## dlpfc_univ             4.470e-04  3.521e-04   1.270   0.2080    
+    ## b_ifg_univ             1.411e-03  5.699e-04   2.475   0.0155 *  
+    ## precuneus_univ         8.384e-04  3.441e-04   2.437   0.0171 *  
+    ## ang_gyrus_univ         1.569e-03  2.159e-03   0.727   0.4696    
+    ## insula_univ           -9.070e-04  5.506e-04  -1.647   0.1036    
+    ## lat_par_univ          -3.516e-03  3.393e-03  -1.036   0.3033    
+    ## parietal_univ          1.006e-03  1.309e-03   0.769   0.4443    
+    ## post_cing_univ         6.961e-05  5.255e-04   0.132   0.8950    
+    ## ppi_ifg                1.075e-03  5.126e-04   2.098   0.0392 *  
+    ## ppi_dlpfc             -7.692e-04  1.181e-03  -0.651   0.5167    
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
-    ## Residual standard error: 0.1901 on 87 degrees of freedom
-    ## Multiple R-squared:  0.2815, Adjusted R-squared:  0.265 
-    ## F-statistic: 17.04 on 2 and 87 DF,  p-value: 5.691e-07
+    ## Residual standard error: 0.1713 on 77 degrees of freedom
+    ## Multiple R-squared:  0.4841, Adjusted R-squared:  0.4037 
+    ## F-statistic:  6.02 on 12 and 77 DF,  p-value: 2.692e-07
+
+## plot transition sensitivity ~ behavior
 
 ``` r
-m <- lm(accuracy ~ age + b_ifg_univ, data = data)
-summary(m)
-```
-
-    ## 
-    ## Call:
-    ## lm(formula = accuracy ~ age + b_ifg_univ, data = data)
-    ## 
-    ## Residuals:
-    ##      Min       1Q   Median       3Q      Max 
-    ## -0.39036 -0.15204  0.02581  0.15668  0.37442 
-    ## 
-    ## Coefficients:
-    ##              Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept) 0.6126372  0.0502391  12.194  < 2e-16 ***
-    ## age         0.0092028  0.0034592   2.660  0.00929 ** 
-    ## b_ifg_univ  0.0010547  0.0004097   2.574  0.01174 *  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 0.1951 on 87 degrees of freedom
-    ## Multiple R-squared:  0.2435, Adjusted R-squared:  0.2261 
-    ## F-statistic:    14 on 2 and 87 DF,  p-value: 5.341e-06
-
-``` r
-m <- lm(accuracy ~ age + precuneus_univ, data = data)
-summary(m)
-```
-
-    ## 
-    ## Call:
-    ## lm(formula = accuracy ~ age + precuneus_univ, data = data)
-    ## 
-    ## Residuals:
-    ##      Min       1Q   Median       3Q      Max 
-    ## -0.38879 -0.15464  0.01417  0.14811  0.45858 
-    ## 
-    ## Coefficients:
-    ##                 Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)    0.6044842  0.0472484  12.794  < 2e-16 ***
-    ## age            0.0093308  0.0031660   2.947 0.004115 ** 
-    ## precuneus_univ 0.0007612  0.0002210   3.444 0.000884 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 0.1898 on 87 degrees of freedom
-    ## Multiple R-squared:  0.2836, Adjusted R-squared:  0.2671 
-    ## F-statistic: 17.22 on 2 and 87 DF,  p-value: 5.011e-07
-
-## plot boundary sensitivity ~ behavior
-
-``` r
-data_z <- data %>%
+data_plot <- data %>%
   mutate(
-    dlpfc_z = as.numeric(scale(dlpfc_univ)),
-    ifg_z = as.numeric(scale(b_ifg_univ)),
-    precuneus_z = as.numeric(scale(precuneus_univ)))
+    b_ifg_univ_z = scale(b_ifg_univ),
+    precuneus_univ_z = scale(precuneus_univ),
+    ppi_ifg_z = scale(ppi_ifg)
+  )
 
-m_dlpfc <- lm(accuracy ~ age + dlpfc_z, data = data_z)
-m_ifg <- lm(accuracy ~ age + ifg_z, data = data_z)
-m_precuneus <- lm(accuracy ~ age + precuneus_z, data = data_z)
 
-# prediction helper function (use for ppi plotting as well)
-mean_age <- mean(data_z$age, na.rm = TRUE)
-make_pred <- function(model, xvar, label) {
-  xseq <- seq(
-    min(data_z[[xvar]], na.rm = TRUE),
-    max(data_z[[xvar]], na.rm = TRUE),
-    length.out = 100)
-
-  newdata <- data.frame(
-    age = rep(mean_age, length(xseq)))
-  newdata[[xvar]] <- xseq
-
-  preds <- predict(model, newdata, interval = "confidence")
-
-  data.frame(
-    boundary_sensitivity_z = xseq,
-    fit = preds[, "fit"],
-    lwr = preds[, "lwr"],
-    upr = preds[, "upr"],
-    region = label)
-}
-
-pred_df <- bind_rows(
-  make_pred(m_dlpfc, "dlpfc_z", "dlPFC"),
-  make_pred(m_ifg, "ifg_z", "IFG"),
-  make_pred(m_precuneus, "precuneus_z", "precuneus"))
-
-ggplot(pred_df,
-       aes(x = boundary_sensitivity_z,
-           y = fit,
-           color = region,
-           fill  = region)) +
-  geom_ribbon(aes(ymin = lwr, ymax = upr),
-              alpha = 0.25, color = NA) +
-  geom_line(linewidth = 1.2) +
-  scale_color_manual(values = c(
-    "dlPFC" = "#497436",
-    "IFG" = "#64A343",
-    "precuneus" = "#86C440")) +
-  scale_fill_manual(values = c(
-    "dlPFC" = "#497436",
-    "IFG" = "#64A343",
-    "precuneus" = "#86C440")) +
+# Plot 1: IFG and precuneus overlaid (boundary sensitivity)
+data_long <- data_plot %>%
+  dplyr::select(accuracy, b_ifg_univ_z, precuneus_univ_z) %>%
+  pivot_longer(cols = c(b_ifg_univ_z, precuneus_univ_z),
+               names_to = "ROI", values_to = "Activation")
+ggplot(data_long, aes(x = Activation, y = accuracy, color = ROI, fill = ROI)) +
+  geom_smooth(method = "lm", se = TRUE) +
+  scale_fill_manual(
+    values = c("b_ifg_univ_z" = "#579d42", "precuneus_univ_z" = "#a6cd57")) +
+  scale_color_manual(
+    values = c("b_ifg_univ_z" = "#579d42", "precuneus_univ_z" = "#a6cd57")) +
   labs(
-    x = "Boundary sensitivity (z)",
-    y = "Triplet memory (%)",
-    color = "Region",
-    fill = "Region") +
-  theme_classic(base_size = 16) +
-  scale_y_continuous(
-    labels = label_number(scale = 100, accuracy = 1),
-    limits = c(0.4, 1.1))
+    x = "Boundary sensitivity (z-score)",
+    y = "Triplet memory",
+    color = "ROI"
+  ) +
+  theme_classic()
 ```
 
-![](4_timeseries_files/figure-gfm/plot_boundary_behave-1.png)<!-- -->
+    ## `geom_smooth()` using formula = 'y ~ x'
 
-## psychophysiological interaction (functional connectivity) ~ behavior
-
-``` r
-m <- lm(accuracy ~ age + ppi_ifg, data = data)
-summary(m)
-```
-
-    ## 
-    ## Call:
-    ## lm(formula = accuracy ~ age + ppi_ifg, data = data)
-    ## 
-    ## Residuals:
-    ##      Min       1Q   Median       3Q      Max 
-    ## -0.42344 -0.17100  0.02107  0.15941  0.39027 
-    ## 
-    ## Coefficients:
-    ##              Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept) 0.6269768  0.0543253  11.541  < 2e-16 ***
-    ## age         0.0109099  0.0032644   3.342  0.00123 ** 
-    ## ppi_ifg     0.0016818  0.0007594   2.214  0.02941 *  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 0.1969 on 87 degrees of freedom
-    ## Multiple R-squared:  0.2293, Adjusted R-squared:  0.2116 
-    ## F-statistic: 12.95 on 2 and 87 DF,  p-value: 1.198e-05
+![](4_timeseries_files/figure-gfm/plot_behave-1.png)<!-- -->
 
 ``` r
-m <- lm(accuracy ~ age + ppi_lpfc, data = data)
-summary(m)
-```
-
-    ## 
-    ## Call:
-    ## lm(formula = accuracy ~ age + ppi_lpfc, data = data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -0.4301 -0.1691  0.0219  0.1559  0.4224 
-    ## 
-    ## Coefficients:
-    ##              Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept) 0.6365990  0.0526377  12.094  < 2e-16 ***
-    ## age         0.0104132  0.0031796   3.275  0.00152 ** 
-    ## ppi_lpfc    0.0009138  0.0003231   2.828  0.00581 ** 
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 0.1937 on 87 degrees of freedom
-    ## Multiple R-squared:  0.2544, Adjusted R-squared:  0.2373 
-    ## F-statistic: 14.85 on 2 and 87 DF,  p-value: 2.838e-06
-
-### Plot directional integration by age group
-
-``` r
-data_z <- data %>%
-  mutate(
-    lpfc_z = as.numeric(scale(ppi_lpfc)),
-    ifg_z = as.numeric(scale(ppi_ifg)))
-
-m_lpfc <- lm(accuracy ~ age + lpfc_z, data = data_z)
-m_ifg  <- lm(accuracy ~ age + ifg_z, data = data_z)
-
-pred_df <- bind_rows(
-  make_pred(m_lpfc, "lpfc_z", "lPFC"),
-  make_pred(m_ifg, "ifg_z", "IFG"))
-
-ggplot(pred_df,
-       aes(x = boundary_sensitivity_z,
-           y = fit,
-           color = region,
-           fill  = region)) +
-  geom_ribbon(aes(ymin = lwr, ymax = upr),
-              alpha = 0.25, color = NA) +
-  geom_line(linewidth = 1.2) +
-  scale_color_manual(values = c(
-    "lPFC" = "#1968B2",
-    "IFG" = "#4997D2")) +
-  scale_fill_manual(values = c(
-    "lPFC" = "#1968B2",
-    "IFG" = "#4997D2")) +
+# Plot 2: connectivity with anterior hippocampus (psychophysiological interaction)
+# -------------------------
+ggplot(data_plot, aes(x = ppi_ifg_z, y = accuracy)) +
+  geom_smooth(method = "lm", se = TRUE, color = "steelblue", fill = "steelblue") +
   labs(
-    x = "aHPC Connectivity (z)",
-    y = "Triplet memory (%)",
-    color = "Region",
-    fill = "Region") +
-  theme_classic(base_size = 16) +
-  scale_y_continuous(
-  labels = label_number(scale = 100, accuracy = 1),
-  breaks = seq(0.2, 1, by = 0.2),
-  limits = c(0.1, 1.1)
-)
+    x = "Anterior hippocampal connectivity (z-score)",
+    y = "Triplet memory"
+  ) +
+  theme_classic()
 ```
 
-![](4_timeseries_files/figure-gfm/plot_ppi_behave-1.png)<!-- -->
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](4_timeseries_files/figure-gfm/plot_behave-2.png)<!-- -->

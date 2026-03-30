@@ -1,114 +1,235 @@
 2_integration
 ================
-2025-12-17
-
-``` r
-master <- read.csv('data/integration_data.csv')
-```
+2026-02-02
 
 # Integration analyses:
 
-## Adjacent pair analyses - primary
+## Having identified age differences in neural integration via searchlight and non-parametric permutation testing approaches, here we test the effect of integration on memory
 
 ``` r
-data <- subset(master, roi == 'sl-AB_group_hip')
-data$age_group <- relevel(factor(data$age_group), ref = 'child')
+data <- read.csv('data/master_rsa_merged.csv')
+```
 
-# posterior integration of adjacent pairs does not vary by age group
-m <- lmer(difference ~ age_group + scanner + (1|subject), data = data)
+``` r
+# start with full model, pare down non-significant effects
+# effect does not vary or interact with comparison (AB, AC), suggesting general effect of integration on behavior independent of scale
+# as such, primary age difference is in which comparison is actually being integrated, not the consequence of such integration on memory
+
+m <- lmer(triplet_accuracy ~ age_group * difference * comparison + (1|subject), data = data)
 summary(m)
 ```
 
     ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
     ## lmerModLmerTest]
-    ## Formula: difference ~ age_group + scanner + (1 | subject)
+    ## Formula: triplet_accuracy ~ age_group * difference * comparison + (1 |  
+    ##     subject)
     ##    Data: data
     ## 
-    ## REML criterion at convergence: 17.9
+    ## REML criterion at convergence: -327.1
     ## 
     ## Scaled residuals: 
     ##     Min      1Q  Median      3Q     Max 
-    ## -3.5336 -0.5399  0.0303  0.5588  2.8190 
+    ## -3.7765 -0.4222  0.0790  0.4236  2.3993 
     ## 
     ## Random effects:
     ##  Groups   Name        Variance Std.Dev.
-    ##  subject  (Intercept) 0.00113  0.03362 
-    ##  Residual             0.05739  0.23956 
-    ## Number of obs: 360, groups:  subject, 90
+    ##  subject  (Intercept) 0.03368  0.1835  
+    ##  Residual             0.02589  0.1609  
+    ## Number of obs: 720, groups:  subject, 90
     ## 
     ## Fixed effects:
-    ##                      Estimate Std. Error        df t value Pr(>|t|)   
-    ## (Intercept)          0.060607   0.022931 85.999991   2.643  0.00976 **
-    ## age_groupadolescent -0.024848   0.032949 85.999991  -0.754  0.45283   
-    ## age_groupadult      -0.004335   0.032732 85.999991  -0.132  0.89493   
-    ## scannerskyra        -0.029875   0.031432 85.999991  -0.950  0.34454   
+    ##                                          Estimate Std. Error         df t value
+    ## (Intercept)                             7.998e-01  3.662e-02  1.032e+02  21.839
+    ## age_groupadult                          8.617e-02  5.186e-02  1.037e+02   1.662
+    ## age_groupchild                         -1.958e-01  5.189e-02  1.039e+02  -3.773
+    ## difference                              4.667e-02  6.740e-02  6.390e+02   0.692
+    ## comparisonAC                            5.038e-05  2.090e-02  6.213e+02   0.002
+    ## age_groupadult:difference               2.881e-02  9.444e-02  6.388e+02   0.305
+    ## age_groupchild:difference               1.253e-01  9.144e-02  6.366e+02   1.370
+    ## age_groupadult:comparisonAC             6.091e-04  2.976e-02  6.214e+02   0.020
+    ## age_groupchild:comparisonAC             1.029e-02  2.974e-02  6.214e+02   0.346
+    ## difference:comparisonAC                -1.064e-01  9.921e-02  6.309e+02  -1.072
+    ## age_groupadult:difference:comparisonAC  1.075e-01  1.404e-01  6.315e+02   0.765
+    ## age_groupchild:difference:comparisonAC -5.013e-02  1.343e-01  6.316e+02  -0.373
+    ##                                        Pr(>|t|)    
+    ## (Intercept)                             < 2e-16 ***
+    ## age_groupadult                         0.099600 .  
+    ## age_groupchild                         0.000268 ***
+    ## difference                             0.488986    
+    ## comparisonAC                           0.998077    
+    ## age_groupadult:difference              0.760378    
+    ## age_groupchild:difference              0.171221    
+    ## age_groupadult:comparisonAC            0.983678    
+    ## age_groupchild:comparisonAC            0.729487    
+    ## difference:comparisonAC                0.284117    
+    ## age_groupadult:difference:comparisonAC 0.444426    
+    ## age_groupchild:difference:comparisonAC 0.709070    
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Correlation of Fixed Effects:
-    ##             (Intr) ag_grpdls ag_grpdlt
-    ## ag_grpdlscn -0.652                    
-    ## age_gropdlt -0.661  0.521             
-    ## scannerskyr -0.137 -0.223    -0.192
+    ##             (Intr) ag_grpd ag_grpc dffrnc cmprAC ag_grpd: ag_grpc: ag_grpd:AC
+    ## age_gropdlt -0.706                                                           
+    ## age_grpchld -0.706  0.498                                                    
+    ## difference  -0.047  0.034   0.034                                            
+    ## comparisnAC -0.286  0.202   0.202   0.085                                    
+    ## ag_grpdlt:d  0.034 -0.066  -0.024  -0.714 -0.061                             
+    ## ag_grpchld:  0.035 -0.025  -0.071  -0.737 -0.063  0.526                      
+    ## ag_grpdl:AC  0.201 -0.288  -0.142  -0.060 -0.702  0.112    0.044             
+    ## ag_grpch:AC  0.201 -0.142  -0.290  -0.060 -0.703  0.043    0.125    0.493    
+    ## dffrnc:cmAC  0.031 -0.022  -0.022  -0.661 -0.004  0.472    0.487    0.003    
+    ## ag_grpd::AC -0.022  0.042   0.016   0.467  0.003 -0.638   -0.344   -0.101    
+    ## ag_grpc::AC -0.023  0.016   0.048   0.488  0.003 -0.348   -0.670   -0.002    
+    ##             ag_grpc:AC dff:AC ag_grpd::AC
+    ## age_gropdlt                              
+    ## age_grpchld                              
+    ## difference                               
+    ## comparisnAC                              
+    ## ag_grpdlt:d                              
+    ## ag_grpchld:                              
+    ## ag_grpdl:AC                              
+    ## ag_grpch:AC                              
+    ## dffrnc:cmAC  0.003                       
+    ## ag_grpd::AC -0.002     -0.707            
+    ## ag_grpc::AC -0.026     -0.739  0.522
 
 ``` r
-# in all age groups, integration of adjacent pairs predicts memory at the triplet level
-m <- lmer(triplet_accuracy ~ difference + age_group + scanner + (1|subject), data = data)
+m <- lmer(triplet_accuracy ~ age_group + difference + comparison +
+            age_group:difference + age_group:comparison + difference:comparison + (1|subject), data = data)
 summary(m)
 ```
 
     ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
     ## lmerModLmerTest]
-    ## Formula: triplet_accuracy ~ difference + age_group + scanner + (1 | subject)
+    ## Formula: 
+    ## triplet_accuracy ~ age_group + difference + comparison + age_group:difference +  
+    ##     age_group:comparison + difference:comparison + (1 | subject)
     ##    Data: data
     ## 
-    ## REML criterion at convergence: -83.9
+    ## REML criterion at convergence: -330.3
     ## 
     ## Scaled residuals: 
     ##     Min      1Q  Median      3Q     Max 
-    ## -3.5408 -0.3992  0.1476  0.4366  2.1491 
+    ## -3.7814 -0.4249  0.0783  0.4217  2.4014 
     ## 
     ## Random effects:
     ##  Groups   Name        Variance Std.Dev.
-    ##  subject  (Intercept) 0.02895  0.1701  
-    ##  Residual             0.02961  0.1721  
-    ## Number of obs: 360, groups:  subject, 90
+    ##  subject  (Intercept) 0.03357  0.1832  
+    ##  Residual             0.02587  0.1609  
+    ## Number of obs: 720, groups:  subject, 90
     ## 
     ## Fixed effects:
-    ##                      Estimate Std. Error        df t value Pr(>|t|)    
-    ## (Intercept)           0.61486    0.03524  86.75195  17.450  < 2e-16 ***
-    ## difference            0.11041    0.04226 303.35681   2.613  0.00943 ** 
-    ## age_groupadolescent   0.20755    0.05051  85.96731   4.109 9.03e-05 ***
-    ## age_groupadult        0.29129    0.05016  85.90001   5.807 1.05e-07 ***
-    ## scannerskyra         -0.07265    0.04819  86.00819  -1.508  0.13533    
+    ##                               Estimate Std. Error         df t value Pr(>|t|)
+    ## (Intercept)                  8.000e-01  3.656e-02  1.031e+02  21.880  < 2e-16
+    ## age_groupadult               8.421e-02  5.174e-02  1.034e+02   1.627 0.106702
+    ## age_groupchild              -1.942e-01  5.176e-02  1.035e+02  -3.753 0.000289
+    ## difference                   4.009e-02  5.638e-02  6.408e+02   0.711 0.477282
+    ## comparisonAC                 3.720e-05  2.089e-02  6.233e+02   0.002 0.998580
+    ## age_groupadult:difference    7.340e-02  7.265e-02  6.452e+02   1.010 0.312763
+    ## age_groupchild:difference    1.017e-01  6.790e-02  6.381e+02   1.499 0.134493
+    ## age_groupadult:comparisonAC  4.503e-03  2.955e-02  6.232e+02   0.152 0.878917
+    ## age_groupchild:comparisonAC  9.539e-03  2.972e-02  6.234e+02   0.321 0.748320
+    ## difference:comparisonAC     -9.169e-02  5.547e-02  6.339e+02  -1.653 0.098813
+    ##                                
+    ## (Intercept)                 ***
+    ## age_groupadult                 
+    ## age_groupchild              ***
+    ## difference                     
+    ## comparisonAC                   
+    ## age_groupadult:difference      
+    ## age_groupchild:difference      
+    ## age_groupadult:comparisonAC    
+    ## age_groupchild:comparisonAC    
+    ## difference:comparisonAC     .  
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Correlation of Fixed Effects:
-    ##             (Intr) dffrnc ag_grpdls ag_grpdlt
-    ## difference  -0.073                           
-    ## ag_grpdlscn -0.652  0.021                    
-    ## age_gropdlt -0.660  0.004  0.521             
-    ## scannerskyr -0.139  0.026 -0.222    -0.192
-
-### Plot adjacent pair analysis above
+    ##             (Intr) ag_grpd ag_grpc dffrnc cmprAC ag_grpd: ag_grpc: ag_grpd:AC
+    ## age_gropdlt -0.706                                                           
+    ## age_grpchld -0.706  0.499                                                    
+    ## difference  -0.040  0.019   0.015                                            
+    ## comparisnAC -0.286  0.202   0.202   0.099                                    
+    ## ag_grpdlt:d  0.025 -0.051  -0.017  -0.638 -0.076                             
+    ## ag_grpchld:  0.026 -0.019  -0.053  -0.663 -0.081  0.518                      
+    ## ag_grpdl:AC  0.201 -0.285  -0.144  -0.035 -0.707  0.063    0.059             
+    ## ag_grpch:AC  0.201 -0.142  -0.289  -0.060 -0.703  0.053    0.144    0.499    
+    ## dffrnc:cmAC  0.018  0.008   0.016  -0.442 -0.002  0.030   -0.013   -0.077    
+    ##             ag_grpc:AC
+    ## age_gropdlt           
+    ## age_grpchld           
+    ## difference            
+    ## comparisnAC           
+    ## ag_grpdlt:d           
+    ## ag_grpchld:           
+    ## ag_grpdl:AC           
+    ## ag_grpch:AC           
+    ## dffrnc:cmAC -0.020
 
 ``` r
-data$age_group <- relevel(factor(data$age_group), ref = 'adult')
-m <- lmer(triplet_accuracy ~ difference + age_group + scanner + (1|subject), data = data)
-interact_plot(m,
-              # x variable
-              pred = difference,
-              # grouping variable
-              modx = age_group,
-              colors = c("#7998cc", "#883689", "#765fb0"),
-              # confidence bands
-              interval = TRUE,
-              # observation-level points
-              plot.points = FALSE,
-              y.label = 'Triplet Memory (%)',
-              x.label = "Hippocampal Integration (Z)",
-              legend.main = "", vary.lty = TRUE) +
+# omitted additional model comparisons here, but no iteration results in significant interaction effects
+
+
+# final model
+m <- lmer(triplet_accuracy ~ age_group + difference + comparison + (1|subject), data = data)
+summary(m)
+```
+
+    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+    ## lmerModLmerTest]
+    ## Formula: triplet_accuracy ~ age_group + difference + comparison + (1 |  
+    ##     subject)
+    ##    Data: data
+    ## 
+    ## REML criterion at convergence: -347.2
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.8503 -0.4363  0.0785  0.4204  2.5345 
+    ## 
+    ## Random effects:
+    ##  Groups   Name        Variance Std.Dev.
+    ##  subject  (Intercept) 0.03339  0.1827  
+    ##  Residual             0.02589  0.1609  
+    ## Number of obs: 720, groups:  subject, 90
+    ## 
+    ## Fixed effects:
+    ##                  Estimate Std. Error         df t value Pr(>|t|)    
+    ## (Intercept)      0.799432   0.035462  92.269854  22.543  < 2e-16 ***
+    ## age_groupadult   0.086153   0.049430  87.086870   1.743 0.084875 .  
+    ## age_groupchild  -0.187785   0.049418  87.007281  -3.800 0.000268 ***
+    ## difference       0.060592   0.028255 646.268982   2.145 0.032365 *  
+    ## comparisonAC     0.002828   0.012066 628.255418   0.234 0.814773    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##             (Intr) ag_grpd ag_grpc dffrnc
+    ## age_gropdlt -0.696                       
+    ## age_grpchld -0.697  0.500                
+    ## difference  -0.021 -0.023  -0.007        
+    ## comparisnAC -0.170 -0.002  -0.001   0.109
+
+``` r
+age_colors <- c("child" = "#883689", "adolescent" = "#765fb0", "adult" = "#7998cc")
+
+# generate predictions from the model for plotting
+# marginal effects of difference, moderated by age_group
+pred <- ggpredict(m, terms = c("difference", "age_group"))
+
+ggplot(pred, aes(x = x, y = predicted, color = group, fill = group)) +
+  # omitting points for this plot; because % accuracy has only 32 possible values, plotting points looks messy
+  #geom_point(data = data, aes(x = difference, y = triplet_accuracy, color = age_group), alpha = 0.4, inherit.aes = FALSE) +
+  geom_line(linewidth = 1.2) +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.1, color = NA) +
+  scale_color_manual(values = age_colors, breaks = c("child", "adolescent", "adult")) +
+  scale_fill_manual(values = age_colors, breaks = c("child", "adolescent", "adult")) +
+  labs(
+    x = "Hippocampal Integration (Z)",
+    y = "Triplet Memory (%)",
+    color = "Age Group",
+    fill = "Age Group"
+  ) +
   theme_classic() +
   # scale y axis to percents
   scale_y_continuous(
@@ -117,249 +238,7 @@ interact_plot(m,
   ) +
   # set y axis limits
   coord_cartesian(ylim = c(0, 1)) +
-  theme(text = element_text(size = 18))
+  theme(text = element_text(size = 14))
 ```
 
-    ## Warning: difference and age_group are not included in an interaction with one
-    ## another in the model.
-
-![](2_integration_files/figure-gfm/adj_pair_integration_behavior_plot-1.png)<!-- -->
-
-### Adjacent pair analyses - supplementary
-
-``` r
-# no age group by integration interaction
-m <- lmer(triplet_accuracy ~ difference * age_group + (1|subject), data = data)
-summary(m)
-```
-
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: triplet_accuracy ~ difference * age_group + (1 | subject)
-    ##    Data: data
-    ## 
-    ## REML criterion at convergence: -82
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.6417 -0.3817  0.1590  0.4030  2.1090 
-    ## 
-    ## Random effects:
-    ##  Groups   Name        Variance Std.Dev.
-    ##  subject  (Intercept) 0.02967  0.1723  
-    ##  Residual             0.02958  0.1720  
-    ## Number of obs: 360, groups:  subject, 90
-    ## 
-    ## Fixed effects:
-    ##                                 Estimate Std. Error        df t value Pr(>|t|)
-    ## (Intercept)                      0.88581    0.03533  88.52323  25.074  < 2e-16
-    ## difference                       0.07979    0.07471 303.74716   1.068   0.2864
-    ## age_groupchild                  -0.28246    0.04999  88.75964  -5.650 1.91e-07
-    ## age_groupadolescent             -0.08625    0.04988  87.95808  -1.729   0.0873
-    ## difference:age_groupchild        0.10441    0.10164 299.37634   1.027   0.3051
-    ## difference:age_groupadolescent  -0.02242    0.10702 305.29198  -0.209   0.8342
-    ##                                   
-    ## (Intercept)                    ***
-    ## difference                        
-    ## age_groupchild                 ***
-    ## age_groupadolescent            .  
-    ## difference:age_groupchild         
-    ## difference:age_groupadolescent    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Correlation of Fixed Effects:
-    ##               (Intr) dffrnc ag_grpc ag_grpd dffrnc:g_grpc
-    ## difference    -0.100                                     
-    ## age_grpchld   -0.707  0.071                              
-    ## ag_grpdlscn   -0.708  0.071  0.501                       
-    ## dffrnc:g_grpc  0.074 -0.735 -0.106  -0.052               
-    ## dffrnc:g_grpd  0.070 -0.698 -0.049  -0.078   0.513
-
-## Extended pair analyses - primary
-
-``` r
-data <- subset(master, roi == 'sl-AC_age_hip')
-data$age_group <- relevel(factor(data$age_group), ref = 'child')
-
-# triplet-level extended integration in anterior hippocampus varies by age and by age group
-
-# here, we switch from mixed-effects models to ordinary least squares regression to avoid singular fits, averaging within subject for group level comparison.
-# notably, however, effects are essentially identical regardless of the approach here
-# further, age effects reported in the manuscript are primarily derived from non-parametric permutation testing of neural z-maps, these are simply follow-up/confirmatory stats
-
-summ <- data %>%
-  group_by(subject, roi, comparison, age_group, scanner) %>%
-  summarize(across(where(is.numeric), \(x) mean(x, na.rm = TRUE)), .groups = "drop")
-
-m <- lm(difference ~ age + scanner, data = summ)
-summary(m)
-```
-
-    ## 
-    ## Call:
-    ## lm(formula = difference ~ age + scanner, data = summ)
-    ## 
-    ## Residuals:
-    ##      Min       1Q   Median       3Q      Max 
-    ## -0.28243 -0.05575  0.01368  0.05750  0.20646 
-    ## 
-    ## Coefficients:
-    ##               Estimate Std. Error t value Pr(>|t|)   
-    ## (Intercept)  -0.073277   0.023857  -3.072  0.00284 **
-    ## age           0.003992   0.001562   2.556  0.01233 * 
-    ## scannerskyra  0.052170   0.025132   2.076  0.04086 * 
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 0.09804 on 87 degrees of freedom
-    ## Multiple R-squared:  0.1488, Adjusted R-squared:  0.1293 
-    ## F-statistic: 7.606 on 2 and 87 DF,  p-value: 0.000903
-
-``` r
-m <- lm(difference ~ age_group + scanner, data = summ)
-summary(m)
-```
-
-    ## 
-    ## Call:
-    ## lm(formula = difference ~ age_group + scanner, data = summ)
-    ## 
-    ## Residuals:
-    ##      Min       1Q   Median       3Q      Max 
-    ## -0.28793 -0.05655  0.01725  0.05135  0.20179 
-    ## 
-    ## Coefficients:
-    ##                      Estimate Std. Error t value Pr(>|t|)   
-    ## (Intercept)         -0.034645   0.018168  -1.907  0.05987 . 
-    ## age_groupadolescent -0.006905   0.026106  -0.264  0.79203   
-    ## age_groupadult       0.052663   0.025934   2.031  0.04538 * 
-    ## scannerskyra         0.066672   0.024904   2.677  0.00889 **
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 0.09857 on 86 degrees of freedom
-    ## Multiple R-squared:  0.1495, Adjusted R-squared:  0.1198 
-    ## F-statistic: 5.037 on 3 and 86 DF,  p-value: 0.002904
-
-``` r
-# in adults (the only group showing integration), trend towards extended integration predicting behavior
-adult <- subset(data, age_group == 'adult')
-m <- lmer(triplet_accuracy ~ difference + scanner + (1|subject), data = adult)
-summary(m)
-```
-
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: triplet_accuracy ~ difference + scanner + (1 | subject)
-    ##    Data: adult
-    ## 
-    ## REML criterion at convergence: -140.6
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -2.4943 -0.1790  0.0689  0.2988  3.6138 
-    ## 
-    ## Random effects:
-    ##  Groups   Name        Variance Std.Dev.
-    ##  subject  (Intercept) 0.023304 0.15266 
-    ##  Residual             0.009124 0.09552 
-    ## Number of obs: 120, groups:  subject, 30
-    ## 
-    ## Fixed effects:
-    ##              Estimate Std. Error       df t value Pr(>|t|)    
-    ## (Intercept)   0.91903    0.03491 27.99332  26.328   <2e-16 ***
-    ## difference    0.09301    0.05130 95.07866   1.813   0.0730 .  
-    ## scannerskyra -0.10993    0.06395 28.37286  -1.719   0.0965 .  
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Correlation of Fixed Effects:
-    ##             (Intr) dffrnc
-    ## difference  -0.010       
-    ## scannerskyr -0.545 -0.084
-
-### Plot adjacent pair analysis above
-
-``` r
-data$age_group <- relevel(factor(data$age_group), ref = 'adult')
-m <- lmer(triplet_accuracy ~ difference * age_group + scanner + (1|subject), data = data)
-interact_plot(m,
-              # x variable
-              pred = difference,
-              # grouping variable
-              modx = age_group,
-              colors = c("#7998cc", "#883689", "#765fb0"),
-              # confidence bands
-              interval = TRUE,
-              # observation-level points
-              plot.points = FALSE,
-              y.label = 'Triplet Memory (%)',
-              x.label = "Hippocampal Integration (Z)",
-              legend.main = "", vary.lty = TRUE) +
-  theme_classic() +
-  # scale y axis to percents
-  scale_y_continuous(
-    labels = function(x) x * 100,
-    breaks = seq(0, 1, 0.2) 
-  ) +
-  # set y axis limits
-  coord_cartesian(ylim = c(0, 1)) +
-  theme(text = element_text(size = 18))
-```
-
-![](2_integration_files/figure-gfm/ext_pair_integration_behavior_plot-1.png)<!-- -->
-
-### Adjacent pair analyses - supplementary
-
-``` r
-# no age group by integration interaction
-m <- lmer(triplet_accuracy ~ difference * age_group + scanner + (1|subject), data = data)
-summary(m)
-```
-
-    ## Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-    ## lmerModLmerTest]
-    ## Formula: triplet_accuracy ~ difference * age_group + scanner + (1 | subject)
-    ##    Data: data
-    ## 
-    ## REML criterion at convergence: -73.4
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.5670 -0.4198  0.1470  0.4370  2.0375 
-    ## 
-    ## Random effects:
-    ##  Groups   Name        Variance Std.Dev.
-    ##  subject  (Intercept) 0.02867  0.1693  
-    ##  Residual             0.03046  0.1745  
-    ## Number of obs: 360, groups:  subject, 90
-    ## 
-    ## Fixed effects:
-    ##                                 Estimate Std. Error        df t value Pr(>|t|)
-    ## (Intercept)                      0.90987    0.03773  86.38061  24.115  < 2e-16
-    ## difference                       0.08348    0.09120 310.95193   0.915   0.3607
-    ## age_groupchild                  -0.28749    0.05023  86.49627  -5.723 1.48e-07
-    ## age_groupadolescent             -0.08370    0.04937  86.77890  -1.695   0.0936
-    ## scannerskyra                    -0.07820    0.04832  87.07510  -1.618   0.1092
-    ## difference:age_groupchild       -0.06184    0.11788 303.63285  -0.525   0.6003
-    ## difference:age_groupadolescent  -0.13190    0.12323 301.41279  -1.070   0.2853
-    ##                                   
-    ## (Intercept)                    ***
-    ## difference                        
-    ## age_groupchild                 ***
-    ## age_groupadolescent            .  
-    ## scannerskyra                      
-    ## difference:age_groupchild         
-    ## difference:age_groupadolescent    
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Correlation of Fixed Effects:
-    ##               (Intr) dffrnc ag_grpc ag_grpd scnnrs dffrnc:g_grpc
-    ## difference    -0.061                                            
-    ## age_grpchld   -0.715  0.054                                     
-    ## ag_grpdlscn   -0.641  0.073  0.485                              
-    ## scannerskyr   -0.377 -0.080  0.187  -0.040                      
-    ## dffrnc:g_grpc  0.047 -0.774 -0.015  -0.056   0.063              
-    ## dffrnc:g_grpd  0.057 -0.738 -0.045  -0.031   0.029  0.571
+![](2_integration_files/figure-gfm/plot_integration_behavior-1.png)<!-- -->

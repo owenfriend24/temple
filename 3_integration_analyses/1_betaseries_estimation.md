@@ -15,7 +15,7 @@ batch_betaseries.sh temple101 drop_run=6
 ### 1. fix arrow output (if not done already) and create .txt files for confounds and each EV
 will output into /func/arrow_txt
 ```
-fix_arrow.py $FM temple058
+clean_arrow.py $FM temple058
 prep_arrow.py $FM both temple058
 ```
 ### 2. create fsf file for each EV and run feat_model to create design matrix
