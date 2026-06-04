@@ -139,16 +139,14 @@ def main() -> None:
     result.to_csv(args.output, index=False)
 
     if not result.empty:
-        subject_totals = (
-            result[result['status'] == 'ok']
-            .groupby('subject')['high_fd_volumes']
-            .sum()
-        )
-        if not subject_totals.empty:
-            avg_high_fd = subject_totals.mean()
-            print(f'Average high-motion volumes per participant: {avg_high_fd:.2f}')
-        else:
-            print('No complete participant motion data available to compute average.')
+        for sub in subjects:
+            subject_rows = result[result['subject'] == sub]
+            valid_runs = subject_rows[subject_rows['status'] == 'ok']
+            if not valid_runs.empty:
+                avg_high_fd = valid_runs['high_fd_volumes'].mean()
+                print(f'{avg_high_fd:.2f}')
+            else:
+                print('NA')
     else:
         print('No motion counts were generated.')
 
